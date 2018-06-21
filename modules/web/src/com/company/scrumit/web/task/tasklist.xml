@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (c) 2017 Haulmont Technology Ltd. All Rights Reserved.
+  ~ Haulmont Technology proprietary and confidential.
+  ~ Use is subject to license terms.
+  -->
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.scrumit.web.task.Tasklist"
+        focusComponent="table"
+        messagesPack="com.company.scrumit.web.task">
+    <dsContext>
+        <hierarchicalDatasource id="tasksDs"
+                                class="com.company.scrumit.entity.Task"
+                                hierarchyProperty="task"
+                                view="tasks-full">
+            <query>
+                <![CDATA[select e from scrumit$Task e]]>
+            </query>
+        </hierarchicalDatasource>
+    </dsContext>
+    <actions>
+        <action id="save"
+                caption="mainMsg://actions.Ok"
+                icon="icons/ok.png"
+                invoke="save"
+                shortcut="CTRL-ENTER"/>
+        <action id="cancel"
+                caption="mainMsg://actions.Cancel"
+                description="Esc"
+                icon="icons/cancel.png"
+                invoke="cancel"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <split id="split"
+               height="100%"
+               orientation="horizontal"
+               reversePosition="true"
+               width="100%">
+            <vbox id="lookupBox"
+                  expand="table"
+                  height="100%"
+                  margin="false,true,false,false"
+                  spacing="true">
+                <filter id="filter"
+                        applyTo="table"
+                        datasource="tasksDs">
+                    <properties include=".*"/>
+                </filter>
+                <treeTable id="table"
+                           width="100%">
+                    <actions>
+                        <action id="create"/>
+                        <action id="edit"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="shortdesc"/>
+                        <column id="description"/>
+                        <column id="performer"/>
+                        <column id="deadline"/>
+                        <column id="task"/>
+                        <column id="begin"/>
+                        <column id="duration"/>
+                        <column id="amount"/>
+                        <column id="type"/>
+                    </columns>
+                    <rows datasource="tasksDs"/>
+                    <rowsCount/>
+                    <buttonsPanel id="buttonsPanel"
+                                  alwaysVisible="true">
+                        <button id="createBtn"
+                                action="table.create"/>
+                        <button id="btnCreateInGroup"
+                                caption="mainMsg://Create in group"
+                                invoke="onBtnCreateInGroupClick"/>
+                        <button id="editBtn"
+                                action="table.edit"/>
+                        <button id="removeBtn"
+                                action="table.remove"/>
+                    </buttonsPanel>
+                </treeTable>
+            </vbox>
+            <vbox id="editBox"
+                  expand="fieldGroupBox"
+                  height="100%"
+                  margin="false,false,false,true"
+                  spacing="true">
+                <scrollBox id="fieldGroupBox">
+                    <fieldGroup id="fieldGroup"
+                                datasource="tasksDs">
+                        <column width="250px">
+                            <field property="shortdesc"/>
+                            <field property="description"/>
+                            <field property="performer"/>
+                            <field property="deadline"/>
+                            <field property="task"/>
+                            <field property="begin"/>
+                            <field property="duration"/>
+                            <field property="amount"/>
+                            <field property="type"/>
+                        </column>
+                    </fieldGroup>
+                </scrollBox>
+                <hbox id="actionsPane"
+                      spacing="true"
+                      visible="false">
+                    <button id="saveBtn"
+                            action="save"/>
+                    <button id="cancelBtn"
+                            action="cancel"/>
+                </hbox>
+            </vbox>
+        </split>
+    </layout>
+</window>

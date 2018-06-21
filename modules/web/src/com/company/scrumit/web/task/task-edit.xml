@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.scrumit.web.task.TaskEdit"
+        datasource="taskDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.scrumit.web.task">
+    <dsContext>
+        <datasource id="taskDs"
+                    class="com.company.scrumit.entity.Task"
+                    view="tasks-full"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="taskDs">
+            <column width="300px">
+                <field property="shortdesc"/>
+                <field property="description"/>
+                <field property="performer"/>
+                <field property="deadline"/>
+                <field property="task"/>
+                <field property="begin"/>
+                <field property="duration"/>
+                <field property="amount"/>
+                <field property="type"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

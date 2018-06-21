@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.scrumit.web.contact.ContactBrowse"
+        focusComponent="contactsTable"
+        lookupComponent="contactsTable"
+        messagesPack="com.company.scrumit.web.contact">
+    <dsContext>
+        <groupDatasource id="contactsDs"
+                         class="com.company.scrumit.entity.Contact"
+                         view="contact-view">
+            <query>
+                <![CDATA[select e from scrumit$Contact e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="contactsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="contactsTable"
+                datasource="contactsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="contactsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="fio"/>
+                <column id="email"/>
+                <column id="phone"/>
+                <column id="comments"/>
+                <column id="city"/>
+            </columns>
+            <rows datasource="contactsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="contactsTable.create"/>
+                <button id="editBtn"
+                        action="contactsTable.edit"/>
+                <button id="removeBtn"
+                        action="contactsTable.remove"/>
+                <button id="import"
+                        caption="mainMsg://Import"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

@@ -1,0 +1,2 @@
+alter table SCRUMIT_CONTACT add constraint FK_SCRUMIT_CONTACT_ON_CITY foreign key (CITY_ID) references SCRUMIT_CITY(ID);
+create index IDX_SCRUMIT_CONTACT_ON_CITY on SCRUMIT_CONTACT (CITY_ID);

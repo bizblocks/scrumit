@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.scrumit.web.contact.ContactEdit"
+        datasource="contactDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.scrumit.web.contact">
+    <dsContext>
+        <datasource id="contactDs"
+                    class="com.company.scrumit.entity.Contact"
+                    view="contact-view">
+            <collectionDatasource id="specialitiesDs"
+                                  property="specialities"/>
+        </datasource>
+        <collectionDatasource id="citiesDs"
+                              class="com.company.scrumit.entity.City"
+                              view="_minimal"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="specs"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="contactDs">
+            <column width="250px">
+                <field property="fio"/>
+                <field property="email"/>
+                <field property="phone"/>
+                <field property="comments"/>
+                <field optionsDatasource="citiesDs"
+                       property="city"/>
+            </column>
+        </fieldGroup>
+        <buttonsPanel>
+            <button id="addCategory"
+                    caption="mainMsg://Create"
+                    icon="CREATE_ACTION"
+                    invoke="onAddCategoryClick"/>
+            <button action="specs.edit"/>
+            <button action="specs.remove"/>
+        </buttonsPanel>
+        <dataGrid id="specs"
+                  datasource="specialitiesDs"
+                  editorEnabled="true"
+                  width="330px">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column property="speciality"
+                        width="300"/>
+            </columns>
+        </dataGrid>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

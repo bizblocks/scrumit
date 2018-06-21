@@ -1,0 +1,5 @@
+alter table SCRUMIT_TASK add constraint FK_SCRUMIT_TASK_ON_PERFORMER foreign key (PERFORMER_ID) references SEC_USER(ID);
+alter table SCRUMIT_TASK add constraint FK_SCRUMIT_TASK_ON_TASK foreign key (TASK_ID) references SCRUMIT_TASK(ID);
+create unique index IDX_SCRUMIT_TASK_UK_SHORTDESC on SCRUMIT_TASK (SHORTDESC) where DELETE_TS is null ;
+create index IDX_SCRUMIT_TASK_ON_PERFORMER on SCRUMIT_TASK (PERFORMER_ID);
+create index IDX_SCRUMIT_TASK_ON_TASK on SCRUMIT_TASK (TASK_ID);

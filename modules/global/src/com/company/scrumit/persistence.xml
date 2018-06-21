@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             version="2.0">
+    <persistence-unit name="scrumit"
+                      transaction-type="RESOURCE_LOCAL">
+        <class>com.company.scrumit.entity.Speciality</class>
+        <class>com.company.scrumit.entity.Contact</class>
+        <class>com.company.scrumit.entity.City</class>
+        <class>com.company.scrumit.entity.ContactSpeciality</class>
+        <class>com.company.scrumit.entity.Performer</class>
+        <class>com.company.scrumit.entity.Command</class>
+        <class>com.company.scrumit.entity.Task</class>
+        <class>com.company.scrumit.entity.Sprint</class>
+        <class>com.company.scrumit.entity.Meeting</class>
+        <class>com.company.scrumit.entity.Tracker</class>
+        <class>com.company.scrumit.entity.Chat</class>
+        <class>com.company.scrumit.entity.ChatRoom</class>
+        <class>com.company.scrumit.entity.Deadlines</class>
+        <class>com.company.scrumit.entity.SprintBacklog</class>
+        <class>com.company.scrumit.entity.Link</class>
+        <class>com.company.scrumit.entity.File</class>
+        <class>com.company.scrumit.entity.TasksFile</class>
+        <class>com.company.scrumit.entity.TaskDuration</class>
+    </persistence-unit>
+</persistence>

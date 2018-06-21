@@ -1,0 +1,1 @@
+alter table scrumit_people_category rename to SCRUMIT_PEOPLE_CATEGORY__U27260 ;
