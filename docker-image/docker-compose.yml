@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres:9.6.6
+    environment:
+      - POSTGRES_PASSWORD=cuba
+      - POSTGRES_USER=cuba
+      - POSTGRES_DB=scrumit
+    ports:
+     - "5433:5432"
+    networks:
+     - scrumit-network
+  web:
+    image: scrumit
+    ports:
+     - "8000:8000"
+    networks:
+     - scrumit-network
+
+networks:
+  scrumit-network:
