@@ -197,3 +197,16 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
 task wrapper(type: Wrapper) {
     gradleVersion = '4.3.1'
 }
+
+task buildUberJar(type: CubaUberJarBuilding) {
+    singleJar = true
+    logbackConfigurationFile = 'etc/uber-jar-logback.xml'
+    webPort = 8000
+    coreJettyEnvPath = 'modules/core/web/META-INF/jetty-env.xml'
+    appProperties = ['cuba.automaticDatabaseUpdate': true,
+ 'cuba.webHostName':'scrumit',
+ 'cuba.connectionUrlList': 'http://62.138.18.220:8079/app-core',
+ 'cuba.webAppUrl': 'http://62.138.18.220:8000/app',
+ 'cuba.useLocalServiceInvocation': false,
+ 'cuba.trustedClientPermittedIpList': '*.*.*.*']
+}

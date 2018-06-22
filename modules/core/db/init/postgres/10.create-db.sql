@@ -96,6 +96,7 @@ create table SCRUMIT_MEETING (
     DELETED_BY varchar(50),
     --
     SPRINT_ID uuid,
+    COMMENT_ varchar(2048),
     TYPE_ varchar(50),
     DATE_ date,
     --
@@ -180,6 +181,7 @@ create table SCRUMIT_TASK (
     DELETED_BY varchar(50),
     --
     SHORTDESC varchar(50) not null,
+    REALDURATION integer,
     TYPE_ varchar(50),
     DESCRIPTION varchar(1024),
     PERFORMER_ID uuid,
@@ -289,3 +291,21 @@ alter table SYS_FILE add column DESCRIPTION varchar(255) ^
 alter table SYS_FILE add column DTYPE varchar(100) ^
 update SYS_FILE set DTYPE = 'sys$FileDescriptor' where DTYPE is null ^
 -- end SYS_FILE
+-- begin SCRUMIT_TASK_DURATION
+create table SCRUMIT_TASK_DURATION (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    TASK_ID uuid,
+    DATE_ date,
+    DURATION integer,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_TASK_DURATION
