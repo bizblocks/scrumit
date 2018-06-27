@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Column;
 
 @NamePattern("%s|performer")
 @Table(name = "SCRUMIT_COMMAND")
@@ -30,6 +31,18 @@ public class Command extends StandardEntity {
         inverseJoinColumns = @JoinColumn(name = "TASK_ID"))
     @ManyToMany
     protected List<Task> projects;
+
+    @Column(name = "SPRINT_SIZE")
+    protected Integer sprintSize;
+
+    public void setSprintSize(Integer sprintSize) {
+        this.sprintSize = sprintSize;
+    }
+
+    public Integer getSprintSize() {
+        return sprintSize;
+    }
+
 
     public void setProjects(List<Task> projects) {
         this.projects = projects;

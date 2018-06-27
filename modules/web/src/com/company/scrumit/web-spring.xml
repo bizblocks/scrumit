@@ -14,6 +14,8 @@
                        value="com.company.scrumit.service.SmartsheetService"/>
                 <entry key="scrumit_MailListService"
                        value="com.company.scrumit.service.MailListService"/>
+                <entry key="scrumit_ImportCSVService"
+                       value="com.company.scrumit.service.ImportCSVService"/>
             </map>
         </property>
     </bean>

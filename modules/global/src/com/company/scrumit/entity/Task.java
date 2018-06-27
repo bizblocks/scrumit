@@ -29,6 +29,9 @@ public class Task extends StandardEntity {
     @Column(name = "SHORTDESC", nullable = false, unique = true, length = 50)
     protected String shortdesc;
 
+    @Column(name = "PROIRITY")
+    protected String proirity;
+
     @Column(name = "REALDURATION")
     protected Integer realduration;
 
@@ -73,6 +76,15 @@ public class Task extends StandardEntity {
         inverseJoinColumns = @JoinColumn(name = "COMMAND_ID"))
     @ManyToMany
     protected List<Command> commands;
+
+    public void setProirity(Priority proirity) {
+        this.proirity = proirity == null ? null : proirity.getId();
+    }
+
+    public Priority getProirity() {
+        return proirity == null ? null : Priority.fromId(proirity);
+    }
+
 
     public void setRealduration(Integer realduration) {
         this.realduration = realduration;

@@ -10,10 +10,16 @@
             template="com/company/scrumit/web/screens/ext-mainwindow.xml"/>
     <screen id="SmartsheetExport"
             template="com/company/scrumit/web/screens/SmartsheetExport.xml"/>
-    <screen id="scrumit$Task.list"
-            template="com/company/scrumit/web/task/tasklist.xml"/>
     <screen id="scrumit$Task.browse"
             template="com/company/scrumit/web/task/task-browse.xml"/>
     <screen id="scrumit$Task.edit"
             template="com/company/scrumit/web/task/task-edit.xml"/>
+    <screen id="scrumit$Meeting.browse"
+            template="com/company/scrumit/web/meeting/meeting-browse.xml"/>
+    <screen id="scrumit$Task.list"
+            template="com/company/scrumit/web/task/tasklist.xml"/>
+    <screen id="massInput"
+            template="com/company/scrumit/web/task/massInput.xml"/>
+    <screen id="importContacts"
+            template="com/company/scrumit/web/contact/importContacts.xml"/>
 </screen-config>

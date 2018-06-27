@@ -26,10 +26,11 @@ create table SCRUMIT_CONTACT (
     DELETED_BY varchar(50),
     --
     FIO varchar(255) not null,
+    CONTACTS varchar(255),
     CITY_ID uuid,
     EMAIL varchar(255) not null,
     PHONE varchar(255),
-    COMMENTS varchar(255),
+    COMMENTS varchar(1024),
     --
     primary key (ID)
 )^
@@ -79,6 +80,7 @@ create table SCRUMIT_COMMAND (
     DELETED_BY varchar(50),
     --
     LEADER_ID uuid,
+    SPRINT_SIZE integer,
     --
     primary key (ID)
 )^
@@ -181,6 +183,7 @@ create table SCRUMIT_TASK (
     DELETED_BY varchar(50),
     --
     SHORTDESC varchar(50) not null,
+    PROIRITY varchar(50),
     REALDURATION integer,
     TYPE_ varchar(50),
     DESCRIPTION varchar(1024),

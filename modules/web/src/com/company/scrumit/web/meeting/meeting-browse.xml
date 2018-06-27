@@ -6,22 +6,21 @@
   -->
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         caption="msg://caption"
-        class="com.company.scrumit.web.task.Tasklist"
+        class="com.company.scrumit.web.meeting.MeetingBrowse"
         focusComponent="table"
         lookupComponent="table"
-        messagesPack="com.company.scrumit.web.task">
+        messagesPack="com.company.scrumit.web.meeting">
     <dsContext>
-        <datasource id="taskDs"
-                    class="com.company.scrumit.entity.Task"
-                    view="tasks-full"/>
-        <hierarchicalDatasource id="tasksDs"
-                                class="com.company.scrumit.entity.Task"
-                                hierarchyProperty="task"
-                                view="task-tree">
+        <datasource id="meetingDs"
+                    class="com.company.scrumit.entity.Meeting"
+                    view="_local"/>
+        <groupDatasource id="meetingsDs"
+                         class="com.company.scrumit.entity.Meeting"
+                         view="_local">
             <query>
-                <![CDATA[select e from scrumit$Task e]]>
+                <![CDATA[select e from scrumit$Meeting e]]>
             </query>
-        </hierarchicalDatasource>
+        </groupDatasource>
     </dsContext>
     <actions>
         <action id="save"
@@ -50,69 +49,49 @@
                   spacing="true">
                 <filter id="filter"
                         applyTo="table"
-                        datasource="tasksDs">
+                        datasource="meetingsDs">
                     <properties include=".*"/>
                 </filter>
-                <treeTable id="table"
-                           multiselect="true"
-                           width="100%">
+                <groupTable id="table"
+                            width="100%">
                     <actions>
                         <action id="create"/>
                         <action id="edit"/>
                         <action id="remove"/>
-                        <action id="excel"/>
-                        <action id="refresh"/>
                     </actions>
                     <columns>
-                        <column id="shortdesc"/>
-                        <column id="proirity"/>
-                        <column id="task"/>
+                        <column id="comment"/>
+                        <column id="type"/>
+                        <column id="date"/>
                     </columns>
-                    <rows datasource="tasksDs"/>
+                    <rows datasource="meetingsDs"/>
                     <rowsCount/>
                     <buttonsPanel id="buttonsPanel"
                                   alwaysVisible="true">
                         <button id="createBtn"
                                 action="table.create"/>
-                        <button id="btnCreateInGroup"
-                                caption="mainMsg://Create in group"
-                                invoke="onBtnCreateInGroupClick"/>
                         <button id="editBtn"
                                 action="table.edit"/>
                         <button id="removeBtn"
                                 action="table.remove"/>
-                        <button id="excelBtn"
-                                action="table.excel"/>
-                        <button id="refreshBtn"
-                                action="table.refresh"/>
                     </buttonsPanel>
-                </treeTable>
+                </groupTable>
             </vbox>
             <vbox id="editBox"
-                  expand="description"
+                  expand="fieldGroupBox"
                   height="100%"
                   margin="false,false,false,true"
                   spacing="true">
                 <scrollBox id="fieldGroupBox">
                     <fieldGroup id="fieldGroup"
-                                datasource="taskDs">
-                        <column width="300px">
-                            <field property="task"/>
-                            <field property="shortdesc"/>
-                            <field property="proirity"/>
+                                datasource="meetingDs">
+                        <column width="250px">
+                            <field property="comment"/>
                             <field property="type"/>
-                            <field property="begin"/>
-                            <field property="duration"/>
-                            <field property="deadline"/>
-                            <field property="amount"/>
-                            <field property="performer"/>
+                            <field property="date"/>
                         </column>
                     </fieldGroup>
                 </scrollBox>
-                <richTextArea id="description"
-                              datasource="taskDs"
-                              property="description"
-                              width="100%"/>
                 <hbox id="actionsPane"
                       spacing="true"
                       visible="false">

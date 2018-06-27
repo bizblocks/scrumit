@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.DataManager;
 
 @NamePattern("%s|name")
 @Table(name = "SCRUMIT_CITY")
@@ -25,5 +27,25 @@ public class City extends StandardEntity {
         return name;
     }
 
+    public static City getCityByName(String name)
+    {
+        DataManager dataManager = AppBeans.get(DataManager.class);
+        City res = null;
+        try {
+            res = dataManager.load(City.class)
+                    .query("select c from scrumit$City c where c.name=:name")
+                    .parameter("name", name)
+                    .view("_local")
+                    .one();
 
+        }
+        catch (Exception e)
+        {
+            res  = new City();
+            res.setName(name);
+            dataManager.commit(res);
+
+        }
+        return res;
+    }
 }

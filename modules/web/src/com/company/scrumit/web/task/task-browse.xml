@@ -33,6 +33,7 @@
             </actions>
             <columns>
                 <column id="shortdesc"/>
+                <column id="proirity"/>
             </columns>
             <rows datasource="tasksDs"/>
             <rowsCount/>

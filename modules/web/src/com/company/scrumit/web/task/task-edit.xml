@@ -26,6 +26,7 @@
                 <field property="duration"/>
                 <field property="amount"/>
                 <field property="type"/>
+                <field property="proirity"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

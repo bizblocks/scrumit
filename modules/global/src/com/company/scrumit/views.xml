@@ -22,5 +22,6 @@
           name="task-tree">
         <property name="task"
                   view="_minimal"/>
+        <property name="proirity"/>
     </view>
 </views>

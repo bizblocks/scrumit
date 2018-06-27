@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.scrumit.web.task.Massinput"
+        messagesPack="com.company.scrumit.web.task">
+    <dsContext>
+        <collectionDatasource id="newTasksDs"
+                              class="com.company.scrumit.entity.Task"
+                              view="tasks-full">
+            <query>
+                <![CDATA[select e from scrumit$Task e where e.createTs IS NULL]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="tasksDs"
+                              allowCommit="false"
+                              class="com.company.scrumit.entity.Task"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from scrumit$Task e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <actions>
+        <action id="add"
+                invoke="onAdd"
+                shortcut="CTRL-INSERT"/>
+        <action id="del"
+                invoke="onDel"
+                shortcut="CTRL-DELETE"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tab"
+            spacing="true">
+        <lookupPickerField id="parent"
+                           optionsDatasource="tasksDs"
+                           width="300px"/>
+        <buttonsPanel>
+            <button id="btnCreate"
+                    action="add"
+                    caption="msg://Add"
+                    icon="PLUS"
+                    invoke="onBtnCreateClick"/>
+            <button id="btnRemove"
+                    action="del"
+                    caption="msg://Remove"
+                    icon="MINUS"/>
+            <button id="btnCommit"
+                    caption="msg://Commit"
+                    icon="SAVE"/>
+        </buttonsPanel>
+        <table id="tab"
+               editable="true"
+               width="100%">
+            <columns>
+                <column id="shortdesc"
+                        editable="true"/>
+                <column id="proirity"
+                        editable="true"/>
+                <column id="type"
+                        editable="true"/>
+                <column id="deadline"
+                        editable="true"/>
+                <column id="begin"
+                        editable="true"/>
+                <column id="amount"
+                        editable="true"/>
+                <column id="duration"
+                        editable="true"/>
+            </columns>
+            <rows datasource="newTasksDs"/>
+        </table>
+    </layout>
+</window>

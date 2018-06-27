@@ -29,6 +29,8 @@
                 <action id="create"/>
                 <action id="edit"/>
                 <action id="remove"/>
+                <action id="refresh"/>
+                <action id="excel"/>
             </actions>
             <columns>
                 <column id="fio"/>
@@ -36,6 +38,7 @@
                 <column id="phone"/>
                 <column id="comments"/>
                 <column id="city"/>
+                <column id="contacts"/>
             </columns>
             <rows datasource="contactsDs"/>
             <rowsCount/>
@@ -47,8 +50,11 @@
                         action="contactsTable.edit"/>
                 <button id="removeBtn"
                         action="contactsTable.remove"/>
+                <button action="contactsTable.refresh"/>
+                <button action="contactsTable.excel"/>
                 <button id="import"
-                        caption="mainMsg://Import"/>
+                        caption="mainMsg://Import"
+                        invoke="onImportClick"/>
             </buttonsPanel>
         </groupTable>
     </layout>

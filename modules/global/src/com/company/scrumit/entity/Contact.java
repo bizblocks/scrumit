@@ -25,6 +25,9 @@ public class Contact extends StandardEntity {
     @Column(name = "FIO", nullable = false)
     protected String fio;
 
+    @Column(name = "CONTACTS")
+    protected String contacts;
+
     @Lookup(type = LookupType.DROPDOWN, actions = {"lookup", "open", "clear"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CITY_ID")
@@ -37,7 +40,7 @@ public class Contact extends StandardEntity {
     @Column(name = "PHONE")
     protected String phone;
 
-    @Column(name = "COMMENTS")
+    @Column(name = "COMMENTS", length = 1024)
     protected String comments;
 
 
@@ -46,6 +49,15 @@ public class Contact extends StandardEntity {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "contact")
     protected Performer performer;
+
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
+    }
+
+    public String getContacts() {
+        return contacts;
+    }
+
 
     public void setPerformer(Performer performer) {
         this.performer = performer;

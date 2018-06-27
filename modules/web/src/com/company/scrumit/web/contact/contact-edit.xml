@@ -29,6 +29,7 @@
                 <field property="comments"/>
                 <field optionsDatasource="citiesDs"
                        property="city"/>
+                <field property="contacts"/>
             </column>
         </fieldGroup>
         <buttonsPanel>
