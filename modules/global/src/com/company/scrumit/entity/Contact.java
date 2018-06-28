@@ -14,6 +14,8 @@ import com.haulmont.cuba.core.entity.annotation.LookupType;
 import javax.validation.constraints.NotNull;
 import com.haulmont.chile.core.annotations.NamePattern;
 import javax.persistence.OneToOne;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 @NamePattern("%s %s|fio,email")
 @Table(name = "SCRUMIT_CONTACT")
@@ -44,6 +46,7 @@ public class Contact extends StandardEntity {
     protected String comments;
 
 
+    @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "contact")
     protected List<ContactSpeciality> specialities;
 

@@ -24,6 +24,7 @@
             <properties include=".*"/>
         </filter>
         <groupTable id="contactsTable"
+                    multiselect="true"
                     width="100%">
             <actions>
                 <action id="create"/>
@@ -52,7 +53,7 @@
                         action="contactsTable.remove"/>
                 <button action="contactsTable.refresh"/>
                 <button action="contactsTable.excel"/>
-                <button id="import"
+                <button id="importBtn"
                         caption="mainMsg://Import"
                         invoke="onImportClick"/>
             </buttonsPanel>

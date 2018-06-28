@@ -28,7 +28,6 @@ public class ImportCSVServiceBean implements ImportCSVService {
             line = reader.readNext();
             if (line == null)
                 break;
-            ;
             HashMap<String, String> hash = new HashMap<>();
             for (int i = 0; i < firstLine.length; i++)
                 hash.put(firstLine[i], line[i]);
@@ -57,25 +56,25 @@ public class ImportCSVServiceBean implements ImportCSVService {
                 contact.setContacts(item.get("контакты"));
                 contact.setCity(City.getCityByName(item.get("город")));
                 contact.setEmail(item.get("e-mail"));
-                String comment = "";
+                StringBuilder comment = new StringBuilder();
                 for(String k:item.keySet())
                 {
                     if(used.indexOf(k)>-1)
                         continue;
-                    if(item.get(k)==null || item.get(k)=="")
+                    if(item.get(k)==null || "".equals(item.get(k)))
                         continue;
-                    comment+=k+": "+item.get(k)+"\n";
+                    comment.append(k).append(": ").append(item.get(k)).append("\n");
                 }
-                contact.setComments(comment);
+                contact.setComments(comment.toString());
                 em.persist(contact);
 
                 ContactSpeciality cs = metadata.create(ContactSpeciality.class);
                 cs.setContact(contact);
-                cs.setSpeciality(Speciality.getSpecialityByName(item.get("специальность")));
+                cs.setSpeciality(Speciality.getSpecialityByName(item.get("специализации")));
                 em.persist(cs);
             }
             t.commit();
-        };
+        }
     }
 
 }

@@ -20,18 +20,29 @@
                 width="800"/>
     <layout expand="specs"
             spacing="true">
-        <fieldGroup id="fieldGroup"
-                    datasource="contactDs">
-            <column width="250px">
-                <field property="fio"/>
-                <field property="email"/>
-                <field property="phone"/>
-                <field property="comments"/>
-                <field optionsDatasource="citiesDs"
-                       property="city"/>
-                <field property="contacts"/>
-            </column>
-        </fieldGroup>
+        <hbox spacing="true">
+            <fieldGroup id="fieldGroup"
+                        datasource="contactDs">
+                <column width="300px">
+                    <field property="fio"/>
+                    <field property="email"/>
+                    <field property="phone"/>
+                    <field optionsDatasource="citiesDs"
+                           property="city"/>
+                    <field property="contacts"/>
+                </column>
+            </fieldGroup>
+            <vbox expand="comments"
+                  height="100%"
+                  spacing="true"
+                  width="AUTO">
+                <label value="msg://Comments"/>
+                <textArea id="comments"
+                          datasource="contactDs"
+                          property="comments"
+                          width="500px"/>
+            </vbox>
+        </hbox>
         <buttonsPanel>
             <button id="addCategory"
                     caption="mainMsg://Create"
