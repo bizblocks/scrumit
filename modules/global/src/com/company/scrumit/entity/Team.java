@@ -14,9 +14,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Column;
 
 @NamePattern("%s|performer")
-@Table(name = "SCRUMIT_COMMAND")
-@Entity(name = "scrumit$Command")
-public class Command extends StandardEntity {
+@Table(name = "SCRUMIT_TEAM")
+@Entity(name = "scrumit$Team")
+public class Team extends StandardEntity {
     private static final long serialVersionUID = 1628222988045065473L;
 
     @OneToMany(mappedBy = "command")

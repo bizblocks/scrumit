@@ -7,5 +7,6 @@
         <item screen="scrumit$Meeting.browse"/>
         <item screen="scrumit$Task.list"/>
         <item screen="massInput"/>
+        <item screen="sprintPlanning"/>
     </menu>
 </menu-config>

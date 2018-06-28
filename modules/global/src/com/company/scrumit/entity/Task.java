@@ -71,11 +71,21 @@ public class Task extends StandardEntity {
     @JoinColumn(name = "SPRINT_BACKLOG_ID")
     protected SprintBacklog sprintBacklog;
 
+
     @JoinTable(name = "SCRUMIT_COMMAND_TASK_LINK",
         joinColumns = @JoinColumn(name = "TASK_ID"),
         inverseJoinColumns = @JoinColumn(name = "COMMAND_ID"))
     @ManyToMany
-    protected List<Command> commands;
+    protected List<Team> teams;
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
 
     public void setProirity(Priority proirity) {
         this.proirity = proirity == null ? null : proirity.getId();
@@ -94,14 +104,6 @@ public class Task extends StandardEntity {
         return realduration;
     }
 
-
-    public void setCommands(List<Command> commands) {
-        this.commands = commands;
-    }
-
-    public List<Command> getCommands() {
-        return commands;
-    }
 
 
     public void setSprintBacklog(SprintBacklog sprintBacklog) {

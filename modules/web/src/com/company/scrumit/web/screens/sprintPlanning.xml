@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.scrumit.web.screens.Sprintplanning"
+        messagesPack="com.company.scrumit.web.screens">
+    <dsContext>
+        <datasource id="teamDs"
+                    allowCommit="false"
+                    class="com.company.scrumit.entity.Team"
+                    view="_minimal"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <hbox spacing="true">
+            <label value="msg://Team"/>
+            <lookupPickerField id="team"
+                               height="32px"
+                               optionsDatasource="commandDs"
+                               width="300px"/>
+        </hbox>
+    </layout>
+</window>

@@ -5,8 +5,8 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="csv">
-        <label value="CSV для импорта"/>
         <label value="msg://import help"/>
+        <label value="CSV для импорта"/>
         <textArea id="csv"
                   width="100%"/>
         <button id="btnImport"

@@ -24,19 +24,20 @@ public class Sprint extends StandardEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "COMMAND_ID")
-    protected Command command;
+    protected Team command;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "PERIOD_END")
     protected Date periodEnd;
 
-    public void setCommand(Command command) {
+    public Team getCommand() {
+        return command;
+    }
+
+    public void setCommand(Team command) {
         this.command = command;
     }
 
-    public Command getCommand() {
-        return command;
-    }
 
 
     public void setPeriodStart(Date periodStart) {

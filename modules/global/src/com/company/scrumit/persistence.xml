@@ -8,7 +8,7 @@
         <class>com.company.scrumit.entity.City</class>
         <class>com.company.scrumit.entity.ContactSpeciality</class>
         <class>com.company.scrumit.entity.Performer</class>
-        <class>com.company.scrumit.entity.Command</class>
+        <class>com.company.scrumit.entity.Team</class>
         <class>com.company.scrumit.entity.Task</class>
         <class>com.company.scrumit.entity.Sprint</class>
         <class>com.company.scrumit.entity.Meeting</class>

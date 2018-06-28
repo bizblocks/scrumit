@@ -22,4 +22,6 @@
             template="com/company/scrumit/web/task/massInput.xml"/>
     <screen id="importContacts"
             template="com/company/scrumit/web/contact/importContacts.xml"/>
+    <screen id="sprintPlanning"
+            template="com/company/scrumit/web/screens/sprintPlanning.xml"/>
 </screen-config>
