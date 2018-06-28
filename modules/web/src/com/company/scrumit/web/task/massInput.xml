@@ -63,8 +63,6 @@
                         editable="true"/>
                 <column id="begin"
                         editable="true"/>
-                <column id="amount"
-                        editable="true"/>
                 <column id="duration"
                         editable="true"/>
             </columns>

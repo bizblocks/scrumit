@@ -47,12 +47,12 @@ public class ImportCSVServiceBean implements ImportCSVService {
         try(Transaction t = persistence.createTransaction())
         {
             EntityManager em = persistence.getEntityManager();
-            List<String> used = Arrays.asList("город", "e-mail", "специализации", "контакты");
+            List<String> used = Arrays.asList("город", "e-mail", "специализации", "контакты", "имя");
             for (HashMap<String,String> item: data) {
                 if(item.get("e-mail")==null)
                     continue;
                 Contact contact = metadata.create(Contact.class);
-                contact.setFio("");
+                contact.setFio(item.get("имя"));
                 contact.setContacts(item.get("контакты"));
                 contact.setCity(City.getCityByName(item.get("город")));
                 contact.setEmail(item.get("e-mail"));

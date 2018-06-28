@@ -1,6 +1,8 @@
 package com.company.scrumit.web.task;
 
+import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
+import com.company.scrumit.entity.TaskType;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
@@ -45,6 +47,8 @@ public class Massinput extends AbstractWindow {
         }
         Task task = new Task();
         task.setTask(parent.getValue());
+        task.setProirity(Priority.Middle);
+        task.setType(TaskType.task);
         newTasksDs.addItem(task);
     }
 
