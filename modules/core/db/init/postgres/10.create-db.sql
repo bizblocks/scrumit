@@ -68,23 +68,6 @@ create table SCRUMIT_CONTACT_SPECIALITY (
     primary key (ID)
 )^
 -- end SCRUMIT_CONTACT_SPECIALITY
--- begin SCRUMIT_COMMAND
-create table SCRUMIT_COMMAND (
-    ID uuid,
-    VERSION integer not null,
-    CREATE_TS timestamp,
-    CREATED_BY varchar(50),
-    UPDATE_TS timestamp,
-    UPDATED_BY varchar(50),
-    DELETE_TS timestamp,
-    DELETED_BY varchar(50),
-    --
-    LEADER_ID uuid,
-    SPRINT_SIZE integer,
-    --
-    primary key (ID)
-)^
--- end SCRUMIT_COMMAND
 
 -- begin SCRUMIT_MEETING
 create table SCRUMIT_MEETING (
@@ -167,7 +150,6 @@ create table SCRUMIT_CHAT_ROOM_PERFORMER_LINK (
 -- end SCRUMIT_CHAT_ROOM_PERFORMER_LINK
 -- begin SEC_USER
 alter table SEC_USER add column CONTACT_ID uuid ^
-alter table SEC_USER add column COMMAND_ID uuid ^
 alter table SEC_USER add column DTYPE varchar(100) ^
 update SEC_USER set DTYPE = 'sec$User' where DTYPE is null ^
 -- end SEC_USER
@@ -190,9 +172,12 @@ create table SCRUMIT_TASK (
     PERFORMER_ID uuid,
     DEADLINE date,
     TASK_ID uuid,
+    LEVEL_ integer,
+    TOP_ID uuid,
     BEGIN_ timestamp,
     AMOUNT integer,
     SPRINT_BACKLOG_ID uuid,
+    SPRINT_ID uuid,
     --
     primary key (ID)
 )^
@@ -226,7 +211,7 @@ create table SCRUMIT_SPRINT (
     DELETED_BY varchar(50),
     --
     PERIOD_START timestamp,
-    COMMAND_ID uuid,
+    TEAM_ID uuid,
     PERIOD_END timestamp,
     --
     primary key (ID)
@@ -312,3 +297,28 @@ create table SCRUMIT_TASK_DURATION (
     primary key (ID)
 )^
 -- end SCRUMIT_TASK_DURATION
+-- begin SCRUMIT_TEAM
+create table SCRUMIT_TEAM (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    NAME varchar(20),
+    LEADER_ID uuid,
+    SPRINT_SIZE integer,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_TEAM
+-- begin SCRUMIT_TEAM_PERFORMER_LINK
+create table SCRUMIT_TEAM_PERFORMER_LINK (
+    TEAM_ID uuid,
+    PERFORMER_ID uuid,
+    primary key (TEAM_ID, PERFORMER_ID)
+)^
+-- end SCRUMIT_TEAM_PERFORMER_LINK

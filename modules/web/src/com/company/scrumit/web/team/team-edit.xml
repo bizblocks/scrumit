@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.scrumit.web.team.TeamEdit"
+        datasource="teamDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.scrumit.web.team">
+    <dsContext>
+        <datasource id="teamDs"
+                    class="com.company.scrumit.entity.Team"
+                    view="team-view">
+            <collectionDatasource id="membersDs"
+                                  property="members"/>
+            <collectionDatasource id="projectsDs"
+                                  property="projects"/>
+        </datasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tabs"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="teamDs">
+            <column width="300px">
+                <field property="name"/>
+                <field property="leader"/>
+                <field property="sprintSize"/>
+            </column>
+        </fieldGroup>
+        <tabSheet id="tabs">
+            <tab id="members"
+                 caption="mainMsg://Members">
+                <table id="membersTable"
+                       height="100%"
+                       width="100%">
+                    <actions>
+                        <action id="add"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="login"/>
+                        <column id="email"/>
+                    </columns>
+                    <rows datasource="membersDs"/>
+                    <buttonsPanel>
+                        <button action="membersTable.add"/>
+                        <button action="membersTable.remove"/>
+                    </buttonsPanel>
+                </table>
+            </tab>
+            <tab id="projects"
+                 caption="mainMsg://Projects">
+                <table id="projectsTable"
+                       height="100%"
+                       width="100%">
+                    <actions>
+                        <action id="add"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="shortdesc"/>
+                    </columns>
+                    <rows datasource="projectsDs"/>
+                    <buttonsPanel>
+                        <button action="projectsTable.add"/>
+                        <button action="projectsTable.remove"/>
+                    </buttonsPanel>
+                </table>
+            </tab>
+        </tabSheet>
+        <frame id="windowActions"
+               screen="extendedEditWindowActions"/>
+    </layout>
+</window>

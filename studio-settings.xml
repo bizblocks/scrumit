@@ -8,4 +8,9 @@
         <functionality id="oneToOneIndex"
                        state="ENABLE"/>
     </functionalitySettings>
+    <screenDesigner>
+        <screen module="web"
+                previewMode="true"
+                reference="com/company/scrumit/web/task/massInput.xml"/>
+    </screenDesigner>
 </studio>

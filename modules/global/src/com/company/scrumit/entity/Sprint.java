@@ -11,6 +11,10 @@ import com.haulmont.chile.core.annotations.NamePattern;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
+import java.util.Set;
+import javax.persistence.OneToMany;
 
 @NamePattern("%s - %s|periodStart,periodEnd")
 @Table(name = "SCRUMIT_SPRINT")
@@ -23,21 +27,35 @@ public class Sprint extends StandardEntity {
     protected Date periodStart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COMMAND_ID")
-    protected Team command;
+    @JoinColumn(name = "TEAM_ID")
+    protected Team team;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "PERIOD_END")
     protected Date periodEnd;
 
-    public Team getCommand() {
-        return command;
+
+
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "sprint")
+    protected Set<Task> tasks;
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 
-    public void setCommand(Team command) {
-        this.command = command;
+    public Set<Task> getTasks() {
+        return tasks;
     }
 
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
 
 
     public void setPeriodStart(Date periodStart) {

@@ -27,14 +27,21 @@
         <action id="del"
                 invoke="onDel"
                 shortcut="CTRL-DELETE"/>
+        <action id="commit"
+                invoke="onCommit"
+                shortcut="CTRL-ENTER"/>
     </actions>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="tab"
             spacing="true">
-        <lookupPickerField id="parent"
-                           optionsDatasource="tasksDs"
-                           width="300px"/>
+        <hbox spacing="true">
+            <label align="MIDDLE_LEFT"
+                   value="msg://parent"/>
+            <lookupPickerField id="parent"
+                               optionsDatasource="tasksDs"
+                               width="300px"/>
+        </hbox>
         <buttonsPanel>
             <button id="btnCreate"
                     action="add"
@@ -46,6 +53,7 @@
                     caption="msg://Remove"
                     icon="MINUS"/>
             <button id="btnCommit"
+                    action="commit"
                     caption="msg://Commit"
                     icon="SAVE"/>
         </buttonsPanel>

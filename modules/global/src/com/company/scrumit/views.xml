@@ -14,8 +14,14 @@
         <property name="performer"
                   view="_minimal"/>
         <property name="task"
-                  view="_minimal"/>
+                  view="_minimal">
+            <property name="level"/>
+            <property name="top"
+                      view="_minimal"/>
+        </property>
         <property name="duration"/>
+        <property name="top"
+                  view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
@@ -23,5 +29,17 @@
         <property name="task"
                   view="_minimal"/>
         <property name="proirity"/>
+    </view>
+    <view class="com.company.scrumit.entity.Team"
+          extends="_local"
+          name="team-view">
+        <property name="leader"
+                  view="_minimal"/>
+        <property name="projects"
+                  view="_minimal"/>
+        <property name="members"
+                  view="_minimal">
+            <property name="email"/>
+        </property>
     </view>
 </views>

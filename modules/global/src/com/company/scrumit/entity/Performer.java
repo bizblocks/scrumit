@@ -21,22 +21,25 @@ public class Performer extends User {
     @JoinColumn(name = "CONTACT_ID")
     protected Contact contact;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COMMAND_ID")
-    protected Team command;
-
     @JoinTable(name = "SCRUMIT_CHAT_ROOM_PERFORMER_LINK",
         joinColumns = @JoinColumn(name = "PERFORMER_ID"),
         inverseJoinColumns = @JoinColumn(name = "CHAT_ROOM_ID"))
     @ManyToMany
     protected List<ChatRoom> chatRooms;
 
-    public Team getCommand() {
-        return command;
+
+    @JoinTable(name = "SCRUMIT_TEAM_PERFORMER_LINK",
+        joinColumns = @JoinColumn(name = "PERFORMER_ID"),
+        inverseJoinColumns = @JoinColumn(name = "TEAM_ID"))
+    @ManyToMany
+    protected List<Team> teams;
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
-    public void setCommand(Team command) {
-        this.command = command;
+    public List<Team> getTeams() {
+        return teams;
     }
 
 

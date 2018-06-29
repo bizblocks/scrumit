@@ -5,7 +5,7 @@
   ~ Use is subject to license terms.
   -->
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
-        caption="msg://caption"
+        caption="msg://tasklist"
         class="com.company.scrumit.web.task.Tasklist"
         focusComponent="table"
         lookupComponent="table"
@@ -34,6 +34,8 @@
                 description="Esc"
                 icon="icons/cancel.png"
                 invoke="cancel"/>
+        <action id="massInput"
+                invoke="onMassInput"/>
     </actions>
     <dialogMode height="600"
                 width="800"/>
@@ -81,10 +83,13 @@
                                 action="table.edit"/>
                         <button id="removeBtn"
                                 action="table.remove"/>
-                        <button id="excelBtn"
-                                action="table.excel"/>
                         <button id="refreshBtn"
                                 action="table.refresh"/>
+                        <button id="excelBtn"
+                                action="table.excel"/>
+                        <button id="btnMassInput"
+                                action="massInput"
+                                caption="mainMsg://Mass input"/>
                     </buttonsPanel>
                 </treeTable>
             </vbox>

@@ -13,14 +13,20 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Column;
 
-@NamePattern("%s|performer")
+@NamePattern("%s|name")
 @Table(name = "SCRUMIT_TEAM")
 @Entity(name = "scrumit$Team")
 public class Team extends StandardEntity {
     private static final long serialVersionUID = 1628222988045065473L;
 
-    @OneToMany(mappedBy = "command")
-    protected List<Performer> performer;
+    @Column(name = "NAME", length = 20)
+    protected String name;
+
+    @JoinTable(name = "SCRUMIT_TEAM_PERFORMER_LINK",
+        joinColumns = @JoinColumn(name = "TEAM_ID"),
+        inverseJoinColumns = @JoinColumn(name = "PERFORMER_ID"))
+    @ManyToMany
+    protected List<Performer> members;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LEADER_ID")
@@ -34,6 +40,24 @@ public class Team extends StandardEntity {
 
     @Column(name = "SPRINT_SIZE")
     protected Integer sprintSize;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+    public void setMembers(List<Performer> members) {
+        this.members = members;
+    }
+
+    public List<Performer> getMembers() {
+        return members;
+    }
+
 
     public void setSprintSize(Integer sprintSize) {
         this.sprintSize = sprintSize;
@@ -61,14 +85,6 @@ public class Team extends StandardEntity {
         return leader;
     }
 
-
-    public void setPerformer(List<Performer> performer) {
-        this.performer = performer;
-    }
-
-    public List<Performer> getPerformer() {
-        return performer;
-    }
 
 
 }

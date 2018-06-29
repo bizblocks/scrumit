@@ -18,7 +18,9 @@ import javax.persistence.Transient;
 import java.util.List;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import com.haulmont.cuba.core.entity.annotation.Listeners;
 
+@Listeners("scrumit_TaskListener")
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TASK")
 @Entity(name = "scrumit$Task")
@@ -53,6 +55,13 @@ public class Task extends StandardEntity {
     @JoinColumn(name = "TASK_ID")
     protected Task task;
 
+    @Column(name = "LEVEL_")
+    protected Integer level;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TOP_ID")
+    protected Task top;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "BEGIN_")
     protected Date begin;
@@ -77,6 +86,36 @@ public class Task extends StandardEntity {
         inverseJoinColumns = @JoinColumn(name = "COMMAND_ID"))
     @ManyToMany
     protected List<Team> teams;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SPRINT_ID")
+    protected Sprint sprint;
+
+    public void setSprint(Sprint sprint) {
+        this.sprint = sprint;
+    }
+
+    public Sprint getSprint() {
+        return sprint;
+    }
+
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setTop(Task top) {
+        this.top = top;
+    }
+
+    public Task getTop() {
+        return top;
+    }
+
 
     public void setTeams(List<Team> teams) {
         this.teams = teams;

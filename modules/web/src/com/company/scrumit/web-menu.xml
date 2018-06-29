@@ -8,5 +8,6 @@
         <item screen="scrumit$Task.list"/>
         <item screen="massInput"/>
         <item screen="sprintPlanning"/>
+        <item screen="scrumit$Team.browse"/>
     </menu>
 </menu-config>

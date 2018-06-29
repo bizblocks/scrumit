@@ -4,20 +4,43 @@
         class="com.company.scrumit.web.screens.Sprintplanning"
         messagesPack="com.company.scrumit.web.screens">
     <dsContext>
-        <datasource id="teamDs"
-                    allowCommit="false"
-                    class="com.company.scrumit.entity.Team"
-                    view="_minimal"/>
+        <collectionDatasource id="teamsDs"
+                              allowCommit="false"
+                              class="com.company.scrumit.entity.Team"
+                              view="team-view">
+            <query>
+                <![CDATA[select e from scrumit$Team e]]>
+            </query>
+        </collectionDatasource>
+        <hierarchicalDatasource id="tasksDs"
+                                class="com.company.scrumit.entity.Task"
+                                hierarchyProperty="task"
+                                view="task-tree">
+            <query>
+                <![CDATA[select e from scrumit$Task e where e.top in :ds$teamsDs.projects]]>
+            </query>
+        </hierarchicalDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
-    <layout>
+    <layout expand="unassigned">
         <hbox spacing="true">
             <label value="msg://Team"/>
             <lookupPickerField id="team"
                                height="32px"
-                               optionsDatasource="commandDs"
+                               metaClass="scrumit$Team"
+                               optionsDatasource="teamsDs"
                                width="300px"/>
+            <button invoke="testQuery"/>
         </hbox>
+        <treeTable id="unassigned"
+                   width="100%">
+            <columns>
+                <column id="shortdesc"/>
+                <column id="proirity"/>
+                <column id="duration"/>
+            </columns>
+            <rows datasource="tasksDs"/>
+        </treeTable>
     </layout>
 </window>

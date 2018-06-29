@@ -24,4 +24,8 @@
             template="com/company/scrumit/web/contact/importContacts.xml"/>
     <screen id="sprintPlanning"
             template="com/company/scrumit/web/screens/sprintPlanning.xml"/>
+    <screen id="scrumit$Team.browse"
+            template="com/company/scrumit/web/team/team-browse.xml"/>
+    <screen id="scrumit$Team.edit"
+            template="com/company/scrumit/web/team/team-edit.xml"/>
 </screen-config>

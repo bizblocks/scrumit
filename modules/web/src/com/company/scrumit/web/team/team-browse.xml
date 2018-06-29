@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.scrumit.web.team.TeamBrowse"
+        focusComponent="teamsTable"
+        lookupComponent="teamsTable"
+        messagesPack="com.company.scrumit.web.team">
+    <dsContext>
+        <groupDatasource id="teamsDs"
+                         class="com.company.scrumit.entity.Team"
+                         view="team-view">
+            <query>
+                <![CDATA[select e from scrumit$Team e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="teamsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="teamsTable"
+                datasource="teamsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="teamsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+                <action id="refresh"/>
+                <action id="excel"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="leader"/>
+                <column id="sprintSize"/>
+            </columns>
+            <rows datasource="teamsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="teamsTable.create"/>
+                <button id="editBtn"
+                        action="teamsTable.edit"/>
+                <button id="removeBtn"
+                        action="teamsTable.remove"/>
+                <button id="refreshBtn"
+                        action="teamsTable.refresh"/>
+                <button id="excelBtn"
+                        action="teamsTable.excel"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

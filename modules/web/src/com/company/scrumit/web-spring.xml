@@ -16,6 +16,8 @@
                        value="com.company.scrumit.service.MailListService"/>
                 <entry key="scrumit_ImportCSVService"
                        value="com.company.scrumit.service.ImportCSVService"/>
+                <entry key="scrumit_TaskService"
+                       value="com.company.scrumit.service.TaskService"/>
             </map>
         </property>
     </bean>

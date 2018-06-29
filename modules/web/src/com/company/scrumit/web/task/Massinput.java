@@ -37,6 +37,7 @@ public class Massinput extends AbstractWindow {
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
+        parent.setValue(params.get("parent"));
     }
 
     public void onAdd(Component source) {
@@ -58,5 +59,10 @@ public class Massinput extends AbstractWindow {
             showNotification(getMessage("Select items first"), NotificationType.WARNING);
             return;
         }
+    }
+
+    public void onCommit(Component source) {
+        newTasksDs.commit();
+        newTasksDs.refresh();
     }
 }
