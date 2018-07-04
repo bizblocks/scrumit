@@ -14,8 +14,6 @@
             template="com/company/scrumit/web/task/task-browse.xml"/>
     <screen id="scrumit$Task.edit"
             template="com/company/scrumit/web/task/task-edit.xml"/>
-    <screen id="scrumit$Meeting.browse"
-            template="com/company/scrumit/web/meeting/meeting-browse.xml"/>
     <screen id="scrumit$Task.list"
             template="com/company/scrumit/web/task/tasklist.xml"/>
     <screen id="massInput"
@@ -28,4 +26,14 @@
             template="com/company/scrumit/web/team/team-browse.xml"/>
     <screen id="scrumit$Team.edit"
             template="com/company/scrumit/web/team/team-edit.xml"/>
+    <screen id="scrumit$Sprint.browse"
+            template="com/company/scrumit/web/sprint/sprint-browse.xml"/>
+    <screen id="scrumit$Performer.browse"
+            template="com/company/scrumit/web/performer/performer-browse.xml"/>
+    <screen id="scrumit$Performer.edit"
+            template="com/company/scrumit/web/performer/performer-edit.xml"/>
+    <screen id="scrumit$Meeting.edit"
+            template="com/company/scrumit/web/meeting/meeting-edit.xml"/>
+    <screen id="scrumit$Meeting.browse"
+            template="com/company/scrumit/web/meeting/meeting-browse.xml"/>
 </screen-config>

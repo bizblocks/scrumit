@@ -31,6 +31,9 @@ public class Task extends StandardEntity {
     @Column(name = "SHORTDESC", nullable = false, unique = true, length = 50)
     protected String shortdesc;
 
+    @Column(name = "DONE")
+    protected Boolean done;
+
     @Column(name = "PROIRITY")
     protected String proirity;
 
@@ -87,17 +90,29 @@ public class Task extends StandardEntity {
     @ManyToMany
     protected List<Team> teams;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SPRINT_ID")
-    protected Sprint sprint;
+    @JoinTable(name = "SCRUMIT_SPRINT_TASK_LINK",
+        joinColumns = @JoinColumn(name = "TASK_ID"),
+        inverseJoinColumns = @JoinColumn(name = "SPRINT_ID"))
+    @ManyToMany
+    protected List<Sprint> sprints;
 
-    public void setSprint(Sprint sprint) {
-        this.sprint = sprint;
+    public void setSprints(List<Sprint> sprints) {
+        this.sprints = sprints;
     }
 
-    public Sprint getSprint() {
-        return sprint;
+    public List<Sprint> getSprints() {
+        return sprints;
     }
+
+
+    public void setDone(Boolean done) {
+        this.done = done;
+    }
+
+    public Boolean getDone() {
+        return done;
+    }
+
 
 
     public void setLevel(Integer level) {

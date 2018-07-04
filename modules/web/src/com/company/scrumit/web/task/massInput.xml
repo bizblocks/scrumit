@@ -8,15 +8,23 @@
                               class="com.company.scrumit.entity.Task"
                               view="tasks-full">
             <query>
-                <![CDATA[select e from scrumit$Task e where e.createTs IS NULL]]>
+                <![CDATA[select e from scrumit$Task e where (e.createTs IS NULL) ]]>
             </query>
         </collectionDatasource>
         <collectionDatasource id="tasksDs"
                               allowCommit="false"
                               class="com.company.scrumit.entity.Task"
-                              view="_minimal">
+                              view="task-top">
             <query>
-                <![CDATA[select e from scrumit$Task e]]>
+                <![CDATA[select e from scrumit$Task e where (e.done IS NULL) or (e.done=false)]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="performersDs"
+                              class="com.company.scrumit.entity.Performer"
+                              view="_local">
+            <query>
+                <![CDATA[select e from scrumit$Performer e 
+]]>
             </query>
         </collectionDatasource>
     </dsContext>
@@ -31,8 +39,8 @@
                 invoke="onCommit"
                 shortcut="CTRL-ENTER"/>
     </actions>
-    <dialogMode height="600"
-                width="800"/>
+    <dialogMode height="90%"
+                width="1024"/>
     <layout expand="tab"
             spacing="true">
         <hbox spacing="true">
@@ -46,8 +54,7 @@
             <button id="btnCreate"
                     action="add"
                     caption="msg://Add"
-                    icon="PLUS"
-                    invoke="onBtnCreateClick"/>
+                    icon="PLUS"/>
             <button id="btnRemove"
                     action="del"
                     caption="msg://Remove"
@@ -63,16 +70,21 @@
             <columns>
                 <column id="shortdesc"
                         editable="true"/>
+                <column id="description"
+                        editable="true"/>
                 <column id="proirity"
                         editable="true"/>
                 <column id="type"
-                        editable="true"/>
-                <column id="deadline"
                         editable="true"/>
                 <column id="begin"
                         editable="true"/>
                 <column id="duration"
                         editable="true"/>
+                <column id="deadline"
+                        editable="true"/>
+                <column id="performer"
+                        editable="true"
+                        optionsDatasource="performersDs"/>
             </columns>
             <rows datasource="newTasksDs"/>
         </table>

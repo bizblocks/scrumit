@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Column;
+import java.util.Collection;
 
 @NamePattern("%s|name")
 @Table(name = "SCRUMIT_TEAM")
@@ -26,7 +27,7 @@ public class Team extends StandardEntity {
         joinColumns = @JoinColumn(name = "TEAM_ID"),
         inverseJoinColumns = @JoinColumn(name = "PERFORMER_ID"))
     @ManyToMany
-    protected List<Performer> members;
+    protected Collection<Performer> members;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "LEADER_ID")
@@ -41,6 +42,15 @@ public class Team extends StandardEntity {
     @Column(name = "SPRINT_SIZE")
     protected Integer sprintSize;
 
+    public Collection<Performer> getMembers() {
+        return members;
+    }
+
+    public void setMembers(Collection<Performer> members) {
+        this.members = members;
+    }
+
+
     public void setName(String name) {
         this.name = name;
     }
@@ -49,14 +59,6 @@ public class Team extends StandardEntity {
         return name;
     }
 
-
-    public void setMembers(List<Performer> members) {
-        this.members = members;
-    }
-
-    public List<Performer> getMembers() {
-        return members;
-    }
 
 
     public void setSprintSize(Integer sprintSize) {

@@ -2,7 +2,8 @@
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         caption="msg://caption"
         class="com.company.scrumit.web.screens.Sprintplanning"
-        messagesPack="com.company.scrumit.web.screens">
+        messagesPack="com.company.scrumit.web.screens"
+        xmlns:dnd="http://schemas.haulmont.com/dnd/0.1/drag-and-drop.xsd">
     <dsContext>
         <collectionDatasource id="teamsDs"
                               allowCommit="false"
@@ -17,30 +18,40 @@
                                 hierarchyProperty="task"
                                 view="task-tree">
             <query>
-                <![CDATA[select e from scrumit$Task e where e.top in :ds$teamsDs.projects]]>
+                <![CDATA[select e from scrumit$Task e where (e.top in :ds$teamsDs.projects) and (e.done is NULL) or (e.done=FALSE)]]>
             </query>
         </hierarchicalDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="unassigned">
+    <layout expand="tasksHbox">
         <hbox spacing="true">
-            <label value="msg://Team"/>
+            <label align="MIDDLE_LEFT"
+                   value="msg://Team"/>
             <lookupPickerField id="team"
                                height="32px"
                                metaClass="scrumit$Team"
                                optionsDatasource="teamsDs"
                                width="300px"/>
+            <label align="MIDDLE_LEFT"
+                   value="msg://Date start"/>
+            <dateField id="dateStart"
+                       dateFormat="msg://dd.MM.yyyy"/>
+            <button id="btnCreateSprint"
+                    caption="msg://Create sprint"
+                    invoke="onBtnCreateSprintClick"/>
             <button invoke="testQuery"/>
         </hbox>
-        <treeTable id="unassigned"
-                   width="100%">
-            <columns>
-                <column id="shortdesc"/>
-                <column id="proirity"/>
-                <column id="duration"/>
-            </columns>
-            <rows datasource="tasksDs"/>
-        </treeTable>
+        <hbox id="tasksHbox"
+              spacing="true"
+              width="100%">
+            <twinColumn id="twins"
+                        addAllBtnEnabled="true"
+                        height="100%"
+                        leftColumnCaption="msg://Unassigned tasks"
+                        optionsDatasource="tasksDs"
+                        rightColumnCaption="msg://Sprint tasks"
+                        width="100%"/>
+        </hbox>
     </layout>
 </window>

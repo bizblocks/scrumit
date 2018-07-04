@@ -11,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
+import javax.validation.constraints.NotNull;
 
 @NamePattern("%s: %s|sprint,date")
 @Table(name = "SCRUMIT_MEETING")
@@ -18,18 +19,21 @@ import com.haulmont.chile.core.annotations.NamePattern;
 public class Meeting extends StandardEntity {
     private static final long serialVersionUID = -1010168574694755600L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "SPRINT_ID")
     protected Sprint sprint;
 
     @Column(name = "COMMENT_", length = 2048)
     protected String comment;
 
-    @Column(name = "TYPE_")
+    @NotNull
+    @Column(name = "TYPE_", nullable = false)
     protected String type;
 
+    @NotNull
     @Temporal(TemporalType.DATE)
-    @Column(name = "DATE_")
+    @Column(name = "DATE_", nullable = false)
     protected Date date;
 
     public void setComment(String comment) {

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (c) 2017 Haulmont Technology Ltd. All Rights Reserved.
+  ~ Haulmont Technology proprietary and confidential.
+  ~ Use is subject to license terms.
+  -->
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.scrumit.web.performer.PerformerBrowse"
+        focusComponent="table"
+        lookupComponent="table"
+        messagesPack="com.company.scrumit.web.performer">
+    <dsContext>
+        <datasource id="performerDs"
+                    class="com.company.scrumit.entity.Performer"
+                    view="performer-view">
+            <collectionDatasource id="teamsDs"
+                                  property="teams"/>
+        </datasource>
+        <groupDatasource id="performersDs"
+                         class="com.company.scrumit.entity.Performer"
+                         view="performer-view">
+            <query>
+                <![CDATA[select e from scrumit$Performer e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <actions>
+        <action id="save"
+                caption="mainMsg://actions.Ok"
+                icon="icons/ok.png"
+                invoke="save"
+                shortcut="CTRL-ENTER"/>
+        <action id="cancel"
+                caption="mainMsg://actions.Cancel"
+                description="Esc"
+                icon="icons/cancel.png"
+                invoke="cancel"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <split id="split"
+               height="100%"
+               orientation="horizontal"
+               reversePosition="true"
+               width="100%">
+            <vbox id="lookupBox"
+                  expand="table"
+                  height="100%"
+                  margin="false,true,false,false"
+                  spacing="true">
+                <filter id="filter"
+                        applyTo="table"
+                        datasource="performersDs">
+                    <properties include=".*"/>
+                </filter>
+                <groupTable id="table"
+                            width="100%">
+                    <actions>
+                        <action id="create"/>
+                        <action id="edit"/>
+                        <action id="remove"/>
+                        <action id="excel"/>
+                    </actions>
+                    <columns>
+                        <column id="login"/>
+                        <column id="name"/>
+                        <column id="firstName"/>
+                        <column id="lastName"/>
+                        <column id="middleName"/>
+                        <column id="email"/>
+                        <column id="changePasswordAtNextLogon"/>
+                        <column id="contact"/>
+                    </columns>
+                    <rows datasource="performersDs"/>
+                    <rowsCount/>
+                    <buttonsPanel id="buttonsPanel"
+                                  alwaysVisible="true">
+                        <button id="createBtn"
+                                action="table.create"/>
+                        <button id="editBtn"
+                                action="table.edit"/>
+                        <button id="removeBtn"
+                                action="table.remove"/>
+                        <button id="excelBtn"
+                                action="table.excel"/>
+                    </buttonsPanel>
+                </groupTable>
+            </vbox>
+            <vbox id="editBox"
+                  expand="tabSheetBox"
+                  height="100%"
+                  margin="false,false,false,true"
+                  spacing="true">
+                <vbox id="tabSheetBox">
+                    <tabSheet id="tabSheet"
+                              height="100%">
+                        <tab id="mainTab"
+                             caption="msg://mainTab"
+                             margin="true">
+                            <scrollBox id="fieldGroupBox"
+                                       height="100%">
+                                <fieldGroup id="fieldGroup"
+                                            datasource="performerDs">
+                                    <column width="300px">
+                                        <field property="login"/>
+                                        <field property="name"/>
+                                        <field property="firstName"/>
+                                        <field property="lastName"/>
+                                        <field property="middleName"/>
+                                        <field property="email"/>
+                                        <field property="changePasswordAtNextLogon"/>
+                                        <field property="contact"/>
+                                    </column>
+                                </fieldGroup>
+                            </scrollBox>
+                        </tab>
+                        <tab id="teamsTab"
+                             caption="msg://com.company.scrumit.entity/Performer.teams"
+                             margin="true,false,false,false">
+                            <table id="teamsTable"
+                                   height="200px"
+                                   width="100%">
+                                <actions>
+                                    <action id="add"/>
+                                    <action id="remove"/>
+                                </actions>
+                                <columns>
+                                    <column id="name"/>
+                                </columns>
+                                <rows datasource="teamsDs"/>
+                                <buttonsPanel>
+                                    <button action="teamsTable.add"/>
+                                    <button action="teamsTable.remove"/>
+                                </buttonsPanel>
+                            </table>
+                        </tab>
+                    </tabSheet>
+                </vbox>
+                <hbox id="actionsPane"
+                      spacing="true"
+                      visible="false">
+                    <button id="saveBtn"
+                            action="save"/>
+                    <button id="cancelBtn"
+                            action="cancel"/>
+                </hbox>
+            </vbox>
+        </split>
+    </layout>
+</window>

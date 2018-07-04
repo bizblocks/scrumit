@@ -1,106 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--
-  ~ Copyright (c) 2017 Haulmont Technology Ltd. All Rights Reserved.
-  ~ Haulmont Technology proprietary and confidential.
-  ~ Use is subject to license terms.
-  -->
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
-        caption="msg://caption"
+        caption="msg://browseCaption"
         class="com.company.scrumit.web.meeting.MeetingBrowse"
-        focusComponent="table"
-        lookupComponent="table"
+        focusComponent="meetingsTable"
+        lookupComponent="meetingsTable"
         messagesPack="com.company.scrumit.web.meeting">
     <dsContext>
-        <datasource id="meetingDs"
-                    class="com.company.scrumit.entity.Meeting"
-                    view="_local"/>
         <groupDatasource id="meetingsDs"
                          class="com.company.scrumit.entity.Meeting"
-                         view="_local">
+                         view="meeting-view">
             <query>
                 <![CDATA[select e from scrumit$Meeting e]]>
             </query>
         </groupDatasource>
     </dsContext>
-    <actions>
-        <action id="save"
-                caption="mainMsg://actions.Ok"
-                icon="icons/ok.png"
-                invoke="save"
-                shortcut="CTRL-ENTER"/>
-        <action id="cancel"
-                caption="mainMsg://actions.Cancel"
-                description="Esc"
-                icon="icons/cancel.png"
-                invoke="cancel"/>
-    </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout>
-        <split id="split"
-               height="100%"
-               orientation="horizontal"
-               reversePosition="true"
-               width="100%">
-            <vbox id="lookupBox"
-                  expand="table"
-                  height="100%"
-                  margin="false,true,false,false"
-                  spacing="true">
-                <filter id="filter"
-                        applyTo="table"
-                        datasource="meetingsDs">
-                    <properties include=".*"/>
-                </filter>
-                <groupTable id="table"
-                            width="100%">
-                    <actions>
-                        <action id="create"/>
-                        <action id="edit"/>
-                        <action id="remove"/>
-                    </actions>
-                    <columns>
-                        <column id="comment"/>
-                        <column id="type"/>
-                        <column id="date"/>
-                    </columns>
-                    <rows datasource="meetingsDs"/>
-                    <rowsCount/>
-                    <buttonsPanel id="buttonsPanel"
-                                  alwaysVisible="true">
-                        <button id="createBtn"
-                                action="table.create"/>
-                        <button id="editBtn"
-                                action="table.edit"/>
-                        <button id="removeBtn"
-                                action="table.remove"/>
-                    </buttonsPanel>
-                </groupTable>
-            </vbox>
-            <vbox id="editBox"
-                  expand="fieldGroupBox"
-                  height="100%"
-                  margin="false,false,false,true"
-                  spacing="true">
-                <scrollBox id="fieldGroupBox">
-                    <fieldGroup id="fieldGroup"
-                                datasource="meetingDs">
-                        <column width="250px">
-                            <field property="comment"/>
-                            <field property="type"/>
-                            <field property="date"/>
-                        </column>
-                    </fieldGroup>
-                </scrollBox>
-                <hbox id="actionsPane"
-                      spacing="true"
-                      visible="false">
-                    <button id="saveBtn"
-                            action="save"/>
-                    <button id="cancelBtn"
-                            action="cancel"/>
-                </hbox>
-            </vbox>
-        </split>
+    <layout expand="meetingsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="meetingsTable"
+                datasource="meetingsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="meetingsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="sprint"/>
+                <column id="comment"/>
+                <column id="type"/>
+                <column id="date"/>
+            </columns>
+            <rows datasource="meetingsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="meetingsTable.create"/>
+                <button id="editBtn"
+                        action="meetingsTable.edit"/>
+                <button id="removeBtn"
+                        action="meetingsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
     </layout>
 </window>

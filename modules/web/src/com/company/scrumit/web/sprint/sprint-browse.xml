@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (c) 2017 Haulmont Technology Ltd. All Rights Reserved.
+  ~ Haulmont Technology proprietary and confidential.
+  ~ Use is subject to license terms.
+  -->
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.scrumit.web.sprint.SprintBrowse"
+        focusComponent="table"
+        lookupComponent="table"
+        messagesPack="com.company.scrumit.web.sprint">
+    <dsContext>
+        <datasource id="sprintDs"
+                    class="com.company.scrumit.entity.Sprint"
+                    view="sprint-view">
+            <hierarchicalDatasource id="tasksDs"
+                                    hierarchyProperty="task"
+                                    property="tasks"/>
+        </datasource>
+        <groupDatasource id="sprintsDs"
+                         class="com.company.scrumit.entity.Sprint"
+                         view="sprint-view">
+            <query>
+                <![CDATA[select e from scrumit$Sprint e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <actions>
+        <action id="save"
+                caption="mainMsg://actions.Ok"
+                icon="icons/ok.png"
+                invoke="save"
+                shortcut="CTRL-ENTER"/>
+        <action id="cancel"
+                caption="mainMsg://actions.Cancel"
+                description="Esc"
+                icon="icons/cancel.png"
+                invoke="cancel"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <split id="split"
+               height="100%"
+               orientation="horizontal"
+               reversePosition="true"
+               width="100%">
+            <vbox id="lookupBox"
+                  expand="table"
+                  height="100%"
+                  margin="false,true,false,false"
+                  spacing="true">
+                <filter id="filter"
+                        applyTo="table"
+                        datasource="sprintsDs">
+                    <properties include=".*"/>
+                </filter>
+                <groupTable id="table"
+                            width="100%">
+                    <actions>
+                        <action id="create"/>
+                        <action id="edit"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <group>
+                            <column id="team"/>
+                        </group>
+                        <column id="periodStart"/>
+                        <column id="periodEnd"/>
+                    </columns>
+                    <rows datasource="sprintsDs"/>
+                    <rowsCount/>
+                    <buttonsPanel id="buttonsPanel"
+                                  alwaysVisible="true">
+                        <button id="createBtn"
+                                action="table.create"/>
+                        <button id="editBtn"
+                                action="table.edit"/>
+                        <button id="removeBtn"
+                                action="table.remove"/>
+                    </buttonsPanel>
+                </groupTable>
+            </vbox>
+            <vbox id="editBox"
+                  expand="tasks"
+                  height="100%"
+                  margin="false,false,false,true"
+                  spacing="true">
+                <fieldGroup id="fieldGroup"
+                            datasource="sprintDs">
+                    <column width="300px">
+                        <field property="periodStart"/>
+                        <field property="team"/>
+                        <field property="periodEnd"/>
+                    </column>
+                </fieldGroup>
+                <treeTable id="tasks"
+                           width="100%">
+                    <columns>
+                        <column id="done"/>
+                        <column id="shortdesc"/>
+                        <column id="proirity"/>
+                        <column id="realduration"/>
+                        <column id="type"/>
+                        <column id="description"
+                                maxTextLength="25"/>
+                        <column id="deadline"/>
+                        <column id="begin"/>
+                        <column id="duration"/>
+                        <column id="amount"/>
+                    </columns>
+                    <rows datasource="tasksDs"/>
+                </treeTable>
+                <hbox id="actionsPane"
+                      spacing="true"
+                      visible="false">
+                    <button id="saveBtn"
+                            action="save"/>
+                    <button id="cancelBtn"
+                            action="cancel"/>
+                </hbox>
+            </vbox>
+        </split>
+    </layout>
+</window>

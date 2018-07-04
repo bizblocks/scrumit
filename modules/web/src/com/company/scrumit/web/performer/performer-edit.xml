@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.scrumit.web.performer.PerformerEdit"
+        datasource="performerDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.scrumit.web.performer">
+    <dsContext>
+        <datasource id="performerDs"
+                    class="com.company.scrumit.entity.Performer"
+                    view="performer-view">
+            <collectionDatasource id="teamsDs"
+                                  property="teams"/>
+        </datasource>
+        <collectionDatasource id="groupsDs"
+                              allowCommit="false"
+                              class="com.haulmont.cuba.security.entity.Group">
+            <query>
+                <![CDATA[select e from sec$Group e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="800"
+                width="600"/>
+    <layout expand="teamsBox"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="performerDs">
+            <column width="300px">
+                <field property="login"/>
+                <field optionsDatasource="groupsDs"
+                       property="group"/>
+                <field property="name"/>
+                <field property="firstName"/>
+                <field property="lastName"/>
+                <field property="middleName"/>
+                <field property="email"/>
+                <field property="changePasswordAtNextLogon"/>
+                <field property="contact"/>
+            </column>
+        </fieldGroup>
+        <groupBox id="teamsBox"
+                  caption="msg://com.company.scrumit.entity/Performer.teams">
+            <table id="teamsTable"
+                   height="100%"
+                   width="100%">
+                <actions>
+                    <action id="add"/>
+                    <action id="remove"/>
+                </actions>
+                <columns>
+                    <column id="name"/>
+                </columns>
+                <rows datasource="teamsDs"/>
+                <buttonsPanel>
+                    <button action="teamsTable.add"/>
+                    <button action="teamsTable.remove"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

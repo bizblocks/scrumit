@@ -21,5 +21,6 @@
         <class>com.company.scrumit.entity.File</class>
         <class>com.company.scrumit.entity.TasksFile</class>
         <class>com.company.scrumit.entity.TaskDuration</class>
+        <class>com.company.scrumit.entity.MeetingsTask</class>
     </persistence-unit>
 </persistence>

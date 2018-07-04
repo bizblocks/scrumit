@@ -15,6 +15,8 @@ import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.global.DeletePolicy;
 import java.util.Set;
 import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @NamePattern("%s - %s|periodStart,periodEnd")
 @Table(name = "SCRUMIT_SPRINT")
@@ -36,8 +38,11 @@ public class Sprint extends StandardEntity {
 
 
 
+    @JoinTable(name = "SCRUMIT_SPRINT_TASK_LINK",
+        joinColumns = @JoinColumn(name = "SPRINT_ID"),
+        inverseJoinColumns = @JoinColumn(name = "TASK_ID"))
+    @ManyToMany
     @OnDelete(DeletePolicy.CASCADE)
-    @OneToMany(mappedBy = "sprint")
     protected Set<Task> tasks;
 
     public void setTasks(Set<Task> tasks) {

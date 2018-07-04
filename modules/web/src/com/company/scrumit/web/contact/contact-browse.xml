@@ -53,6 +53,9 @@
                         action="contactsTable.remove"/>
                 <button action="contactsTable.refresh"/>
                 <button action="contactsTable.excel"/>
+                <button id="btnCreatePerformer"
+                        caption="msg://CreatePerformer"
+                        invoke="onBtnCreatePerformerClick"/>
                 <button id="importBtn"
                         caption="mainMsg://Import"
                         invoke="onImportClick"/>

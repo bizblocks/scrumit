@@ -1,6 +1,6 @@
 package com.company.scrumit.web.meeting;
 
-import com.haulmont.cuba.gui.components.EntityCombinedScreen;
+import com.haulmont.cuba.gui.components.AbstractLookup;
 
-public class MeetingBrowse extends EntityCombinedScreen {
+public class MeetingBrowse extends AbstractLookup {
 }

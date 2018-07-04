@@ -42,4 +42,61 @@
             <property name="email"/>
         </property>
     </view>
+    <view class="com.company.scrumit.entity.Sprint"
+          extends="_local"
+          name="sprint-view">
+        <property name="team"
+                  view="_minimal"/>
+        <property name="tasks"
+                  view="_minimal">
+            <property name="deadline"/>
+            <property name="begin"/>
+            <property name="done"/>
+            <property name="proirity"/>
+            <property name="realduration"/>
+            <property name="type"/>
+            <property name="description"/>
+            <property name="performer"
+                      view="_minimal"/>
+            <property name="duration"/>
+            <property name="amount"/>
+            <property name="task"
+                      view="_minimal"/>
+        </property>
+    </view>
+    <view class="com.company.scrumit.entity.Performer"
+          extends="_minimal"
+          name="performer-view">
+        <property name="contact"
+                  view="_minimal"/>
+        <property name="teams"
+                  view="_minimal"/>
+        <property name="loginLowerCase"/>
+        <property name="password"/>
+        <property name="name"/>
+        <property name="firstName"/>
+        <property name="lastName"/>
+        <property name="middleName"/>
+        <property name="email"/>
+        <property name="changePasswordAtNextLogon"/>
+        <property name="group"
+                  view="_minimal"/>
+    </view>
+    <view class="com.company.scrumit.entity.Task"
+          extends="_minimal"
+          name="task-top">
+        <property name="top"
+                  view="_minimal"/>
+    </view>
+    <view class="com.company.scrumit.entity.Meeting"
+          extends="_local"
+          name="meeting-view">
+        <property name="sprint"
+                  view="_minimal">
+            <property name="team"
+                      view="_minimal"/>
+            <property name="tasks"
+                      view="_minimal"/>
+        </property>
+    </view>
 </views>

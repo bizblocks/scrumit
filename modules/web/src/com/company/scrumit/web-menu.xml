@@ -4,10 +4,12 @@
           insertBefore="administration">
         <item screen="scrumit$Contact.browse"/>
         <item screen="scrumit$Speciality.browse"/>
-        <item screen="scrumit$Meeting.browse"/>
         <item screen="scrumit$Task.list"/>
         <item screen="massInput"/>
         <item screen="sprintPlanning"/>
         <item screen="scrumit$Team.browse"/>
+        <item screen="scrumit$Sprint.browse"/>
+        <item screen="scrumit$Performer.browse"/>
+        <item screen="scrumit$Meeting.browse"/>
     </menu>
 </menu-config>

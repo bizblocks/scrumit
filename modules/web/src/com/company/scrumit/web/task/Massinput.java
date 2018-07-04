@@ -17,9 +17,6 @@ public class Massinput extends AbstractWindow {
     private LookupPickerField parent;
 
     @Inject
-    private Button btnCreate;
-
-    @Inject
     private Table<Task> tab;
 
     @Inject
@@ -38,6 +35,13 @@ public class Massinput extends AbstractWindow {
     public void init(Map<String, Object> params) {
         super.init(params);
         parent.setValue(params.get("parent"));
+        newTasksDs.addItemPropertyChangeListener(e -> {
+            if(!"shortdesc".equals(e.getProperty()))
+                return;
+            if(!"".equals(e.getItem().getDescription()) && e.getItem().getDescription()!=null)
+                return;
+            e.getItem().setDescription(e.getValue().toString());
+        });
     }
 
     public void onAdd(Component source) {
@@ -61,8 +65,12 @@ public class Massinput extends AbstractWindow {
         }
     }
 
+    @Inject
+    private CollectionDatasource<Task, UUID> tasksDs;
+
     public void onCommit(Component source) {
         newTasksDs.commit();
         newTasksDs.refresh();
+        tasksDs.refresh();
     }
 }

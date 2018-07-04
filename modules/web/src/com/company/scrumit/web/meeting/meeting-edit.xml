@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.scrumit.web.meeting.MeetingEdit"
+        datasource="meetingDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.scrumit.web.meeting">
+    <dsContext>
+        <datasource id="meetingDs"
+                    class="com.company.scrumit.entity.Meeting"
+                    view="meeting-view"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tasks"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="meetingDs">
+            <column width="250px">
+                <field property="sprint"/>
+            </column>
+            <column>
+                <field property="date"/>
+            </column>
+            <column>
+                <field property="type"/>
+            </column>
+        </fieldGroup>
+        <hbox expand="comment"
+              spacing="true"
+              width="100%">
+            <label value="mainMsg://Comment"/>
+            <textArea id="comment"
+                      datasource="meetingDs"
+                      property="comment"/>
+        </hbox>
+        <dataGrid id="tasks">
+            <columns>
+                <column id="a"/>
+                <column id="b"/>
+            </columns>
+        </dataGrid>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

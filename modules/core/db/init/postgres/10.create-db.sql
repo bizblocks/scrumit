@@ -80,10 +80,10 @@ create table SCRUMIT_MEETING (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    SPRINT_ID uuid,
+    SPRINT_ID uuid not null,
     COMMENT_ varchar(2048),
-    TYPE_ varchar(50),
-    DATE_ date,
+    TYPE_ varchar(50) not null,
+    DATE_ date not null,
     --
     primary key (ID)
 )^
@@ -165,6 +165,7 @@ create table SCRUMIT_TASK (
     DELETED_BY varchar(50),
     --
     SHORTDESC varchar(50) not null,
+    DONE boolean,
     PROIRITY varchar(50),
     REALDURATION integer,
     TYPE_ varchar(50),
@@ -177,7 +178,6 @@ create table SCRUMIT_TASK (
     BEGIN_ timestamp,
     AMOUNT integer,
     SPRINT_BACKLOG_ID uuid,
-    SPRINT_ID uuid,
     --
     primary key (ID)
 )^
@@ -322,3 +322,28 @@ create table SCRUMIT_TEAM_PERFORMER_LINK (
     primary key (TEAM_ID, PERFORMER_ID)
 )^
 -- end SCRUMIT_TEAM_PERFORMER_LINK
+-- begin SCRUMIT_MEETINGS_TASK
+create table SCRUMIT_MEETINGS_TASK (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    MEETING_ID uuid,
+    TASK_ID uuid,
+    COMMENT_ varchar(2048),
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_MEETINGS_TASK
+-- begin SCRUMIT_SPRINT_TASK_LINK
+create table SCRUMIT_SPRINT_TASK_LINK (
+    SPRINT_ID uuid,
+    TASK_ID uuid,
+    primary key (SPRINT_ID, TASK_ID)
+)^
+-- end SCRUMIT_SPRINT_TASK_LINK
