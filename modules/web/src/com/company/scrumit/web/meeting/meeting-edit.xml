@@ -9,6 +9,26 @@
         <datasource id="meetingDs"
                     class="com.company.scrumit.entity.Meeting"
                     view="meeting-view"/>
+        <valueHierarchicalDatasource id="tasksForMeetingDs"
+                                     datasourceClass="com.company.scrumit.web.meeting.TasksForMeetingDs"
+                                     hierarchyProperty="parent">
+            <properties idProperty="task">
+                <property class="com.company.scrumit.entity.Task"
+                          name="parent"/>
+                <property class="com.company.scrumit.entity.Task"
+                          name="task"/>
+                <property datatype="boolean"
+                          name="done"/>
+                <property class="com.company.scrumit.entity.Performer"
+                          name="performer"/>
+                <property datatype="date"
+                          name="begin"/>
+                <property datatype="date"
+                          name="deadline"/>
+                <property datatype="string"
+                          name="comment"/>
+            </properties>
+        </valueHierarchicalDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -16,13 +36,13 @@
             spacing="true">
         <fieldGroup id="fieldGroup"
                     datasource="meetingDs">
-            <column width="250px">
+            <column width="300px">
                 <field property="sprint"/>
             </column>
             <column>
                 <field property="date"/>
             </column>
-            <column>
+            <column width="300px">
                 <field property="type"/>
             </column>
         </fieldGroup>
@@ -34,12 +54,20 @@
                       datasource="meetingDs"
                       property="comment"/>
         </hbox>
-        <dataGrid id="tasks">
+        <treeTable id="tasks"
+                   editable="true"
+                   width="100%">
             <columns>
-                <column id="a"/>
-                <column id="b"/>
+                <column id="parent"/>
+                <column id="task"/>
+                <column id="done"/>
+                <column id="performer"/>
+                <column id="begin"/>
+                <column id="deadline"/>
+                <column id="comment"/>
             </columns>
-        </dataGrid>
+            <rows datasource="tasksForMeetingDs"/>
+        </treeTable>
         <frame id="windowActions"
                screen="editWindowActions"/>
     </layout>

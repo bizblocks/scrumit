@@ -22,6 +22,14 @@
         <property name="duration"/>
         <property name="top"
                   view="_minimal"/>
+        <property name="sprints"
+                  view="_minimal"/>
+        <property name="tracker"
+                  view="_minimal"/>
+        <property name="sprintBacklog"
+                  view="_minimal"/>
+        <property name="teams"
+                  view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
@@ -98,5 +106,13 @@
             <property name="tasks"
                       view="_minimal"/>
         </property>
+    </view>
+    <view class="com.company.scrumit.entity.MeetingsTask"
+          extends="_local"
+          name="meetingsTask-full">
+        <property name="meeting"
+                  view="_minimal"/>
+        <property name="task"
+                  view="_minimal"/>
     </view>
 </views>
