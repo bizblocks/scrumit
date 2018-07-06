@@ -11,5 +11,6 @@
         <item screen="scrumit$Sprint.browse"/>
         <item screen="scrumit$Performer.browse"/>
         <item screen="scrumit$Meeting.browse"/>
+        <item screen="scrumit$ContactsStatus.browse"/>
     </menu>
 </menu-config>

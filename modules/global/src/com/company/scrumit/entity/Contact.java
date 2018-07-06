@@ -32,6 +32,11 @@ public class Contact extends StandardEntity {
 
     @Lookup(type = LookupType.DROPDOWN, actions = {"lookup", "open", "clear"})
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STATUS_ID")
+    protected ContactsStatus status;
+
+    @Lookup(type = LookupType.DROPDOWN, actions = {"lookup", "open", "clear"})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CITY_ID")
     protected City city;
 
@@ -48,10 +53,29 @@ public class Contact extends StandardEntity {
 
     @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "contact")
-    protected List<ContactSpeciality> specialities;
+    protected List<ContactsSpeciality> specialities;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "contact")
     protected Performer performer;
+
+    public List<ContactsSpeciality> getSpecialities() {
+        return specialities;
+    }
+
+    public void setSpecialities(List<ContactsSpeciality> specialities) {
+        this.specialities = specialities;
+    }
+
+
+    public ContactsStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ContactsStatus status) {
+        this.status = status;
+    }
+
+
 
     public void setContacts(String contacts) {
         this.contacts = contacts;
@@ -79,14 +103,6 @@ public class Contact extends StandardEntity {
         return city;
     }
 
-
-    public void setSpecialities(List<ContactSpeciality> specialities) {
-        this.specialities = specialities;
-    }
-
-    public List<ContactSpeciality> getSpecialities() {
-        return specialities;
-    }
 
 
     public void setFio(String fio) {

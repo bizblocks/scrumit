@@ -36,4 +36,6 @@
             template="com/company/scrumit/web/meeting/meeting-edit.xml"/>
     <screen id="scrumit$Meeting.browse"
             template="com/company/scrumit/web/meeting/meeting-browse.xml"/>
+    <screen id="scrumit$ContactsStatus.browse"
+            template="com/company/scrumit/web/contactsstatus/contacts-status-browse.xml"/>
 </screen-config>

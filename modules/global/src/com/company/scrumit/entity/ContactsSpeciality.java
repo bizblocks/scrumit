@@ -9,9 +9,9 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
 
 @NamePattern("%s %s|contact,speciality")
-@Table(name = "SCRUMIT_CONTACT_SPECIALITY")
-@Entity(name = "scrumit$ContactSpeciality")
-public class ContactSpeciality extends StandardEntity {
+@Table(name = "SCRUMIT_CONTACTS_SPECIALITY")
+@Entity(name = "scrumit$ContactsSpeciality")
+public class ContactsSpeciality extends StandardEntity {
     private static final long serialVersionUID = 6405107122996536684L;
 
     @ManyToOne(fetch = FetchType.LAZY)

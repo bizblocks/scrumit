@@ -6,7 +6,7 @@
         <class>com.company.scrumit.entity.Speciality</class>
         <class>com.company.scrumit.entity.Contact</class>
         <class>com.company.scrumit.entity.City</class>
-        <class>com.company.scrumit.entity.ContactSpeciality</class>
+        <class>com.company.scrumit.entity.ContactsSpeciality</class>
         <class>com.company.scrumit.entity.Performer</class>
         <class>com.company.scrumit.entity.Team</class>
         <class>com.company.scrumit.entity.Task</class>
@@ -22,5 +22,6 @@
         <class>com.company.scrumit.entity.TasksFile</class>
         <class>com.company.scrumit.entity.TaskDuration</class>
         <class>com.company.scrumit.entity.MeetingsTask</class>
+        <class>com.company.scrumit.entity.ContactsStatus</class>
     </persistence-unit>
 </persistence>

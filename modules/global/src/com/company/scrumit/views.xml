@@ -7,6 +7,8 @@
                   view="_minimal"/>
         <property name="city"
                   view="_minimal"/>
+        <property name="status"
+                  view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_local"

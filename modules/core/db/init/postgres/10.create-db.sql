@@ -27,6 +27,7 @@ create table SCRUMIT_CONTACT (
     --
     FIO varchar(255) not null,
     CONTACTS varchar(255),
+    STATUS_ID uuid,
     CITY_ID uuid,
     EMAIL varchar(255) not null,
     PHONE varchar(255),
@@ -51,23 +52,6 @@ create table SCRUMIT_CITY (
     primary key (ID)
 )^
 -- end SCRUMIT_CITY
--- begin SCRUMIT_CONTACT_SPECIALITY
-create table SCRUMIT_CONTACT_SPECIALITY (
-    ID uuid,
-    VERSION integer not null,
-    CREATE_TS timestamp,
-    CREATED_BY varchar(50),
-    UPDATE_TS timestamp,
-    UPDATED_BY varchar(50),
-    DELETE_TS timestamp,
-    DELETED_BY varchar(50),
-    --
-    CONTACT_ID uuid,
-    SPECIALITY_ID uuid,
-    --
-    primary key (ID)
-)^
--- end SCRUMIT_CONTACT_SPECIALITY
 
 -- begin SCRUMIT_MEETING
 create table SCRUMIT_MEETING (
@@ -347,3 +331,36 @@ create table SCRUMIT_SPRINT_TASK_LINK (
     primary key (SPRINT_ID, TASK_ID)
 )^
 -- end SCRUMIT_SPRINT_TASK_LINK
+-- begin SCRUMIT_CONTACTS_SPECIALITY
+create table SCRUMIT_CONTACTS_SPECIALITY (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    CONTACT_ID uuid,
+    SPECIALITY_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_CONTACTS_SPECIALITY
+-- begin SCRUMIT_CONTACTS_STATUS
+create table SCRUMIT_CONTACTS_STATUS (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    STATUS varchar(25),
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_CONTACTS_STATUS

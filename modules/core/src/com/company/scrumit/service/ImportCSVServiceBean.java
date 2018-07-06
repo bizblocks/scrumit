@@ -3,7 +3,7 @@ package com.company.scrumit.service;
 import au.com.bytecode.opencsv.CSVReader;
 import com.company.scrumit.entity.City;
 import com.company.scrumit.entity.Contact;
-import com.company.scrumit.entity.ContactSpeciality;
+import com.company.scrumit.entity.ContactsSpeciality;
 import com.company.scrumit.entity.Speciality;
 import com.haulmont.cuba.core.EntityManager;
 import com.haulmont.cuba.core.Persistence;
@@ -68,7 +68,7 @@ public class ImportCSVServiceBean implements ImportCSVService {
                 contact.setComments(comment.toString());
                 em.persist(contact);
 
-                ContactSpeciality cs = metadata.create(ContactSpeciality.class);
+                ContactsSpeciality cs = metadata.create(ContactsSpeciality.class);
                 cs.setContact(contact);
                 cs.setSpeciality(Speciality.getSpecialityByName(item.get("специализации")));
                 em.persist(cs);

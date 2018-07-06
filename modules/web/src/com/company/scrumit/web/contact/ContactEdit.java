@@ -1,6 +1,6 @@
 package com.company.scrumit.web.contact;
 
-import com.company.scrumit.entity.ContactSpeciality;
+import com.company.scrumit.entity.ContactsSpeciality;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.AbstractEditor;
 import com.company.scrumit.entity.Contact;
@@ -16,13 +16,13 @@ public class ContactEdit extends AbstractEditor<Contact> {
     private DataManager dataManager;
 
     @Inject
-    private DataGrid<ContactSpeciality> specs;
+    private DataGrid<ContactsSpeciality> specs;
 
     @Inject
-    private CollectionDatasource<ContactSpeciality, UUID> specialitiesDs;
+    private CollectionDatasource<ContactsSpeciality, UUID> specialitiesDs;
 
     public void onAddCategoryClick() {
-        ContactSpeciality cs = new ContactSpeciality();
+        ContactsSpeciality cs = new ContactsSpeciality();
         cs.setContact(this.getItem());
         specialitiesDs.addItem(cs);
         specs.edit(cs);
