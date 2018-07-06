@@ -8,8 +8,7 @@ import com.haulmont.cuba.core.listener.BeforeUpdateEntityListener;
 
 @Component("scrumit_TaskListener")
 public class TaskListener implements BeforeInsertEntityListener<Task>, BeforeUpdateEntityListener<Task> {
-
-
+    
     @Override
     public void onBeforeInsert(Task entity, EntityManager entityManager) {
         updateLevelAndTop(entity, entityManager);

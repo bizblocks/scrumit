@@ -39,6 +39,9 @@
         <property name="task"
                   view="_minimal"/>
         <property name="proirity"/>
+        <property name="level"/>
+        <property name="top"
+                  view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Team"
           extends="_local"
@@ -97,6 +100,7 @@
           name="task-top">
         <property name="top"
                   view="_minimal"/>
+        <property name="level"/>
     </view>
     <view class="com.company.scrumit.entity.Meeting"
           extends="_local"

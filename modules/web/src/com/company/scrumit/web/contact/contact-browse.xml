@@ -37,7 +37,8 @@
                 <column id="fio"/>
                 <column id="email"/>
                 <column id="phone"/>
-                <column id="comments"/>
+                <column id="comments"
+                        maxTextLength="50"/>
                 <column id="city"/>
                 <column id="contacts"/>
                 <column id="status"/>
