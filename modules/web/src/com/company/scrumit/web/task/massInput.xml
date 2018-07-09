@@ -40,7 +40,7 @@
                 shortcut="CTRL-ENTER"/>
     </actions>
     <dialogMode height="90%"
-                width="1024"/>
+                width="99%"/>
     <layout expand="tab"
             spacing="true">
         <hbox spacing="true">

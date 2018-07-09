@@ -105,6 +105,7 @@
                                             datasource="performerDs">
                                     <column width="300px">
                                         <field property="login"/>
+                                        <field property="group"/>
                                         <field property="name"/>
                                         <field property="firstName"/>
                                         <field property="lastName"/>
