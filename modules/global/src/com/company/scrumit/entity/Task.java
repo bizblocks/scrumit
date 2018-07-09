@@ -19,6 +19,7 @@ import java.util.List;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
+import javax.persistence.Lob;
 
 @Listeners("scrumit_TaskListener")
 @NamePattern("%s|shortdesc")
@@ -43,7 +44,8 @@ public class Task extends StandardEntity {
     @Column(name = "TYPE_")
     protected String type;
 
-    @Column(name = "DESCRIPTION", length = 1024)
+    @Lob
+    @Column(name = "DESCRIPTION")
     protected String description;
 
     @ManyToOne(fetch = FetchType.LAZY)

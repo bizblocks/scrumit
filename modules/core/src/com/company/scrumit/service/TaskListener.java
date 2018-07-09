@@ -8,7 +8,7 @@ import com.haulmont.cuba.core.listener.BeforeUpdateEntityListener;
 
 @Component("scrumit_TaskListener")
 public class TaskListener implements BeforeInsertEntityListener<Task>, BeforeUpdateEntityListener<Task> {
-    
+
     @Override
     public void onBeforeInsert(Task entity, EntityManager entityManager) {
         updateLevelAndTop(entity, entityManager);
@@ -22,7 +22,7 @@ public class TaskListener implements BeforeInsertEntityListener<Task>, BeforeUpd
 
     private void updateLevelAndTop(Task entity, EntityManager entityManager) {
         Task parent = entity.getTask();
-        entity.setLevel(parent == null ? 0 : parent.getLevel()+1);
+        entity.setLevel(parent == null ? 0 : parent.getLevel()==null ? 0 : parent.getLevel()+1);
         entity.setTop(parent == null ? null : parent.getTop()==null ? parent : parent.getTop());
     }
 }
