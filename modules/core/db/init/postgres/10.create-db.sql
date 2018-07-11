@@ -83,6 +83,7 @@ create table SCRUMIT_TRACKER (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
+    PROJECT_ID uuid,
     SHORTDESC varchar(50) not null,
     TASK_ID uuid,
     TYPE_ varchar(50),
@@ -153,7 +154,7 @@ create table SCRUMIT_TASK (
     PROIRITY varchar(50),
     REALDURATION integer,
     TYPE_ varchar(50),
-    DESCRIPTION varchar(1024),
+    DESCRIPTION varchar(2048),
     PERFORMER_ID uuid,
     DEADLINE date,
     TASK_ID uuid,
