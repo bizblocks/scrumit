@@ -154,7 +154,7 @@ create table SCRUMIT_TASK (
     PROIRITY varchar(50),
     REALDURATION integer,
     TYPE_ varchar(50),
-    DESCRIPTION varchar(2048),
+    DESCRIPTION text,
     PERFORMER_ID uuid,
     DEADLINE date,
     TASK_ID uuid,
