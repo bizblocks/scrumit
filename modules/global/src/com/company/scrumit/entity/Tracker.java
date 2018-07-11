@@ -9,12 +9,17 @@ import com.haulmont.chile.core.annotations.NamePattern;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TRACKER")
 @Entity(name = "scrumit$Tracker")
 public class Tracker extends StandardEntity {
     private static final long serialVersionUID = -8847125133735817612L;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PROJECT_ID")
+    protected Task project;
 
     @NotNull
     @Column(name = "SHORTDESC", nullable = false, length = 50)
@@ -29,6 +34,15 @@ public class Tracker extends StandardEntity {
 
     @Column(name = "DESCRIPTION")
     protected String description;
+
+
+    public void setProject(Task project) {
+        this.project = project;
+    }
+
+    public Task getProject() {
+        return project;
+    }
 
 
     public void setTask(Task task) {

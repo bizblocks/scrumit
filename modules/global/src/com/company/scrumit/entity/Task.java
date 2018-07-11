@@ -44,8 +44,7 @@ public class Task extends StandardEntity {
     @Column(name = "TYPE_")
     protected String type;
 
-    @Lob
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", length = 2048)
     protected String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
