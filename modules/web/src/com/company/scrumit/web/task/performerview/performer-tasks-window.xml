@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://performerTaskWindow.caption"
+        class="com.company.scrumit.web.task.performerview.PerformerTasksWindow"
+        messagesPack="com.company.scrumit.web.task.performerview">
+    <dsContext>
+        <collectionDatasource id="sprintsDs"
+                              class="com.company.scrumit.entity.Sprint"
+                              view="_minimal">
+            <query>
+                <![CDATA[select s from scrumit$Task t join t.sprints s where t.performer.id = :custom$userId]]>
+            </query>
+        </collectionDatasource>
+        <hierarchicalDatasource id="tasksDs"
+                                class="com.company.scrumit.entity.Task"
+                                hierarchyProperty="task"
+                                view="tasks-performer-view">
+            <query>
+                <![CDATA[select t from scrumit$Task t left join t.sprints s]]>
+                <filter>
+                    <and>
+                        <c>t.performer.id = :custom$userId</c>
+                        <c>s.id = :custom$sprintId</c>
+                    </and>
+                </filter>
+            </query>
+        </hierarchicalDatasource>
+        <collectionDatasource id="commentsDs"
+                              class="com.company.scrumit.entity.TaskComment"
+                              view="taskComment-browse">
+            <query>
+                <![CDATA[select c from scrumit$TaskComment c where c.task.id = :ds$tasksDs order by c.createTs asc]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true"
+            width="100%">
+        <split id="mainSplit"
+               height="100%"
+               orientation="horizontal"
+               pos="70"
+               settingsEnabled="false"
+               width="100%">
+            <vbox height="100%"
+                  margin="true">
+                <treeTable id="tasksTable"
+                           height="100%"
+                           textSelectionEnabled="true"
+                           width="100%">
+                    <actions>
+                        <action id="done"/>
+                        <action id="refresh"/>
+                    </actions>
+                    <columns>
+                        <column id="proirity"/>
+                        <column id="begin"/>
+                        <column id="deadline"/>
+                        <column id="shortdesc"/>
+                        <column id="done"/>
+                    </columns>
+                    <rows datasource="tasksDs"/>
+                    <rowsCount/>
+                    <buttonsPanel id="buttonsPanel"
+                                  alwaysVisible="true">
+                        <hbox spacing="true"
+                              width="100%">
+                            <label align="MIDDLE_CENTER"
+                                   value="msg://com.company.scrumit.entity/Sprint"/>
+                            <lookupField id="sprintsField"
+                                         optionsDatasource="sprintsDs"
+                                         width="300px"/>
+                        </hbox>
+                        <button id="doneBtn"
+                                action="tasksTable.done"/>
+                        <button id="refreshBtn"
+                                action="tasksTable.refresh"/>
+                    </buttonsPanel>
+                </treeTable>
+            </vbox>
+            <vbox id="commentsBox"
+                  expand="commentsTable"
+                  height="100%"
+                  margin="true"
+                  spacing="true">
+                <table id="commentsTable"
+                       settingsEnabled="false"
+                       textSelectionEnabled="true"
+                       width="100%">
+                    <columns>
+                        <column id="createTs"/>
+                        <column id="createdBy"/>
+                        <column id="message"
+                                maxTextLength="50"/>
+                    </columns>
+                    <rows datasource="commentsDs"/>
+                </table>
+                <hbox expand="commentTextArea"
+                      spacing="true"
+                      width="100%">
+                    <textArea id="commentTextArea"
+                              inputPrompt="msg://performerTaskWindow.comments.hint"/>
+                    <button align="MIDDLE_CENTER"
+                            caption="mainMsg://actions.Ok"
+                            invoke="onComment"
+                            stylename="friendly"/>
+                </hbox>
+            </vbox>
+        </split>
+    </layout>
+</window>

@@ -43,6 +43,22 @@
         <property name="top"
                   view="_minimal"/>
     </view>
+    <view class="com.company.scrumit.entity.Task"
+          extends="_minimal"
+          name="tasks-performer-view">
+        <property name="task" view="_minimal"/>
+        <property name="proirity"/>
+        <property name="begin"/>
+        <property name="deadline"/>
+        <property name="shortdesc"/>
+        <property name="done"/>
+    </view>
+    <view class="com.company.scrumit.entity.TaskComment"
+          extends="_local"
+          name="taskComment-browse">
+        <property name="createTs"/>
+        <property name="createdBy"/>
+    </view>
     <view class="com.company.scrumit.entity.Team"
           extends="_local"
           name="team-view">

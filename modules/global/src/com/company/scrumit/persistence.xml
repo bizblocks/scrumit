@@ -10,6 +10,7 @@
         <class>com.company.scrumit.entity.Performer</class>
         <class>com.company.scrumit.entity.Team</class>
         <class>com.company.scrumit.entity.Task</class>
+        <class>com.company.scrumit.entity.TaskComment</class>
         <class>com.company.scrumit.entity.Sprint</class>
         <class>com.company.scrumit.entity.Meeting</class>
         <class>com.company.scrumit.entity.Tracker</class>

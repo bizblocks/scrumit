@@ -14,6 +14,8 @@
             template="com/company/scrumit/web/task/task-browse.xml"/>
     <screen id="scrumit$Task.edit"
             template="com/company/scrumit/web/task/task-edit.xml"/>
+    <screen id="scrumit$Task.performerTasks"
+            template="com/company/scrumit/web/task/performerview/performer-tasks-window.xml"/>
     <screen id="scrumit$Task.list"
             template="com/company/scrumit/web/task/tasklist.xml"/>
     <screen id="massInput"
