@@ -42,11 +42,14 @@
         <property name="level"/>
         <property name="top"
                   view="_minimal"/>
+        <property name="description"/>
+        <property name="done"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
           name="tasks-performer-view">
-        <property name="task" view="_minimal"/>
+        <property name="task"
+                  view="_minimal"/>
         <property name="proirity"/>
         <property name="begin"/>
         <property name="deadline"/>
