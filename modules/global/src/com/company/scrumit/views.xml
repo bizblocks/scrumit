@@ -44,6 +44,12 @@
                   view="_minimal"/>
         <property name="description"/>
         <property name="done"/>
+        <property name="realduration"/>
+        <property name="type"/>
+        <property name="deadline"/>
+        <property name="begin"/>
+        <property name="duration"/>
+        <property name="amount"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"

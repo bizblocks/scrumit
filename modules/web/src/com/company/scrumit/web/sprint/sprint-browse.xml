@@ -99,6 +99,8 @@
                 <treeTable id="tasks"
                            width="100%">
                     <actions>
+                        <action id="add"/>
+                        <action id="exclude"/>
                         <action id="excel"/>
                     </actions>
                     <columns>
@@ -115,6 +117,15 @@
                         <column id="amount"/>
                     </columns>
                     <rows datasource="tasksDs"/>
+                    <buttonsPanel id="buttonsPanelTasks"
+                                  alwaysVisible="true">
+                        <button id="createBtnTasks"
+                                action="tasks.add"/>
+                        <button id="btnExcludeTasks"
+                                action="tasks.exclude"/>
+                        <button id="excelBtnTasks"
+                                action="tasks.excel"/>
+                    </buttonsPanel>
                 </treeTable>
                 <hbox id="actionsPane"
                       spacing="true"
