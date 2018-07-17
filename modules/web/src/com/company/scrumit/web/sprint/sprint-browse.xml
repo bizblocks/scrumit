@@ -98,6 +98,9 @@
                 </fieldGroup>
                 <treeTable id="tasks"
                            width="100%">
+                    <actions>
+                        <action id="excel"/>
+                    </actions>
                     <columns>
                         <column id="done"/>
                         <column id="shortdesc"/>
