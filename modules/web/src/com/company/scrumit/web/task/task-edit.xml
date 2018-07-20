@@ -27,6 +27,7 @@
                 <field property="amount"/>
                 <field property="type"/>
                 <field property="proirity"/>
+                <field property="control"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"

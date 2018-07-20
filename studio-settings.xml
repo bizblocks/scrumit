@@ -9,5 +9,8 @@
                        state="ENABLE"/>
     </functionalitySettings>
     <screenDesigner>
+        <screen module="web"
+                presentSize="1920x1080"
+                reference="com/company/scrumit/web/task/tasklist.xml"/>
     </screenDesigner>
 </studio>

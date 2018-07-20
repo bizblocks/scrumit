@@ -151,6 +151,7 @@ create table SCRUMIT_TASK (
     --
     SHORTDESC varchar(50) not null,
     DONE boolean,
+    CONTROL boolean,
     PROIRITY varchar(50),
     REALDURATION integer,
     TYPE_ varchar(50),

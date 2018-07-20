@@ -59,6 +59,7 @@
                         <column id="deadline"/>
                         <column id="shortdesc"/>
                         <column id="done"/>
+                        <column id="control"/>
                     </columns>
                     <rows datasource="tasksDs"/>
                     <rowsCount/>

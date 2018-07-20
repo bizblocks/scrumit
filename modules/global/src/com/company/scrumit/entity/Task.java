@@ -26,6 +26,9 @@ public class Task extends StandardEntity {
     @Column(name = "DONE")
     protected Boolean done;
 
+    @Column(name = "CONTROL")
+    protected Boolean control;
+
     @Column(name = "PROIRITY")
     protected String proirity;
 
@@ -89,6 +92,15 @@ public class Task extends StandardEntity {
         inverseJoinColumns = @JoinColumn(name = "SPRINT_ID"))
     @ManyToMany
     protected List<Sprint> sprints;
+
+    public void setControl(Boolean control) {
+        this.control = control;
+    }
+
+    public Boolean getControl() {
+        return control;
+    }
+
 
     public void setSprints(List<Sprint> sprints) {
         this.sprints = sprints;

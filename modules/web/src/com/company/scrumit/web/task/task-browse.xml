@@ -34,6 +34,7 @@
             <columns>
                 <column id="shortdesc"/>
                 <column id="proirity"/>
+                <column id="control"/>
             </columns>
             <rows datasource="tasksDs"/>
             <rowsCount/>

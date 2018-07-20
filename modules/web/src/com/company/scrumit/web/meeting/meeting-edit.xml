@@ -12,13 +12,17 @@
         <valueHierarchicalDatasource id="tasksForMeetingDs"
                                      datasourceClass="com.company.scrumit.web.meeting.TasksForMeetingDs"
                                      hierarchyProperty="parent">
-            <properties idProperty="task">
+            <properties idProperty="id">
+                <property datatype="uuid"
+                          name="id"/>
                 <property class="com.company.scrumit.entity.Task"
                           name="parent"/>
                 <property class="com.company.scrumit.entity.Task"
                           name="task"/>
                 <property datatype="boolean"
                           name="done"/>
+                <property datatype="boolean"
+                          name="control"/>
                 <property class="com.company.scrumit.entity.Performer"
                           name="performer"/>
                 <property datatype="date"
@@ -27,8 +31,19 @@
                           name="deadline"/>
                 <property datatype="string"
                           name="comment"/>
+                <property class="com.company.scrumit.entity.MeetingsTask"
+                          name="mtask"/>
             </properties>
         </valueHierarchicalDatasource>
+        <valueCollectionDatasource id="commentsDs">
+            <query>
+                <![CDATA[select mt.comment from scrumit$MeetingsTask mt where mt.task.id = :ds$tasksForMeetingDs.task]]>
+            </query>
+            <properties>
+                <property datatype="string"
+                          name="comment"/>
+            </properties>
+        </valueCollectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -46,25 +61,35 @@
                 <field property="type"/>
             </column>
         </fieldGroup>
-        <hbox expand="comment"
-              spacing="true"
-              width="100%">
-            <label value="mainMsg://Comment"/>
-            <textArea id="comment"
-                      datasource="meetingDs"
-                      property="comment"/>
-        </hbox>
+        <vbox expand="comment_split"
+              spacing="true">
+            <label value="mainMsg://Comments"/>
+            <split id="comment_split"
+                   orientation="horizontal"
+                   width="100%">
+                <textArea id="comment"
+                          datasource="meetingDs"
+                          property="comment"
+                          width="100%"/>
+                <label id="comments"
+                       value=" "/>
+            </split>
+        </vbox>
         <treeTable id="tasks"
                    editable="true"
                    width="100%">
             <columns>
                 <column id="parent"/>
                 <column id="task"/>
-                <column id="done"/>
+                <column id="done"
+                        editable="true"/>
+                <column id="control"
+                        editable="true"/>
                 <column id="performer"/>
                 <column id="begin"/>
                 <column id="deadline"/>
-                <column id="comment"/>
+                <column id="comment"
+                        editable="true"/>
             </columns>
             <rows datasource="tasksForMeetingDs"/>
         </treeTable>

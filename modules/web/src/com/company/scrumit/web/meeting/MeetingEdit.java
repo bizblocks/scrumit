@@ -1,21 +1,23 @@
 package com.company.scrumit.web.meeting;
 
+import com.company.scrumit.entity.Meeting;
 import com.company.scrumit.entity.MeetingType;
+import com.company.scrumit.entity.MeetingsTask;
+import com.company.scrumit.entity.Task;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
+import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.TimeSource;
 import com.haulmont.cuba.gui.WindowManager;
-import com.haulmont.cuba.gui.components.AbstractEditor;
-import com.company.scrumit.entity.Meeting;
-import com.haulmont.cuba.gui.components.DateField;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.PickerField;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class MeetingEdit extends AbstractEditor<Meeting> {
@@ -33,6 +35,32 @@ public class MeetingEdit extends AbstractEditor<Meeting> {
 
     @Named("fieldGroup.sprint")
     private PickerField sprintField;
+
+    @Inject
+    private DataManager dataManager;
+
+    @Inject
+    private Metadata metadata;
+
+    @Inject
+    private TreeTable tasks;
+
+    private Collection<Entity> changedEntities = new HashSet<>();
+
+    /**
+     * Hook to be implemented in subclasses. Called by the framework after committing datasources.
+     * The default implementation notifies about commit and calls {@link #postInit()} if the window is not closing.
+     *
+     * @param committed whether any data were actually changed and committed
+     * @param close     whether the window is going to be closed
+     * @return true to continue, false to abort
+     */
+    @Override
+    protected boolean postCommit(boolean committed, boolean close) {
+        if(committed)
+            changedEntities.forEach(e -> dataManager.commit(e));
+        return super.postCommit(committed, close);
+    }
 
     /**
      * Hook to be implemented in subclasses. Called by {@link #setItem(Entity)}.
@@ -64,9 +92,52 @@ public class MeetingEdit extends AbstractEditor<Meeting> {
         dsparams.put("sprint", this.getItem().getSprint());
         tasksForMeetingDs.refresh(dsparams);
 
+        tasks.expandAll();
+        setListners(dsparams);
+    }
+
+    @Inject
+    private Label comments;
+
+    void setListners(Map<String, Object> dsparams)
+    {
         sprintField.addValueChangeListener(e -> {
             dsparams.put("sprint", e.getValue());
             tasksForMeetingDs.refresh(dsparams);
+            tasks.expandAll();
+        });
+
+        tasksForMeetingDs.addItemPropertyChangeListener(e -> {
+            if("done".equals(e.getProperty()) || "control".equals(e.getProperty()))
+            {
+                Task t = (Task) e.getItem().getValue("task");
+                if("done".equals(e.getProperty()))
+                    t.setDone((Boolean) e.getValue());
+                if("control".equals(e.getProperty()))
+                    t.setControl((Boolean) e.getValue());
+                changedEntities.add(t);
+            }
+            if("comment".equals(e.getProperty()))
+            {
+                MeetingsTask mtask = (MeetingsTask) e.getItem().getValue("mtask");
+                if(mtask==null) {
+                    mtask = metadata.create(MeetingsTask.class);
+                    mtask.setTask(e.getItem().getValue("task"));
+                    mtask.setMeeting(this.getItem());
+                }
+                mtask.setComment((String) e.getValue());
+                changedEntities.add(mtask);
+            }
+        });
+
+        tasksForMeetingDs.addItemChangeListener(e -> {
+            StringBuilder s =  new StringBuilder();
+            dataManager.load(MeetingsTask.class)
+                    .query("select mt from scrumit$MeetingsTask mt where mt.task.id = :task")
+                    .parameter("task", (Task)e.getItem().getValue("task"))
+                    .list()
+                    .forEach(i-> s.append(i.getComment()).append("\n"));
+            comments.setValue(getMessage("Comments for task: ")+s);
         });
     }
 

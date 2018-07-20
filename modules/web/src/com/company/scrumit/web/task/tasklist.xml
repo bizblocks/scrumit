@@ -70,6 +70,7 @@
                         <column id="proirity"/>
                         <column id="done"
                                 editable="true"/>
+                        <column id="control"/>
                         <column id="description"
                                 maxTextLength="100"/>
                     </columns>
@@ -91,7 +92,8 @@
                         <button id="excelBtn"
                                 action="table.excel"/>
                         <button id="btnDone"
-                                caption="msg://Done"/>
+                                caption="msg://Done"
+                                invoke="onBtnDoneClick"/>
                         <button id="btnMassInput"
                                 action="massInput"
                                 caption="mainMsg://Mass input"/>
@@ -118,6 +120,7 @@
                             <field property="deadline"/>
                             <field property="amount"/>
                             <field property="performer"/>
+                            <field property="control"/>
                         </column>
                     </fieldGroup>
                 </scrollBox>

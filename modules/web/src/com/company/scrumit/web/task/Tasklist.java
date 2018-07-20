@@ -3,14 +3,15 @@ package com.company.scrumit.web.task;
 import com.company.scrumit.entity.Task;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.WindowManager;
+import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.components.EntityCombinedScreen;
 import com.haulmont.cuba.gui.components.TreeTable;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 
 import javax.inject.Inject;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.UUID;
-import com.haulmont.cuba.gui.components.Component;
 
 public class Tasklist extends EntityCombinedScreen {
     @Inject
@@ -34,5 +35,13 @@ public class Tasklist extends EntityCombinedScreen {
         HashMap<String, Object> map = new HashMap<>();
         map.put("parent", table.getSingleSelected());
         openWindow("massInput", WindowManager.OpenType.DIALOG, map);
+    }
+
+    public void onBtnDoneClick() {
+        Set<Task> tasks = table.getSelected();
+        tasks.forEach(task -> {
+            task.setDone(true);
+            dataManager.commit(task);
+        });
     }
 }
