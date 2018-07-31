@@ -22,6 +22,13 @@
                 <![CDATA[select e from scrumit$Task e]]>
             </query>
         </hierarchicalDatasource>
+        <collectionDatasource id="performersDs"
+                              class="com.company.scrumit.entity.Performer"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from scrumit$Performer e]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <actions>
         <action id="save"
@@ -111,16 +118,19 @@
                         <column width="300px">
                             <field caption="mainMsg://Parent"
                                    property="task"/>
-                            <field property="shortdesc"/>
                             <field property="done"/>
                             <field property="proirity"/>
-                            <field property="type"/>
                             <field property="begin"/>
                             <field property="duration"/>
                             <field property="deadline"/>
-                            <field property="amount"/>
-                            <field property="performer"/>
+                        </column>
+                        <column width="300px">
+                            <field property="shortdesc"/>
                             <field property="control"/>
+                            <field property="type"/>
+                            <field property="amount"/>
+                            <field optionsDatasource="performersDs"
+                                   property="performer"/>
                         </column>
                     </fieldGroup>
                 </scrollBox>

@@ -25,6 +25,14 @@
                 <![CDATA[select e from scrumit$Sprint e]]>
             </query>
         </groupDatasource>
+        <hierarchicalDatasource id="tasksDs1"
+                                class="com.company.scrumit.entity.Task"
+                                hierarchyProperty="task"
+                                view="task-tree">
+            <query>
+                <![CDATA[select e from scrumit$Task e where e.id in :ds$sprintDs.tasks]]>
+            </query>
+        </hierarchicalDatasource>
     </dsContext>
     <actions>
         <action id="save"
@@ -37,6 +45,10 @@
                 description="Esc"
                 icon="icons/cancel.png"
                 invoke="cancel"/>
+        <action id="export"
+                caption="mainMsg://Export"
+                icon="icons/wf-exchange.png"
+                invoke="onExport"/>
     </actions>
     <dialogMode height="600"
                 width="800"/>
@@ -80,6 +92,9 @@
                                 action="table.edit"/>
                         <button id="removeBtn"
                                 action="table.remove"/>
+                        <button id="btnExport"
+                                action="export"
+                                caption="mainMsg://Export"/>
                     </buttonsPanel>
                 </groupTable>
             </vbox>
@@ -104,20 +119,20 @@
                         <action id="excel"/>
                     </actions>
                     <columns>
-                        <column id="done"/>
                         <column id="shortdesc"/>
                         <column id="proirity"/>
+                        <column id="level"/>
+                        <column id="description"/>
+                        <column id="done"/>
                         <column id="realduration"/>
                         <column id="type"/>
-                        <column id="description"
-                                maxTextLength="25"/>
                         <column id="deadline"/>
                         <column id="begin"/>
                         <column id="duration"/>
                         <column id="amount"/>
                         <column id="control"/>
                     </columns>
-                    <rows datasource="tasksDs"/>
+                    <rows datasource="tasksDs1"/>
                     <buttonsPanel id="buttonsPanelTasks"
                                   alwaysVisible="true">
                         <button id="createBtnTasks"

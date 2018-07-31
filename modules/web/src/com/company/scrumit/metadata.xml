@@ -2,6 +2,6 @@
 <metadata xmlns="http://schemas.haulmont.com/cuba/metadata.xsd">
 
     <metadata-model root-package="com.company.scrumit" namespace="scrumit">
-<!--       <class>com.company.scrumit.web.screens.SpecialKVEntity</class> -->
+       <class>com.company.scrumit.web.screens.SpecialKVEntity</class>
     </metadata-model>
 </metadata>

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
+    <screen id="scrumit$Tracker.browse"
+            template="com/company/scrumit/web/bugtracker/trackerlist.xml"/>
+    <screen id="scrumit$Tracker.edit"
+            template="com/company/scrumit/web/bugtracker/tracker-edit.xml"/>            
     <screen id="scrumit$Contact.browse"
             template="com/company/scrumit/web/contact/contact-browse.xml"/>
     <screen id="scrumit$Contact.edit"

@@ -73,6 +73,10 @@ configure([globalModule, coreModule, webModule]) {
 }
 
 configure(globalModule) {
+
+    dependencies {
+        compile('com.smartsheet:smartsheet-sdk-java:2.2.5')
+    }
     task enhance(type: CubaEnhancing)
 
     

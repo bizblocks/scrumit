@@ -162,8 +162,10 @@ create table SCRUMIT_TASK (
     LEVEL_ integer,
     TOP_ID uuid,
     BEGIN_ timestamp,
+    DURATION varchar(255),
     AMOUNT integer,
     SPRINT_BACKLOG_ID uuid,
+    SS_ID bigint,
     --
     primary key (ID)
 )^
@@ -297,6 +299,7 @@ create table SCRUMIT_TEAM (
     NAME varchar(20),
     LEADER_ID uuid,
     SPRINT_SIZE integer,
+    SMARTSHEET_ID bigint,
     --
     primary key (ID)
 )^

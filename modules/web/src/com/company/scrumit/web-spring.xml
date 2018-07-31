@@ -10,14 +10,14 @@
                   ref="cuba_ServerSelector"/>
         <property name="remoteServices">
             <map>
-                <entry key="scrumit_SmartsheetService"
-                       value="com.company.scrumit.service.SmartsheetService"/>
                 <entry key="scrumit_MailListService"
                        value="com.company.scrumit.service.MailListService"/>
                 <entry key="scrumit_ImportCSVService"
                        value="com.company.scrumit.service.ImportCSVService"/>
                 <entry key="scrumit_TaskService"
                        value="com.company.scrumit.service.TaskService"/>
+                <entry key="scrumit_SmartSheetService"
+                       value="com.company.scrumit.service.SmartSheetService"/>
             </map>
         </property>
     </bean>

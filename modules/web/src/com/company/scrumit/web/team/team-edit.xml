@@ -25,6 +25,7 @@
                 <field property="name"/>
                 <field property="leader"/>
                 <field property="sprintSize"/>
+                <field property="smartsheetId"/>
             </column>
         </fieldGroup>
         <tabSheet id="tabs">

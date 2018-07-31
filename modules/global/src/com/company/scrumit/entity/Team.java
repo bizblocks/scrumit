@@ -1,18 +1,11 @@
 package com.company.scrumit.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.List;
-import javax.persistence.OneToMany;
-import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Column;
+import com.haulmont.cuba.core.entity.StandardEntity;
+
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @NamePattern("%s|name")
 @Table(name = "SCRUMIT_TEAM")
@@ -41,6 +34,18 @@ public class Team extends StandardEntity {
 
     @Column(name = "SPRINT_SIZE")
     protected Integer sprintSize;
+
+    @Column(name = "SMARTSHEET_ID")
+    protected Long smartsheetId;
+
+    public void setSmartsheetId(Long smartsheetId) {
+        this.smartsheetId = smartsheetId;
+    }
+
+    public Long getSmartsheetId() {
+        return smartsheetId;
+    }
+
 
     public Collection<Performer> getMembers() {
         return members;

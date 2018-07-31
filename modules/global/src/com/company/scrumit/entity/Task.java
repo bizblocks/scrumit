@@ -1,6 +1,5 @@
 package com.company.scrumit.entity;
 
-import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
@@ -66,8 +65,7 @@ public class Task extends StandardEntity {
     @Column(name = "BEGIN_")
     protected Date begin;
 
-    @Transient
-    @MetaProperty(related = {"begin", "deadline"})
+    @Column(name = "DURATION")
     protected String duration;
 
     @Column(name = "AMOUNT")
@@ -92,6 +90,28 @@ public class Task extends StandardEntity {
         inverseJoinColumns = @JoinColumn(name = "SPRINT_ID"))
     @ManyToMany
     protected List<Sprint> sprints;
+
+    @Column(name = "SS_ID")
+    protected Long ssId;
+
+    public void setSsId(Long ssId) {
+        this.ssId = ssId;
+    }
+
+    public Long getSsId() {
+        return ssId;
+    }
+
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+
 
     public void setControl(Boolean control) {
         this.control = control;
@@ -217,14 +237,6 @@ public class Task extends StandardEntity {
 
     public Date getBegin() {
         return begin;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public String getDuration() {
-        return duration;
     }
 
 

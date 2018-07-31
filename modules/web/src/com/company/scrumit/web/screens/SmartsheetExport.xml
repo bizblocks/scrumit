@@ -1,8 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         class="com.company.scrumit.web.screens.Smartsheetexport"
+        focusComponent="token"
+        lookupComponent="tab"
         messagesPack="com.company.scrumit.web.screens">
+    <dsContext>
+        <valueHierarchicalDatasource id="ssDs"
+                                     datasourceClass="com.company.scrumit.web.screens.SmartsheetDatasource"
+                                     hierarchyProperty="parent">
+            <properties idProperty="id">
+                <property datatype="long"
+                          name="id"/>
+                <property class="com.haulmont.cuba.core.entity.KeyValueEntity"
+                          name="parent"/>
+                <property datatype="string"
+                          name="Задачи"/>
+                <property datatype="string"
+                          name="Период"/>
+                <property datatype="string"
+                          name="Поручил"/>
+                <property datatype="string"
+                          name="Начало"/>
+                <property datatype="string"
+                          name="Срок"/>
+            </properties>
+        </valueHierarchicalDatasource>
+    </dsContext>
     <dialogMode height="600"
                 width="800"/>
-    <layout/>
+    <layout expand="tab">
+        <groupBox caption="Token">
+            <textField id="token"
+                       width="300px"/>
+        </groupBox>
+        <button caption="refresh"
+                invoke="refresh"/>
+        <treeTable id="tab"
+                   width="100%">
+            <columns>
+                <column id="Задачи"/>
+                <column id="Начало"/>
+                <column id="Срок"/>
+            </columns>
+            <rows datasource="ssDs"/>
+        </treeTable>
+    </layout>
 </window>

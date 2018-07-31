@@ -5,6 +5,7 @@
         <item screen="massInput"/>
         <item screen="scrumit$Task.performerTasks"/>
         <item screen="sprintPlanning"/>
+        <item screen="SmartsheetExport"/>
     </menu>
     <menu id="refs"
           insertBefore="administration">
