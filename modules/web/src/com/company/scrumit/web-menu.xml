@@ -6,6 +6,7 @@
         <item screen="scrumit$Task.performerTasks"/>
         <item screen="sprintPlanning"/>
         <item screen="SmartsheetExport"/>
+        <item screen="scrumit%PokerPlanning"/>
     </menu>
     <menu id="refs"
           insertBefore="administration">
@@ -18,5 +19,7 @@
         <item screen="scrumit$Performer.browse"/>
         <item screen="scrumit$ContactsStatus.browse"/>
         <item screen="scrumit$City.browse"/>
+        <item screen="scrumit$Estimation.browse"/>
+        <item screen="scrumit$Complexity.browse"/>
     </menu>
 </menu-config>

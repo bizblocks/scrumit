@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.scrumit.web.screens.pokerplanning.PokerPlanning"
+        messagesPack="com.company.scrumit.web.screens.pokerplanning">
+
+    <dsContext>
+
+        <collectionDatasource id="tasksDs"
+                              class="com.company.scrumit.entity.Task"
+                              view="task-poker-planning">
+            <query>
+                <![CDATA[select t from scrumit$Task t
+where t.performer in :custom$performersUserTeams
+]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="performersUserTeamsDs"
+                              class="com.company.scrumit.entity.Performer"
+                              datasourceClass="com.company.scrumit.web.screens.pokerplanning.PerformersUserTeamsDatasource"
+                              view="performers-userTeams-view"/>
+        <collectionDatasource id="estimationsDs"
+                              class="com.company.scrumit.entity.Estimation"
+                              view="estimation-view">
+            <query>
+                <![CDATA[select e from scrumit$Estimation e
+where e.task in :custom$tasksUserTeams
+and e.user.id = :session$userId
+]]>
+            </query>
+            <datasource id="taskDs"
+                        property="task"/>
+        </collectionDatasource>
+
+        <collectionDatasource id="complexitiesDs"
+                              class="com.company.scrumit.entity.Complexity"
+                              view="_local">
+            <query>
+                <![CDATA[select e from scrumit$Complexity e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="complexitiesLookupDs"
+                              class="com.company.scrumit.entity.Complexity"
+                              view="_local">
+            <query>
+                <![CDATA[select e from scrumit$Complexity e where e.duty = false]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <table id="taskEstimationsTable"
+               editable="true"
+               height="100%"
+               width="100%">
+            <columns>
+                <column id="task.shortdesc"/>
+                <column id="complexity"
+                        editable="true"/>
+            </columns>
+            <actions>
+                <action id="commit" caption="msg://commit" invoke="commit"/>
+            </actions>
+            <buttonsPanel>
+                <button action="taskEstimationsTable.commit"/>
+            </buttonsPanel>
+            <rows datasource="estimationsDs"/>
+        </table>
+    </layout>
+</window>

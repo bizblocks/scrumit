@@ -166,6 +166,7 @@ create table SCRUMIT_TASK (
     AMOUNT integer,
     SPRINT_BACKLOG_ID uuid,
     SS_ID bigint,
+    COMPLEXITY_ID uuid,
     --
     primary key (ID)
 )^
@@ -386,3 +387,37 @@ create table SCRUMIT_TASK_COMMENT (
     primary key (ID)
 )^
 -- end SCRUMIT_TASK_COMMENT
+-- begin SCRUMIT_ESTIMATION
+create table SCRUMIT_ESTIMATION (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    USER_ID uuid,
+    TASK_ID uuid,
+    COMPLEXITY_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_ESTIMATION
+-- begin SCRUMIT_COMPLEXITY
+create table SCRUMIT_COMPLEXITY (
+    ID uuid,
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    VERSION integer not null,
+    --
+    NAME varchar(50),
+    VALUE_ double precision,
+    DUTY boolean not null,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_COMPLEXITY

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.scrumit.web.estimation.EstimationBrowse"
+        focusComponent="estimationsTable"
+        lookupComponent="estimationsTable"
+        messagesPack="com.company.scrumit.web.estimation">
+    <dsContext>
+        <groupDatasource id="estimationsDs"
+                         class="com.company.scrumit.entity.Estimation"
+                         view="estimation-browse-view">
+            <query>
+                <![CDATA[select e from scrumit$Estimation e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="estimationsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="estimationsTable"
+                datasource="estimationsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="estimationsTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="task.shortdesc"/>
+                <column id="user"/>
+                <column id="complexity"/>
+            </columns>
+            <rows datasource="estimationsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="estimationsTable.create"/>
+                <button id="editBtn"
+                        action="estimationsTable.edit"/>
+                <button id="removeBtn"
+                        action="estimationsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

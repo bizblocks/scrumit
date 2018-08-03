@@ -80,6 +80,8 @@
                         <column id="control"/>
                         <column id="description"
                                 maxTextLength="100"/>
+                        <column id="complexity"
+                                caption="msg://Complexity"/>
                     </columns>
                     <rows datasource="tasksDs"/>
                     <rowsCount/>

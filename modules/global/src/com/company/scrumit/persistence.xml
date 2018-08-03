@@ -24,5 +24,7 @@
         <class>com.company.scrumit.entity.TaskDuration</class>
         <class>com.company.scrumit.entity.MeetingsTask</class>
         <class>com.company.scrumit.entity.ContactsStatus</class>
+		<class>com.company.scrumit.entity.Complexity</class>
+        <class>com.company.scrumit.entity.Estimation</class>
     </persistence-unit>
 </persistence>
