@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.smartsheet:smartsheet-sdk-java:2.2.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.smartsheet/smartsheet-sdk-java/2.2.5/d18ea04953fa58ec1800cc8a81b4bf2b0fbbe24e/smartsheet-sdk-java-2.2.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.smartsheet/smartsheet-sdk-java/2.2.5/452c1f61c827682be36d2509a99405a9c9130dbd/smartsheet-sdk-java-2.2.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

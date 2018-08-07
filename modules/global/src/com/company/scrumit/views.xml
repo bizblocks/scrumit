@@ -165,4 +165,12 @@
             <property name="begin"/>
         </property>
     </view>
+    <view class="com.company.scrumit.entity.Tracker"
+          extends="_local"
+          name="_full">
+        <property name="project"
+                  view="_local"/>
+        <property name="file"
+                  view="_minimal"/>
+    </view>
 </views>

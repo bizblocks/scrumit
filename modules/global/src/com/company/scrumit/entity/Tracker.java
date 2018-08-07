@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
+import com.haulmont.cuba.core.entity.FileDescriptor;
 
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TRACKER")
@@ -21,6 +24,11 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
 
+    @OnDelete(DeletePolicy.DENY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FILE_ID")
+    protected FileDescriptor file;
+
     @NotNull
     @Column(name = "SHORTDESC", nullable = false, length = 50)
     protected String shortdesc;
@@ -29,11 +37,45 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "TASK_ID")
     protected Task task;
 
+    @Column(name = "STATUS")
+    protected String status;
+
+    @Column(name = "TRACKER_PRIORITY_TYPE")
+    protected String trackerPriorityType;
+
     @Column(name = "TYPE_")
     protected String type;
 
     @Column(name = "DESCRIPTION")
     protected String description;
+    public void setStatus(Status status) {
+        this.status = status == null ? null : status.getId();
+    }
+
+    public Status getStatus() {
+        return status == null ? null : Status.fromId(status);
+    }
+
+    public void setTrackerPriorityType(TrackerPriorityType trackerPriorityType) {
+        this.trackerPriorityType = trackerPriorityType == null ? null : trackerPriorityType.getId();
+    }
+
+    public TrackerPriorityType getTrackerPriorityType() {
+        return trackerPriorityType == null ? null : TrackerPriorityType.fromId(trackerPriorityType);
+    }
+
+
+    public FileDescriptor getFile() {
+        return file;
+    }
+
+    public void setFile(FileDescriptor file) {
+        this.file = file;
+    }
+
+
+
+
 
 
     public void setProject(Task project) {

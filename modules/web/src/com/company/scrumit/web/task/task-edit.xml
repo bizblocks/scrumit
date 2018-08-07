@@ -9,6 +9,9 @@
         <datasource id="taskDs"
                     class="com.company.scrumit.entity.Task"
                     view="tasks-full"/>
+        <collectionDatasource id="task1Ds"
+                              class="com.company.scrumit.entity.Task"
+                              view="tasks-full"/>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
