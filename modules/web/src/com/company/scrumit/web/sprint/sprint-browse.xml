@@ -74,6 +74,7 @@
                         <action id="create"/>
                         <action id="edit"/>
                         <action id="remove"/>
+                        <action id="refresh"/>
                     </actions>
                     <columns>
                         <group>
@@ -92,6 +93,8 @@
                                 action="table.edit"/>
                         <button id="removeBtn"
                                 action="table.remove"/>
+                        <button id="refreshBtn"
+                                action="table.refresh"/>
                         <button id="btnExport"
                                 action="export"
                                 caption="mainMsg://Export"/>
@@ -115,6 +118,10 @@
                            width="100%">
                     <actions>
                         <action id="add"/>
+                        <action id="editTask"
+                                caption="msg://Edit task"
+                                icon="EDIT"
+                                invoke="onEditTask"/>
                         <action id="exclude"/>
                         <action id="excel"/>
                     </actions>
@@ -135,8 +142,10 @@
                     <rows datasource="tasksDs1"/>
                     <buttonsPanel id="buttonsPanelTasks"
                                   alwaysVisible="true">
-                        <button id="createBtnTasks"
+                        <button id="btnCreateTask"
                                 action="tasks.add"/>
+                        <button id="btnEditTask"
+                                action="tasks.editTask"/>
                         <button id="btnExcludeTasks"
                                 action="tasks.exclude"/>
                         <button id="excelBtnTasks"
