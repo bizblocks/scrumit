@@ -3,7 +3,7 @@
         caption="msg://caption"
         class="com.company.scrumit.web.screens.Sprintplanning"
         messagesPack="com.company.scrumit.web.screens"
-        xmlns:dnd="http://schemas.haulmont.com/dnd/0.1/drag-and-drop.xsd">
+>
     <dsContext>
         <collectionDatasource id="teamsDs"
                               allowCommit="false"
@@ -40,7 +40,8 @@
             <button id="btnCreateSprint"
                     caption="msg://Create sprint"
                     invoke="onBtnCreateSprintClick"/>
-            <button invoke="testQuery"/>
+            <button invoke="testQuery"
+                    visible="false"/>
         </hbox>
         <hbox id="tasksHbox"
               spacing="true"
