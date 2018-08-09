@@ -18,7 +18,7 @@
                          class="com.company.scrumit.entity.Complexity"
                          view="_local">
             <query>
-                <![CDATA[select e from scrumit$Complexity e]]>
+                <![CDATA[select e from scrumit$Complexity e where e.duty = false]]>
             </query>
         </groupDatasource>
     </dsContext>

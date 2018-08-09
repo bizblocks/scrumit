@@ -8,6 +8,7 @@ import com.haulmont.cuba.gui.components.AbstractWindow;
 import com.haulmont.cuba.gui.components.LookupPickerField;
 import com.haulmont.cuba.gui.components.Table;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.cuba.security.global.UserSession;
 
@@ -33,10 +34,17 @@ public class PokerPlanning extends AbstractWindow {
     @Inject
     private Metadata metadata;
     @Inject
-    private Table<Estimation> taskEstimationsTable;
+    private Table<TreeTaskEstimation> taskEstimationsTable;
+
     @Inject
-    private CollectionDatasource<Complexity, UUID> complexitiesDs;
+    private HierarchicalDatasource<TreeTaskEstimation, UUID> treeTaskEstimationsDs;
+
     private Complexity complexityDispute;
+    private Collection<Task> tasks;
+    private LinkedHashSet<UUID> existingTaskIdsInEstimations = new LinkedHashSet<>();
+    private LinkedHashMap<UUID, TreeTaskEstimation> includedParentsByTaskId = new LinkedHashMap<>();
+    private LinkedHashMap<UUID, TreeTaskEstimation> includedTasksByTaskId = new LinkedHashMap<>();
+    private ArrayList<Complexity> toDeleteComplexities = new ArrayList<>();
 
     @Override
     public void init(Map<String, Object> params) {
@@ -46,19 +54,69 @@ public class PokerPlanning extends AbstractWindow {
                 .id(UUID.fromString("00112233-4455-6677-8899-aabbccddeeff"))
                 .view("_local")
                 .one();
-        complexitiesDs.refresh();
         complexitiesLookupDs.refresh();
 
         List<Performer> performersUserTeams = getPerformersUserTeams(getCurrentUserPerformer());
         tasksDs.refresh(Collections.singletonMap("performersUserTeams", performersUserTeams));
 
-        initEstimationsDs();
-
+        tasks = tasksDs.getItems();
+        initTreeTaskEstimationsDs();
         setupLookupPickerFieldForComplexity();
 
         getDsContext().addAfterCommitListener(
                 (context, result) -> changeTaskAndParentTaskComplexities(result)
         );
+    }
+
+    private void initTreeTaskEstimationsDs() {
+        List<Estimation> estimations = getEstimationsInDatabase();
+        // LinkedHashSet<TreeTaskEstimation> includedParentTaskIds = new LinkedHashSet<>();
+
+        for (Estimation e : estimations) {
+            existingTaskIdsInEstimations.add(e.getTask().getId());
+            includeToTreeTaskEstimations(e, e.getTask(), e.getTask().getTask());
+            estimationsDs.includeItem(e);
+        }
+        for (Task t : tasks) {
+            if (!existingTaskIdsInEstimations.contains(t.getId())) {
+                Estimation estimation = metadata.create(Estimation.class);
+                estimation.setTask(t);
+                estimation.setUser(userSession.getUser());
+                existingTaskIdsInEstimations.add(t.getId());
+                includeToTreeTaskEstimations(estimation, t, t.getTask());
+                estimationsDs.includeItem(estimation);
+                // estimationsDs.includeItem(estimation);
+            }
+        }
+        // remove duplicates if there are tasks with same performers as in parent tasks
+        includedTasksByTaskId.forEach((uuid, treeTaskEstimation) -> {
+            if (includedParentsByTaskId.containsKey(uuid)) {
+                treeTaskEstimationsDs.excludeItem(treeTaskEstimation);
+            }
+        });
+    }
+
+    private void includeToTreeTaskEstimations(Estimation estimation, Task task, Task parentTask) {
+        TreeTaskEstimation treeTaskEstimation = metadata.create(TreeTaskEstimation.class);
+        treeTaskEstimation.setEstimation(estimation);
+        treeTaskEstimation.setTask(task);
+
+        if (parentTask != null) {
+            TreeTaskEstimation parentTreeTaskEstimation;
+            if (includedParentsByTaskId.containsKey(parentTask.getId())) {
+                parentTreeTaskEstimation = includedParentsByTaskId.get(parentTask.getId());
+            } else {
+                parentTreeTaskEstimation = metadata.create(TreeTaskEstimation.class);
+                parentTreeTaskEstimation.setTask(parentTask);
+                includedParentsByTaskId.put(parentTask.getId(), parentTreeTaskEstimation);
+            }
+
+            treeTaskEstimation.setParent(parentTreeTaskEstimation);
+            treeTaskEstimationsDs.includeItem(parentTreeTaskEstimation);
+        }
+
+        includedTasksByTaskId.put(task.getId(), treeTaskEstimation);
+        treeTaskEstimationsDs.includeItem(treeTaskEstimation);
     }
 
     private Performer getCurrentUserPerformer() {
@@ -82,13 +140,18 @@ public class PokerPlanning extends AbstractWindow {
     }
 
     private void setupLookupPickerFieldForComplexity() {
-        taskEstimationsTable.addGeneratedColumn("complexity", complexity -> {
+        taskEstimationsTable.addGeneratedColumn("estimation.complexity", treeTaskEstimation -> {
             LookupPickerField field = componentsFactory.createComponent(LookupPickerField.class);
             field.setWidth("100%");
             field.setOptionsDatasource(complexitiesLookupDs);
-            field.setDatasource(taskEstimationsTable.getItemDatasource(complexity), "complexity");
+            field.setDatasource(taskEstimationsTable.getItemDatasource(treeTaskEstimation),
+                    "estimation.complexity");
             field.addLookupAction();
             field.addClearAction();
+            if (includedParentsByTaskId.containsKey(treeTaskEstimation.getTask().getId())) {
+                return null;
+            }
+
             return field;
         });
     }
@@ -112,6 +175,12 @@ public class PokerPlanning extends AbstractWindow {
         // ps already commit in other transaction
 
         commitTasksParentTasks(tasksToCommit, parentTasksToCommit);
+
+        toDeleteComplexities.stream()
+                .filter(complexity -> !complexity.equals(complexityDispute))
+                .forEach(complexity -> dataManager.remove(complexity));
+
+        toDeleteComplexities.clear();
     }
 
     private void commitTasksParentTasks(HashSet<Task> tasks, HashSet<Task> parentTasks) {
@@ -119,35 +188,13 @@ public class PokerPlanning extends AbstractWindow {
         tasks.forEach(this::prepareTask);
         tasks.forEach(commitConsumer);
         prepareParentTasks(parentTasks);
-        parentTasks.stream()
-                .filter(task -> !parentTasks.contains(task))
-                .forEach(commitConsumer);
-    }
-
-    private void initEstimationsDs() {
-        List<Estimation> estimations = getEstimationsInDatabase();
-        LinkedHashSet<UUID> existingTaskIdsInEstimations = new LinkedHashSet<>();
-        for (Estimation e :
-                estimations) {
-            existingTaskIdsInEstimations.add(e.getTask().getId());
-            estimationsDs.includeItem(e);
-        }
-        for (Task t :
-                tasksDs.getItems()) {
-            if (!existingTaskIdsInEstimations.contains(t.getId())) {
-                Estimation estimation = metadata.create(Estimation.class);
-                estimation.setTask(t);
-                estimation.setUser(userSession.getUser());
-                existingTaskIdsInEstimations.add(t.getId());
-                estimationsDs.includeItem(estimation);
-            }
-        }
+        parentTasks.forEach(commitConsumer);
     }
 
     private List<Estimation> getEstimationsInDatabase() {
         return dataManager.load(Estimation.class)
                 .query("select e from scrumit$Estimation e where e.task.id in :tasks and e.user.id = :userId")
-                .parameter("tasks", tasksDs.getItems())
+                .parameter("tasks", tasks)
                 .parameter("userId", userSession.getUser().getId())
                 .view("estimation-view")
                 .list();
@@ -199,14 +246,15 @@ public class PokerPlanning extends AbstractWindow {
 
     private void changeComplexity(Task task, double value, String name) {
         Complexity complexity = task.getComplexity();
-        if (complexity == null) {
-            complexity = metadata.create(Complexity.class);
-            task.setComplexity(complexity);
+        if (complexity != null) {
+            toDeleteComplexities.add(complexity);
         }
+        complexity = metadata.create(Complexity.class);
         complexity.setValue(value);
         complexity.setName(name);
         complexity.setDuty(true);
         dataManager.commit(complexity);
+        task.setComplexity(complexity);
     }
 
     private void prepareTask(Task task) {
@@ -244,5 +292,7 @@ public class PokerPlanning extends AbstractWindow {
 
     public void commit() {
         getDsContext().commit();
+        // Necessary, else Object was modified in another transaction sometimes
+        this.close("commit");
     }
 }

@@ -29,6 +29,13 @@
                 <![CDATA[select e from scrumit$Performer e]]>
             </query>
         </collectionDatasource>
+        <collectionDatasource id="complexitiesDs"
+                              class="com.company.scrumit.entity.Complexity"
+                              view="_local">
+            <query>
+                <![CDATA[select e from scrumit$Complexity e]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <actions>
         <action id="save"
@@ -82,6 +89,9 @@
                                 maxTextLength="100"/>
                         <column id="complexity"
                                 caption="msg://Complexity"/>
+                        <column id="estimationsCount"
+                                caption="msg://estimationsCount"
+                                generator="generateEstimationsCountCell"/>
                     </columns>
                     <rows datasource="tasksDs"/>
                     <rowsCount/>
@@ -133,6 +143,9 @@
                             <field property="amount"/>
                             <field optionsDatasource="performersDs"
                                    property="performer"/>
+                            <field property="complexity"
+                                   editable="false"
+                                   caption="msg://Complexity"/>
                         </column>
                     </fieldGroup>
                 </scrollBox>

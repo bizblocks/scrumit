@@ -41,8 +41,6 @@
                           alwaysVisible="true">
                 <button id="createBtn"
                         action="estimationsTable.create"/>
-                <button id="editBtn"
-                        action="estimationsTable.edit"/>
                 <button id="removeBtn"
                         action="estimationsTable.remove"/>
             </buttonsPanel>

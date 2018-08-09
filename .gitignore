@@ -9,5 +9,3 @@ modules/*/build/*
 out
 test-run
 .idea
-pgdata
-pg.log

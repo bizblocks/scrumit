@@ -19,6 +19,7 @@ where t.performer in :custom$performersUserTeams
                               class="com.company.scrumit.entity.Performer"
                               datasourceClass="com.company.scrumit.web.screens.pokerplanning.PerformersUserTeamsDatasource"
                               view="performers-userTeams-view"/>
+        <!-- TODO to delete -->
         <collectionDatasource id="estimationsDs"
                               class="com.company.scrumit.entity.Estimation"
                               view="estimation-view">
@@ -31,14 +32,11 @@ and e.user.id = :session$userId
             <datasource id="taskDs"
                         property="task"/>
         </collectionDatasource>
+        <hierarchicalDatasource id="treeTaskEstimationsDs"
+                                class="com.company.scrumit.entity.TreeTaskEstimation"
+                                view="_minimal"
+                                hierarchyProperty="parent"/>
 
-        <collectionDatasource id="complexitiesDs"
-                              class="com.company.scrumit.entity.Complexity"
-                              view="_local">
-            <query>
-                <![CDATA[select e from scrumit$Complexity e]]>
-            </query>
-        </collectionDatasource>
         <collectionDatasource id="complexitiesLookupDs"
                               class="com.company.scrumit.entity.Complexity"
                               view="_local">
@@ -50,13 +48,13 @@ and e.user.id = :session$userId
     <dialogMode height="600"
                 width="800"/>
     <layout>
-        <table id="taskEstimationsTable"
+        <treeTable id="taskEstimationsTable"
                editable="true"
                height="100%"
                width="100%">
             <columns>
                 <column id="task.shortdesc"/>
-                <column id="complexity"
+                <column id="estimation.complexity"
                         editable="true"/>
             </columns>
             <actions>
@@ -65,7 +63,7 @@ and e.user.id = :session$userId
             <buttonsPanel>
                 <button action="taskEstimationsTable.commit"/>
             </buttonsPanel>
-            <rows datasource="estimationsDs"/>
-        </table>
+            <rows datasource="treeTaskEstimationsDs"/>
+        </treeTable>
     </layout>
 </window>
