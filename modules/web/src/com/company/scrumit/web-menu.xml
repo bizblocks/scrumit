@@ -17,5 +17,6 @@
         <item screen="scrumit$Team.browse"/>
         <item screen="scrumit$Performer.browse"/>
         <item screen="scrumit$ContactsStatus.browse"/>
+        <item screen="scrumit$City.browse"/>
     </menu>
 </menu-config>

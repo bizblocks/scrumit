@@ -1,18 +1,12 @@
 package com.company.scrumit.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
-import com.haulmont.cuba.security.entity.User;
-import javax.persistence.ManyToOne;
 import com.haulmont.chile.core.annotations.NamePattern;
-import java.util.List;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import com.haulmont.cuba.security.entity.User;
 
-@NamePattern("%s|login")
+import javax.persistence.*;
+import java.util.List;
+
+@NamePattern("%s %s|login,name")
 @Entity(name = "scrumit$Performer")
 public class Performer extends User {
     private static final long serialVersionUID = 6564112011977325025L;
@@ -25,7 +19,7 @@ public class Performer extends User {
         joinColumns = @JoinColumn(name = "PERFORMER_ID"),
         inverseJoinColumns = @JoinColumn(name = "CHAT_ROOM_ID"))
     @ManyToMany
-    protected List<ChatRoom> chatRooms;
+    private List<ChatRoom> chatRooms;
 
 
     @JoinTable(name = "SCRUMIT_TEAM_PERFORMER_LINK",
