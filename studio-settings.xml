@@ -10,4 +10,16 @@
     </functionalitySettings>
     <screenDesigner>
     </screenDesigner>
+    <dbScripts>
+        <excludes>
+            <postgres>
+                <item name="180810-1-createScrumitTrackerFileDescriptorLink01.sql">
+                    <![CDATA[create table SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK (
+    TRACKER_ID uuid,
+    FILE_DESCRIPTOR_ID uuid,
+    primary key (TRACKER_ID, FILE_DESCRIPTOR_ID);]]>
+                </item>
+            </postgres>
+        </excludes>
+    </dbScripts>
 </studio>

@@ -1,2 +1,0 @@
-alter table SCRUMIT_TASK add constraint FK_SCRUMIT_TASK_ON_SPRINT foreign key (SPRINT_ID) references SCRUMIT_SPRINT(ID);
-create index IDX_SCRUMIT_TASK_ON_SPRINT on SCRUMIT_TASK (SPRINT_ID);

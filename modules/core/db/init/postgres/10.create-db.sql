@@ -116,6 +116,7 @@ create table SCRUMIT_TASK (
     AMOUNT integer,
     SPRINT_BACKLOG_ID uuid,
     SS_ID bigint,
+    TRACKER_ID_ID uuid,
     --
     primary key (ID)
 )^
@@ -186,7 +187,6 @@ create table SCRUMIT_TRACKER (
     DELETED_BY varchar(50),
     --
     PROJECT_ID uuid,
-    FILE_ID uuid,
     SHORTDESC varchar(50) not null,
     TASK_ID uuid,
     STATUS varchar(50),
@@ -350,6 +350,13 @@ create table SCRUMIT_CONTACTS_STATUS (
     primary key (ID)
 )^
 -- end SCRUMIT_CONTACTS_STATUS
+-- begin SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK
+create table SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK (
+    TRACKER_ID uuid,
+    FILE_DESCRIPTOR_ID uuid,
+    primary key (TRACKER_ID, FILE_DESCRIPTOR_ID)
+)^
+-- end SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK
 -- begin SCRUMIT_CHAT_ROOM_PERFORMER_LINK
 create table SCRUMIT_CHAT_ROOM_PERFORMER_LINK (
     CHAT_ROOM_ID uuid,
@@ -385,6 +392,8 @@ update SEC_USER set DTYPE = 'sec$User' where DTYPE is null ^
 -- end SEC_USER
 -- begin SYS_FILE
 alter table SYS_FILE add column DESCRIPTION varchar(255) ^
+alter table SYS_FILE add column FILE_ID uuid ^
+alter table SYS_FILE add column TRACKER_ID uuid ^
 alter table SYS_FILE add column DTYPE varchar(100) ^
 update SYS_FILE set DTYPE = 'sys$FileDescriptor' where DTYPE is null ^
 -- end SYS_FILE

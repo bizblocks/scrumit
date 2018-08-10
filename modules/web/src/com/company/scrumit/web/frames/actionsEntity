@@ -1,0 +1,8 @@
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd">
+    <layout>
+        <vbox spacing="true" stylename="cuba-edit-window-actions">
+            <button id="windowCommit" action="windowCommit" icon="icons/ok.png" align="TOP_CENTER" width="100%"/>
+            <button id="windowClose" action="windowClose" icon="icons/cancel.png" align="TOP_CENTER" width="100%"/>
+        </vbox>
+    </layout>
+</window>

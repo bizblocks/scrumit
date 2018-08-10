@@ -42,4 +42,6 @@
             template="com/company/scrumit/web/contactsstatus/contacts-status-browse.xml"/>
     <screen id="scrumit$Tracker.browse"
             template="com/company/scrumit/web/tracker/tracker-browse.xml"/>
+    <screen id="scrumit$Tracker.edit"
+            template="com/company/scrumit/web/tracker/tracker-edit.xml"/>
 </screen-config>

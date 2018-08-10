@@ -1,1 +1,0 @@
-alter table SCRUMIT_COMMAND_TASK_LINK add constraint FK_SCRUMIT_COMMAND_TASK_LINK_ON_COMMAND foreign key (COMMAND_ID) references SCRUMIT_TEAM(ID);

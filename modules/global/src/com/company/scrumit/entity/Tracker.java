@@ -13,6 +13,12 @@ import javax.persistence.ManyToOne;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.entity.FileDescriptor;
+import java.util.Set;
+import javax.persistence.OneToMany;
+import java.util.Collection;
+import java.util.List;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TRACKER")
@@ -24,10 +30,12 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
 
-    @OnDelete(DeletePolicy.DENY)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FILE_ID")
-    protected FileDescriptor file;
+
+    @JoinTable(name = "SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK",
+        joinColumns = @JoinColumn(name = "TRACKER_ID"),
+        inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
+    @ManyToMany
+    protected List<FileDescriptor> files;
 
     @NotNull
     @Column(name = "SHORTDESC", nullable = false, length = 50)
@@ -48,6 +56,21 @@ public class Tracker extends StandardEntity {
 
     @Column(name = "DESCRIPTION")
     protected String description;
+
+
+
+
+
+
+    public void setFiles(List<FileDescriptor> files) {
+        this.files = files;
+    }
+
+    public List<FileDescriptor> getFiles() {
+        return files;
+    }
+
+
     public void setStatus(Status status) {
         this.status = status == null ? null : status.getId();
     }
@@ -65,13 +88,7 @@ public class Tracker extends StandardEntity {
     }
 
 
-    public FileDescriptor getFile() {
-        return file;
-    }
 
-    public void setFile(FileDescriptor file) {
-        this.file = file;
-    }
 
 
 

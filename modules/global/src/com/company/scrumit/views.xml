@@ -14,7 +14,7 @@
           extends="_local"
           name="tasks-full">
         <property name="performer"
-                  view="_minimal"/>
+                  view="_local"/>
         <property name="task"
                   view="_minimal">
             <property name="level"/>
@@ -28,7 +28,7 @@
         <property name="sprints"
                   view="_minimal"/>
         <property name="tracker"
-                  view="_minimal"/>
+                  view="_local"/>
         <property name="sprintBacklog"
                   view="_minimal"/>
         <property name="teams"
@@ -169,8 +169,8 @@
           extends="_local"
           name="_full">
         <property name="project"
+                  view="tasks-full"/>
+        <property name="files"
                   view="_local"/>
-        <property name="file"
-                  view="_minimal"/>
     </view>
 </views>
