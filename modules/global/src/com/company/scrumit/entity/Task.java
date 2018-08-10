@@ -75,6 +75,10 @@ public class Task extends StandardEntity {
     protected Tracker tracker;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "COMPLEXITY_ID")
+    protected Complexity complexity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SPRINT_BACKLOG_ID")
     protected SprintBacklog sprintBacklog;
 
@@ -111,6 +115,15 @@ public class Task extends StandardEntity {
         this.duration = duration;
     }
 
+
+
+    public void setComplexity(Complexity complexity) {
+        this.complexity = complexity;
+    }
+
+    public Complexity getComplexity() {
+        return complexity;
+    }
 
 
     public void setControl(Boolean control) {

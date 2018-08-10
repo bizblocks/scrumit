@@ -1,6 +1,8 @@
 package com.company.scrumit.web.task;
 
+import com.company.scrumit.entity.Estimation;
 import com.company.scrumit.entity.Task;
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.WindowManager;
@@ -75,5 +77,15 @@ public class Tasklist extends EntityCombinedScreen {
         Date d = beginField.getValue();
         d.setTime((d.getTime() + ONEDAY * Double.valueOf(durationField.getValue()).longValue()));
         deadlineField.setValue(d);
+    }
+
+    public Component generateEstimationsCountCell(Entity entity) {
+        long count = dataManager.load(Estimation.class)
+                .query("select e from scrumit$Estimation e where e.task.id = :task")
+                .view("_minimal")
+                .parameter("task", entity)
+                .list()
+                .size();
+        return new Table.PlainTextCell(String.valueOf(count));
     }
 }

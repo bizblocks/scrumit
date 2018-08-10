@@ -46,4 +46,10 @@
             template="com/company/scrumit/web/contactsstatus/contacts-status-browse.xml"/>
     <screen id="scrumit$City.browse"
             template="com/company/scrumit/web/city/city-browse.xml"/>
+    <screen id="scrumit%PokerPlanning"
+            template="/com/company/scrumit/web/screens/pokerplanning/pokerPlanning.xml"/>
+    <screen id="scrumit$Estimation.browse"
+            template="com/company/scrumit/web/estimation/estimation-browse.xml"/>
+    <screen id="scrumit$Complexity.browse"
+            template="com/company/scrumit/web/complexity/complexity-browse.xml"/>
 </screen-config>

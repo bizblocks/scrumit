@@ -33,6 +33,8 @@
                   view="_minimal"/>
         <property name="teams"
                   view="_minimal"/>
+        <property name="complexity"
+                  view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
@@ -52,6 +54,7 @@
         <property name="duration"/>
         <property name="amount"/>
         <property name="control"/>
+        <property name="complexity"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
@@ -163,6 +166,74 @@
                       view="_minimal"/>
             <property name="deadline"/>
             <property name="begin"/>
+        </property>
+    </view>
+    <view class="com.company.scrumit.entity.Task"
+          extends="_minimal"
+          name="task-poker-planning">
+        <property name="complexity"
+                  view="_local"/>
+        <property name="performer"
+                  view="_minimal"/>
+        <property name="task"
+                  view="_minimal"/>
+    </view>
+
+    <view class="com.company.scrumit.entity.Estimation"
+          extends="_minimal"
+          name="estimation-view">
+        <property name="user"
+                  view="_minimal"/>
+        <property name="task"
+                  view="_minimal">
+            <property name="complexity"
+                      view="_local"/>
+            <property name="task"
+                      view="_minimal">
+                <property name="complexity"
+                          view="_local"/>
+            </property>
+        </property>
+    </view>
+    <view class="com.company.scrumit.entity.Estimation"
+          extends="_minimal"
+          name="estimation-browse-view">
+        <property name="user"
+                  view="_minimal"/>
+        <property name="task"
+                  view="_minimal">
+            <property name="shortdesc"/>
+        </property>
+        <property name="complexity"
+                  view="_local"/>
+    </view>
+    <view class="com.company.scrumit.entity.Performer"
+          extends="_minimal"
+          name="performers-userTeams-view">
+        <property name="name"/>
+        <property name="teams"
+                  view="_minimal">
+            <property name="members"
+                      view="_minimal">
+                <property name="name"/>
+            </property>
+        </property>
+    </view>
+    <view class="com.company.scrumit.entity.Task"
+          extends="_minimal"
+          name="task-commit-complexity-view">
+        <property name="complexity"
+                  view="_local"/>
+    </view>
+    <view class="com.company.scrumit.entity.Task"
+          extends="_minimal"
+          name="task-parent-tasks-view">
+        <property name="complexity"
+                  view="_local"/>
+        <property name="task"
+                  view="_minimal">
+            <property name="complexity"
+                      view="_local"/>
         </property>
     </view>
 </views>
