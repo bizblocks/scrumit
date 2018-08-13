@@ -5,7 +5,10 @@ import com.company.scrumit.entity.Task;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.WindowManager;
-import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.components.AbstractLookup;
+import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.components.TreeTable;
+import com.haulmont.cuba.gui.components.Window;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.settings.Settings;
 import com.smartsheet.api.Smartsheet;
@@ -29,6 +32,10 @@ public class Smartsheetexport extends AbstractLookup {
     private long sheetId;
     private long taskId;
     private Sprint sprint;
+
+    @Inject
+    private TextField token;
+
 
     @Inject
     private TreeTable tab;
@@ -76,14 +83,6 @@ public class Smartsheetexport extends AbstractLookup {
             }
             close(Window.CLOSE_ACTION_ID);
         }
-    }
-
-    @Inject
-    private TextField token;
-
-    @Override
-    public void setLookupComponent(Component lookupComponent) {
-        super.setLookupComponent(lookupComponent);
     }
 
     public void refresh()
@@ -164,6 +163,21 @@ public class Smartsheetexport extends AbstractLookup {
             t.setSsId(row.getId());
             dataManager.commit(t);
         });
+
+        List<Row> rowsToUpdate = new LinkedList<>();
+        rows.forEach(row -> {
+            Task t = tasks.get(row.getCells().get(taskIdx.get()).getDisplayValue());
+            if(t==null)
+                return;
+            Long ssid = t.getTask()==null ? null : t.getTask().getSsId();
+            if(ssid==null)
+                return;
+            Row updRow = new Row();
+            updRow.setId(row.getId());
+            updRow.setParentId(ssid);
+            rowsToUpdate.add(updRow);
+        });
+        ss.sheetResources().rowResources().updateRows(sheetId, rowsToUpdate);
     }
 
     private List<Row> taskList()
@@ -178,7 +192,7 @@ public class Smartsheetexport extends AbstractLookup {
             if(t.getBegin()!=null)
                 cells.add(createCell("Начало", ssFormatDate(t.getBegin())));
             if(t.getDeadline()!=null)
-                cells.add(createCell("Период", t.getBegin().compareTo(t.getDeadline())));
+                cells.add(createCell("Период", t.getBegin().compareTo(t.getDeadline())+ 1));
             Row row = new Row();
             row.setCells(cells);
             row.setParentId(taskId);

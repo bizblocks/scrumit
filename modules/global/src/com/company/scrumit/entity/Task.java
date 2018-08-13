@@ -66,7 +66,7 @@ public class Task extends StandardEntity {
     protected Date begin;
 
     @Column(name = "DURATION")
-    protected String duration;
+    protected Integer duration;
 
     @Column(name = "AMOUNT")
     protected Integer amount;
@@ -94,6 +94,15 @@ public class Task extends StandardEntity {
     @Column(name = "SS_ID")
     protected Long ssId;
 
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+
     public void setSsId(Long ssId) {
         this.ssId = ssId;
     }
@@ -102,14 +111,6 @@ public class Task extends StandardEntity {
         return ssId;
     }
 
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
 
 
 

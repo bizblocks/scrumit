@@ -1,6 +1,8 @@
 package com.company.scrumit.web.task;
 
+import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
+import com.company.scrumit.entity.TaskType;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.WindowManager;
@@ -51,6 +53,9 @@ public class Tasklist extends EntityCombinedScreen {
         Task t = metadata.create(Task.class);
         t.setShortdesc("");
         t.setTask(table.getSingleSelected());
+        t.setProirity(Priority.Middle);
+        t.setType(TaskType.task);
+        t.setDuration(1);
         dataManager.commit(t);
         tasksDs.refresh();
     }
@@ -73,7 +78,7 @@ public class Tasklist extends EntityCombinedScreen {
         if (beginField.getValue() == null || durationField.getValue() == null)
             return;
         Date d = beginField.getValue();
-        d.setTime((d.getTime() + ONEDAY * Double.valueOf(durationField.getValue()).longValue()));
+        d.setTime((d.getTime() + ONEDAY * (int)durationField.getValue()));
         deadlineField.setValue(d);
     }
 }

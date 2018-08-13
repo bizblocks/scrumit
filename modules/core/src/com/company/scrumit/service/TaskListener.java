@@ -1,16 +1,18 @@
 package com.company.scrumit.service;
 
-import org.springframework.stereotype.Component;
-import com.haulmont.cuba.core.listener.BeforeInsertEntityListener;
-import com.haulmont.cuba.core.EntityManager;
+import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
+import com.haulmont.cuba.core.EntityManager;
+import com.haulmont.cuba.core.listener.BeforeInsertEntityListener;
 import com.haulmont.cuba.core.listener.BeforeUpdateEntityListener;
+import org.springframework.stereotype.Component;
 
 @Component("scrumit_TaskListener")
 public class TaskListener implements BeforeInsertEntityListener<Task>, BeforeUpdateEntityListener<Task> {
 
     @Override
     public void onBeforeInsert(Task entity, EntityManager entityManager) {
+        entity.setProirity(Priority.Middle);
         updateLevelAndTop(entity, entityManager);
         entityManager.persist(entity);
     }
