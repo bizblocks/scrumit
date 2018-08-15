@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.scrumit.web.tracker.TrackerBrowse"
+        focusComponent="trackersTable"
+        lookupComponent="trackersTable"
+        messagesPack="com.company.scrumit.web.tracker">
+    <dsContext>
+        <groupDatasource id="trackersDs"
+                         class="com.company.scrumit.entity.Tracker"
+                         view="_full">
+            <query>
+                <![CDATA[select e from scrumit$Tracker e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="trackersTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="trackersTable"
+                datasource="trackersDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="trackersTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+                <action id="excel"/>
+                <action id="exclude"/>
+                <action id="add"/>
+                <action id="refresh"/>
+            </actions>
+            <columns>
+                <column id="shortdesc"/>
+                <column id="type"/>
+                <column id="status"/>
+                <column id="description"/>
+                <column id="files"/>
+                <column id="trackerPriorityType"/>
+            </columns>
+            <rows datasource="trackersDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="trackersTable.create"/>
+                <button id="editBtn"
+                        action="trackersTable.edit"/>
+                <button id="removeBtn"
+                        action="trackersTable.remove"/>
+                <button id="refreshBtn"
+                        action="trackersTable.refresh"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

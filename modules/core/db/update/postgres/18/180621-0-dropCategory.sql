@@ -1,2 +1,0 @@
-alter table scrumit_category rename to SCRUMIT_CATEGORY__U72446 ;
-alter table scrumit_people_category drop constraint FK_SCRUMIT_PEOPLE_CATEGORY_ON_CATEGORY ;

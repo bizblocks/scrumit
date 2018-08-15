@@ -10,6 +10,15 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
+import com.haulmont.cuba.core.entity.FileDescriptor;
+import java.util.Set;
+import javax.persistence.OneToMany;
+import java.util.Collection;
+import java.util.List;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TRACKER")
@@ -21,6 +30,13 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
 
+
+    @JoinTable(name = "SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK",
+        joinColumns = @JoinColumn(name = "TRACKER_ID"),
+        inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
+    @ManyToMany
+    protected List<FileDescriptor> files;
+
     @NotNull
     @Column(name = "SHORTDESC", nullable = false, length = 50)
     protected String shortdesc;
@@ -29,11 +45,54 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "TASK_ID")
     protected Task task;
 
+    @Column(name = "STATUS")
+    protected String status;
+
+    @Column(name = "TRACKER_PRIORITY_TYPE")
+    protected String trackerPriorityType;
+
     @Column(name = "TYPE_")
     protected String type;
 
     @Column(name = "DESCRIPTION")
     protected String description;
+
+
+
+
+
+
+    public void setFiles(List<FileDescriptor> files) {
+        this.files = files;
+    }
+
+    public List<FileDescriptor> getFiles() {
+        return files;
+    }
+
+
+    public void setStatus(Status status) {
+        this.status = status == null ? null : status.getId();
+    }
+
+    public Status getStatus() {
+        return status == null ? null : Status.fromId(status);
+    }
+
+    public void setTrackerPriorityType(TrackerPriorityType trackerPriorityType) {
+        this.trackerPriorityType = trackerPriorityType == null ? null : trackerPriorityType.getId();
+    }
+
+    public TrackerPriorityType getTrackerPriorityType() {
+        return trackerPriorityType == null ? null : TrackerPriorityType.fromId(trackerPriorityType);
+    }
+
+
+
+
+
+
+
 
 
     public void setProject(Task project) {
