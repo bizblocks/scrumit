@@ -10,8 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
-import com.haulmont.cuba.core.entity.annotation.OnDelete;
-import com.haulmont.cuba.core.global.DeletePolicy;
 
 @Listeners("scrumit_TaskListener")
 @NamePattern("%s|shortdesc")
@@ -105,18 +103,6 @@ public class Task extends StandardEntity {
     }
 
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TRACKER_ID_ID")
-    protected Tracker trackerId;
-
-    public void setTrackerId(Tracker trackerId) {
-        this.trackerId = trackerId;
-    }
-
-    public Tracker getTrackerId() {
-        return trackerId;
-    }
 
 
     public void setSsId(Long ssId) {
