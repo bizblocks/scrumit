@@ -16,70 +16,92 @@
                               class="com.company.scrumit.entity.Task"
                               view="tasks-full">
             <query>
-                <![CDATA[select e from scrumit$Task e where e.type=:custom$project]]>
+                <![CDATA[select e from scrumit$Task e where e.type='project']]>
             </query>
         </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
-    <layout
-            spacing="true">
+    <layout spacing="true">
         <flowBox width="100%">
             <groupBox width="70%">
-                <grid id="grid" width="100%" margin="true" spacing="true">
+                <grid id="grid"
+                      margin="true"
+                      spacing="true"
+                      width="100%">
                     <columns>
                         <column/>
-                        <column flex="3"/>
+                        <column flex="3.0"/>
                         <column/>
-                        <column flex="0"/>
-                        <column flex="3"/>
+                        <column flex="0.0"/>
+                        <column flex="3.0"/>
                         <column/>
                     </columns>
                     <rows>
                         <row>
                             <label value="msg://Parent"/>
                             <lookupPickerField id="project"
+                                               colspan="4"
                                                datasource="trackerDs"
                                                optionsDatasource="taskDs"
                                                property="project"
-                                               width="100%"
-                                               colspan="4">
+                                               width="100%">
                                 <actions>
-                                    <action id="open" openType="DIALOG"/>
-                                    <action id="lookup" openType="DIALOG"/>
-                                    <action id="clear" openType="DIALOG"/>
+                                    <action id="open"
+                                            openType="DIALOG"/>
+                                    <action id="lookup"
+                                            openType="DIALOG"/>
+                                    <action id="clear"
+                                            openType="DIALOG"/>
                                 </actions>
                             </lookupPickerField>
-
-                            <button caption="msg://createTask" invoke="createTask"/>
+                            <button caption="msg://createTask"
+                                    invoke="createTask"/>
                         </row>
                         <row>
                             <label value="msg://shortdesc"/>
-                            <textField property="shortdesc" id="shortdesc" datasource="trackerDs" width="100%" colspan="2"/>
+                            <textField id="shortdesc"
+                                       colspan="2"
+                                       datasource="trackerDs"
+                                       property="shortdesc"
+                                       width="100%"/>
                             <label value="msg://trackerPriorityType"/>
-                            <lookupField property="trackerPriorityType" datasource="trackerDs" width="100%" colspan="2"/>
-
+                            <lookupField colspan="2"
+                                         datasource="trackerDs"
+                                         property="trackerPriorityType"
+                                         width="100%"/>
                         </row>
                         <row>
-                            <label value="msg://status" />
-                            <lookupField property="status" id="status" datasource="trackerDs" width="100%" colspan="2"/>
+                            <label value="msg://status"/>
+                            <lookupField id="status"
+                                         colspan="2"
+                                         datasource="trackerDs"
+                                         property="status"
+                                         width="100%"/>
                             <label value="msg://type"/>
-                            <lookupField property="type"  datasource="trackerDs" width="100%" colspan="2"/>
+                            <lookupField colspan="2"
+                                         datasource="trackerDs"
+                                         property="type"
+                                         width="100%"/>
                         </row>
                         <row>
-                            <hbox colspan="6" width="100%">
-                                <groupBox caption="msg://description" width="98%" align="TOP_LEFT">
-                                    <richTextArea property="description"
-                                                  id="description"
-                                                  width="100%"
+                            <hbox colspan="6"
+                                  width="100%">
+                                <groupBox caption="msg://description"
+                                          width="98%">
+                                    <richTextArea id="description"
                                                   datasource="trackerDs"
-                                                  height="300px"/>
+                                                  height="300px"
+                                                  property="description"
+                                                  width="100%"/>
                                 </groupBox>
-
-
-                                <groupBox id="filesBox" caption="msg://upload"  width="98%" align="TOP_RIGHT">
+                                <groupBox id="filesBox"
+                                          align="TOP_RIGHT"
+                                          caption="msg://upload"
+                                          width="98%">
                                     <table id="filesTable"
-                                           height="300px" width="100%">
+                                           height="300px"
+                                           width="100%">
                                         <actions>
                                             <action id="add"/>
                                             <action id="remove"/>
@@ -93,27 +115,23 @@
                                         <buttonsPanel>
                                             <multiUpload id="multiUpload"
                                                          caption="Upload files"/>
-                                            <button caption="msg://download" invoke="download"/>
+                                            <button caption="msg://download"
+                                                    invoke="download"/>
                                             <button action="filesTable.add"/>
                                             <button action="filesTable.remove"/>
                                         </buttonsPanel>
                                     </table>
                                 </groupBox>
                             </hbox>
-
                         </row>
-                        <row>
-
-                        </row>
+                        <row/>
                     </rows>
                 </grid>
-
             </groupBox>
-
             <groupBox width="20%">
-                <frame id="windowActions" src="com/company/scrumit/web/frames/actionsEntity"/>
+                <frame id="windowActions"
+                       src="com/company/scrumit/web/frames/actionsEntity"/>
             </groupBox>
-
         </flowBox>
     </layout>
 </window>

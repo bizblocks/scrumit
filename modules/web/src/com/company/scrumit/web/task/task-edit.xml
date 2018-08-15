@@ -12,27 +12,49 @@
         <collectionDatasource id="task1Ds"
                               class="com.company.scrumit.entity.Task"
                               view="tasks-full"/>
+        <collectionDatasource id="performersDs"
+                              class="com.company.scrumit.entity.Performer"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from scrumit$Performer e]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="windowActions"
             spacing="true">
-        <fieldGroup id="fieldGroup"
-                    datasource="taskDs">
-            <column width="300px">
-                <field property="shortdesc"/>
-                <field property="description"/>
-                <field property="performer"/>
-                <field property="deadline"/>
-                <field property="task"/>
-                <field property="begin"/>
-                <field property="duration"/>
-                <field property="amount"/>
-                <field property="type"/>
-                <field property="proirity"/>
-                <field property="control"/>
-            </column>
-        </fieldGroup>
+        <vbox id="editBox"
+              expand="description"
+              margin="false,false,false,true"
+              spacing="true">
+            <scrollBox id="fieldGroupBox">
+                <fieldGroup id="fieldGroup"
+                            datasource="taskDs">
+                    <column width="300px">
+                        <field caption="mainMsg://Parent"
+                               property="task"/>
+                        <field property="done"/>
+                        <field property="proirity"/>
+                        <field property="begin"/>
+                        <field property="duration"/>
+                        <field property="deadline"/>
+                    </column>
+                    <column width="300px">
+                        <field property="shortdesc"/>
+                        <field property="control"/>
+                        <field property="type"/>
+                        <field property="amount"/>
+                        <field optionsDatasource="performersDs"
+                               property="performer"/>
+                    </column>
+                </fieldGroup>
+            </scrollBox>
+            <richTextArea id="description"
+                          datasource="taskDs"
+                          property="description"
+                          width="100%"/>
+        </vbox>
         <frame id="windowActions"
                screen="editWindowActions"/>
     </layout>

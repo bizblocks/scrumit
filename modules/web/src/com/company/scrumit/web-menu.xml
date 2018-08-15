@@ -6,8 +6,7 @@
         <item screen="scrumit$Task.performerTasks"/>
         <item screen="sprintPlanning"/>
         <item screen="SmartsheetExport"/>
-        <item id="traker"
-              screen="scrumit$Tracker.browse"/>
+        <item screen="scrumit$Tracker.browse"/>
     </menu>
     <menu id="refs"
           insertBefore="administration">

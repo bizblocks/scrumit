@@ -1,23 +1,19 @@
 package com.company.scrumit.web.tracker;
 
-import com.company.scrumit.entity.Performer;
 import com.company.scrumit.entity.Task;
+import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.web.task.TaskEdit;
-import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.FileStorageException;
 import com.haulmont.cuba.gui.AppConfig;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
-import com.company.scrumit.entity.Tracker;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
-import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
-import com.haulmont.cuba.web.gui.components.WebLookupPickerField;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -65,18 +61,13 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
-
-
-//        taskDs.refresh(ParamsMap.of("project", "project"));
-//        if (trackerDs.isModified()) {
-//            status.setValue(getItem().getStatus());
-//        }
     }
 
     @Override
     public boolean isModified() {
         return trackerDs.isModified();
     }
+
     @Override
     public void ready() {
         multiUpload.addQueueUploadCompleteListener(() -> {
@@ -110,9 +101,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
         multiUpload.addFileUploadErrorListener(event ->
                 showNotification("File upload error", NotificationType.HUMANIZED));
-
-
-
     }
 
     public void createTask() {
@@ -121,9 +109,9 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         final DataSupplier dataService = dataSource.getDataSupplier();
         final Entity item = dataService.newInstance(dataSource.getMetaClass());
         if (project.getValue() != null) {
-            ((Task) item).setTask((Task) project.getValue());
+            ((Task) item).setTask(project.getValue());
             if (((Task) project.getValue()).getPerformer() != null)
-                ((Task) item).setPerformer((Performer) ((Task) project.getValue()).getPerformer());
+                ((Task) item).setPerformer(((Task) project.getValue()).getPerformer());
         }
         if (shortdesc.getValue() != null) {
             ((Task) item).setShortdesc(shortdesc.getValue());
@@ -131,23 +119,20 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         if (description.getValue() != null)
             ((Task) item).setDescription(description.getValue());
         TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
-        editor.getDialogOptions().setWidth(1000).setResizable(true);
-        editor.addListener(new CloseListener() {
-            @Override
-            public void windowClosed(String actionId) {
-                if (Window.COMMIT_ACTION_ID.equals(actionId) && editor instanceof Editor) {
-                    Object item = ((TaskEdit) editor).getItem();
-                    if (item instanceof Entity) {
-                        Boolean modifed = dataSource.isModified();
-                        dataSource.addItem((Entity) item);
-                        ((DatasourceImplementation) dataSource).setModified(modifed);
-                    }
-
-                    dataSource.addItem((Entity) item);
-                    dataSource.refresh();
+        editor.getDialogOptions().setWidth((float)1000.0).setResizable(true);
+        editor.addCloseListener(actionId -> {
+            if (Window.COMMIT_ACTION_ID.equals(actionId)) {
+                Object task = editor.getItem();
+                if (task != null) {
+                    Boolean modifed = dataSource.isModified();
+                    dataSource.addItem((Entity) task);
+                    ((DatasourceImplementation) dataSource).setModified(modifed);
                 }
-                lookupPickerField.requestFocus();
+
+                dataSource.addItem(item);
+                dataSource.refresh();
             }
+            lookupPickerField.requestFocus();
         });
     }
 
