@@ -41,6 +41,8 @@ public class Tasklist extends EntityCombinedScreen {
                return;
            durationField.setValue((deadlineField.getValue().getTime()-beginField.getValue().getTime())/ONEDAY);
         });
+        addBeforeCloseWithCloseButtonListener(event -> table.getDatasource().commit());
+        addBeforeCloseWithShortcutListener(event -> table.getDatasource().commit());
     }
 
     @Inject

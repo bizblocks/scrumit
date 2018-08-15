@@ -63,6 +63,7 @@
                     <properties include=".*"/>
                 </filter>
                 <treeTable id="table"
+                           editable="true"
                            multiselect="true"
                            width="100%">
                     <actions>
@@ -77,7 +78,8 @@
                         <column id="proirity"/>
                         <column id="done"
                                 editable="true"/>
-                        <column id="control"/>
+                        <column id="control"
+                                editable="true"/>
                         <column id="description"
                                 maxTextLength="100"/>
                     </columns>

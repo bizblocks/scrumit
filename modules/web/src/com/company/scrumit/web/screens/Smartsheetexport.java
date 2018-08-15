@@ -164,7 +164,6 @@ public class Smartsheetexport extends AbstractLookup {
             dataManager.commit(t);
         });
 
-        List<Row> rowsToUpdate = new LinkedList<>();
         rows.forEach(row -> {
             Task t = tasks.get(row.getCells().get(taskIdx.get()).getDisplayValue());
             if(t==null)
@@ -172,12 +171,18 @@ public class Smartsheetexport extends AbstractLookup {
             Long ssid = t.getTask()==null ? null : t.getTask().getSsId();
             if(ssid==null)
                 return;
+            List<Row> rowsToUpdate = new LinkedList<>();
             Row updRow = new Row();
             updRow.setId(row.getId());
             updRow.setParentId(ssid);
             rowsToUpdate.add(updRow);
+            try {
+                ss.sheetResources().rowResources().updateRows(sheetId, rowsToUpdate);
+            } catch (SmartsheetException e) {
+                showNotification(t.getShortdesc()+":"+e.getMessage(), NotificationType.TRAY);
+            }
         });
-        ss.sheetResources().rowResources().updateRows(sheetId, rowsToUpdate);
+
     }
 
     private List<Row> taskList()
