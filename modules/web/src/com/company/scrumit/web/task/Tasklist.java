@@ -48,20 +48,6 @@ public class Tasklist extends EntityCombinedScreen {
         });
     }
 
-    @Override
-    protected boolean preClose(String actionId) {
-        if (control.getValue()) {
-            LoadContext.Query query = new LoadContext.Query("select t from scrumit$Tracker t where t.project.id = :id").setParameter("id", taskDs.getItem().getId());
-            LoadContext<Tracker> loadContext = LoadContext.create(Tracker.class)
-                    .setQuery(query);
-            if (dataManager.load(loadContext)!= null) {
-                Tracker tracker = dataManager.load(loadContext);
-                tracker.setStatus(Status.Done);
-                dataManager.commit(tracker);
-            }
-        }
-        return super.preClose(actionId);
-    }
 
     public void onBtnCreateInGroupClick() {
         Task t = metadata.create(Task.class);

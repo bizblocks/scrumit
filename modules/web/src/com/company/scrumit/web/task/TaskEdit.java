@@ -24,33 +24,9 @@ import java.util.Map;
 import static com.haulmont.cuba.gui.components.Frame.NotificationType.WARNING;
 
 public class TaskEdit extends AbstractEditor<Task> {
-    @Named("fieldGroup.control")
-    protected CheckBox control;
-    @Inject
-    protected DataManager dataManager;
+
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
-        control.addValueChangeListener(new ValueChangeListener() {
-            @Override
-            public void valueChanged(ValueChangeEvent e) {
-
-            }
-        });
-    }
-
-    @Override
-    protected boolean postCommit(boolean committed, boolean close) {
-        if (control.getValue()) {
-            Query query = new Query("select t from scrumit$Tracker t where t.project.id = :id").setParameter("id", getItem().getId());
-            LoadContext<Tracker> loadContext = LoadContext.create(Tracker.class)
-                    .setQuery(query);
-            if (dataManager.load(loadContext)!= null) {
-                Tracker tracker = dataManager.load(loadContext);
-                tracker.setStatus(Status.Done);
-                dataManager.commit(tracker);
-            }
-        }
-        return super.postCommit(committed, close);
     }
 }

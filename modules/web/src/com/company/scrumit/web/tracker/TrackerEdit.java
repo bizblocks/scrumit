@@ -6,6 +6,7 @@ import com.company.scrumit.web.task.TaskEdit;
 import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
+import com.haulmont.cuba.core.global.EntityStates;
 import com.haulmont.cuba.core.global.FileStorageException;
 import com.haulmont.cuba.gui.AppConfig;
 import com.haulmont.cuba.gui.WindowManager;
@@ -56,6 +57,9 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     @Inject
     private Table<FileDescriptor> filesTable;
+
+    @Inject
+    private EntityStates entityStates;
 
     @Override
     protected void initNewItem(Tracker item) {
@@ -119,20 +123,29 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         LookupPickerField lookupPickerField = ((LookupPickerField) getComponent("project"));
         final CollectionDatasource dataSource = lookupPickerField.getOptionsDatasource();
         final DataSupplier dataService = dataSource.getDataSupplier();
-        final Entity item = dataService.newInstance(dataSource.getMetaClass());
+        final Task item = dataService.newInstance(dataSource.getMetaClass());
         if (project.getValue() != null) {
-            ((Task) item).setTask((Task) project.getValue());
+            item.setTask((Task) project.getValue());
             if (((Task) project.getValue()).getPerformer() != null)
-                ((Task) item).setPerformer((Performer) ((Task) project.getValue()).getPerformer());
+                item.setPerformer((Performer) ((Task) project.getValue()).getPerformer());
         }
         if (shortdesc.getValue() != null) {
-            ((Task) item).setShortdesc(shortdesc.getValue());
+            item.setShortdesc(shortdesc.getValue());
         }
         if (description.getValue() != null)
-            ((Task) item).setDescription(description.getValue());
+            item.setDescription(description.getValue());
+
+        if (entityStates.isNew(getItem())) {
+            showNotification("Please, save the object.", NotificationType.WARNING);
+            return;
+        }
+        if (entityStates.isManaged(getItem())) {
+            item.getTracker().add(getItem());
+        }
+
         TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
         editor.getDialogOptions().setWidth(1000).setResizable(true);
-        editor.addListener(new CloseListener() {
+        editor.addCloseListener(new CloseListener() {
             @Override
             public void windowClosed(String actionId) {
                 if (Window.COMMIT_ACTION_ID.equals(actionId) && editor instanceof Editor) {

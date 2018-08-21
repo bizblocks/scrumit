@@ -116,7 +116,6 @@ create table SCRUMIT_TASK (
     AMOUNT integer,
     SPRINT_BACKLOG_ID uuid,
     SS_ID bigint,
-    TRACKER_ID_ID uuid,
     --
     primary key (ID)
 )^
@@ -188,7 +187,6 @@ create table SCRUMIT_TRACKER (
     --
     PROJECT_ID uuid,
     SHORTDESC varchar(50) not null,
-    TASK_ID uuid,
     STATUS varchar(50),
     TRACKER_PRIORITY_TYPE varchar(50),
     TYPE_ varchar(50),
