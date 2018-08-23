@@ -1,12 +1,9 @@
 package com.company.scrumit.web.task;
 
-import com.company.scrumit.entity.Status;
 import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
-import com.company.scrumit.entity.Tracker;
 import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;

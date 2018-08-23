@@ -35,6 +35,9 @@
                 <action id="refresh"/>
             </actions>
             <columns>
+                <group>
+                    <column id="project"/>
+                </group>
                 <column id="shortdesc"/>
                 <column id="type"/>
                 <column id="status"/>

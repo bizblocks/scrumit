@@ -1,10 +1,8 @@
 package com.company.scrumit.web.tracker;
 
-import com.company.scrumit.entity.Performer;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.web.task.TaskEdit;
-import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.EntityStates;
@@ -12,14 +10,11 @@ import com.haulmont.cuba.core.global.FileStorageException;
 import com.haulmont.cuba.gui.AppConfig;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
-import com.company.scrumit.entity.Tracker;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
-import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
-import com.haulmont.cuba.web.gui.components.WebLookupPickerField;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -108,17 +103,20 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 showNotification("File upload error", NotificationType.HUMANIZED));
     }
 
+    @Inject
+    private EntityStates entityStates;
+
     public void createTask() {
         LookupPickerField lookupPickerField = ((LookupPickerField) getComponent("project"));
         final CollectionDatasource dataSource = lookupPickerField.getOptionsDatasource();
         final DataSupplier dataService = dataSource.getDataSupplier();
         final Task item = dataService.newInstance(dataSource.getMetaClass());
         if (project.getValue() != null) {
-            ((Task) item).setTask(project.getValue());
-            item.setTask((Task) project.getValue());
+            item.setTask(project.getValue());
+            item.setTask(project.getValue());
             if (((Task) project.getValue()).getPerformer() != null)
-                ((Task) item).setPerformer(((Task) project.getValue()).getPerformer());
-                item.setPerformer((Performer) ((Task) project.getValue()).getPerformer());
+                item.setPerformer(((Task) project.getValue()).getPerformer());
+                item.setPerformer(((Task) project.getValue()).getPerformer());
         }
         if (shortdesc.getValue() != null) {
             item.setShortdesc(shortdesc.getValue());

@@ -1,24 +1,12 @@
 package com.company.scrumit.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
-import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.ManyToOne;
-import com.haulmont.cuba.core.entity.annotation.OnDelete;
-import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.core.entity.FileDescriptor;
-import java.util.Set;
-import javax.persistence.OneToMany;
-import java.util.Collection;
+import com.haulmont.cuba.core.entity.StandardEntity;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TRACKER")
@@ -49,6 +37,7 @@ public class Tracker extends StandardEntity {
     @Column(name = "TYPE_")
     protected String type;
 
+    @Lob
     @Column(name = "DESCRIPTION")
     protected String description;
 
