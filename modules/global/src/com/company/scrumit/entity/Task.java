@@ -10,8 +10,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
-@Listeners("scrumit_TaskListener")
+@Listeners({"scrumit_TaskListener", "scrumit_TaskEntityListener"})
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TASK")
 @Entity(name = "scrumit$Task")
@@ -71,8 +73,8 @@ public class Task extends StandardEntity {
     @Column(name = "AMOUNT")
     protected Integer amount;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "task")
-    protected Tracker tracker;
+    @OneToMany(mappedBy = "project")
+    protected List<Tracker> tracker;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SPRINT_BACKLOG_ID")
@@ -98,12 +100,17 @@ public class Task extends StandardEntity {
         return duration;
     }
 
+    public List<Tracker> getTracker() {
+        return tracker;
+    }
+
     public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
-
-
+    public void setTracker(List<Tracker> tracker) {
+        this.tracker = tracker;
+    }
 
     public void setSsId(Long ssId) {
         this.ssId = ssId;
@@ -113,9 +120,6 @@ public class Task extends StandardEntity {
         return ssId;
     }
 
-
-
-
     public void setControl(Boolean control) {
         this.control = control;
     }
@@ -123,7 +127,6 @@ public class Task extends StandardEntity {
     public Boolean getControl() {
         return control;
     }
-
 
     public void setSprints(List<Sprint> sprints) {
         this.sprints = sprints;
@@ -133,7 +136,6 @@ public class Task extends StandardEntity {
         return sprints;
     }
 
-
     public void setDone(Boolean done) {
         this.done = done;
     }
@@ -141,8 +143,6 @@ public class Task extends StandardEntity {
     public Boolean getDone() {
         return done;
     }
-
-
 
     public void setLevel(Integer level) {
         this.level = level;
@@ -160,7 +160,6 @@ public class Task extends StandardEntity {
         return top;
     }
 
-
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
@@ -168,7 +167,6 @@ public class Task extends StandardEntity {
     public List<Team> getTeams() {
         return teams;
     }
-
 
     public void setProirity(Priority proirity) {
         this.proirity = proirity == null ? null : proirity.getId();
@@ -178,7 +176,6 @@ public class Task extends StandardEntity {
         return proirity == null ? null : Priority.fromId(proirity);
     }
 
-
     public void setRealduration(Integer realduration) {
         this.realduration = realduration;
     }
@@ -186,8 +183,6 @@ public class Task extends StandardEntity {
     public Integer getRealduration() {
         return realduration;
     }
-
-
 
     public void setSprintBacklog(SprintBacklog sprintBacklog) {
         this.sprintBacklog = sprintBacklog;
@@ -197,7 +192,6 @@ public class Task extends StandardEntity {
         return sprintBacklog;
     }
 
-
     public void setType(TaskType type) {
         this.type = type == null ? null : type.getId();
     }
@@ -205,16 +199,6 @@ public class Task extends StandardEntity {
     public TaskType getType() {
         return type == null ? null : TaskType.fromId(type);
     }
-
-
-    public void setTracker(Tracker tracker) {
-        this.tracker = tracker;
-    }
-
-    public Tracker getTracker() {
-        return tracker;
-    }
-
 
     public Task getTask() {
         return task;
@@ -224,7 +208,6 @@ public class Task extends StandardEntity {
         this.task = task;
     }
 
-
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
@@ -233,7 +216,6 @@ public class Task extends StandardEntity {
         return amount;
     }
 
-
     public void setBegin(Date begin) {
         this.begin = begin;
     }
@@ -241,7 +223,6 @@ public class Task extends StandardEntity {
     public Date getBegin() {
         return begin;
     }
-
 
     public void setDescription(String description) {
         this.description = description;
@@ -259,7 +240,6 @@ public class Task extends StandardEntity {
         return performer;
     }
 
-
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
@@ -268,9 +248,6 @@ public class Task extends StandardEntity {
         return deadline;
     }
 
-
-
-
     public void setShortdesc(String shortdesc) {
         this.shortdesc = shortdesc;
     }
@@ -278,6 +255,4 @@ public class Task extends StandardEntity {
     public String getShortdesc() {
         return shortdesc;
     }
-
-
 }

@@ -30,7 +30,6 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
 
-
     @JoinTable(name = "SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK",
         joinColumns = @JoinColumn(name = "TRACKER_ID"),
         inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
@@ -40,10 +39,6 @@ public class Tracker extends StandardEntity {
     @NotNull
     @Column(name = "SHORTDESC", nullable = false, length = 50)
     protected String shortdesc;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TASK_ID")
-    protected Task task;
 
     @Column(name = "STATUS")
     protected String status;
@@ -57,11 +52,6 @@ public class Tracker extends StandardEntity {
     @Column(name = "DESCRIPTION")
     protected String description;
 
-
-
-
-
-
     public void setFiles(List<FileDescriptor> files) {
         this.files = files;
     }
@@ -69,7 +59,6 @@ public class Tracker extends StandardEntity {
     public List<FileDescriptor> getFiles() {
         return files;
     }
-
 
     public void setStatus(Status status) {
         this.status = status == null ? null : status.getId();
@@ -87,14 +76,6 @@ public class Tracker extends StandardEntity {
         return trackerPriorityType == null ? null : TrackerPriorityType.fromId(trackerPriorityType);
     }
 
-
-
-
-
-
-
-
-
     public void setProject(Task project) {
         this.project = project;
     }
@@ -103,16 +84,6 @@ public class Tracker extends StandardEntity {
         return project;
     }
 
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
-
-    public Task getTask() {
-        return task;
-    }
-
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -120,7 +91,6 @@ public class Tracker extends StandardEntity {
     public String getDescription() {
         return description;
     }
-
 
     public void setType(TicketsType type) {
         this.type = type == null ? null : type.getId();

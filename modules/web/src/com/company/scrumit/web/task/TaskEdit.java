@@ -3,6 +3,9 @@ package com.company.scrumit.web.task;
 import com.company.scrumit.entity.Status;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Tracker;
+import com.haulmont.cuba.core.app.DataService;
+import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.LoadContext.Query;
@@ -15,6 +18,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Date;
 import java.util.Map;
+
+import static com.haulmont.cuba.gui.components.Frame.NotificationType.WARNING;
 
 public class TaskEdit extends AbstractEditor<Task> {
     private static final long ONEDAY = 24*60*60*1000;

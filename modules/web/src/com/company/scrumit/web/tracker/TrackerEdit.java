@@ -1,19 +1,25 @@
 package com.company.scrumit.web.tracker;
 
+import com.company.scrumit.entity.Performer;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.web.task.TaskEdit;
+import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
+import com.haulmont.cuba.core.global.EntityStates;
 import com.haulmont.cuba.core.global.FileStorageException;
 import com.haulmont.cuba.gui.AppConfig;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
+import com.company.scrumit.entity.Tracker;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
+import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
+import com.haulmont.cuba.web.gui.components.WebLookupPickerField;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -67,7 +73,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     public boolean isModified() {
         return trackerDs.isModified();
     }
-
     @Override
     public void ready() {
         multiUpload.addQueueUploadCompleteListener(() -> {
@@ -107,17 +112,28 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         LookupPickerField lookupPickerField = ((LookupPickerField) getComponent("project"));
         final CollectionDatasource dataSource = lookupPickerField.getOptionsDatasource();
         final DataSupplier dataService = dataSource.getDataSupplier();
-        final Entity item = dataService.newInstance(dataSource.getMetaClass());
+        final Task item = dataService.newInstance(dataSource.getMetaClass());
         if (project.getValue() != null) {
             ((Task) item).setTask(project.getValue());
+            item.setTask((Task) project.getValue());
             if (((Task) project.getValue()).getPerformer() != null)
                 ((Task) item).setPerformer(((Task) project.getValue()).getPerformer());
+                item.setPerformer((Performer) ((Task) project.getValue()).getPerformer());
         }
         if (shortdesc.getValue() != null) {
-            ((Task) item).setShortdesc(shortdesc.getValue());
+            item.setShortdesc(shortdesc.getValue());
         }
         if (description.getValue() != null)
-            ((Task) item).setDescription(description.getValue());
+            item.setDescription(description.getValue());
+
+        if (entityStates.isNew(getItem())) {
+            showNotification("Please, save the object.", NotificationType.WARNING);
+            return;
+        }
+        if (entityStates.isManaged(getItem())) {
+            item.getTracker().add(getItem());
+        }
+
         TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
         editor.getDialogOptions().setWidth((float)1000.0).setResizable(true);
         editor.addCloseListener(actionId -> {
