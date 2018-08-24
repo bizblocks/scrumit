@@ -3,11 +3,13 @@ package com.company.scrumit.web.task;
 import com.company.scrumit.entity.Status;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Tracker;
+import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 
@@ -35,6 +37,8 @@ public class Tasklist extends EntityCombinedScreen {
     private Datasource<Task> taskDs;
     @Inject
     private Metadata metadata;
+    @Inject
+    private CollectionDatasource trackerDs;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -48,6 +52,10 @@ public class Tasklist extends EntityCombinedScreen {
         });
     }
 
+    @Override
+    public void ready() {
+        super.ready();
+    }
 
     public void onBtnCreateInGroupClick() {
         Task t = metadata.create(Task.class);

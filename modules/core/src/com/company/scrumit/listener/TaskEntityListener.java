@@ -14,12 +14,16 @@ public class TaskEntityListener implements BeforeUpdateEntityListener<Task> {
 
     @Override
     public void onBeforeUpdate(Task entity, EntityManager entityManager) {
-        if (entity.getControl() == true) {
-            if (entity.getTracker().size()>0) {
-                for (Tracker tracker : entity.getTracker()) {
-                    tracker.setStatus(Status.Done);
-                }
+        Tracker parentTracker = entity.getParentBug();
+        int countTask = parentTracker.getTask().size();
+        int countControlTask = 0;
+        for (Task task: parentTracker.getTask()) {
+            if (task.getControl() == true) {
+                countControlTask++;
             }
+        }
+        if (countTask == countControlTask) {
+            parentTracker.setStatus(Status.Done);
         }
     }
 }

@@ -29,6 +29,13 @@
                 <![CDATA[select e from scrumit$Performer e]]>
             </query>
         </collectionDatasource>
+        <collectionDatasource id="trackerDs" class="com.company.scrumit.entity.Tracker"
+                              view="_full">
+            <query>
+                <![CDATA[select t from scrumit$Tracker t]]>
+            </query>
+        </collectionDatasource>
+
     </dsContext>
     <actions>
         <action id="save"
@@ -108,7 +115,6 @@
                 </treeTable>
             </vbox>
             <vbox id="editBox"
-                  expand="description"
                   height="100%"
                   margin="false,false,false,true"
                   spacing="true">
@@ -131,14 +137,16 @@
                             <field property="amount"/>
                             <field optionsDatasource="performersDs"
                                    property="performer"/>
+                            <field optionsDatasource="trackerDs"
+                                   property="parentBug"/>
                         </column>
                     </fieldGroup>
+                    <richTextArea id="description"
+                                  datasource="taskDs"
+                                  property="description"
+                                  width="100%"/>
                 </scrollBox>
-                <richTextArea id="description"
-                              datasource="taskDs"
-                              property="description"
-                              width="100%"/>
-                <hbox id="actionsPane"
+                <hbox id="actionsPane" align="BOTTOM_RIGHT"
                       spacing="true"
                       visible="false">
                     <button id="saveBtn"

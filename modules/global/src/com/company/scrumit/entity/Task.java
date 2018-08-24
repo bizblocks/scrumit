@@ -24,6 +24,14 @@ public class Task extends StandardEntity {
     @Column(name = "SHORTDESC", nullable = false, unique = true, length = 50)
     protected String shortdesc;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PARENT_BUG_ID")
+    protected Tracker parentBug;
+
+    @OneToMany(mappedBy = "project")
+    @OrderBy("createTs")
+    protected List<Tracker> tracker;
+
     @Column(name = "DONE")
     protected Boolean done;
 
@@ -73,8 +81,6 @@ public class Task extends StandardEntity {
     @Column(name = "AMOUNT")
     protected Integer amount;
 
-    @OneToMany(mappedBy = "project")
-    protected List<Tracker> tracker;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SPRINT_BACKLOG_ID")
@@ -96,12 +102,21 @@ public class Task extends StandardEntity {
     @Column(name = "SS_ID")
     protected Long ssId;
 
-    public List<Tracker> getTracker() {
-        return tracker;
+    public void setParentBug(Tracker parentBug) {
+        this.parentBug = parentBug;
     }
+
+    public Tracker getParentBug() {
+        return parentBug;
+    }
+
 
     public void setTracker(List<Tracker> tracker) {
         this.tracker = tracker;
+    }
+
+    public List<Tracker> getTracker() {
+        return tracker;
     }
 
     public void setSsId(Long ssId) {
@@ -111,7 +126,6 @@ public class Task extends StandardEntity {
     public Long getSsId() {
         return ssId;
     }
-
 
     public String getDuration() {
         return duration;

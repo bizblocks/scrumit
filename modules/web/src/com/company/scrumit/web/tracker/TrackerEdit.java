@@ -15,10 +15,12 @@ import com.company.scrumit.entity.Tracker;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
+import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.cuba.web.gui.components.WebLookupPickerField;
+import com.haulmont.cuba.web.toolkit.ui.CubaManagedTabSheet;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -61,6 +63,12 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Inject
     private EntityStates entityStates;
 
+    @Inject
+    private HierarchicalDatasource taskParentBugDs;
+
+    @Inject
+    private TabSheet tabSheet;
+
     @Override
     protected void initNewItem(Tracker item) {
         item.setFiles(new ArrayList<>());
@@ -69,20 +77,20 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
-
-
-//        taskDs.refresh(ParamsMap.of("project", "project"));
-//        if (trackerDs.isModified()) {
-//            status.setValue(getItem().getStatus());
-//        }
     }
 
     @Override
     public boolean isModified() {
         return trackerDs.isModified();
     }
+
+
     @Override
     public void ready() {
+        for (TabSheet.Tab tab: tabSheet.getTabs()) {
+            if (tab.getName().equals("bugTab"))
+                tab.setCaption("Bugs - " + taskParentBugDs.size());
+        }
         multiUpload.addQueueUploadCompleteListener(() -> {
             for (Map.Entry<UUID, String> entry : multiUpload.getUploadsMap().entrySet()) {
                 UUID fileId = entry.getKey();
@@ -114,9 +122,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
         multiUpload.addFileUploadErrorListener(event ->
                 showNotification("File upload error", NotificationType.HUMANIZED));
-
-
-
     }
 
     public void createTask() {
@@ -124,25 +129,23 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         final CollectionDatasource dataSource = lookupPickerField.getOptionsDatasource();
         final DataSupplier dataService = dataSource.getDataSupplier();
         final Task item = dataService.newInstance(dataSource.getMetaClass());
-        if (project.getValue() != null) {
-            item.setTask((Task) project.getValue());
-            if (((Task) project.getValue()).getPerformer() != null)
-                item.setPerformer((Performer) ((Task) project.getValue()).getPerformer());
-        }
-        if (shortdesc.getValue() != null) {
-            item.setShortdesc(shortdesc.getValue());
-        }
-        if (description.getValue() != null)
-            item.setDescription(description.getValue());
-
         if (entityStates.isNew(getItem())) {
             showNotification("Please, save the object.", NotificationType.WARNING);
             return;
         }
-        if (entityStates.isManaged(getItem())) {
-            item.getTracker().add(getItem());
+        if (entityStates.isDetached(getItem())) {
+            item.setParentBug(getItem());
+            if (project.getValue() != null) {
+                item.setTask((Task) project.getValue());
+                if (((Task) project.getValue()).getPerformer() != null)
+                    item.setPerformer((Performer) ((Task) project.getValue()).getPerformer());
+            }
+            if (shortdesc.getValue() != null) {
+                item.setShortdesc(shortdesc.getValue());
+            }
+            if (description.getValue() != null)
+                item.setDescription(description.getValue());
         }
-
         TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
         editor.getDialogOptions().setWidth(1000).setResizable(true);
         editor.addCloseListener(new CloseListener() {
@@ -155,7 +158,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                         dataSource.addItem((Entity) item);
                         ((DatasourceImplementation) dataSource).setModified(modifed);
                     }
-
                     dataSource.addItem((Entity) item);
                     dataSource.refresh();
                 }

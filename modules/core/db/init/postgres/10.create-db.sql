@@ -100,6 +100,7 @@ create table SCRUMIT_TASK (
     DELETED_BY varchar(50),
     --
     SHORTDESC varchar(50) not null,
+    PARENT_BUG_ID uuid,
     DONE boolean,
     CONTROL boolean,
     PROIRITY varchar(50),
