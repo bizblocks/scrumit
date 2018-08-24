@@ -126,7 +126,7 @@
                     </groupBox>
                 </flowBox>
             </tab>
-            <tab id="bugTab" caption="msg://bugs">
+            <tab id="taskTab">
                 <treeTable id="tasksTable"
                            width="100%">
                     <actions>

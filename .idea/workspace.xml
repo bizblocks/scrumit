@@ -2,37 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="870255b3-8041-4fb9-abb5-2bacd2102f32" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTask.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTask01.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTask02.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTask03.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTask04.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTask04_DropScript.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTask05.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTask06.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTracker.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTracker01.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTracker02.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTracker03.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTracker04.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/180824-2-updateTracker_DropScript.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/db/init/postgres/10.create-db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/db/init/postgres/10.create-db.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/db/init/postgres/20.create-db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/db/init/postgres/20.create-db.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/src/com/company/scrumit/listener/TaskEntityListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/com/company/scrumit/listener/TaskEntityListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Tracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Tracker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/messages.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/views.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/views.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/frames/actionsEntity" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/frames/actionsEntity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/Tasklist.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/Tasklist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages_ru.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-edit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/tasklist.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/tasklist.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/messages.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -86,10 +56,12 @@
       <file leaf-file-name="TrackerEdit.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="83" column="57" selection-start-line="83" selection-start-column="57" selection-end-line="83" selection-end-column="57" />
+            <state relative-caret-position="259">
+              <caret line="91" column="37" selection-start-line="91" selection-start-column="37" selection-end-line="91" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2213#2214#0" expanded="true" />
+                <element signature="e#2247#2248#0" expanded="true" />
                 <element signature="e#2335#2336#0" expanded="true" />
                 <element signature="e#2380#2381#0" expanded="true" />
               </folding>
@@ -1275,7 +1247,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="10" />
     <option name="y" value="20" />
     <option name="width" value="1346" />
@@ -1848,10 +1820,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="83" column="57" selection-start-line="83" selection-start-column="57" selection-end-line="83" selection-end-column="57" />
+        <state relative-caret-position="259">
+          <caret line="91" column="37" selection-start-line="91" selection-start-column="37" selection-end-line="91" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2213#2214#0" expanded="true" />
+            <element signature="e#2247#2248#0" expanded="true" />
             <element signature="e#2335#2336#0" expanded="true" />
             <element signature="e#2380#2381#0" expanded="true" />
           </folding>
