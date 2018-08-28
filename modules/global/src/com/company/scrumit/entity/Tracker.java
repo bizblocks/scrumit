@@ -3,6 +3,8 @@ package com.company.scrumit.entity;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -39,6 +41,7 @@ public class Tracker extends StandardEntity {
     @OneToMany(mappedBy = "parentBug")
     protected List<Task> task;
 
+    @OnDelete(DeletePolicy.CASCADE)
     @JoinTable(name = "SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK",
         joinColumns = @JoinColumn(name = "TRACKER_ID"),
         inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
