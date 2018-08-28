@@ -148,7 +148,7 @@
                     </groupBox>
                     <groupBox width="20%">
                         <frame id="windowActions"
-                               src="com/company/scrumit/web/frames/actionsEntity"/>
+                               src="com/company/scrumit/web/frames/actionsEntity.xml"/>
                     </groupBox>
                 </flowBox>
             </tab>
