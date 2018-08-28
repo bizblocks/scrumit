@@ -25,7 +25,7 @@
     </dsContext>
     <dialogMode height="auto"
                 width="auto"/>
-    <layout expand="windowActions"
+    <layout expand="editBox"
             spacing="true">
         <vbox id="editBox"
               expand="description"

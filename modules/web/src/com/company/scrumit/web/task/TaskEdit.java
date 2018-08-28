@@ -36,7 +36,7 @@ public class TaskEdit extends AbstractEditor<Task> {
         if (beginField.getValue() == null || durationField.getValue() == null)
             return;
         Date d = beginField.getValue();
-        d.setTime((d.getTime() + ONEDAY * Double.valueOf(durationField.getValue()).longValue()));
+        d.setTime((d.getTime() + ONEDAY * Double.valueOf(durationField.getRawValue()).longValue()));
         deadlineField.setValue(d);
     }
 
