@@ -15,12 +15,6 @@ public class Tracker extends StandardEntity {
     private static final long serialVersionUID = -8847125133735817612L;
 
 
-    @JoinTable(name = "SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK",
-        joinColumns = @JoinColumn(name = "TRACKER_ID"),
-        inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
-    @ManyToMany
-    protected List<FileDescriptor> files;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
@@ -44,6 +38,12 @@ public class Tracker extends StandardEntity {
 
     @OneToMany(mappedBy = "parentBug")
     protected List<Task> task;
+
+    @JoinTable(name = "SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK",
+        joinColumns = @JoinColumn(name = "TRACKER_ID"),
+        inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
+    @ManyToMany
+    protected List<FileDescriptor> files;
 
     public Task getProject() {
         return project;
