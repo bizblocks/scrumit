@@ -23,12 +23,12 @@
             <property name="task"
                       view="_minimal"/>
         </property>
+        <property name="parentBug"
+                  view="_local"/>
         <property name="top"
                   view="_minimal"/>
         <property name="sprints"
                   view="_minimal"/>
-        <property name="tracker"
-                  view="_local"/>
         <property name="sprintBacklog"
                   view="_minimal"/>
         <property name="teams"
@@ -39,7 +39,6 @@
           name="task-tree">
         <property name="task"
                   view="_minimal"/>
-        <property name="proirity"/>
         <property name="level"/>
         <property name="top"
                   view="_minimal"/>
@@ -52,18 +51,19 @@
         <property name="duration"/>
         <property name="amount"/>
         <property name="control"/>
+        <property name="priority"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
           name="tasks-performer-view">
         <property name="task"
                   view="_minimal"/>
-        <property name="proirity"/>
         <property name="begin"/>
         <property name="deadline"/>
         <property name="shortdesc"/>
         <property name="done"/>
         <property name="control"/>
+        <property name="priority"/>
     </view>
     <view class="com.company.scrumit.entity.TaskComment"
           extends="_local"
@@ -95,7 +95,6 @@
             <property name="deadline"/>
             <property name="begin"/>
             <property name="done"/>
-            <property name="proirity"/>
             <property name="realduration"/>
             <property name="type"/>
             <property name="description"/>
@@ -109,6 +108,7 @@
             </property>
             <property name="control"/>
             <property name="ssId"/>
+            <property name="priority"/>
         </property>
     </view>
     <view class="com.company.scrumit.entity.Performer"

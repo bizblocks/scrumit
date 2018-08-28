@@ -12,6 +12,9 @@
         <collectionDatasource id="task1Ds"
                               class="com.company.scrumit.entity.Task"
                               view="tasks-full"/>
+        <datasource id="trackerDs"
+                    class="com.company.scrumit.entity.Tracker"
+                    view="_local"/>
         <collectionDatasource id="performersDs"
                               class="com.company.scrumit.entity.Performer"
                               view="_minimal">
@@ -20,8 +23,8 @@
             </query>
         </collectionDatasource>
     </dsContext>
-    <dialogMode height="600"
-                width="800"/>
+    <dialogMode height="auto"
+                width="auto"/>
     <layout expand="windowActions"
             spacing="true">
         <vbox id="editBox"
@@ -35,7 +38,7 @@
                         <field caption="mainMsg://Parent"
                                property="task"/>
                         <field property="done"/>
-                        <field property="proirity"/>
+                        <field property="priority"/>
                         <field property="begin"/>
                         <field property="duration"/>
                         <field property="deadline"/>
@@ -56,6 +59,7 @@
                           width="100%"/>
         </vbox>
         <frame id="windowActions"
-               screen="editWindowActions"/>
+               screen="editWindowActions"
+               width="AUTO"/>
     </layout>
 </window>

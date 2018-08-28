@@ -29,6 +29,13 @@
                 <![CDATA[select e from scrumit$Performer e]]>
             </query>
         </collectionDatasource>
+        <collectionDatasource id="trackerDs"
+                              class="com.company.scrumit.entity.Tracker"
+                              view="_full">
+            <query>
+                <![CDATA[select t from scrumit$Tracker t]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <actions>
         <action id="save"
@@ -75,7 +82,7 @@
                     </actions>
                     <columns>
                         <column id="shortdesc"/>
-                        <column id="proirity"/>
+                        <column id="priority"/>
                         <column id="done"
                                 editable="true"/>
                         <column id="control"
@@ -110,18 +117,18 @@
                 </treeTable>
             </vbox>
             <vbox id="editBox"
-                  expand="description"
                   height="100%"
                   margin="false,false,false,true"
                   spacing="true">
-                <scrollBox id="fieldGroupBox">
+                <scrollBox id="fieldGroupBox"
+                           height="100%">
                     <fieldGroup id="fieldGroup"
                                 datasource="taskDs">
                         <column width="300px">
                             <field caption="mainMsg://Parent"
                                    property="task"/>
                             <field property="done"/>
-                            <field property="proirity"/>
+                            <field property="priority"/>
                             <field property="begin"/>
                             <field property="duration"/>
                             <field property="deadline"/>
@@ -133,14 +140,17 @@
                             <field property="amount"/>
                             <field optionsDatasource="performersDs"
                                    property="performer"/>
+                            <field optionsDatasource="trackerDs"
+                                   property="parentBug"/>
                         </column>
                     </fieldGroup>
+                    <richTextArea id="description"
+                                  datasource="taskDs"
+                                  property="description"
+                                  width="100%"/>
                 </scrollBox>
-                <richTextArea id="description"
-                              datasource="taskDs"
-                              property="description"
-                              width="100%"/>
                 <hbox id="actionsPane"
+                      align="BOTTOM_RIGHT"
                       spacing="true"
                       visible="false">
                     <button id="saveBtn"

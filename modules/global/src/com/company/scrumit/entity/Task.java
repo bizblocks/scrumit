@@ -22,14 +22,22 @@ public class Task extends StandardEntity {
     @Column(name = "SHORTDESC", nullable = false, unique = true, length = 50)
     protected String shortdesc;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PARENT_BUG_ID")
+    protected Tracker parentBug;
+
+    @OneToMany(mappedBy = "project")
+    @OrderBy("createTs")
+    protected List<Tracker> tracker;
+
     @Column(name = "DONE")
     protected Boolean done;
 
     @Column(name = "CONTROL")
     protected Boolean control;
 
-    @Column(name = "PROIRITY")
-    protected String proirity;
+    @Column(name = "PRIORITY")
+    protected String priority;
 
     @Column(name = "REALDURATION")
     protected Integer realduration;
@@ -71,8 +79,6 @@ public class Task extends StandardEntity {
     @Column(name = "AMOUNT")
     protected Integer amount;
 
-    @OneToMany(mappedBy = "project")
-    protected List<Tracker> tracker;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SPRINT_BACKLOG_ID")
@@ -94,6 +100,14 @@ public class Task extends StandardEntity {
     @Column(name = "SS_ID")
     protected Long ssId;
 
+    public void setPriority(Priority priority) {
+        this.priority = priority == null ? null : priority.getId();
+    }
+
+    public Priority getPriority() {
+        return priority == null ? null : Priority.fromId(priority);
+    }
+
     public Integer getDuration() {
         return duration;
     }
@@ -102,12 +116,26 @@ public class Task extends StandardEntity {
         return tracker;
     }
 
+
+    public void setParentBug(Tracker parentBug) {
+        this.parentBug = parentBug;
+    }
+
+    public Tracker getParentBug() {
+        return parentBug;
+    }
+
+
     public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
     public void setTracker(List<Tracker> tracker) {
         this.tracker = tracker;
+    }
+
+    public List<Tracker> getTracker() {
+        return tracker;
     }
 
     public void setSsId(Long ssId) {
@@ -164,14 +192,6 @@ public class Task extends StandardEntity {
 
     public List<Team> getTeams() {
         return teams;
-    }
-
-    public void setProirity(Priority proirity) {
-        this.proirity = proirity == null ? null : proirity.getId();
-    }
-
-    public Priority getProirity() {
-        return proirity == null ? null : Priority.fromId(proirity);
     }
 
     public void setRealduration(Integer realduration) {

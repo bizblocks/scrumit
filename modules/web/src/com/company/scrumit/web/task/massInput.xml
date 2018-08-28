@@ -72,7 +72,7 @@
                         editable="true"/>
                 <column id="description"
                         editable="true"/>
-                <column id="proirity"
+                <column id="priority"
                         editable="true"/>
                 <column id="type"
                         editable="true"/>

@@ -14,15 +14,16 @@ import java.util.List;
 public class Tracker extends StandardEntity {
     private static final long serialVersionUID = -8847125133735817612L;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PROJECT_ID")
-    protected Task project;
 
     @JoinTable(name = "SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK",
         joinColumns = @JoinColumn(name = "TRACKER_ID"),
         inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
     @ManyToMany
     protected List<FileDescriptor> files;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PROJECT_ID")
+    protected Task project;
 
     @NotNull
     @Column(name = "SHORTDESC", nullable = false, length = 50)
@@ -40,6 +41,29 @@ public class Tracker extends StandardEntity {
     @Lob
     @Column(name = "DESCRIPTION")
     protected String description;
+
+    @OneToMany(mappedBy = "parentBug")
+    protected List<Task> task;
+
+    public Task getProject() {
+        return project;
+    }
+
+    public void setProject(Task project) {
+        this.project = project;
+    }
+
+
+    public List<Task> getTask() {
+        return task;
+    }
+
+    public void setTask(List<Task> task) {
+        this.task = task;
+    }
+
+
+
 
     public void setFiles(List<FileDescriptor> files) {
         this.files = files;
@@ -65,13 +89,7 @@ public class Tracker extends StandardEntity {
         return trackerPriorityType == null ? null : TrackerPriorityType.fromId(trackerPriorityType);
     }
 
-    public void setProject(Task project) {
-        this.project = project;
-    }
 
-    public Task getProject() {
-        return project;
-    }
 
     public void setDescription(String description) {
         this.description = description;

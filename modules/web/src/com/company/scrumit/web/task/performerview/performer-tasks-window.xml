@@ -54,7 +54,7 @@
                         <action id="refresh"/>
                     </actions>
                     <columns>
-                        <column id="proirity"/>
+                        <column id="priority"/>
                         <column id="begin"/>
                         <column id="deadline"/>
                         <column id="shortdesc"/>

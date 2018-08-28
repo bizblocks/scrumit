@@ -127,7 +127,7 @@
                     </actions>
                     <columns>
                         <column id="shortdesc"/>
-                        <column id="proirity"/>
+                        <column id="priority"/>
                         <column id="level"/>
                         <column id="description"/>
                         <column id="done"/>

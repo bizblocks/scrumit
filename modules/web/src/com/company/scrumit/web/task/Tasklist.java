@@ -1,12 +1,14 @@
 package com.company.scrumit.web.task;
 
-import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
+import com.company.scrumit.entity.Tracker;
+import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 
@@ -39,6 +41,8 @@ public class Tasklist extends EntityCombinedScreen {
     private Datasource<Task> taskDs;
     @Inject
     private Metadata metadata;
+    @Inject
+    private CollectionDatasource trackerDs;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -59,7 +63,7 @@ public class Tasklist extends EntityCombinedScreen {
         Task t = metadata.create(Task.class);
         t.setShortdesc("");
         t.setTask(table.getSingleSelected());
-        t.setProirity(Priority.Middle);
+        t.setPriority(Priority.Middle);
         t.setType(TaskType.task);
         t.setDuration(1);
         dataManager.commit(t);
@@ -84,7 +88,7 @@ public class Tasklist extends EntityCombinedScreen {
         if (beginField.getValue() == null || durationField.getValue() == null)
             return;
         Date d = beginField.getValue();
-        d.setTime((d.getTime() + ONEDAY * (int)durationField.getValue()));
+        d.setTime((d.getTime() + ONEDAY * Double.valueOf(durationField.getValue()).longValue()));
         deadlineField.setValue(d);
     }
 }

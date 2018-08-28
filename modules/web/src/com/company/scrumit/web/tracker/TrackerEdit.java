@@ -1,5 +1,6 @@
 package com.company.scrumit.web.tracker;
 
+import com.company.scrumit.entity.*;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.web.task.TaskEdit;
@@ -13,11 +14,13 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
+import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
@@ -54,6 +57,15 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Inject
     private Table<FileDescriptor> filesTable;
 
+    @Inject
+    private EntityStates entityStates;
+
+    @Inject
+    private HierarchicalDatasource taskParentBugDs;
+
+    @Inject
+    private TabSheet tabSheet;
+
     @Override
     protected void initNewItem(Tracker item) {
         item.setFiles(new ArrayList<>());
@@ -68,8 +80,14 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     public boolean isModified() {
         return trackerDs.isModified();
     }
+
+
     @Override
     public void ready() {
+        for (TabSheet.Tab tab: tabSheet.getTabs()) {
+            if (tab.getName().equals("taskTab"))
+                tab.setCaption("Tasks - " + taskParentBugDs.size());
+        }
         multiUpload.addQueueUploadCompleteListener(() -> {
             for (Map.Entry<UUID, String> entry : multiUpload.getUploadsMap().entrySet()) {
                 UUID fileId = entry.getKey();
@@ -101,6 +119,8 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
         multiUpload.addFileUploadErrorListener(event ->
                 showNotification("File upload error", NotificationType.HUMANIZED));
+
+        taskDs.refresh(Collections.singletonMap("project", TaskType.project));
     }
 
     @Inject
@@ -111,42 +131,42 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         final CollectionDatasource dataSource = lookupPickerField.getOptionsDatasource();
         final DataSupplier dataService = dataSource.getDataSupplier();
         final Task item = dataService.newInstance(dataSource.getMetaClass());
-        if (project.getValue() != null) {
-            item.setTask(project.getValue());
-            item.setTask(project.getValue());
-            if (((Task) project.getValue()).getPerformer() != null)
-                item.setPerformer(((Task) project.getValue()).getPerformer());
-                item.setPerformer(((Task) project.getValue()).getPerformer());
-        }
-        if (shortdesc.getValue() != null) {
-            item.setShortdesc(shortdesc.getValue());
-        }
-        if (description.getValue() != null)
-            item.setDescription(description.getValue());
-
         if (entityStates.isNew(getItem())) {
             showNotification("Please, save the object.", NotificationType.WARNING);
             return;
         }
-        if (entityStates.isManaged(getItem())) {
-            item.getTracker().add(getItem());
-        }
-
-        TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
-        editor.getDialogOptions().setWidth((float)1000.0).setResizable(true);
-        editor.addCloseListener(actionId -> {
-            if (Window.COMMIT_ACTION_ID.equals(actionId)) {
-                Object task = editor.getItem();
-                if (task != null) {
-                    Boolean modifed = dataSource.isModified();
-                    dataSource.addItem((Entity) task);
-                    ((DatasourceImplementation) dataSource).setModified(modifed);
-                }
-
-                dataSource.addItem(item);
-                dataSource.refresh();
+        if (entityStates.isDetached(getItem())) {
+            item.setParentBug(getItem());
+            if (project.getValue() != null) {
+                item.setTask((Task) project.getValue());
+                if (((Task) project.getValue()).getPerformer() != null)
+                    item.setPerformer((Performer) ((Task) project.getValue()).getPerformer());
             }
-            lookupPickerField.requestFocus();
+            if (shortdesc.getValue() != null) {
+                item.setShortdesc(shortdesc.getValue());
+            }
+            if (description.getValue() != null)
+                item.setDescription(description.getValue());
+        }
+        TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
+        ((LookupField)((FieldGroup)editor.getComponent("fieldGroup")).getField("type").getComponent()).setValue(TaskType.task);
+        ((LookupField)((FieldGroup)editor.getComponent("fieldGroup")).getField("priority").getComponent()).setValue(Priority.Middle);
+        editor.getDialogOptions().setResizable(true);
+        editor.addCloseListener(new CloseListener() {
+            @Override
+            public void windowClosed(String actionId) {
+                if (Window.COMMIT_ACTION_ID.equals(actionId) && editor instanceof Editor) {
+                    Object item = ((TaskEdit) editor).getItem();
+                    if (item instanceof Entity) {
+                        Boolean modifed = dataSource.isModified();
+                        dataSource.addItem((Entity) item);
+                        ((DatasourceImplementation) dataSource).setModified(modifed);
+                    }
+                    dataSource.addItem((Entity) item);
+                    dataSource.refresh();
+                }
+                lookupPickerField.requestFocus();
+            }
         });
     }
 

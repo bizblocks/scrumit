@@ -4,7 +4,10 @@ import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
 import com.haulmont.cuba.gui.WindowManager;
-import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.components.AbstractWindow;
+import com.haulmont.cuba.gui.components.Component;
+import com.haulmont.cuba.gui.components.LookupPickerField;
+import com.haulmont.cuba.gui.components.Table;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 import javax.inject.Inject;
@@ -52,7 +55,7 @@ public class Massinput extends AbstractWindow {
         }
         Task task = new Task();
         task.setTask(parent.getValue());
-        task.setProirity(Priority.Middle);
+        task.setPriority(Priority.Middle);
         task.setType(TaskType.task);
         newTasksDs.addItem(task);
     }
