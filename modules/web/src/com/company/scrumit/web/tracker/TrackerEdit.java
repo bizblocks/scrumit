@@ -1,7 +1,8 @@
 package com.company.scrumit.web.tracker;
 
-import com.company.scrumit.entity.*;
+import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
+import com.company.scrumit.entity.TaskType;
 import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.web.task.TaskEdit;
 import com.haulmont.cuba.core.entity.Entity;
@@ -123,9 +124,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         taskDs.refresh(Collections.singletonMap("project", TaskType.project));
     }
 
-    @Inject
-    private EntityStates entityStates;
-
     public void createTask() {
         LookupPickerField lookupPickerField = ((LookupPickerField) getComponent("project"));
         final CollectionDatasource dataSource = lookupPickerField.getOptionsDatasource();
@@ -138,9 +136,9 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         if (entityStates.isDetached(getItem())) {
             item.setParentBug(getItem());
             if (project.getValue() != null) {
-                item.setTask((Task) project.getValue());
+                item.setTask(project.getValue());
                 if (((Task) project.getValue()).getPerformer() != null)
-                    item.setPerformer((Performer) ((Task) project.getValue()).getPerformer());
+                    item.setPerformer(((Task) project.getValue()).getPerformer());
             }
             if (shortdesc.getValue() != null) {
                 item.setShortdesc(shortdesc.getValue());
@@ -152,21 +150,18 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         ((LookupField)((FieldGroup)editor.getComponent("fieldGroup")).getField("type").getComponent()).setValue(TaskType.task);
         ((LookupField)((FieldGroup)editor.getComponent("fieldGroup")).getField("priority").getComponent()).setValue(Priority.Middle);
         editor.getDialogOptions().setResizable(true);
-        editor.addCloseListener(new CloseListener() {
-            @Override
-            public void windowClosed(String actionId) {
-                if (Window.COMMIT_ACTION_ID.equals(actionId) && editor instanceof Editor) {
-                    Object item = ((TaskEdit) editor).getItem();
-                    if (item instanceof Entity) {
-                        Boolean modifed = dataSource.isModified();
-                        dataSource.addItem((Entity) item);
-                        ((DatasourceImplementation) dataSource).setModified(modifed);
-                    }
-                    dataSource.addItem((Entity) item);
-                    dataSource.refresh();
+        editor.addCloseListener(actionId -> {
+            if (Window.COMMIT_ACTION_ID.equals(actionId)) {
+                Object item1 = editor.getItem();
+                if (item1 != null) {
+                    Boolean modifed = dataSource.isModified();
+                    dataSource.addItem((Entity) item1);
+                    ((DatasourceImplementation) dataSource).setModified(modifed);
                 }
-                lookupPickerField.requestFocus();
+                dataSource.addItem((Entity) item1);
+                dataSource.refresh();
             }
+            lookupPickerField.requestFocus();
         });
     }
 

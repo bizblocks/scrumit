@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
-@Listeners({"scrumit_TaskListener", "scrumit_TaskEntityListener"})
+@Listeners("scrumit_TaskEntityListener")
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TASK")
 @Entity(name = "scrumit$Task")
@@ -132,10 +132,6 @@ public class Task extends StandardEntity {
 
     public void setTracker(List<Tracker> tracker) {
         this.tracker = tracker;
-    }
-
-    public List<Tracker> getTracker() {
-        return tracker;
     }
 
     public void setSsId(Long ssId) {

@@ -103,7 +103,7 @@ create table SCRUMIT_TASK (
     PARENT_BUG_ID uuid,
     DONE boolean,
     CONTROL boolean,
-    PROIRITY varchar(50),
+    PRIORITY varchar(50),
     REALDURATION integer,
     TYPE_ varchar(50),
     DESCRIPTION text,
@@ -113,7 +113,7 @@ create table SCRUMIT_TASK (
     LEVEL_ integer,
     TOP_ID uuid,
     BEGIN_ timestamp,
-    DURATION varchar(255),
+    DURATION integer,
     AMOUNT integer,
     SPRINT_BACKLOG_ID uuid,
     SS_ID bigint,
@@ -191,7 +191,7 @@ create table SCRUMIT_TRACKER (
     STATUS varchar(50),
     TRACKER_PRIORITY_TYPE varchar(50),
     TYPE_ varchar(50),
-    DESCRIPTION varchar(255),
+    DESCRIPTION text,
     --
     primary key (ID)
 )^
