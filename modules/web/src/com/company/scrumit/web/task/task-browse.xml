@@ -33,7 +33,7 @@
             </actions>
             <columns>
                 <column id="shortdesc"/>
-                <column id="proirity"/>
+                <column id="priority"/>
                 <column id="control"/>
             </columns>
             <rows datasource="tasksDs"/>

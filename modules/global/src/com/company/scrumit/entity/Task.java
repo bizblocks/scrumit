@@ -10,8 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
-import com.haulmont.cuba.core.entity.annotation.OnDelete;
-import com.haulmont.cuba.core.global.DeletePolicy;
 
 @Listeners({"scrumit_TaskListener", "scrumit_TaskEntityListener"})
 @NamePattern("%s|shortdesc")
@@ -38,8 +36,8 @@ public class Task extends StandardEntity {
     @Column(name = "CONTROL")
     protected Boolean control;
 
-    @Column(name = "PROIRITY")
-    protected String proirity;
+    @Column(name = "PRIORITY")
+    protected String priority;
 
     @Column(name = "REALDURATION")
     protected Integer realduration;
@@ -101,6 +99,15 @@ public class Task extends StandardEntity {
 
     @Column(name = "SS_ID")
     protected Long ssId;
+
+    public void setPriority(Priority priority) {
+        this.priority = priority == null ? null : priority.getId();
+    }
+
+    public Priority getPriority() {
+        return priority == null ? null : Priority.fromId(priority);
+    }
+
 
     public void setParentBug(Tracker parentBug) {
         this.parentBug = parentBug;
@@ -181,14 +188,6 @@ public class Task extends StandardEntity {
 
     public List<Team> getTeams() {
         return teams;
-    }
-
-    public void setProirity(Priority proirity) {
-        this.proirity = proirity == null ? null : proirity.getId();
-    }
-
-    public Priority getProirity() {
-        return proirity == null ? null : Priority.fromId(proirity);
     }
 
     public void setRealduration(Integer realduration) {

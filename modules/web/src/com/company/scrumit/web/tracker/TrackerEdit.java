@@ -1,9 +1,7 @@
 package com.company.scrumit.web.tracker;
 
-import com.company.scrumit.entity.Performer;
-import com.company.scrumit.entity.Task;
+import com.company.scrumit.entity.*;
 import com.company.scrumit.web.task.TaskEdit;
-import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.EntityStates;
@@ -11,19 +9,16 @@ import com.haulmont.cuba.core.global.FileStorageException;
 import com.haulmont.cuba.gui.AppConfig;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
-import com.company.scrumit.entity.Tracker;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
-import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
-import com.haulmont.cuba.web.gui.components.WebLookupPickerField;
-import com.haulmont.cuba.web.toolkit.ui.CubaManagedTabSheet;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
@@ -122,6 +117,8 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
         multiUpload.addFileUploadErrorListener(event ->
                 showNotification("File upload error", NotificationType.HUMANIZED));
+
+        taskDs.refresh(Collections.singletonMap("project", TaskType.project));
     }
 
     public void createTask() {
@@ -147,7 +144,9 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 item.setDescription(description.getValue());
         }
         TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
-        editor.getDialogOptions().setWidth(1000).setResizable(true);
+        ((LookupField)((FieldGroup)editor.getComponent("fieldGroup")).getField("type").getComponent()).setValue(TaskType.task);
+        ((LookupField)((FieldGroup)editor.getComponent("fieldGroup")).getField("priority").getComponent()).setValue(Priority.Middle);
+        editor.getDialogOptions().setResizable(true);
         editor.addCloseListener(new CloseListener() {
             @Override
             public void windowClosed(String actionId) {

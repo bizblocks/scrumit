@@ -15,9 +15,16 @@
         <datasource id="trackerDs"
                     class="com.company.scrumit.entity.Tracker"
                     view="_local"/>
+        <collectionDatasource id="performersDs"
+                              class="com.company.scrumit.entity.Performer"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from scrumit$Performer e]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
-    <dialogMode height="600"
-                width="800"/>
+    <dialogMode height="auto"
+                width="auto"/>
     <layout expand="windowActions"
             spacing="true">
         <fieldGroup id="fieldGroup"
@@ -25,19 +32,22 @@
             <column width="300px">
                 <field property="shortdesc"/>
                 <field property="description"/>
-                <field property="performer"/>
-                <field property="deadline"/>
-                <field property="task"/>
+                <field caption="Parent task"
+                       property="task"/>
+                <field optionsDatasource="performersDs"
+                       property="performer"/>
                 <field property="begin"/>
                 <field property="duration"/>
+                <field property="deadline"/>
                 <field property="amount"/>
                 <field property="type"/>
-                <field property="proirity"/>
+                <field property="priority"/>
                 <field property="control"/>
                 <field property="parentBug"/>
             </column>
         </fieldGroup>
         <frame id="windowActions"
-               screen="editWindowActions"/>
+               screen="editWindowActions"
+               width="AUTO"/>
     </layout>
 </window>
