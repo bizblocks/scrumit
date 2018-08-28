@@ -20,7 +20,6 @@ import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
@@ -69,7 +68,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     @Override
     protected void initNewItem(Tracker item) {
-        item.setFiles(new ArrayList<>());
+        //item.setFiles(new ArrayList<>());
     }
 
     @Override
@@ -105,7 +104,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 FileDescriptor committedFd = dataSupplier.commit(fd);
 
                 // add reloaded FileDescriptor
-                getItem().getFiles().add(committedFd);
+                //getItem().getFiles().add(committedFd);
             }
             showNotification("Uploaded files: " + multiUpload.getUploadsMap().values(), NotificationType.HUMANIZED);
             multiUpload.clearUploads();

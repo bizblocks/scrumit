@@ -1,0 +1,1 @@
+alter table scrumit_tracker_file_descriptor_link rename to SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK__U47443 ;

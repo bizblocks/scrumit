@@ -41,12 +41,19 @@ public class Tracker extends StandardEntity {
     @OneToMany(mappedBy = "parentBug")
     protected List<Task> task;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FILES_ID")
     @OnDelete(DeletePolicy.CASCADE)
-    @JoinTable(name = "SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK",
-        joinColumns = @JoinColumn(name = "TRACKER_ID"),
-        inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
-    @ManyToMany
-    protected List<FileDescriptor> files;
+    protected FileDescriptor files;
+
+    public FileDescriptor getFiles() {
+        return files;
+    }
+
+    public void setFiles(FileDescriptor files) {
+        this.files = files;
+    }
+
 
     public Task getProject() {
         return project;
@@ -67,14 +74,6 @@ public class Tracker extends StandardEntity {
 
 
 
-
-    public void setFiles(List<FileDescriptor> files) {
-        this.files = files;
-    }
-
-    public List<FileDescriptor> getFiles() {
-        return files;
-    }
 
     public void setStatus(Status status) {
         this.status = status == null ? null : status.getId();
