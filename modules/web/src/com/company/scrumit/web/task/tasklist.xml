@@ -117,11 +117,11 @@
                 </treeTable>
             </vbox>
             <vbox id="editBox"
+                  expand="description"
                   height="100%"
                   margin="false,false,false,true"
                   spacing="true">
-                <scrollBox id="fieldGroupBox"
-                           height="100%">
+                <scrollBox id="fieldGroupBox">
                     <fieldGroup id="fieldGroup"
                                 datasource="taskDs">
                         <column width="300px">
@@ -144,11 +144,11 @@
                                    property="parentBug"/>
                         </column>
                     </fieldGroup>
-                    <richTextArea id="description"
-                                  datasource="taskDs"
-                                  property="description"
-                                  width="100%"/>
                 </scrollBox>
+                <richTextArea id="description"
+                              datasource="taskDs"
+                              property="description"
+                              width="100%"/>
                 <hbox id="actionsPane"
                       align="BOTTOM_RIGHT"
                       spacing="true"

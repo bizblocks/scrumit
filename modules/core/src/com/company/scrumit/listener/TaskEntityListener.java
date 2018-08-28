@@ -15,13 +15,28 @@ public class TaskEntityListener implements BeforeUpdateEntityListener<Task>, Bef
     @Override
     public void onBeforeInsert(Task entity, EntityManager entityManager) {
         entity.setPriority(Priority.Middle);
-        updateLevelAndTop(entity, entityManager);
+        updateLevelAndTop(entity);
         entityManager.persist(entity);
     }
 
     @Override
     public void onBeforeUpdate(Task entity, EntityManager entityManager) {
+        updateLevelAndTop(entity);
+        updateParentBug(entity);
+        entityManager.persist(entity);
+    }
+
+    private void updateLevelAndTop(Task entity) {
+        Task parent = entity.getTask();
+        entity.setLevel(parent == null ? 0 : parent.getLevel()==null ? 0 : parent.getLevel()+1);
+        entity.setTop(parent == null ? null : parent.getTop()==null ? parent : parent.getTop());
+    }
+
+    private void updateParentBug(Task entity)
+    {
         Tracker parentTracker = entity.getParentBug();
+        if(parentTracker==null)
+            return;
         int countTask = parentTracker.getTask().size();
         int countControlTask = 0;
         for (Task task: parentTracker.getTask()) {
@@ -32,12 +47,5 @@ public class TaskEntityListener implements BeforeUpdateEntityListener<Task>, Bef
         if (countTask == countControlTask) {
             parentTracker.setStatus(Status.Done);
         }
-        updateLevelAndTop(entity, entityManager);
-    }
-
-    private void updateLevelAndTop(Task entity, EntityManager entityManager) {
-        Task parent = entity.getTask();
-        entity.setLevel(parent == null ? 0 : parent.getLevel()==null ? 0 : parent.getLevel()+1);
-        entity.setTop(parent == null ? null : parent.getTop()==null ? parent : parent.getTop());
     }
 }
