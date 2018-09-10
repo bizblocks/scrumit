@@ -64,6 +64,8 @@
         <property name="done"/>
         <property name="control"/>
         <property name="priority"/>
+        <property name="planningTime"/>
+        <property name="actualTime"/>
     </view>
     <view class="com.company.scrumit.entity.TaskComment"
           extends="_local"
@@ -172,5 +174,9 @@
                   view="tasks-full"/>
         <property name="files"
                   view="_local"/>
+        <property name="createTs"/>
+        <property name="createdBy"/>
+        <property name="updateTs"/>
+        <property name="updatedBy"/>
     </view>
 </views>

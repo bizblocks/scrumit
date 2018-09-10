@@ -22,6 +22,12 @@ public class Task extends StandardEntity {
     @Column(name = "SHORTDESC", nullable = false, unique = true, length = 50)
     protected String shortdesc;
 
+    @Column(name = "PLANNING_TIME")
+    protected Double planningTime;
+
+    @Column(name = "ACTUAL_TIME")
+    protected Double actualTime;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_BUG_ID")
     protected Tracker parentBug;
@@ -99,6 +105,23 @@ public class Task extends StandardEntity {
 
     @Column(name = "SS_ID")
     protected Long ssId;
+
+    public void setPlanningTime(Double planningTime) {
+        this.planningTime = planningTime;
+    }
+
+    public Double getPlanningTime() {
+        return planningTime;
+    }
+
+    public void setActualTime(Double actualTime) {
+        this.actualTime = actualTime;
+    }
+
+    public Double getActualTime() {
+        return actualTime;
+    }
+
 
     public void setPriority(Priority priority) {
         this.priority = priority == null ? null : priority.getId();

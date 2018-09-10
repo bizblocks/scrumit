@@ -100,6 +100,8 @@ create table SCRUMIT_TASK (
     DELETED_BY varchar(50),
     --
     SHORTDESC varchar(50) not null,
+    PLANNING_TIME double precision,
+    ACTUAL_TIME double precision,
     PARENT_BUG_ID uuid,
     DONE boolean,
     CONTROL boolean,
@@ -349,13 +351,6 @@ create table SCRUMIT_CONTACTS_STATUS (
     primary key (ID)
 )^
 -- end SCRUMIT_CONTACTS_STATUS
--- begin SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK
-create table SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK (
-    TRACKER_ID uuid,
-    FILE_DESCRIPTOR_ID uuid,
-    primary key (TRACKER_ID, FILE_DESCRIPTOR_ID)
-)^
--- end SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK
 -- begin SCRUMIT_CHAT_ROOM_PERFORMER_LINK
 create table SCRUMIT_CHAT_ROOM_PERFORMER_LINK (
     CHAT_ROOM_ID uuid,

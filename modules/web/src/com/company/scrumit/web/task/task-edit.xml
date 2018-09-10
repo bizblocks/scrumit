@@ -42,6 +42,8 @@
                         <field property="begin"/>
                         <field property="duration"/>
                         <field property="deadline"/>
+                        <field property="planningTime"/>
+                        <field property="actualTime"/>
                     </column>
                     <column width="300px">
                         <field property="shortdesc"/>

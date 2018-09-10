@@ -60,6 +60,8 @@
                         <column id="shortdesc"/>
                         <column id="done"/>
                         <column id="control"/>
+                        <column id="planningTime"/>
+                        <column id="actualTime"/>
                     </columns>
                     <rows datasource="tasksDs"/>
                     <rowsCount/>

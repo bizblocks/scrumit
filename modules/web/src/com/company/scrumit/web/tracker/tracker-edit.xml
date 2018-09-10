@@ -167,6 +167,8 @@
                         <column id="type"/>
                         <column id="control"/>
                         <column id="description"/>
+                        <column id="planningTime"/>
+                        <column id="actualTime"/>
                     </columns>
                     <rows datasource="taskParentBugDs"/>
                     <rowsCount/>
