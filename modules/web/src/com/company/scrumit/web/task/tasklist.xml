@@ -50,6 +50,8 @@
                 invoke="cancel"/>
         <action id="massInput"
                 invoke="onMassInput"/>
+        <action id="timeMoney"
+                invoke="timeMoney"/>
     </actions>
     <dialogMode height="600"
                 width="800"/>
@@ -79,6 +81,7 @@
                         <action id="remove"/>
                         <action id="excel"/>
                         <action id="refresh"/>
+                        <action id="timeMoney"/>
                     </actions>
                     <columns>
                         <column id="shortdesc"/>
@@ -113,6 +116,9 @@
                         <button id="btnMassInput"
                                 action="massInput"
                                 caption="mainMsg://Mass input"/>
+                        <button id="timeMoneyBtn"
+                                action="timeMoney"
+                                caption="msg://timeMoney"/>
                     </buttonsPanel>
                 </treeTable>
             </vbox>

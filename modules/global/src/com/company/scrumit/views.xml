@@ -52,6 +52,9 @@
         <property name="amount"/>
         <property name="control"/>
         <property name="priority"/>
+        <property name="sprints"
+                  view="_local"/>
+        <property name="actualTime"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
