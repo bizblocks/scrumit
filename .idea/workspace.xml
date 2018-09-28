@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="870255b3-8041-4fb9-abb5-2bacd2102f32" name="Default" comment="Added Performer to Tracker and &quot;Testing&quot;,&quot;Checked&quot; into Status">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/db/init/postgres/10.create-db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/db/init/postgres/10.create-db.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/db/init/postgres/20.create-db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/db/init/postgres/20.create-db.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Tracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Tracker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/messages.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/views.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/views.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -94,8 +85,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2516">
-              <caret line="148" column="27" selection-start-line="148" selection-start-column="27" selection-end-line="148" selection-end-column="27" />
+            <state relative-caret-position="2482">
+              <caret line="146" column="27" selection-start-line="146" selection-start-column="27" selection-end-line="146" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -103,8 +94,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+            <state relative-caret-position="221">
+              <caret line="45" column="11" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -827,7 +821,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538113013595" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538116611573" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../supply" />
   </component>
   <component name="RunDashboard">
@@ -876,6 +870,14 @@
       <updated>1533764018216</updated>
       <workItem from="1534162220297" duration="22000" />
     </task>
+    <task id="LOCAL-00001" summary="Added Performer to Tracker and &quot;Testing&quot;,&quot;Checked&quot; into Status">
+      <created>1538113238780</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1538113238780</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -892,6 +894,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2647504" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -900,7 +903,7 @@
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Messages" visible="true" weight="0.28150573" />
+      <window_info anchor="bottom" id="Messages" weight="0.28150573" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -910,7 +913,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32843137" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32843137" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32843137" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" visible="true" weight="0.32733223" />
       <window_info anchor="bottom" id="Build" order="10" visible="true" weight="0.32843137" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1083,15 +1086,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2516">
-          <caret line="148" column="27" selection-start-line="148" selection-start-column="27" selection-end-line="148" selection-end-column="27" />
+        <state relative-caret-position="2482">
+          <caret line="146" column="27" selection-start-line="146" selection-start-column="27" selection-end-line="146" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+        <state relative-caret-position="221">
+          <caret line="45" column="11" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

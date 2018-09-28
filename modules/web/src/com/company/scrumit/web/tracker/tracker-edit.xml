@@ -63,7 +63,7 @@
                                 <row>
                                     <label value="msg://Parent"/>
                                     <lookupPickerField id="project"
-                                                       colspan="4"
+                                                       colspan="2"
                                                        datasource="trackerDs"
                                                        optionsDatasource="taskDs"
                                                        property="project"
@@ -77,13 +77,8 @@
                                                     openType="DIALOG"/>
                                         </actions>
                                     </lookupPickerField>
-                                    <button caption="msg://createTask"
-                                            invoke="createTask"/>
-                                </row>
-                                <row>
                                     <label value="msg://com.company.scrumit.entity/Tracker.performer"/>
                                     <lookupPickerField id="performer"
-                                                       colspan="4"
                                                        datasource="trackerDs"
                                                        optionsDatasource="performersDs"
                                                        property="performer"
@@ -97,6 +92,8 @@
                                                     openType="DIALOG"/>
                                         </actions>
                                     </lookupPickerField>
+                                    <button caption="msg://createTask"
+                                            invoke="createTask"/>
                                 </row>
                                 <row>
                                     <label value="msg://shortdesc"/>
