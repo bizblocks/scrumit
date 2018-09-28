@@ -61,6 +61,15 @@
                             </columns>
                             <rows>
                                 <row>
+                                    <label id="ID"
+                                           value="ID"/>
+                                    <textField id="textField"
+                                               datasource="trackerDs"
+                                               editable="false"
+                                               property="id"
+                                               width="100%"/>
+                                </row>
+                                <row>
                                     <label value="msg://Parent"/>
                                     <lookupPickerField id="project"
                                                        colspan="4"
