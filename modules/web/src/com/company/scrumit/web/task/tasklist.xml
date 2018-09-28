@@ -82,6 +82,8 @@
                     </actions>
                     <columns>
                         <column id="shortdesc"/>
+                        <column id="id"
+                                caption="ID"/>
                         <column id="priority"/>
                         <column id="done"
                                 editable="true"/>
@@ -113,6 +115,8 @@
                         <button id="btnMassInput"
                                 action="massInput"
                                 caption="mainMsg://Mass input"/>
+                        <checkBox id="checkSelect"
+                                  caption="Select text"/>
                     </buttonsPanel>
                 </treeTable>
             </vbox>
@@ -125,20 +129,21 @@
                     <fieldGroup id="fieldGroup"
                                 datasource="taskDs">
                         <column width="300px">
+                            <field property="id"/>
                             <field caption="mainMsg://Parent"
                                    property="task"/>
                             <field property="done"/>
-                            <field property="priority"/>
+                            <field property="shortdesc"/>
+                            <field property="type"/>
                             <field property="begin"/>
                             <field property="duration"/>
                             <field property="deadline"/>
-                            <field property="planningTime"/>
-                            <field property="actualTime"/>
                         </column>
                         <column width="300px">
-                            <field property="shortdesc"/>
+                            <field property="planningTime"/>
+                            <field property="actualTime"/>
                             <field property="control"/>
-                            <field property="type"/>
+                            <field property="priority"/>
                             <field property="amount"/>
                             <field optionsDatasource="performersDs"
                                    property="performer"/>

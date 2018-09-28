@@ -42,6 +42,8 @@ public class Tasklist extends EntityCombinedScreen {
     private Metadata metadata;
     @Inject
     private CollectionDatasource trackerDs;
+    @Inject
+    private CheckBox checkSelect;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -55,6 +57,8 @@ public class Tasklist extends EntityCombinedScreen {
         });
         addBeforeCloseWithCloseButtonListener(event -> table.getDatasource().commit());
         addBeforeCloseWithShortcutListener(event -> table.getDatasource().commit());
+        
+        checkSelect.addValueChangeListener(e -> table.setTextSelectionEnabled((Boolean) e.getValue()));
     }
 
 

@@ -35,19 +35,20 @@
                 <fieldGroup id="fieldGroup"
                             datasource="taskDs">
                     <column width="300px">
+                        <field property="id"/>
                         <field caption="mainMsg://Parent"
                                property="task"/>
                         <field property="done"/>
-                        <field property="priority"/>
                         <field property="begin"/>
                         <field property="duration"/>
                         <field property="deadline"/>
-                        <field property="planningTime"/>
-                        <field property="actualTime"/>
+                        <field property="shortdesc"/>
                     </column>
                     <column width="300px">
-                        <field property="shortdesc"/>
+                        <field property="planningTime"/>
+                        <field property="actualTime"/>
                         <field property="control"/>
+                        <field property="priority"/>
                         <field property="type"/>
                         <field property="amount"/>
                         <field optionsDatasource="performersDs"
