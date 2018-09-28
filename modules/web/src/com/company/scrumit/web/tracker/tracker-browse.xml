@@ -45,6 +45,7 @@
                 <column id="description"/>
                 <column id="files"/>
                 <column id="trackerPriorityType"/>
+                <column id="performer"/>
             </columns>
             <rows datasource="trackersDs"/>
             <rowsCount/>

@@ -189,6 +189,7 @@ create table SCRUMIT_TRACKER (
     DELETED_BY varchar(50),
     --
     PROJECT_ID uuid,
+    PERFORMER_ID uuid,
     SHORTDESC varchar(50) not null,
     STATUS varchar(50),
     TRACKER_PRIORITY_TYPE varchar(50),

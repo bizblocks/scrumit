@@ -178,5 +178,7 @@
         <property name="createdBy"/>
         <property name="updateTs"/>
         <property name="updatedBy"/>
+        <property name="performer"
+                  view="_minimal"/>
     </view>
 </views>

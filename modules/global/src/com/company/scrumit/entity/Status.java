@@ -8,7 +8,9 @@ import javax.annotation.Nullable;
 public enum Status implements EnumClass<String> {
     ToDo("todo"),
     Doing("doing"),
-    Done("done");
+    Done("done"),
+    Testing("testing"),
+    Checked("Checked");
 
     private String id;
 

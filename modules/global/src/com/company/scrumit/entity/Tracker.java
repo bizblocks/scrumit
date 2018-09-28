@@ -9,6 +9,8 @@ import com.haulmont.cuba.core.global.DeletePolicy;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import com.haulmont.cuba.core.entity.annotation.Lookup;
+import com.haulmont.cuba.core.entity.annotation.LookupType;
 
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TRACKER")
@@ -20,6 +22,11 @@ public class Tracker extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
+
+    @Lookup(type = LookupType.DROPDOWN, actions = {"lookup", "open"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PERFORMER_ID")
+    protected Performer performer;
 
     @NotNull
     @Column(name = "SHORTDESC", nullable = false, length = 50)
@@ -45,6 +52,15 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "FILES_ID")
     @OnDelete(DeletePolicy.CASCADE)
     protected FileDescriptor files;
+
+    public void setPerformer(Performer performer) {
+        this.performer = performer;
+    }
+
+    public Performer getPerformer() {
+        return performer;
+    }
+
 
     public FileDescriptor getFiles() {
         return files;

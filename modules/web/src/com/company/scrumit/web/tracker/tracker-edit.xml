@@ -35,6 +35,9 @@
                 <![CDATA[select e from scrumit$Task e]]>
             </query>
         </hierarchicalDatasource>
+        <collectionDatasource id="performersDs"
+                              class="com.company.scrumit.entity.Performer"
+                              view="_minimal"/>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -76,6 +79,24 @@
                                     </lookupPickerField>
                                     <button caption="msg://createTask"
                                             invoke="createTask"/>
+                                </row>
+                                <row>
+                                    <label value="msg://com.company.scrumit.entity/Tracker.performer"/>
+                                    <lookupPickerField id="performer"
+                                                       colspan="4"
+                                                       datasource="trackerDs"
+                                                       optionsDatasource="performersDs"
+                                                       property="performer"
+                                                       width="100%">
+                                        <actions>
+                                            <action id="open"
+                                                    openType="DIALOG"/>
+                                            <action id="lookup"
+                                                    openType="DIALOG"/>
+                                            <action id="clear"
+                                                    openType="DIALOG"/>
+                                        </actions>
+                                    </lookupPickerField>
                                 </row>
                                 <row>
                                     <label value="msg://shortdesc"/>

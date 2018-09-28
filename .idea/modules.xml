@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/web/app-web.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/web/app-web.iml" group="app-web" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/web/app-web_main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/web/app-web_main.iml" group="app-web" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/web/app-web_test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/web/app-web_test.iml" group="app-web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/scrumit.iml" filepath="$PROJECT_DIR$/.idea/scrumit.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/scrumit.iml" filepath="$PROJECT_DIR$/.idea/modules/scrumit.iml" />
     </modules>
   </component>
