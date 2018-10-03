@@ -22,6 +22,10 @@ public class Task extends StandardEntity {
     @Column(name = "SHORTDESC", nullable = false, unique = true, length = 50)
     protected String shortdesc;
 
+    @Lob
+    @Column(name = "TESTING_PLAN")
+    protected String testingPlan;
+
     @Column(name = "PLANNING_TIME")
     protected Double planningTime;
 
@@ -105,6 +109,15 @@ public class Task extends StandardEntity {
 
     @Column(name = "SS_ID")
     protected Long ssId;
+
+    public void setTestingPlan(String testingPlan) {
+        this.testingPlan = testingPlan;
+    }
+
+    public String getTestingPlan() {
+        return testingPlan;
+    }
+
 
     public void setPlanningTime(Double planningTime) {
         this.planningTime = planningTime;

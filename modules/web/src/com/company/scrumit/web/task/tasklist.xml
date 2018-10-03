@@ -82,6 +82,8 @@
                     </actions>
                     <columns>
                         <column id="shortdesc"/>
+                        <column id="id"
+                                caption="ID"/>
                         <column id="priority"/>
                         <column id="done"
                                 editable="true"/>
@@ -89,6 +91,8 @@
                                 editable="true"/>
                         <column id="description"
                                 maxTextLength="100"/>
+                        <column id="performer"/>
+                        <column id="testingPlan"/>
                     </columns>
                     <rows datasource="tasksDs"/>
                     <rowsCount/>
@@ -113,53 +117,67 @@
                         <button id="btnMassInput"
                                 action="massInput"
                                 caption="mainMsg://Mass input"/>
+                        <checkBox id="checkSelect"
+                                  caption="Select text"/>
                     </buttonsPanel>
                 </treeTable>
             </vbox>
             <vbox id="editBox"
-                  expand="description"
                   height="100%"
-                  margin="false,false,false,true"
+                  margin="true,true,true,true"
                   spacing="true">
-                <scrollBox id="fieldGroupBox">
-                    <fieldGroup id="fieldGroup"
-                                datasource="taskDs">
-                        <column width="300px">
-                            <field caption="mainMsg://Parent"
-                                   property="task"/>
-                            <field property="done"/>
-                            <field property="priority"/>
-                            <field property="begin"/>
-                            <field property="duration"/>
-                            <field property="deadline"/>
-                            <field property="planningTime"/>
-                            <field property="actualTime"/>
-                        </column>
-                        <column width="300px">
-                            <field property="shortdesc"/>
-                            <field property="control"/>
-                            <field property="type"/>
-                            <field property="amount"/>
-                            <field optionsDatasource="performersDs"
-                                   property="performer"/>
-                            <field optionsDatasource="trackerDs"
-                                   property="parentBug"/>
-                        </column>
-                    </fieldGroup>
+                <scrollBox height="100%">
+                        <fieldGroup id="fieldGroup"
+                                    datasource="taskDs">
+                            <column width="300px">
+                                <field property="id"/>
+                                <field caption="msg://Parent"
+                                       property="task"/>
+                                <field property="done"/>
+                                <field property="shortdesc"/>
+                                <field property="type"/>
+                                <field property="begin"/>
+                                <field property="duration"/>
+                                <field property="deadline"/>
+                            </column>
+                            <column width="300px">
+                                <field property="planningTime"/>
+                                <field property="actualTime"/>
+                                <field property="control"/>
+                                <field property="priority"/>
+                                <field property="amount"/>
+                                <field optionsDatasource="performersDs"
+                                       property="performer"/>
+                                <field optionsDatasource="trackerDs"
+                                       property="parentBug"/>
+                            </column>
+                        </fieldGroup>
+                    <groupBox caption="msg://description"
+                              width="98%">
+                        <richTextArea id="description"
+                                      datasource="taskDs"
+                                      property="description"
+                                      width="100%"/>
+                    </groupBox>
+                    <groupBox caption="msg://testingPlan"
+                              width="98%">
+                        <richTextArea id="testingPlan"
+                                      datasource="taskDs"
+                                      height="300px"
+                                      property="testingPlan"
+                                      width="100%"/>
+                    </groupBox>
+                
+                    <hbox id="actionsPane"
+                          align="BOTTOM_RIGHT"
+                          spacing="true"
+                          visible="false">
+                        <button id="saveBtn"
+                                action="save"/>
+                        <button id="cancelBtn"
+                                action="cancel"/>
+                    </hbox>
                 </scrollBox>
-                <richTextArea id="description"
-                              datasource="taskDs"
-                              property="description"
-                              width="100%"/>
-                <hbox id="actionsPane"
-                      align="BOTTOM_RIGHT"
-                      spacing="true"
-                      visible="false">
-                    <button id="saveBtn"
-                            action="save"/>
-                    <button id="cancelBtn"
-                            action="cancel"/>
-                </hbox>
             </vbox>
         </split>
     </layout>

@@ -33,6 +33,8 @@
             </actions>
             <columns>
                 <column id="shortdesc"/>
+                <column id="id"
+                        caption="ID"/>
                 <column id="priority"/>
                 <column id="control"/>
             </columns>

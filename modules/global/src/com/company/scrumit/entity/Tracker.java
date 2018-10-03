@@ -23,6 +23,10 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
 
+    @Lob
+    @Column(name = "TESTING_PLAN")
+    protected String testingPlan;
+
     @Lookup(type = LookupType.DROPDOWN, actions = {"lookup", "open"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERFORMER_ID")
@@ -52,6 +56,15 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "FILES_ID")
     @OnDelete(DeletePolicy.CASCADE)
     protected FileDescriptor files;
+
+    public void setTestingPlan(String testingPlan) {
+        this.testingPlan = testingPlan;
+    }
+
+    public String getTestingPlan() {
+        return testingPlan;
+    }
+
 
     public void setPerformer(Performer performer) {
         this.performer = performer;
