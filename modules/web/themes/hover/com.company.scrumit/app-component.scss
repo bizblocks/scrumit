@@ -1,0 +1,5 @@
+@import "hover-ext";
+
+@mixin com_company_scrumit {
+  @include com_company_scrumit-hover-ext;
+}

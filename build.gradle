@@ -22,6 +22,7 @@ def modulePrefix = 'app'
 def globalModule = project(":${modulePrefix}-global")
 def coreModule = project(":${modulePrefix}-core")
 def webModule = project(":${modulePrefix}-web")
+def webThemesModule = project(":${modulePrefix}-web-themes")
 
 def servletApi = 'javax.servlet:javax.servlet-api:3.1.0'
 
@@ -181,6 +182,30 @@ configure(webModule) {
     task deploy(dependsOn: [assemble, cleanConf], type: CubaDeployment) {
         appName = "${modulePrefix}"
         appJars(modulePrefix + '-global', modulePrefix + '-web')
+    }
+    task buildScssThemes(type: CubaWebScssThemeCreation)
+    task deployThemes(type: CubaDeployThemeTask, dependsOn: buildScssThemes)
+    assemble.dependsOn buildScssThemes
+}
+
+configure(webThemesModule) {
+    apply(plugin: 'java')
+    apply(plugin: 'maven')
+    apply(plugin: 'cuba')
+
+    appModuleType = 'web-themes'
+
+    buildDir = file('../build/scss-themes')
+
+    sourceSets {
+        main {
+            java {
+                srcDir '.'
+            }
+            resources {
+                srcDir '.'
+            }
+        }
     }
 }
 

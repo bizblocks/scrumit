@@ -1,0 +1,71 @@
+/* Define your theme modifications inside next mixin */
+@mixin com_company_scrumit-hover-ext {
+
+    .min-height{
+        min-height:50px;
+    }
+
+    .v-table-row.done-query {
+        background-color: lightgray ;
+    }
+    .v-table-row.in-work-query {
+        background-color: #FFCA73;
+    }
+    .v-table-row.new-query {
+        background-color: #62DA9A;
+    }
+    .v-table-row.three-sup {
+        background-color: #62DA9A;
+    }
+    .v-table-row.overdue-query {
+        background-color: #FF9273;
+    }
+
+    .v-table-row-odd.done-query {
+        background-color: white;
+    }
+    .v-table-row-odd.in-work-query {
+        background-color: #FFB740;
+    }
+    .v-table-row-odd.new-query {
+        background-color: #36DA82;
+    }
+    .v-table-row-odd.three-sup {
+        background-color: #36DA82;
+    }
+    .v-table-row-odd.overdue-query {
+        background-color: #FF6B40;
+    }
+
+    .v-textfield-error{
+        background-color: lightpink;
+    }
+    .v-datefield-error{
+        background-color: lightpink;
+    }
+    .c-pickerfield-error{
+        background-color: lightpink;
+    }
+
+    .v-table-row.italic-font{
+        font-style:  italic;
+    }
+    .v-table-row-odd.italic-font{
+        font-style:  italic;
+    }
+
+    .v-table-row.italic-font input{
+        font-style: normal !important;
+    }
+    .v-table-row-odd.italic-font input{
+        font-style:  normal !important;
+    }
+
+    .v-table-row.green {
+        background-color: #62DA9A;
+    }
+
+    .v-table-row-odd.green {
+        background-color: #36DA82;
+    }
+}
