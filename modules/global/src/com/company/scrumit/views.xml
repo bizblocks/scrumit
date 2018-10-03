@@ -52,6 +52,9 @@
         <property name="amount"/>
         <property name="control"/>
         <property name="priority"/>
+        <property name="performer"
+                  view="_minimal"/>
+        <property name="testingPlan"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
@@ -60,12 +63,14 @@
                   view="_minimal"/>
         <property name="begin"/>
         <property name="deadline"/>
-        <property name="shortdesc"/>
         <property name="done"/>
         <property name="control"/>
         <property name="priority"/>
         <property name="planningTime"/>
         <property name="actualTime"/>
+        <property name="performer"
+                  view="_local"/>
+        <property name="testingPlan"/>
     </view>
     <view class="com.company.scrumit.entity.TaskComment"
           extends="_local"
@@ -137,6 +142,9 @@
         <property name="top"
                   view="_minimal"/>
         <property name="level"/>
+        <property name="performer"
+                  view="_minimal"/>
+        <property name="testingPlan"/>
     </view>
     <view class="com.company.scrumit.entity.Meeting"
           extends="_local"

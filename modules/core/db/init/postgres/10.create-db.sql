@@ -100,6 +100,7 @@ create table SCRUMIT_TASK (
     DELETED_BY varchar(50),
     --
     SHORTDESC varchar(50) not null,
+    TESTING_PLAN text,
     PLANNING_TIME double precision,
     ACTUAL_TIME double precision,
     PARENT_BUG_ID uuid,
@@ -189,6 +190,7 @@ create table SCRUMIT_TRACKER (
     DELETED_BY varchar(50),
     --
     PROJECT_ID uuid,
+    TESTING_PLAN text,
     PERFORMER_ID uuid,
     SHORTDESC varchar(50) not null,
     STATUS varchar(50),

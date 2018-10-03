@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="870255b3-8041-4fb9-abb5-2bacd2102f32" name="Default" comment="Changed Tracker edit form">
+    <list default="true" id="870255b3-8041-4fb9-abb5-2bacd2102f32" name="Default" comment="Added ID to Tasks, select text possibility">
+      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/181003-2-updateTask.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/core/db/update/postgres/18/181003-2-updateTracker.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/Tasklist.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/Tasklist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-browse.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-browse.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-edit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/core/db/init/postgres/10.create-db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/db/init/postgres/10.create-db.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Tracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Tracker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/messages.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/views.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/global/src/com/company/scrumit/views.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/tasklist.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/tasklist.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/messages.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -34,10 +42,11 @@
     <session id="-1735519142">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="2" />
-          <entry key="project.open.time.1" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -48,39 +57,48 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="5" />
-          <entry key="xml" value="4" />
+          <entry key="java" value="9" />
+          <entry key="properties" value="4" />
+          <entry key="xml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="5" />
-          <entry key="XML" value="4" />
+          <entry key="JAVA" value="9" />
+          <entry key="Properties" value="4" />
+          <entry key="XML" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="java" value="10" />
-          <entry key="txt" value="101" />
-          <entry key="xml" value="4" />
+          <entry key="properties" value="12" />
+          <entry key="txt" value="211" />
+          <entry key="xml" value="59" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JAVA" value="10" />
-          <entry key="PLAIN_TEXT" value="101" />
-          <entry key="XML" value="4" />
+          <entry key="PLAIN_TEXT" value="211" />
+          <entry key="Properties" value="12" />
+          <entry key="XML" value="59" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/tasklist.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
+            <state relative-caret-position="187">
+              <caret line="41" column="40" lean-forward="true" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
+              <folding>
+                <element signature="e#5632#5646#0" expanded="true" />
+                <element signature="e#6836#6855#0" expanded="true" />
+                <element signature="e#7196#7215#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -88,17 +106,39 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2465">
-              <caret line="154" column="27" selection-start-line="154" selection-start-column="27" selection-end-line="154" selection-end-column="27" />
+            <state relative-caret-position="-170">
+              <caret line="164" column="66" selection-start-line="164" selection-start-column="66" selection-end-line="164" selection-end-column="66" />
+              <folding>
+                <element signature="e#2076#2097#0" expanded="true" />
+                <element signature="e#3445#3459#0" expanded="true" />
+                <element signature="e#5687#5705#0" expanded="true" />
+                <element signature="e#5914#5931#0" expanded="true" />
+                <element signature="e#6328#6355#0" expanded="true" />
+                <element signature="e#6789#6803#0" expanded="true" />
+                <element signature="e#7204#7216#0" expanded="true" />
+                <element signature="e#7902#7916#0" expanded="true" />
+                <element signature="e#9236#9252#0" expanded="true" />
+                <element signature="e#9763#9782#0" expanded="true" />
+                <element signature="e#10622#10641#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="337">
+              <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="94" column="33" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
+            <state relative-caret-position="191">
+              <caret line="104" selection-start-line="104" selection-end-line="104" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -109,7 +149,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerBrowse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="43">
+            <state relative-caret-position="170">
               <caret line="17" selection-start-line="17" selection-end-line="17" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -133,6 +173,7 @@
       <find>Tab</find>
       <find>performer</find>
       <find>status</find>
+      <find>testingPlan</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -787,15 +828,16 @@
         <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/frames/actionsEntity" />
         <option value="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Tracker.java" />
         <option value="$PROJECT_DIR$/modules/core/src/com/company/scrumit/listener/TaskEntityListener.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages.properties" />
-        <option value="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Task.java" />
         <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/messages.properties" />
         <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-edit.xml" />
         <option value="$PROJECT_DIR$/modules/global/src/com/company/scrumit/views.xml" />
         <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/Tasklist.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/tasklist.xml" />
         <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml" />
         <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml" />
+        <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages.properties" />
+        <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/tasklist.xml" />
+        <option value="$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Task.java" />
       </list>
     </option>
   </component>
@@ -806,10 +848,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="10" />
-    <option name="y" value="20" />
+    <option name="x" value="14" />
+    <option name="y" value="2" />
     <option name="width" value="1346" />
-    <option name="height" value="688" />
+    <option name="height" value="610" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -823,12 +865,156 @@
               <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
               <item name="scrumit" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="global" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="global" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="global" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="global" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="global" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="global" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="task" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="tracker" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
       <pane id="Course" />
     </panes>
@@ -836,7 +1022,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538116696187" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538554735606" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../supply" />
   </component>
   <component name="RunDashboard">
@@ -899,7 +1085,14 @@
       <option name="project" value="LOCAL" />
       <updated>1538116680695</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added ID to Tasks, select text possibility">
+      <created>1538123793720</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1538123793720</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -916,8 +1109,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2685325" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27609682" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -933,7 +1127,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32843137" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32843137" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="9" visible="true" weight="0.25859246" />
+      <window_info anchor="bottom" id="Version Control" order="9" visible="true" weight="0.22585924" />
       <window_info anchor="bottom" id="Build" order="10" visible="true" weight="0.32843137" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.28150573" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -957,7 +1151,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Performer to Tracker and &quot;Testing&quot;,&quot;Checked&quot; into Status" />
     <MESSAGE value="Changed Tracker edit form" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed Tracker edit form" />
+    <MESSAGE value="Added ID to Tasks, select text possibility" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added ID to Tasks, select text possibility" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tasks/TaskBrowse.java">
@@ -968,14 +1163,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/messages.properties">
+      <provider editor-type-id="ResourceBundle" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1887" />
       </provider>
-      <provider editor-type-id="ResourceBundle" />
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/messages_ru.properties">
-      <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="ResourceBundle" />
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/TaskEdit.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1021,32 +1216,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-        </state>
-      </provider>
-      <provider editor-type-id="ResourceBundle" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="57" column="21" selection-start-line="25" selection-start-column="8" selection-end-line="57" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/global/src/com/company/scrumit/views.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="381">
           <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Task.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1064,13 +1237,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/messages.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/Tasklist.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-204">
@@ -1078,33 +1244,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Tracker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="93" column="25" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/tasklist.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" column="19" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2465">
-          <caret line="154" column="27" selection-start-line="154" selection-start-column="27" selection-end-line="154" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/TaskBrowse.java">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerBrowse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="43">
+        <state relative-caret-position="170">
           <caret line="17" selection-start-line="17" selection-end-line="17" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1112,12 +1267,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="94" column="33" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
+        <state relative-caret-position="337">
+          <caret line="31" column="36" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages_ru.properties">
+      <provider editor-type-id="ResourceBundle" />
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/messages.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-170">
+          <caret line="164" column="66" selection-start-line="164" selection-start-column="66" selection-end-line="164" selection-end-column="66" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2076#2097#0" expanded="true" />
+            <element signature="e#3445#3459#0" expanded="true" />
+            <element signature="e#5687#5705#0" expanded="true" />
+            <element signature="e#5914#5931#0" expanded="true" />
+            <element signature="e#6328#6355#0" expanded="true" />
+            <element signature="e#6789#6803#0" expanded="true" />
+            <element signature="e#7204#7216#0" expanded="true" />
+            <element signature="e#7902#7916#0" expanded="true" />
+            <element signature="e#9236#9252#0" expanded="true" />
+            <element signature="e#9763#9782#0" expanded="true" />
+            <element signature="e#10622#10641#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Tracker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-149">
+          <caret line="32" column="33" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/global/src/com/company/scrumit/entity/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="285" column="13" selection-start-line="285" selection-start-column="13" selection-end-line="285" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/messages.properties">
+      <provider editor-type-id="ResourceBundle" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/tasklist.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="41" column="40" lean-forward="true" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
+          <folding>
+            <element signature="e#5632#5646#0" expanded="true" />
+            <element signature="e#6836#6855#0" expanded="true" />
+            <element signature="e#7196#7215#0" expanded="true" />
           </folding>
         </state>
       </provider>
