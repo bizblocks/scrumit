@@ -9,6 +9,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/global/app-global_main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/global/app-global_main.iml" group="app-global" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/global/app-global_test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/global/app-global_test.iml" group="app-global" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/web/app-web.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/web/app-web.iml" group="app-web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/web/themes/app-web-themes.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/web/themes/app-web-themes.iml" group="app-web-themes" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/web/themes/app-web-themes_main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/web/themes/app-web-themes_main.iml" group="app-web-themes" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/web/themes/app-web-themes_test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/web/themes/app-web-themes_test.iml" group="app-web-themes" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/web/app-web_main.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/web/app-web_main.iml" group="app-web" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/modules/web/app-web_test.iml" filepath="$PROJECT_DIR$/.idea/modules/modules/web/app-web_test.iml" group="app-web" />
       <module fileurl="file://$PROJECT_DIR$/.idea/scrumit.iml" filepath="$PROJECT_DIR$/.idea/scrumit.iml" />

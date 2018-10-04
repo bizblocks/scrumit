@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/modules/core" />
             <option value="$PROJECT_DIR$/modules/global" />
             <option value="$PROJECT_DIR$/modules/web" />
+            <option value="$PROJECT_DIR$/modules/web/themes" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />
