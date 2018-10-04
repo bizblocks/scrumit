@@ -1,6 +1,5 @@
 /* Define your theme modifications inside next mixin */
-@mixin com_groupstp_supply-halo-ext {
-
+@mixin com_company_scrumit-hover-ext {
 
     .min-height{
         min-height:50px;
@@ -69,6 +68,4 @@
     .v-table-row-odd.green {
         background-color: #36DA82;
     }
-
 }
-
