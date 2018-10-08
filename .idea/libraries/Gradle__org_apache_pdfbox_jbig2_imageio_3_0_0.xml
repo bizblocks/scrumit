@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.pdfbox:jbig2-imageio:3.0.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.pdfbox/jbig2-imageio/3.0.0/59cba3c1e9d11c790c27be31b311cd3d729ca900/jbig2-imageio-3.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.pdfbox/jbig2-imageio/3.0.0/f1ae11f9c9dc1d6d12347ec89f25d3a7dc3f7327/jbig2-imageio-3.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

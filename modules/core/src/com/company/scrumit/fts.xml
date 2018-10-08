@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fts-config xmlns="http://schemas.haulmont.com/cuba/fts.xsd">
+    <entities>
+        <entity class="com.company.scrumit.entity.Task">
+            <include name="id"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Tracker">
+            <include name="id"/>
+        </entity>
+    </entities>
+</fts-config>
