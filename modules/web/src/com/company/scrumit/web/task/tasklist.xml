@@ -92,7 +92,6 @@
                         <column id="description"
                                 maxTextLength="100"/>
                         <column id="performer"/>
-                        <column id="testingPlan"/>
                     </columns>
                     <rows datasource="tasksDs"/>
                     <rowsCount/>
@@ -124,34 +123,34 @@
             </vbox>
             <vbox id="editBox"
                   height="100%"
-                  margin="true,true,true,true"
+                  margin="true"
                   spacing="true">
                 <scrollBox height="100%">
-                        <fieldGroup id="fieldGroup"
-                                    datasource="taskDs">
-                            <column width="300px">
-                                <field property="id"/>
-                                <field caption="msg://Parent"
-                                       property="task"/>
-                                <field property="done"/>
-                                <field property="shortdesc"/>
-                                <field property="type"/>
-                                <field property="begin"/>
-                                <field property="duration"/>
-                                <field property="deadline"/>
-                            </column>
-                            <column width="300px">
-                                <field property="planningTime"/>
-                                <field property="actualTime"/>
-                                <field property="control"/>
-                                <field property="priority"/>
-                                <field property="amount"/>
-                                <field optionsDatasource="performersDs"
-                                       property="performer"/>
-                                <field optionsDatasource="trackerDs"
-                                       property="parentBug"/>
-                            </column>
-                        </fieldGroup>
+                    <fieldGroup id="fieldGroup"
+                                datasource="taskDs">
+                        <column width="300px">
+                            <field property="id"/>
+                            <field caption="msg://Parent"
+                                   property="task"/>
+                            <field property="done"/>
+                            <field property="shortdesc"/>
+                            <field property="type"/>
+                            <field property="begin"/>
+                            <field property="duration"/>
+                            <field property="deadline"/>
+                        </column>
+                        <column width="300px">
+                            <field property="planningTime"/>
+                            <field property="actualTime"/>
+                            <field property="control"/>
+                            <field property="priority"/>
+                            <field property="amount"/>
+                            <field optionsDatasource="performersDs"
+                                   property="performer"/>
+                            <field optionsDatasource="trackerDs"
+                                   property="parentBug"/>
+                        </column>
+                    </fieldGroup>
                     <groupBox caption="msg://description"
                               width="98%">
                         <richTextArea id="description"
@@ -167,7 +166,6 @@
                                       property="testingPlan"
                                       width="100%"/>
                     </groupBox>
-                
                     <hbox id="actionsPane"
                           align="BOTTOM_RIGHT"
                           spacing="true"
