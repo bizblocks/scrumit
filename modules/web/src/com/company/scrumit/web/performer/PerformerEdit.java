@@ -1,5 +1,6 @@
 package com.company.scrumit.web.performer;
 
+import com.company.scrumit.web.entity.UiEvent;
 import com.haulmont.cuba.gui.components.AbstractEditor;
 import com.company.scrumit.entity.Performer;
 import com.haulmont.cuba.gui.components.FieldGroup;
@@ -31,5 +32,11 @@ public class PerformerEdit extends AbstractEditor<Performer> {
         fc.setCaption(getMessage("Password"));
         fc.setComponent(componentsFactory.createComponent(PasswordField.class));
         fieldGroup.addField(fc, 0, 1);
+    }
+
+    @Override
+    protected boolean postCommit(boolean committed, boolean close) {
+        UiEvent.push("perfomerRefresh");
+        return super.postCommit(committed, close);
     }
 }

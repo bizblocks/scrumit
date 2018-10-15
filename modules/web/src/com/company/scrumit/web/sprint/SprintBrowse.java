@@ -2,6 +2,7 @@ package com.company.scrumit.web.sprint;
 
 import com.company.scrumit.entity.Sprint;
 import com.company.scrumit.entity.Task;
+import com.company.scrumit.web.entity.UiEvent;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
@@ -10,6 +11,7 @@ import com.haulmont.cuba.gui.components.actions.ExcludeAction;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
+import org.springframework.context.event.EventListener;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,6 +21,13 @@ import java.util.Map;
 import java.util.UUID;
 
 public class SprintBrowse extends EntityCombinedScreen {
+
+    @EventListener
+    public void onUiEvent(UiEvent event) {
+        if ("sprintRefresh".equals(event.getSource())) {
+            getDsContext().refresh();
+        }
+    }
 
     @Inject
     private GroupTable<Sprint> table;

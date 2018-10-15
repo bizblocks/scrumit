@@ -4,6 +4,7 @@ import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
 import com.company.scrumit.entity.Tracker;
+import com.company.scrumit.web.entity.UiEvent;
 import com.company.scrumit.web.task.TaskEdit;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
@@ -123,6 +124,12 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         taskDs.refresh(Collections.singletonMap("project", TaskType.project));
     }
 
+    @Override
+    protected boolean postCommit(boolean committed, boolean close) {
+        UiEvent.push("trackerRefresh");
+        return super.postCommit(committed, close);
+    }
+
     public void createTask() {
         LookupPickerField lookupPickerField = ((LookupPickerField) getComponent("project"));
         final CollectionDatasource dataSource = lookupPickerField.getOptionsDatasource();
@@ -161,6 +168,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 dataSource.refresh();
             }
             lookupPickerField.requestFocus();
+            UiEvent.push("taskRefresh");
         });
     }
 

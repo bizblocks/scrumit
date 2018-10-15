@@ -3,6 +3,7 @@ package com.company.scrumit.web.task;
 import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
+import com.company.scrumit.web.entity.UiEvent;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.AbstractWindow;
 import com.haulmont.cuba.gui.components.Component;
@@ -71,9 +72,10 @@ public class Massinput extends AbstractWindow {
     @Inject
     private CollectionDatasource<Task, UUID> tasksDs;
 
-    public void onCommit(Component source) {
+    public void onCommit(Component ignore) {
         newTasksDs.commit();
         newTasksDs.refresh();
         tasksDs.refresh();
+        UiEvent.push("taskRefresh");
     }
 }

@@ -2,9 +2,11 @@ package com.company.scrumit.web.contact;
 
 import com.company.scrumit.entity.Contact;
 import com.company.scrumit.entity.Performer;
+import com.company.scrumit.web.entity.UiEvent;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.AbstractLookup;
 import com.haulmont.cuba.gui.components.GroupTable;
+import org.springframework.context.event.EventListener;
 
 import javax.inject.Inject;
 
@@ -16,6 +18,13 @@ public class ContactBrowse extends AbstractLookup {
 
     @Inject
     private GroupTable<Contact> contactsTable;
+
+    @EventListener
+    public void onUiEvent(UiEvent event) {
+        if ("contactRefresh".equals(event.getSource())) {
+            getDsContext().refresh();
+        }
+    }
 
     public void onBtnCreatePerformerClick() {
         if(contactsTable.getSelected().size()==0)

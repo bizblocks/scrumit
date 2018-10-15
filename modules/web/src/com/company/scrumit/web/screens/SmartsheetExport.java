@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Smartsheetexport extends AbstractLookup {
+public class SmartsheetExport extends AbstractLookup {
 
     @Inject
     private HierarchicalDatasource<KeyValueEntity, Object> ssDs;

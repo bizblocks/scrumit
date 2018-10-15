@@ -3,6 +3,7 @@ package com.company.scrumit.web.task;
 import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
+import com.company.scrumit.web.entity.UiEvent;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.WindowManager;
@@ -10,6 +11,7 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
+import org.springframework.context.event.EventListener;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,6 +46,13 @@ public class Tasklist extends EntityCombinedScreen {
     private CollectionDatasource trackerDs;
     @Inject
     private CheckBox checkSelect;
+
+    @EventListener
+    public void onUiEvent(UiEvent event) {
+        if ("taskRefresh".equals(event.getSource())) {
+            getDsContext().refresh();
+        }
+    }
 
     @Override
     public void init(Map<String, Object> params) {

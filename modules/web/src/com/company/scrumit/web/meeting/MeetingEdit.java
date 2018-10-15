@@ -4,6 +4,7 @@ import com.company.scrumit.entity.Meeting;
 import com.company.scrumit.entity.MeetingType;
 import com.company.scrumit.entity.MeetingsTask;
 import com.company.scrumit.entity.Task;
+import com.company.scrumit.web.entity.UiEvent;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
@@ -59,6 +60,8 @@ public class MeetingEdit extends AbstractEditor<Meeting> {
     protected boolean postCommit(boolean committed, boolean close) {
         if(committed)
             changedEntities.forEach(e -> dataManager.commit(e));
+        if (changedEntities.size()>0) UiEvent.push("taskRefresh");
+        UiEvent.push("meetingRefresh");
         return super.postCommit(committed, close);
     }
 

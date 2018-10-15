@@ -3,6 +3,8 @@ package com.company.scrumit.web.screens;
 import com.company.scrumit.entity.Sprint;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Team;
+import com.company.scrumit.web.entity.UiEvent;
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.WindowManager;
@@ -15,7 +17,7 @@ import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import javax.inject.Inject;
 import java.util.*;
 
-public class Sprintplanning extends AbstractWindow {
+public class SprintPlanning extends AbstractWindow {
     @Inject
     private HierarchicalDatasource<Task, UUID> tasksDs;
 
@@ -77,9 +79,16 @@ public class Sprintplanning extends AbstractWindow {
         sprint.setTeam(team.getValue());
         sprint.setPeriodStart(dateStart.getValue());
         Date d = dateStart.getValue();
-        d.setTime(d.getTime()+((Team)team.getValue()).getSprintSize()*ONE_DAY);
+        Integer sprintSize = ((Team) team.getValue()).getSprintSize();
+
+        Preconditions.checkNotNullArgument(d, "Date start must bo not NULL");
+        Preconditions.checkNotNullArgument(sprintSize, "Team's sprint size must be not NULL");
+
+        d.setTime(d.getTime() + sprintSize * ONE_DAY);
         sprint.setPeriodEnd(d);
         sprint.setTasks(s);
         dataManager.commit(sprint);
+        showNotification(getMessage("sprintPlanning.created"), NotificationType.TRAY);
+        UiEvent.push("sprintRefresh");
     }
 }

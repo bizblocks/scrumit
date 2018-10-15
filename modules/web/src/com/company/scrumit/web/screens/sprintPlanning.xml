@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         caption="msg://caption"
-        class="com.company.scrumit.web.screens.Sprintplanning"
+        class="com.company.scrumit.web.screens.SprintPlanning"
         messagesPack="com.company.scrumit.web.screens"
 >
     <dsContext>

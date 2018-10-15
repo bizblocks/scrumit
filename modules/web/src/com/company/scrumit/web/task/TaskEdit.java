@@ -1,6 +1,7 @@
 package com.company.scrumit.web.task;
 
 import com.company.scrumit.entity.Task;
+import com.company.scrumit.web.entity.UiEvent;
 import com.haulmont.cuba.gui.components.AbstractEditor;
 import com.haulmont.cuba.gui.components.DateField;
 import com.haulmont.cuba.gui.components.TextField;
@@ -40,4 +41,9 @@ public class TaskEdit extends AbstractEditor<Task> {
         deadlineField.setValue(d);
     }
 
+    @Override
+    protected boolean postCommit(boolean committed, boolean close) {
+        UiEvent.push("taskRefresh");
+        return super.postCommit(committed, close);
+    }
 }
