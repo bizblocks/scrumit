@@ -22,6 +22,7 @@ import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 
 import javax.inject.Inject;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -152,7 +153,10 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
             if (description.getValue() != null)
                 item.setDescription(description.getValue());
         }
-        TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("perfomer", ((PickerField) getComponent("performer")).getValue());
+
+        TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG, paramMap);
         ((LookupField)((FieldGroup)editor.getComponent("fieldGroup")).getField("type").getComponent()).setValue(TaskType.task);
         ((LookupField)((FieldGroup)editor.getComponent("fieldGroup")).getField("priority").getComponent()).setValue(Priority.Middle);
         editor.getDialogOptions().setResizable(true);

@@ -4,6 +4,7 @@ import com.company.scrumit.entity.Task;
 import com.company.scrumit.web.entity.UiEvent;
 import com.haulmont.cuba.gui.components.AbstractEditor;
 import com.haulmont.cuba.gui.components.DateField;
+import com.haulmont.cuba.gui.components.PickerField;
 import com.haulmont.cuba.gui.components.TextField;
 
 import javax.inject.Named;
@@ -21,6 +22,8 @@ public class TaskEdit extends AbstractEditor<Task> {
     @Named("fieldGroup.duration")
     private TextField durationField;
 
+    private Map<String, Object> params;
+
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
@@ -31,6 +34,24 @@ public class TaskEdit extends AbstractEditor<Task> {
                 return;
             durationField.setValue((deadlineField.getValue().getTime()-beginField.getValue().getTime())/ONEDAY);
         });
+        this.params = params;
+    }
+
+    @Override
+    protected void postInit() {
+        super.postInit();
+        setupPerfomer(params);
+    }
+
+    /**
+     * setup Perfomer from tracker if exist
+     *
+     * @param params
+     */
+    private void setupPerfomer(Map<String, Object> params) {
+        if (params.containsKey("perfomer")) {
+            ((PickerField) getComponent("editBox.fieldGroupBox.fieldGroup.performer")).setValue(params.get("perfomer"));
+        }
     }
 
     private void calcDates(ValueChangeEvent e) {
