@@ -13,6 +13,8 @@
                                   property="members"/>
             <collectionDatasource id="projectsDs"
                                   property="projects"/>
+            <collectionDatasource id="rolesDs"
+                                  property="roles"/>
         </datasource>
     </dsContext>
     <dialogMode height="600"
@@ -65,6 +67,29 @@
                     <buttonsPanel>
                         <button action="projectsTable.add"/>
                         <button action="projectsTable.remove"/>
+                    </buttonsPanel>
+                </table>
+            </tab>
+            <tab id="roles"
+                 caption="mainMsg://Roles">
+                <table id="rolesTable"
+                       height="200px"
+                       width="100%">
+                    <actions>
+                        <action id="create"/>
+                        <action id="edit"/>
+                        <action id="remove"/>
+                    </actions>
+                    <columns>
+                        <column id="type"/>
+                        <column id="project"/>
+                        <column id="performer"/>
+                    </columns>
+                    <rows datasource="rolesDs"/>
+                    <buttonsPanel>
+                        <button action="rolesTable.create"/>
+                        <button action="rolesTable.edit"/>
+                        <button action="rolesTable.remove"/>
                     </buttonsPanel>
                 </table>
             </tab>

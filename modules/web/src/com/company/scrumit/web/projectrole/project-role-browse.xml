@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.scrumit.web.projectrole.ProjectRoleBrowse"
+        focusComponent="projectRolesTable"
+        lookupComponent="projectRolesTable"
+        messagesPack="com.company.scrumit.web.projectrole">
+    <dsContext>
+        <groupDatasource id="projectRolesDs"
+                         class="com.company.scrumit.entity.ProjectRole"
+                         view="_local">
+            <query>
+                <![CDATA[select e from scrumit$ProjectRole e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="projectRolesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="projectRolesTable"
+                datasource="projectRolesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="projectRolesTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="team"/>
+                <column id="project"/>
+                <column id="type"/>
+                <column id="performer"/>
+            </columns>
+            <rows datasource="projectRolesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="projectRolesTable.create"/>
+                <button id="editBtn"
+                        action="projectRolesTable.edit"/>
+                <button id="removeBtn"
+                        action="projectRolesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

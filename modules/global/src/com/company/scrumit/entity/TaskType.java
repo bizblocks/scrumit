@@ -10,7 +10,8 @@ public enum TaskType implements EnumClass<String> {
     task("task"),
     project("project"),
     prototype("prototype"),
-    unplannedTask("unplannedTask");
+    unplannedTask("unplannedTask"),
+    testing("testing");
 
     private String id;
 

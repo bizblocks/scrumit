@@ -11,4 +11,6 @@ public interface TaskService {
 
     Set<Task> tasksByProject(Task project);
     Set<Task> tasksByTeam(Team team);
+
+    void updateTesting(Task entity);
 }

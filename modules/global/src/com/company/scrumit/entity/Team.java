@@ -1,7 +1,10 @@
 package com.company.scrumit.entity;
 
+import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -32,11 +35,25 @@ public class Team extends StandardEntity {
     @ManyToMany
     protected List<Task> projects;
 
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "team")
+    protected List<ProjectRole> roles;
+
     @Column(name = "SPRINT_SIZE")
     protected Integer sprintSize;
 
     @Column(name = "SMARTSHEET_ID")
     protected Long smartsheetId;
+
+    public void setRoles(List<ProjectRole> roles) {
+        this.roles = roles;
+    }
+
+    public List<ProjectRole> getRoles() {
+        return roles;
+    }
+
 
     public void setSmartsheetId(Long smartsheetId) {
         this.smartsheetId = smartsheetId;

@@ -1,10 +1,10 @@
 package com.company.scrumit.web.task;
 
-import com.company.scrumit.entity.Priority;
-import com.company.scrumit.entity.Task;
-import com.company.scrumit.entity.TaskType;
+import com.company.scrumit.entity.*;
 import com.company.scrumit.web.entity.UiEvent;
+import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
@@ -91,9 +91,16 @@ public class Tasklist extends EntityCombinedScreen {
     public void onBtnDoneClick() {
         Set<Task> tasks = table.getSelected();
         tasks.forEach(task -> {
-            task.setDone(true);
-            dataManager.commit(task);
+            if (task.getType() == TaskType.testing) {
+                task.setDone(true);
+                dataManager.commit(task);
+            } else if (!task.getDone()) {
+                task.setDone(true);
+                dataManager.commit(task);
+                processDoneTask(task);
+            }
         });
+        getDsContext().refresh();
     }
 
     private void calcDates(ValueChangeEvent e) {
@@ -102,5 +109,50 @@ public class Tasklist extends EntityCombinedScreen {
         Date d = beginField.getValue();
         d.setTime((d.getTime() + ONEDAY * Double.valueOf(durationField.getRawValue()).longValue()));
         deadlineField.setValue(d);
+    }
+
+    private void processDoneTask(Task parentTask) {
+        if (parentTask.getDone()) {
+            Task task = AppBeans.get(Metadata.class).create(Task.class);
+            task.setShortdesc("Testing: " + parentTask.getShortdesc() + "");
+            task.setTop(parentTask.getTop());
+            task.setTask(parentTask);
+            task.setDone(false);
+            task.setControl(false);
+            task.setPriority(parentTask.getPriority());
+            task.setTeams(parentTask.getTeams());
+            task.setType(TaskType.testing);
+            task.setTracker(parentTask.getTracker());
+            task.setPerformer(getQATesterForProject(parentTask));
+            dataManager.commit(task);
+            showNotification(getMessage("taskForTestingCreated"), NotificationType.TRAY);
+        }
+    }
+
+    private Performer getQATesterForProject(Task task) {
+
+        List<ProjectRole> rolesQATester = dataManager.loadList(LoadContext.create(ProjectRole.class).setQuery(LoadContext.createQuery(
+                "select role from scrumit$ProjectRole role where role.type=:type")
+                .setParameter("type", ProjectRoleType.QATester))
+                .setView("projectRole-full"));
+
+        ProjectRole roleAppropriated = null;
+        for (ProjectRole projectRole : rolesQATester) {
+            if (checkProjectRecur(projectRole, task)) {
+                roleAppropriated = projectRole;
+                break;
+            }
+        }
+        return roleAppropriated == null ? null : roleAppropriated.getPerformer();
+    }
+
+    private boolean checkProjectRecur(ProjectRole role, Task task) {
+        if (task.getTask() == null) {
+            return false;
+        } else if (role.getProject().equals(task.getTask())) {
+            return true;
+        } else {
+            return checkProjectRecur(role, task.getTask());
+        }
     }
 }

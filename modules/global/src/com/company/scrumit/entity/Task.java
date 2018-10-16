@@ -19,7 +19,7 @@ public class Task extends StandardEntity {
     private static final long serialVersionUID = 8919522312858052940L;
 
     @NotNull
-    @Column(name = "SHORTDESC", nullable = false, unique = true, length = 50)
+    @Column(name = "SHORTDESC", nullable = false, length = 50)
     protected String shortdesc;
 
     @Lob
@@ -183,7 +183,7 @@ public class Task extends StandardEntity {
     }
 
     public Boolean getControl() {
-        return control;
+        return control == null ? false : control;
     }
 
     public void setSprints(List<Sprint> sprints) {
@@ -199,7 +199,7 @@ public class Task extends StandardEntity {
     }
 
     public Boolean getDone() {
-        return done;
+        return done == null ? false : done;
     }
 
     public void setLevel(Integer level) {

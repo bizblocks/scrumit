@@ -395,3 +395,22 @@ alter table SYS_FILE add column TRACKER_ID uuid ^
 alter table SYS_FILE add column DTYPE varchar(100) ^
 update SYS_FILE set DTYPE = 'sys$FileDescriptor' where DTYPE is null ^
 -- end SYS_FILE
+-- begin SCRUMIT_PROJECT_ROLE
+create table SCRUMIT_PROJECT_ROLE (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    TYPE_ integer not null,
+    TEAM_ID uuid not null,
+    PROJECT_ID uuid not null,
+    PERFORMER_ID uuid not null,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_PROJECT_ROLE
