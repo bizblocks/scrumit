@@ -2,8 +2,7 @@
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         caption="msg://caption"
         class="com.company.scrumit.web.screens.SprintPlanning"
-        messagesPack="com.company.scrumit.web.screens"
->
+        messagesPack="com.company.scrumit.web.screens">
     <dsContext>
         <collectionDatasource id="teamsDs"
                               allowCommit="false"
@@ -13,14 +12,16 @@
                 <![CDATA[select e from scrumit$Team e]]>
             </query>
         </collectionDatasource>
-        <hierarchicalDatasource id="tasksDs"
+        <hierarchicalDatasource id="unassignedTasksDs"
                                 class="com.company.scrumit.entity.Task"
                                 hierarchyProperty="task"
-                                view="task-tree">
-            <query>
-                <![CDATA[select e from scrumit$Task e where (e.top in :ds$teamsDs.projects) and (e.done is NULL) or (e.done=FALSE)]]>
-            </query>
-        </hierarchicalDatasource>
+                                refreshMode="NEVER"
+                                view="task-tree"/>
+        <hierarchicalDatasource id="assignedTasksDs"
+                                class="com.company.scrumit.entity.Task"
+                                hierarchyProperty="task"
+                                refreshMode="NEVER"
+                                view="task-tree"/>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -40,19 +41,51 @@
             <button id="btnCreateSprint"
                     caption="msg://Create sprint"
                     invoke="onBtnCreateSprintClick"/>
-            <button invoke="testQuery"
-                    visible="false"/>
         </hbox>
         <hbox id="tasksHbox"
               spacing="true"
               width="100%">
-            <twinColumn id="twins"
-                        addAllBtnEnabled="true"
-                        height="100%"
-                        leftColumnCaption="msg://Unassigned tasks"
-                        optionsDatasource="tasksDs"
-                        rightColumnCaption="msg://Sprint tasks"
-                        width="100%"/>
+            <treeTable id="unassignedTasksTable"
+                       caption="msg://Unassigned tasks"
+                       height="100%"
+                       width="100%">
+                <columns>
+                    <column id="shortdesc"/>
+                    <column id="level"/>
+                    <column id="description"/>
+                    <column id="done"/>
+                    <column id="realduration"/>
+                    <column id="type"/>
+                    <column id="deadline"/>
+                    <column id="begin"/>
+                    <column id="duration"/>
+                    <column id="amount"/>
+                    <column id="control"/>
+                    <column id="priority"/>
+                </columns>
+                <rows datasource="unassignedTasksDs"/>
+            </treeTable>
+            <treeTable id="assignedTasksTable"
+                       caption="msg://Assigned tasks"
+                       height="100%"
+                       width="100%">
+                <columns>
+                    <column id="shortdesc"/>
+                    <column id="level"/>
+                    <column id="description"/>
+                    <column id="done"/>
+                    <column id="realduration"/>
+                    <column id="type"/>
+                    <column id="deadline"/>
+                    <column id="begin"/>
+                    <column id="duration"/>
+                    <column id="amount"/>
+                    <column id="control"/>
+                    <column id="priority"/>
+                    <column id="testingPlan"/>
+                </columns>
+                <rows datasource="assignedTasksDs"/>
+            </treeTable>
         </hbox>
     </layout>
 </window>

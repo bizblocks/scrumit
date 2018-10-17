@@ -90,7 +90,10 @@
         <property name="leader"
                   view="_minimal"/>
         <property name="projects"
-                  view="_minimal"/>
+                  view="_minimal">
+            <property name="task"
+                      view="_minimal"/>
+        </property>
         <property name="members"
                   view="_minimal">
             <property name="email"/>
