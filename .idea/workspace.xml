@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7a33231f-3ec7-4da7-9aa5-795f04185041" name="Default Changelist" comment="build.gradle fix">
-      <change afterPath="$PROJECT_DIR$/modules/core/src/com/company/scrumit/fts.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/src/com/company/scrumit/app.properties" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/com/company/scrumit/app.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/core/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/web/WEB-INF/web.xml" afterDir="false" />
+    <list default="true" id="7a33231f-3ec7-4da7-9aa5-795f04185041" name="Default Changelist" comment="added fts for filter, export to excel from tasks and tracker">
+      <change afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/filter/FilterDelegateImplExt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/filter/messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/filter/messages_ru.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/core/src/com/company/scrumit/fts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/core/src/com/company/scrumit/fts.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web-spring.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/messages.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-browse.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-browse.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/web/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/modules/web/web/WEB-INF/web.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/" />
     <ignored path="$PROJECT_DIR$/modules/core/.gradle/" />
@@ -18,6 +22,12 @@
     <ignored path="$PROJECT_DIR$/modules/web/out/" />
     <ignored path="$PROJECT_DIR$/modules/web/themes/.gradle/" />
     <ignored path="$PROJECT_DIR$/modules/web/themes/out/" />
+    <ignored path="$PROJECT_DIR$/modules/global/build/" />
+    <ignored path="$PROJECT_DIR$/classes/" />
+    <ignored path="$PROJECT_DIR$/modules/core/build/" />
+    <ignored path="$PROJECT_DIR$/modules/web/build/" />
+    <ignored path="$PROJECT_DIR$/.gradle/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,24 +42,38 @@
     <session id="-1735519142">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="properties" value="1" />
-          <entry key="xml" value="17" />
+          <entry key="java" value="5" />
+          <entry key="properties" value="6" />
+          <entry key="txt" value="62" />
+          <entry key="xml" value="55" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Properties" value="1" />
-          <entry key="XML" value="17" />
+          <entry key="JAVA" value="5" />
+          <entry key="PLAIN_TEXT" value="62" />
+          <entry key="Properties" value="6" />
+          <entry key="XML" value="55" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="xml" value="3" />
+          <entry key="java" value="4" />
+          <entry key="properties" value="3" />
+          <entry key="xml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="XML" value="3" />
+          <entry key="JAVA" value="4" />
+          <entry key="Properties" value="3" />
+          <entry key="XML" value="5" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
     </session>
@@ -68,24 +92,73 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/filter/FilterDelegateImplExt.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="143" column="55" selection-start-line="143" selection-start-column="55" selection-end-line="143" selection-end-column="55" />
-              <folding>
-                <element signature="e#7762#7781#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="66">
+              <caret line="75" column="44" selection-start-line="75" selection-start-column="44" selection-end-line="75" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/filter/messages.properties">
+          <provider selected="true" editor-type-id="text-editor" />
+          <provider editor-type-id="ResourceBundle" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/filter/messages_ru.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+          <provider editor-type-id="ResourceBundle" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web-spring.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="239">
+              <caret line="26" column="29" lean-forward="true" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-browse.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="52" column="51" selection-start-line="52" selection-start-column="51" selection-end-line="52" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-578">
+              <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="36" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>_letters_min</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -1039,11 +1112,11 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="6155051504149" />
+        <entry key="$PROJECT_DIR$" value="6156599549580" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="3688512785" />
-        <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="1124708390" />
-        <entry key="$PROJECT_DIR$/settings.gradle" value="2841037746" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="2727239049" />
+        <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="1491888232" />
+        <entry key="$PROJECT_DIR$/settings.gradle" value="2755643594" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1510,8 +1583,19 @@
         <option value="$PROJECT_DIR$/modules/core/src/com/company/scrumit/app.properties" />
         <option value="$PROJECT_DIR$/modules/core/src/com/company/scrumit/fts.xml" />
         <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml" />
+        <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/filter/FilterDelegateImplExt.java" />
+        <option value="$PROJECT_DIR$/deploy/tomcat/conf/app/com/company/scrumit/web/filter/FilterDelegateImplExt.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/messages.properties" />
+        <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web-spring.xml" />
+        <option value="$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-browse.xml" />
       </list>
     </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -1522,9 +1606,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -1608,6 +1689,16 @@
               <item name="src" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="scrumit" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="task" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="scrumit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scrumit" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="scrumit" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="tracker" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -1629,11 +1720,20 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="Course" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538986275131" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542069423266" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\KORA\IdeaProjects\scrumit\modules\web\src\com\company\scrumit\web" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -1674,8 +1774,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="870255b3-8041-4fb9-abb5-2bacd2102f32" name="Default" comment="" />
-      <changelist id="6e52bff2-ccab-4720-921f-ed298d38ec4e" name="Hover theme extension (branding)" comment="" />
+      <changelist id="7a33231f-3ec7-4da7-9aa5-795f04185041" name="Default Changelist" comment="build.gradle fix" />
       <created>1533764018216</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -1724,7 +1823,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49665552" visible="true" weight="0.2965204" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49665552" visible="true" weight="0.19969743" />
       <window_info id="Structure" order="1" sideWeight="0.50167227" side_tool="true" weight="0.2780303" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -1792,6 +1891,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.haulmont.cuba/cuba-gui/6.10.0/7f7c0cfd9c0c5f3cb725e9594b45f9d9afb03f37/cuba-gui-6.10.0-sources.jar!/com/haulmont/cuba/gui/components/filter/FilterDelegateImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="130" column="32" selection-start-line="130" selection-start-column="27" selection-end-line="130" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/messages.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="34" column="39" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
+        </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deploy/tomcat/conf/app/com/company/scrumit/web/filter/FilterDelegateImplExt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="84" column="52" lean-forward="true" selection-start-line="84" selection-start-column="52" selection-end-line="84" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/filter/messages.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="ResourceBundle" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/filter/messages_ru.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/TrackerEdit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-578">
+          <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/filter/FilterDelegateImplExt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="75" column="44" selection-start-line="75" selection-start-column="44" selection-end-line="75" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web-spring.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="26" column="29" lean-forward="true" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2263">
+          <caret line="18" column="73" selection-start-line="18" selection-start-column="73" selection-end-line="18" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -1800,15 +1961,16 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-browse.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/tracker/tracker-edit.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="143" column="55" selection-start-line="143" selection-start-column="55" selection-end-line="143" selection-end-column="55" />
-          <folding>
-            <element signature="e#7762#7781#0" expanded="true" />
-          </folding>
+          <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/com/company/scrumit/web/task/task-browse.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="52" column="51" selection-start-line="52" selection-start-column="51" selection-end-line="52" selection-end-column="51" />
         </state>
       </provider>
     </entry>

@@ -77,6 +77,7 @@
                                                            datasource="trackerDs"
                                                            optionsDatasource="taskDs"
                                                            property="project"
+                                                           required="true"
                                                            width="100%">
                                             <actions>
                                                 <action id="open"
