@@ -1,15 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7a33231f-3ec7-4da7-9aa5-795f04185041" name="Default Changelist" comment="build.gradle fix">
-      <change afterPath="$PROJECT_DIR$/modules/web/themes/hover/styles.scss" afterDir="false" />
+    <list default="true" id="07b2954d-1d31-46c2-944f-ddecd26f2955" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/modules/global/.gradle/" />
+    <ignored path="$PROJECT_DIR$/modules/global/build/" />
+    <ignored path="$PROJECT_DIR$/modules/global/out/" />
+    <ignored path="$PROJECT_DIR$/classes/" />
+    <ignored path="$PROJECT_DIR$/modules/core/.gradle/" />
+    <ignored path="$PROJECT_DIR$/modules/core/build/" />
+    <ignored path="$PROJECT_DIR$/modules/core/out/" />
+    <ignored path="$PROJECT_DIR$/modules/web/.gradle/" />
+    <ignored path="$PROJECT_DIR$/modules/web/build/" />
+    <ignored path="$PROJECT_DIR$/modules/web/out/" />
+    <ignored path="$PROJECT_DIR$/modules/web/themes/.gradle/" />
+    <ignored path="$PROJECT_DIR$/modules/web/themes/out/" />
+    <ignored path="$PROJECT_DIR$/.gradle/" />
+    <ignored path="$PROJECT_DIR$/build/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="2056464024">
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="ico" value="1" />
+          <entry key="scss" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CSS" value="1" />
+          <entry key="Image" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit" />
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.45" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit" />
+      <usages-collector id="statistics.vcs.git.usages" />
+    </session>
   </component>
   <component name="FavoritesManager">
     <favorites_list name="scrumit" />
@@ -19,10 +63,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="27" selection-start-line="27" selection-end-line="27" />
+            <state relative-caret-position="105">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/themes/hover/styles.scss">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -44,6 +93,42 @@
     <option name="myGradleVersions">
       <map>
         <entry key="$PROJECT_DIR$" value="4.3.1" />
+      </map>
+    </option>
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="scrumit" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="scrumit" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+              <ExternalProjectPojo>
+                <option name="name" value=":app-core" />
+                <option name="path" value="$PROJECT_DIR$/modules/core" />
+              </ExternalProjectPojo>
+              <ExternalProjectPojo>
+                <option name="name" value=":app-global" />
+                <option name="path" value="$PROJECT_DIR$/modules/global" />
+              </ExternalProjectPojo>
+              <ExternalProjectPojo>
+                <option name="name" value=":app-web" />
+                <option name="path" value="$PROJECT_DIR$/modules/web" />
+              </ExternalProjectPojo>
+              <ExternalProjectPojo>
+                <option name="name" value=":app-web-themes" />
+                <option name="path" value="$PROJECT_DIR$/modules/web/themes" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
       </map>
     </option>
     <option name="availableTasks">
@@ -946,6 +1031,15 @@
         </entry>
       </map>
     </option>
+    <option name="modificationStamps">
+      <map>
+        <entry key="$PROJECT_DIR$" value="6154418579000" />
+        <entry key="$PROJECT_DIR$/.gradle" value="0" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="3688512785" />
+        <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="1491888232" />
+        <entry key="$PROJECT_DIR$/settings.gradle" value="2755643594" />
+      </map>
+    </option>
     <option name="projectBuildClasspath">
       <map>
         <entry key="$PROJECT_DIR$">
@@ -1398,6 +1492,17 @@
         </entry>
       </map>
     </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="10" />
+    <option name="y" value="20" />
+    <option name="width" value="1346" />
+    <option name="height" value="688" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -1408,8 +1513,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -1454,11 +1557,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="Course" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538622269609" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538622760580" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -1496,8 +1601,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="870255b3-8041-4fb9-abb5-2bacd2102f32" name="Default" comment="" />
-      <changelist id="6e52bff2-ccab-4720-921f-ed298d38ec4e" name="Hover theme extension (branding)" comment="" />
+      <changelist id="07b2954d-1d31-46c2-944f-ddecd26f2955" name="Default Changelist" comment="" />
       <created>1533764018216</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -1511,12 +1615,12 @@
       <option name="project" value="LOCAL" />
       <updated>1538622012640</updated>
     </task>
-    <task id="LOCAL-00002" summary="branding">
-      <created>1538560280369</created>
+    <task id="LOCAL-00002" summary="build.gradle fix">
+      <created>1538622330700</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1538560280369</updated>
+      <updated>1538622330700</updated>
     </task>
     <task id="LOCAL-00003" summary="applying Ildar's patch (branding)">
       <created>1538620899420</created>
@@ -1539,13 +1643,13 @@
       <option name="project" value="LOCAL" />
       <updated>1538621811748</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="34" width="1366" height="734" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49665552" visible="true" weight="0.29166666" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49665552" visible="true" weight="0.2962121" />
       <window_info id="Structure" order="1" sideWeight="0.50167227" side_tool="true" weight="0.2780303" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -1563,7 +1667,7 @@
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5007576" side_tool="true" visible="true" weight="0.28093645" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32843137" />
       <window_info anchor="bottom" id="Build" order="10" weight="0.32843137" />
-      <window_info active="true" anchor="bottom" id="Messages" order="11" sideWeight="0.49924242" visible="true" weight="0.28093645" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49924242" visible="true" weight="0.28093645" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1579,13 +1683,22 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added Performer to Tracker and &quot;Testing&quot;,&quot;Checked&quot; into Status" />
-    <MESSAGE value="Added Test plan" />
-    <MESSAGE value="branding" />
-    <MESSAGE value="applying Ildar's patch (branding)" />
-    <MESSAGE value="Hover theme extension (branding) again" />
-    <MESSAGE value="build.gradle fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="build.gradle fix" />
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/modules/web/themes/hover/styles.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradlew.bat">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/themes/hover/favicon.ico">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
