@@ -8,6 +8,7 @@ import com.haulmont.cuba.gui.components.filter.FilterDelegateImpl;
 import com.haulmont.cuba.gui.components.filter.FtsFilterHelper;
 import com.haulmont.cuba.gui.components.filter.condition.CustomCondition;
 import com.haulmont.cuba.gui.icons.CubaIcon;
+import org.eclipse.persistence.internal.sessions.DirectCollectionChangeRecord;
 
 import javax.annotation.PostConstruct;
 import java.util.Collections;
@@ -60,7 +61,8 @@ public class FilterDelegateImplExt extends FilterDelegateImpl {
     @Override
     public void setEditable(boolean editable) {
         super.setEditable(editable);
-        resetAll.setVisible(editable && userCanEditFilers());
+        if(resetAll!=null)
+            resetAll.setVisible(editable && userCanEditFilers());
     }
 
     @Override

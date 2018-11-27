@@ -41,191 +41,177 @@
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
-    <layout spacing="true">
-        <scrollBox height="100%">
-            <tabSheet id="tabSheet">
-                <tab id="edit"
-                     caption="msg://editorCaption">
-                    <flowBox width="100%">
-                        <groupBox width="70%">
-                            <grid id="grid"
-                                  margin="true"
-                                  spacing="true"
-                                  width="100%">
+    <layout expand="scroll"
+            spacing="true">
+        <scrollBox id="scroll">
+            <grid id="grid"
+                  margin="true"
+                  spacing="true"
+                  width="100%">
+                <columns>
+                    <column/>
+                    <column flex="3.0"/>
+                    <column/>
+                    <column flex="0.0"/>
+                    <column flex="3.0"/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row>
+                        <label id="ID"
+                               value="ID"/>
+                        <textField id="textField"
+                                   datasource="trackerDs"
+                                   editable="false"
+                                   property="id"
+                                   width="100%"/>
+                    </row>
+                    <row>
+                        <label value="msg://Parent"/>
+                        <lookupPickerField id="project"
+                                           colspan="2"
+                                           datasource="trackerDs"
+                                           optionsDatasource="taskDs"
+                                           property="project"
+                                           required="true"
+                                           width="100%">
+                            <actions>
+                                <action id="open"
+                                        openType="DIALOG"/>
+                                <action id="lookup"
+                                        openType="DIALOG"/>
+                                <action id="clear"
+                                        openType="DIALOG"/>
+                            </actions>
+                        </lookupPickerField>
+                        <label value="msg://com.company.scrumit.entity/Tracker.performer"/>
+                        <lookupPickerField id="performer"
+                                           datasource="trackerDs"
+                                           optionsDatasource="performersDs"
+                                           property="performer"
+                                           width="100%">
+                            <actions>
+                                <action id="open"
+                                        openType="DIALOG"/>
+                                <action id="lookup"
+                                        openType="DIALOG"/>
+                                <action id="clear"
+                                        openType="DIALOG"/>
+                            </actions>
+                        </lookupPickerField>
+                        <button caption="msg://createTask"
+                                invoke="createTask"/>
+                    </row>
+                    <row>
+                        <label value="msg://shortdesc"/>
+                        <textField id="shortdesc"
+                                   colspan="2"
+                                   datasource="trackerDs"
+                                   property="shortdesc"
+                                   width="100%"/>
+                        <label value="msg://trackerPriorityType"/>
+                        <lookupField colspan="2"
+                                     datasource="trackerDs"
+                                     property="trackerPriorityType"
+                                     width="100%"/>
+                    </row>
+                    <row>
+                        <label value="msg://status"/>
+                        <lookupField id="status"
+                                     colspan="2"
+                                     datasource="trackerDs"
+                                     property="status"
+                                     width="100%"/>
+                        <label value="msg://type"/>
+                        <lookupField colspan="2"
+                                     datasource="trackerDs"
+                                     property="type"
+                                     width="100%"/>
+                    </row>
+                    <row>
+                        <hbox colspan="6"
+                              spacing="true"
+                              width="100%">
+                            <richTextArea id="description"
+                                          caption="msg://description"
+                                          datasource="trackerDs"
+                                          height="300px"
+                                          property="description"
+                                          width="100%"/>
+                            <table id="filesTable"
+                                   caption="msg://Attachments"
+                                   height="300px"
+                                   width="100%">
+                                <actions>
+                                    <action id="add"/>
+                                    <action id="remove"/>
+                                </actions>
                                 <columns>
-                                    <column/>
-                                    <column flex="3.0"/>
-                                    <column/>
-                                    <column flex="0.0"/>
-                                    <column flex="3.0"/>
-                                    <column/>
+                                    <column id="name"/>
+                                    <column id="createDate"/>
+                                    <column id="extension"/>
                                 </columns>
-                                <rows>
-                                    <row>
-                                        <label id="ID"
-                                               value="ID"/>
-                                        <textField id="textField"
-                                                   datasource="trackerDs"
-                                                   editable="false"
-                                                   property="id"
-                                                   width="100%"/>
-                                    </row>
-                                    <row>
-                                        <label value="msg://Parent"/>
-                                        <lookupPickerField id="project"
-                                                           colspan="2"
-                                                           datasource="trackerDs"
-                                                           optionsDatasource="taskDs"
-                                                           property="project"
-                                                           required="true"
-                                                           width="100%">
-                                            <actions>
-                                                <action id="open"
-                                                        openType="DIALOG"/>
-                                                <action id="lookup"
-                                                        openType="DIALOG"/>
-                                                <action id="clear"
-                                                        openType="DIALOG"/>
-                                            </actions>
-                                        </lookupPickerField>
-                                        <label value="msg://com.company.scrumit.entity/Tracker.performer"/>
-                                        <lookupPickerField id="performer"
-                                                           datasource="trackerDs"
-                                                           optionsDatasource="performersDs"
-                                                           property="performer"
-                                                           width="100%">
-                                            <actions>
-                                                <action id="open"
-                                                        openType="DIALOG"/>
-                                                <action id="lookup"
-                                                        openType="DIALOG"/>
-                                                <action id="clear"
-                                                        openType="DIALOG"/>
-                                            </actions>
-                                        </lookupPickerField>
-                                        <button caption="msg://createTask"
-                                                invoke="createTask"/>
-                                    </row>
-                                    <row>
-                                        <label value="msg://shortdesc"/>
-                                        <textField id="shortdesc"
-                                                   colspan="2"
-                                                   datasource="trackerDs"
-                                                   property="shortdesc"
-                                                   width="100%"/>
-                                        <label value="msg://trackerPriorityType"/>
-                                        <lookupField colspan="2"
-                                                     datasource="trackerDs"
-                                                     property="trackerPriorityType"
-                                                     width="100%"/>
-                                    </row>
-                                    <row>
-                                        <label value="msg://status"/>
-                                        <lookupField id="status"
-                                                     colspan="2"
-                                                     datasource="trackerDs"
-                                                     property="status"
-                                                     width="100%"/>
-                                        <label value="msg://type"/>
-                                        <lookupField colspan="2"
-                                                     datasource="trackerDs"
-                                                     property="type"
-                                                     width="100%"/>
-                                    </row>
-                                    <row>
-                                        <hbox colspan="6"
-                                              width="100%">
-                                            <groupBox caption="msg://description"
-                                                      width="98%">
-                                                <richTextArea id="description"
-                                                              datasource="trackerDs"
-                                                              height="300px"
-                                                              property="description"
-                                                              width="100%"/>
-                                            </groupBox>
-                                            <groupBox id="filesBox"
-                                                      align="TOP_RIGHT"
-                                                      caption="msg://upload"
-                                                      width="98%">
-                                                <table id="filesTable"
-                                                       height="300px"
-                                                       width="100%">
-                                                    <actions>
-                                                        <action id="add"/>
-                                                        <action id="remove"/>
-                                                    </actions>
-                                                    <columns>
-                                                        <column id="name"/>
-                                                        <column id="createDate"/>
-                                                        <column id="extension"/>
-                                                    </columns>
-                                                    <rows datasource="filesDs"/>
-                                                    <buttonsPanel>
-                                                        <multiUpload id="multiUpload"
-                                                                     caption="Upload files"/>
-                                                        <button caption="msg://download"
-                                                                invoke="download"/>
-                                                        <button action="filesTable.add"/>
-                                                        <button action="filesTable.remove"/>
-                                                    </buttonsPanel>
-                                                </table>
-                                            </groupBox>
-                                        </hbox>
-                                    </row>
-                                    <row>
-                                        <hbox colspan="6"
-                                              width="100%">
-                                            <groupBox caption="msg://testingPlan"
-                                                      width="98%">
-                                                <richTextArea id="testingPlan"
-                                                              datasource="trackerDs"
-                                                              height="300px"
-                                                              property="testingPlan"
-                                                              width="100%"/>
-                                            </groupBox>
-                                        </hbox>
-                                    </row>
-                                </rows>
-                            </grid>
-                        </groupBox>
-                        <groupBox width="20%">
-                            <frame id="windowActions"
-                                   src="com/company/scrumit/web/frames/actionsEntity.xml"/>
-                        </groupBox>
-                    </flowBox>
-                </tab>
-                <tab id="taskTab">
-                    <treeTable id="tasksTable"
-                               width="100%">
-                        <actions>
-                            <action id="refresh"/>
-                            <action id="edit"/>
-                            <action id="remove"/>
-                        </actions>
-                        <columns>
-                            <column id="shortdesc"/>
-                            <column id="priority"/>
-                            <column id="done"/>
-                            <column id="type"/>
-                            <column id="control"/>
-                            <column id="description"/>
-                            <column id="planningTime"/>
-                            <column id="actualTime"/>
-                        </columns>
-                        <rows datasource="taskParentBugDs"/>
-                        <rowsCount/>
-                        <buttonsPanel id="buttonsPanel"
-                                      alwaysVisible="true">
-                            <button id="createBtn"
-                                    action="tasksTable.refresh"/>
-                            <button id="editBtn"
-                                    action="tasksTable.edit"/>
-                            <button id="removeBtn"
-                                    action="tasksTable.remove"/>
-                        </buttonsPanel>
-                    </treeTable>
-                </tab>
-            </tabSheet>
+                                <rows datasource="filesDs"/>
+                                <buttonsPanel>
+                                    <multiUpload id="multiUpload"
+                                                 caption="Upload files"/>
+                                    <button caption="msg://download"
+                                            invoke="download"/>
+                                    <button action="filesTable.add"/>
+                                    <button action="filesTable.remove"/>
+                                </buttonsPanel>
+                            </table>
+                        </hbox>
+                    </row>
+                    <row>
+                        <hbox colspan="6"
+                              spacing="true"
+                              width="100%">
+                            <richTextArea id="testingPlan"
+                                          caption="msg://testingPlan"
+                                          datasource="trackerDs"
+                                          height="300px"
+                                          property="testingPlan"
+                                          width="100%"/>
+                            <treeTable id="tasksTable"
+                                       caption="msg://Tasks"
+                                       height="300px"
+                                       width="100%">
+                                <actions>
+                                    <action id="refresh"/>
+                                    <action id="edit"/>
+                                    <action id="remove"/>
+                                </actions>
+                                <columns>
+                                    <column id="shortdesc"/>
+                                    <column id="priority"/>
+                                    <column id="done"/>
+                                    <column id="type"/>
+                                    <column id="control"/>
+                                    <column id="description"/>
+                                    <column id="planningTime"/>
+                                    <column id="actualTime"/>
+                                </columns>
+                                <rows datasource="taskParentBugDs"/>
+                                <rowsCount/>
+                                <buttonsPanel id="buttonsPanel"
+                                              alwaysVisible="true">
+                                    <button id="createBtn"
+                                            action="tasksTable.refresh"/>
+                                    <button id="editBtn"
+                                            action="tasksTable.edit"/>
+                                    <button id="removeBtn"
+                                            action="tasksTable.remove"/>
+                                </buttonsPanel>
+                            </treeTable>
+                        </hbox>
+                    </row>
+                    <row/>
+                </rows>
+            </grid>
         </scrollBox>
+        <frame id="windowActions"
+               src="com/company/scrumit/web/frames/actionsEntity.xml"
+               width="AUTO"/>
     </layout>
 </window>

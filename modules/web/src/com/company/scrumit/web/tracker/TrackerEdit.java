@@ -84,10 +84,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     @Override
     public void ready() {
-        for (TabSheet.Tab tab: tabSheet.getTabs()) {
-            if (tab.getName().equals("taskTab"))
-                tab.setCaption("Tasks - " + taskParentBugDs.size());
-        }
         multiUpload.addQueueUploadCompleteListener(() -> {
             for (Map.Entry<UUID, String> entry : multiUpload.getUploadsMap().entrySet()) {
                 UUID fileId = entry.getKey();
