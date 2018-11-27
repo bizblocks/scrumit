@@ -30,6 +30,7 @@
                 <action id="create"/>
                 <action id="edit"/>
                 <action id="remove"/>
+                <action id="excel"/>
             </actions>
             <columns>
                 <column id="shortdesc"/>
@@ -48,6 +49,8 @@
                         action="tasksTable.edit"/>
                 <button id="removeBtn"
                         action="tasksTable.remove"/>
+                <button id="excelBtn"
+                        action="tasksTable.excel"/>
             </buttonsPanel>
         </treeTable>
     </layout>

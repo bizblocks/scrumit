@@ -77,6 +77,7 @@
                                                            datasource="trackerDs"
                                                            optionsDatasource="taskDs"
                                                            property="project"
+                                                           required="true"
                                                            width="100%">
                                             <actions>
                                                 <action id="open"
@@ -134,6 +135,14 @@
                                     <row>
                                         <hbox colspan="6"
                                               width="100%">
+                                            <groupBox caption="msg://description"
+                                                      width="98%">
+                                                <richTextArea id="description"
+                                                              datasource="trackerDs"
+                                                              height="300px"
+                                                              property="description"
+                                                              width="100%"/>
+                                            </groupBox>
                                             <groupBox id="filesBox"
                                                       align="TOP_RIGHT"
                                                       caption="msg://upload"
@@ -160,14 +169,6 @@
                                                         <button action="filesTable.remove"/>
                                                     </buttonsPanel>
                                                 </table>
-                                            </groupBox>
-                                            <groupBox caption="msg://description"
-                                                      width="98%">
-                                                <richTextArea id="description"
-                                                              datasource="trackerDs"
-                                                              height="300px"
-                                                              property="description"
-                                                              width="100%"/>
                                             </groupBox>
                                         </hbox>
                                     </row>

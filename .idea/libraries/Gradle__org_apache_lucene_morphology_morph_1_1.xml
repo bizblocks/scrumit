@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.lucene.morphology:morph:1.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.lucene.morphology/morph/1.1/3890078a6f82b2b5f0ba13d15028015b7edcb5cb/morph-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.lucene.morphology/morph/1.1/c5fa46a8240d0e863b68757a5fcacfe4ad64eb7c/morph-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

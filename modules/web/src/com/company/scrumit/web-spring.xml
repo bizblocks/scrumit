@@ -21,4 +21,8 @@
             </map>
         </property>
     </bean>
+
+    <bean id="cuba_FilterDelegate"
+          class="com.company.scrumit.web.filter.FilterDelegateImplExt"
+          scope="prototype"/>
 </beans>

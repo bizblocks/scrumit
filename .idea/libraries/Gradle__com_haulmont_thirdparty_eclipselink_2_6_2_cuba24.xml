@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.haulmont.thirdparty:eclipselink:2.6.2.cuba24">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.haulmont.thirdparty/eclipselink/2.6.2.cuba24/dd779e5837f4eeb208c741a5d710e597baf0876a/eclipselink-2.6.2.cuba24.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.haulmont.thirdparty/eclipselink/2.6.2.cuba24/6e5fd52a331343bbb7ca765ee02a892d541c6d23/eclipselink-2.6.2.cuba24-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -20,7 +20,8 @@
             spacing="true">
         <filter id="filter"
                 applyTo="trackersTable"
-                datasource="trackersDs">
+                datasource="trackersDs"
+                useMaxResults="false">
             <properties include=".*"/>
         </filter>
         <groupTable id="trackersTable"
@@ -62,6 +63,8 @@
                         action="trackersTable.remove"/>
                 <button id="refreshBtn"
                         action="trackersTable.refresh"/>
+                <button id="excelBtn"
+                        action="trackersTable.excel"/>
                 <checkBox id="checkSelect"
                           align="MIDDLE_LEFT"
                           caption="msg://Select text"

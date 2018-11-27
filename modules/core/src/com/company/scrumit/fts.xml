@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fts-config xmlns="http://schemas.haulmont.com/cuba/fts.xsd">
+    <entities>
+        <entity class="com.company.scrumit.entity.Speciality">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Contact">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.City">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.ContactsSpeciality">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Performer">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Team">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Task">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.TaskComment">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Sprint">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Meeting">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Tracker">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Chat">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.ChatRoom">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Deadlines">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.SprintBacklog">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Link">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.File">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.TasksFile">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.TaskDuration">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.MeetingsTask">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.ContactsStatus">
+            <include re=".*"/>
+        </entity>
+    </entities>
+</fts-config>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.lucene.morphology:english:1.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.lucene.morphology/english/1.1/2e91e76fcedae545ed40911bf409d45647749b26/english-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.lucene.morphology/english/1.1/85e614c3aa2a658bcbc8fb97d22c86ce399a55e0/english-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
