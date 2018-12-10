@@ -43,10 +43,12 @@
                 <column id="createTs"/>
                 <column id="shortdesc"/>
                 <column id="type"/>
-                <column id="status"/>
+                <column id="status"
+                        editable="true"/>
                 <column id="description"/>
                 <column id="files"/>
-                <column id="trackerPriorityType"/>
+                <column id="trackerPriorityType"
+                        editable="true"/>
                 <column id="performer"/>
                 <column id="testingPlan"/>
             </columns>
