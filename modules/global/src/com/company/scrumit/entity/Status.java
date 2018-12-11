@@ -10,7 +10,9 @@ public enum Status implements EnumClass<String> {
     Doing("doing"),
     Done("done"),
     Testing("testing"),
-    Checked("Checked");
+    Checked("checked"),
+    WontFix("wontfix"),
+    NotABug("notabug");
 
     private String id;
 
