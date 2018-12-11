@@ -12,7 +12,8 @@ public enum TrackerPriorityType implements EnumClass<String> {
     Hinder("hinder"),
     Inessential("inessential"),
     Speed("speed"),
-    Current("current");
+    Current("current"),
+    Security("security");
 
     private String id;
 
