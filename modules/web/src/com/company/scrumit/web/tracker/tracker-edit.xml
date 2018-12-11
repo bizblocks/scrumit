@@ -61,29 +61,11 @@
                         <label id="ID"
                                value="ID"/>
                         <textField id="textField"
+                                   colspan="2"
                                    datasource="trackerDs"
                                    editable="false"
                                    property="id"
                                    width="100%"/>
-                    </row>
-                    <row>
-                        <label value="msg://Parent"/>
-                        <lookupPickerField id="project"
-                                           colspan="2"
-                                           datasource="trackerDs"
-                                           optionsDatasource="taskDs"
-                                           property="project"
-                                           required="true"
-                                           width="100%">
-                            <actions>
-                                <action id="open"
-                                        openType="DIALOG"/>
-                                <action id="lookup"
-                                        openType="DIALOG"/>
-                                <action id="clear"
-                                        openType="DIALOG"/>
-                            </actions>
-                        </lookupPickerField>
                         <label value="msg://com.company.scrumit.entity/Tracker.performer"/>
                         <lookupPickerField id="performer"
                                            datasource="trackerDs"
@@ -103,16 +85,40 @@
                                 invoke="createTask"/>
                     </row>
                     <row>
+                        <label value="msg://Parent"/>
+                        <lookupPickerField id="project"
+                                           colspan="2"
+                                           datasource="trackerDs"
+                                           optionsDatasource="taskDs"
+                                           property="project"
+                                           required="true"
+                                           width="100%">
+                            <actions>
+                                <action id="open"
+                                        openType="DIALOG"/>
+                                <action id="lookup"
+                                        openType="DIALOG"/>
+                                <action id="clear"
+                                        openType="DIALOG"/>
+                            </actions>
+                        </lookupPickerField>
+                        <label value="msg://trackerPriorityType"/>
+                        <lookupField colspan="2"
+                                     datasource="trackerDs"
+                                     property="trackerPriorityType"
+                                     width="100%"/>
+                    </row>
+                    <row>
                         <label value="msg://shortdesc"/>
                         <textField id="shortdesc"
                                    colspan="2"
                                    datasource="trackerDs"
                                    property="shortdesc"
                                    width="100%"/>
-                        <label value="msg://trackerPriorityType"/>
+                        <label value="msg://type"/>
                         <lookupField colspan="2"
                                      datasource="trackerDs"
-                                     property="trackerPriorityType"
+                                     property="type"
                                      width="100%"/>
                     </row>
                     <row>
@@ -122,11 +128,11 @@
                                      datasource="trackerDs"
                                      property="status"
                                      width="100%"/>
-                        <label value="msg://type"/>
-                        <lookupField colspan="2"
-                                     datasource="trackerDs"
-                                     property="type"
-                                     width="100%"/>
+                        <label value="msg://testingPlan"/>
+                        <textField id="testingPlan"/>
+                        <button id="okBtn"
+                                caption="OK"
+                                invoke="onOkBtn"/>
                     </row>
                     <row>
                         <hbox colspan="6"
@@ -167,12 +173,6 @@
                         <hbox colspan="6"
                               spacing="true"
                               width="100%">
-                            <richTextArea id="testingPlan"
-                                          caption="msg://testingPlan"
-                                          datasource="trackerDs"
-                                          height="300px"
-                                          property="testingPlan"
-                                          width="100%"/>
                             <treeTable id="tasksTable"
                                        caption="msg://Tasks"
                                        height="300px"
