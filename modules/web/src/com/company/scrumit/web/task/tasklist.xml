@@ -124,50 +124,61 @@
             </vbox>
             <vbox id="editBox"
                   height="100%"
-                  margin="true,true,true,true"
+                  margin="true"
                   spacing="true">
-                <scrollBox height="100%">
-                        <fieldGroup id="fieldGroup"
-                                    datasource="taskDs">
-                            <column width="300px">
-                                <field property="id"/>
-                                <field caption="msg://Parent"
-                                       property="task"/>
-                                <field property="done"/>
-                                <field property="shortdesc"/>
-                                <field property="type"/>
-                                <field property="begin"/>
-                                <field property="duration"/>
-                                <field property="deadline"/>
-                            </column>
-                            <column width="300px">
-                                <field property="planningTime"/>
-                                <field property="actualTime"/>
-                                <field property="control"/>
-                                <field property="priority"/>
-                                <field property="amount"/>
-                                <field optionsDatasource="performersDs"
-                                       property="performer"/>
-                                <field optionsDatasource="trackerDs"
-                                       property="parentBug"/>
-                            </column>
-                        </fieldGroup>
-                    <groupBox caption="msg://description"
-                              width="98%">
+                <scrollBox height="100%"
+                           spacing="true">
+                    <fieldGroup id="fieldGroup"
+                                datasource="taskDs">
+                        <column width="300px">
+                            <field property="id"/>
+                            <field caption="msg://Parent"
+                                   property="task"/>
+                            <field property="done"/>
+                            <field property="shortdesc"/>
+                            <field property="type"/>
+                            <field property="begin"/>
+                            <field property="duration"/>
+                            <field property="deadline"/>
+                        </column>
+                        <column width="300px">
+                            <field property="planningTime"/>
+                            <field property="actualTime"/>
+                            <field property="control"/>
+                            <field property="priority"/>
+                            <field property="amount"/>
+                            <field optionsDatasource="performersDs"
+                                   property="performer"/>
+                            <field optionsDatasource="trackerDs"
+                                   property="parentBug"/>
+                        </column>
+                    </fieldGroup>
+                    <groupBox caption="msg://description">
                         <richTextArea id="description"
                                       datasource="taskDs"
                                       property="description"
                                       width="100%"/>
                     </groupBox>
-                    <groupBox caption="msg://testingPlan"
-                              width="98%">
-                        <richTextArea id="testingPlan"
-                                      datasource="taskDs"
-                                      height="300px"
-                                      property="testingPlan"
-                                      width="100%"/>
-                    </groupBox>
-                
+                    <grid id="grid"
+                          caption="msg://testingPlan"
+                          spacing="true"
+                          width="100%">
+                        <columns>
+                            <column flex="3.0"/>
+                            <column/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <textField id="testingPlan"
+                                           datasource="taskDs"
+                                           property="testingPlan"
+                                           width="100%"/>
+                                <button id="okBtn"
+                                        caption="OK"
+                                        invoke="onOkBtn"/>
+                            </row>
+                        </rows>
+                    </grid>
                     <hbox id="actionsPane"
                           align="BOTTOM_RIGHT"
                           spacing="true"

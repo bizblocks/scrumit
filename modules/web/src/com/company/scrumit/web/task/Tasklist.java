@@ -10,6 +10,7 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
+import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,6 +45,10 @@ public class Tasklist extends EntityCombinedScreen {
     private CollectionDatasource trackerDs;
     @Inject
     private CheckBox checkSelect;
+    @Inject
+    private GridLayout grid;
+    @Inject
+    private ComponentsFactory componentsFactory;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -59,6 +64,11 @@ public class Tasklist extends EntityCombinedScreen {
         addBeforeCloseWithShortcutListener(event -> table.getDatasource().commit());
         
         checkSelect.addValueChangeListener(e -> table.setTextSelectionEnabled((Boolean) e.getValue()));
+
+        Datasource editDs = getFieldGroup().getDatasource();
+        table.getDatasource().addItemChangeListener(e -> {
+            setupTestingPlan();
+        });
     }
 
 
@@ -93,5 +103,62 @@ public class Tasklist extends EntityCombinedScreen {
         Date d = beginField.getValue();
         d.setTime((d.getTime() + ONEDAY * Double.valueOf(durationField.getRawValue()).longValue()));
         deadlineField.setValue(d);
+    }
+
+    @Override
+    protected void initEditComponents(boolean enabled) {
+        super.initEditComponents(enabled);
+        setupTestingPlan();
+    }
+
+    private void setupTestingPlan(){
+        Task item = (Task) getFieldGroup().getDatasource().getItem();
+        Component testingPlan = grid.getComponent("testingPlan");
+        grid.remove(testingPlan);
+
+        if (item == null || item.getTestingPlan() == null || item.getTestingPlan().length() == 0) {
+            showTestingPlanAsTextField();
+        } else {
+           showTestingPlanAsLink(item);
+        }
+        
+    }
+
+    private void showTestingPlanAsTextField(){
+        Button btn = (Button) grid.getComponent("okBtn");
+        btn.setCaption("OK");
+        TextField textField = componentsFactory.createComponent(TextField.class);
+        textField.setId("testingPlan");
+        textField.setDatasource(taskDs, "testingPlan");
+        textField.setWidth("100%");
+        grid.add(textField, 0, 0);
+    }
+
+    private void showTestingPlanAsLink(Task item){
+        Button btn = (Button) grid.getComponent("okBtn");
+        btn.setCaption("Edit");
+        Link link = componentsFactory.createComponent(Link.class);
+        link.setUrl(item.getTestingPlan());
+        link.setId("testingPlan");
+        try {
+            link.setCaption(item.getTestingPlan().substring(0, 40) + "...");
+        } catch (Exception e) {
+            link.setCaption(item.getTestingPlan());
+        }
+        link.setWidth("60%");
+        link.setTarget("_blank");
+        grid.add(link, 0, 0);
+    }
+
+    public void onOkBtn(){
+        Task item = (Task) getFieldGroup().getDatasource().getItem();
+        Component testingPlan = grid.getComponent("testingPlan");
+        grid.remove(testingPlan);
+        Button btn = (Button) grid.getComponent("okBtn");
+        if (item == null || item.getTestingPlan() == null || item.getTestingPlan().length() == 0 || btn.getCaption().equals("Edit")) {
+            showTestingPlanAsTextField();
+        } else {
+            showTestingPlanAsLink(item);
+        }
     }
 }

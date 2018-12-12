@@ -18,6 +18,7 @@ import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
+import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -66,6 +67,12 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Inject
     private TabSheet tabSheet;
 
+    @Inject
+    private GridLayout grid;
+
+    @Inject
+    private ComponentsFactory componentsFactory;
+
     @Override
     protected void initNewItem(Tracker item) {
         //item.setFiles(new ArrayList<>());
@@ -74,6 +81,46 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
+    }
+
+    @Override
+    public void postInit(){
+        super.postInit();
+        setupTestingPlan();
+    }
+
+    private void setupTestingPlan(){
+        Button btn = (Button) grid.getComponent("okBtn");
+        Component testingPlan = grid.getComponent("testingPlan");
+        grid.remove(testingPlan);
+
+        if(getItem().getTestingPlan()==null || getItem().getTestingPlan().length()==0 || btn.getCaption().equals("Edit")) {
+            btn.setCaption("OK");
+            TextField textField = componentsFactory.createComponent(TextField.class);
+            textField.setId("testingPlan");
+            textField.setDatasource(trackerDs, "testingPlan");
+            textField.setWidth("100%");
+            grid.add(textField, 4, 3);
+        }
+        else{
+            btn.setCaption("Edit");
+            Link link = componentsFactory.createComponent(Link.class);
+            link.setUrl(getItem().getTestingPlan());
+            link.setId("testingPlan");
+            try{
+                link.setCaption(getItem().getTestingPlan().substring(0,40) + "...");
+            }
+            catch(Exception e){
+                link.setCaption(getItem().getTestingPlan());
+            }
+            link.setWidth("60%");
+            link.setTarget("_blank");
+            grid.add(link, 4, 3);
+        }
+    }
+
+    public void onOkBtn(){
+        setupTestingPlan();
     }
 
     @Override
