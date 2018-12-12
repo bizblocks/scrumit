@@ -33,7 +33,7 @@ public class Tracker extends StandardEntity {
     protected Performer performer;
 
     @NotNull
-    @Column(name = "SHORTDESC", nullable = false, length = 50)
+    @Column(name = "SHORTDESC", nullable = false, length = 100)
     protected String shortdesc;
 
     @Column(name = "STATUS")

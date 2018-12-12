@@ -133,7 +133,9 @@
                         <column width="300px">
                             <field property="id"/>
                             <field caption="msg://Parent"
-                                   property="task"/>
+                                   property="task">
+                                <lookupPickerField id="taskLookup" optionsDatasource="tasksDs" property="task"></lookupPickerField>
+                            </field>
                             <field property="done"/>
                             <field property="shortdesc"/>
                             <field property="type"/>

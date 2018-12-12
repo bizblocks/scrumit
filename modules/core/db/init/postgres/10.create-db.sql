@@ -192,7 +192,7 @@ create table SCRUMIT_TRACKER (
     PROJECT_ID uuid,
     TESTING_PLAN text,
     PERFORMER_ID uuid,
-    SHORTDESC varchar(50) not null,
+    SHORTDESC varchar(100) not null,
     STATUS varchar(50),
     TRACKER_PRIORITY_TYPE varchar(50),
     TYPE_ varchar(50),

@@ -9,9 +9,6 @@
         <datasource id="taskDs"
                     class="com.company.scrumit.entity.Task"
                     view="tasks-full"/>
-        <collectionDatasource id="task1Ds"
-                              class="com.company.scrumit.entity.Task"
-                              view="tasks-full"/>
         <datasource id="trackerDs"
                     class="com.company.scrumit.entity.Tracker"
                     view="_local"/>
@@ -20,6 +17,13 @@
                               view="_minimal">
             <query>
                 <![CDATA[select e from scrumit$Performer e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="tasksDs"
+                              class="com.company.scrumit.entity.Task"
+                              view="_local">
+            <query>
+                <![CDATA[select e from scrumit$Task e]]>
             </query>
         </collectionDatasource>
     </dsContext>
@@ -37,7 +41,9 @@
                     <column width="300px">
                         <field property="id"/>
                         <field caption="mainMsg://Parent"
-                               property="task"/>
+                               property="task">
+                            <lookupPickerField id="taskLookup" optionsDatasource="tasksDs" property="task"></lookupPickerField>
+                        </field>
                         <field property="done"/>
                         <field property="begin"/>
                         <field property="duration"/>
