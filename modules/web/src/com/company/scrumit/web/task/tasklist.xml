@@ -134,7 +134,7 @@
                             <field property="id"/>
                             <field caption="msg://Parent"
                                    property="task">
-                                <lookupPickerField id="taskLookup" optionsDatasource="tasksDs" property="task"></lookupPickerField>
+                                <lookupPickerField id="taskLookup" optionsDatasource="tasksDs" property="task"/>
                             </field>
                             <field property="done"/>
                             <field property="shortdesc"/>
