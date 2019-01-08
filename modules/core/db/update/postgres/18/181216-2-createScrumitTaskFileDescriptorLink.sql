@@ -1,0 +1,2 @@
+alter table SCRUMIT_TASK_FILE_DESCRIPTOR_LINK add constraint FK_TASFILDES_ON_TASK foreign key (TASK_ID) references SCRUMIT_TASK(ID);
+alter table SCRUMIT_TASK_FILE_DESCRIPTOR_LINK add constraint FK_TASFILDES_ON_FILE_DESCRIPTOR foreign key (FILE_DESCRIPTOR_ID) references SYS_FILE(ID);

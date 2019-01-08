@@ -134,7 +134,9 @@
                             <field property="id"/>
                             <field caption="msg://Parent"
                                    property="task">
-                                <lookupPickerField id="taskLookup" optionsDatasource="tasksDs" property="task"/>
+                                <lookupPickerField id="taskLookup"
+                                                   optionsDatasource="tasksDs"
+                                                   property="task"/>
                             </field>
                             <field property="done"/>
                             <field property="shortdesc"/>
@@ -161,6 +163,21 @@
                                       property="description"
                                       width="100%"/>
                     </groupBox>
+                    <split height="200px"
+                           orientation="horizontal"
+                           pos="8"
+                           width="100%">
+                        <multiUpload id="multiUpload"
+                                     caption="msg://Upload"
+                                     enable="false"/>
+                        <scrollBox id="scrollBox"
+                                   height="100%">
+                            <flowBox id="thumbnailsBox"
+                                     height="200px"
+                                     spacing="true"
+                                     width="100%"/>
+                        </scrollBox>
+                    </split>
                     <grid id="grid"
                           caption="msg://testingPlan"
                           spacing="true"

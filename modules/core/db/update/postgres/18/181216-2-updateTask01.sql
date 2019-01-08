@@ -1,0 +1,1 @@
+create unique index IDX_SCRUMIT_TASK_UK_SHORTDESC on SCRUMIT_TASK (SHORTDESC) where DELETE_TS is null ;

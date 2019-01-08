@@ -8,8 +8,10 @@ import com.haulmont.cuba.core.entity.annotation.LookupType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import com.haulmont.cuba.core.entity.FileDescriptor;
 
 @Listeners("scrumit_TaskEntityListener")
 @NamePattern("%s|shortdesc")
@@ -109,6 +111,21 @@ public class Task extends StandardEntity {
 
     @Column(name = "SS_ID")
     protected Long ssId;
+
+    @JoinTable(name = "SCRUMIT_TASK_FILE_DESCRIPTOR_LINK",
+        joinColumns = @JoinColumn(name = "TASK_ID"),
+        inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
+    @ManyToMany
+    protected List<FileDescriptor> images;
+
+    public void setImages(List<FileDescriptor> images) {
+        this.images = images;
+    }
+
+    public List<FileDescriptor> getImages() {
+        return images == null ? Collections.emptyList() : images;
+    }
+
 
     public void setTestingPlan(String testingPlan) {
         this.testingPlan = testingPlan;

@@ -3,13 +3,18 @@ package com.company.scrumit.web.task;
 import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
-import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.entity.FileDescriptor;
+import com.haulmont.cuba.core.global.*;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.components.actions.BaseAction;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
+import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
+import com.haulmont.cuba.gui.export.ExportDisplay;
+import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 
 import javax.inject.Inject;
@@ -50,6 +55,19 @@ public class Tasklist extends EntityCombinedScreen {
     @Inject
     private ComponentsFactory componentsFactory;
 
+    @Inject
+    private FileMultiUploadField multiUpload;
+    @Inject
+    private FileUploadingAPI fileUploadingAPI;
+    @Inject
+    private DataSupplier dataSupplier;
+    @Inject
+    private FlowBoxLayout thumbnailsBox;
+    @Inject
+    private FileLoader fileLoader;
+
+    private List<FileDescriptor> imagesToDelete = new ArrayList<>();
+
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
@@ -65,12 +83,45 @@ public class Tasklist extends EntityCombinedScreen {
         
         checkSelect.addValueChangeListener(e -> table.setTextSelectionEnabled((Boolean) e.getValue()));
 
-        Datasource editDs = getFieldGroup().getDatasource();
         table.getDatasource().addItemChangeListener(e -> {
             setupTestingPlan();
+            getAndShowBookImages();
         });
+        initFilesUpload();
+        getDsContext().addBeforeCommitListener(context -> context.addInstanceToCommit(getEditedTask()));
     }
 
+    private void initFilesUpload() {
+        multiUpload.addQueueUploadCompleteListener(() -> {
+            if (getEditedTask().getVersion()==null) {
+                showNotification(getMessage("entityCommitted"));
+                dataManager.commit(getEditedTask());
+                getDsContext().refresh();
+            }
+            for (Map.Entry<UUID, String> entry : multiUpload.getUploadsMap().entrySet()) {
+                UUID fileId = entry.getKey();
+                String fileName = entry.getValue();
+                FileDescriptor fd = fileUploadingAPI.getFileDescriptor(fileId, fileName);
+                // save file to FileStorage
+                try {
+                    fileUploadingAPI.putFileIntoStorage(fileId, fd);
+                } catch (FileStorageException e) {
+                    new RuntimeException("Error saving file to FileStorage", e);
+                }
+                // save file descriptor to database
+                FileDescriptor committedFd = dataSupplier.commit(fd);
+
+                addThumbnail(committedFd);
+                getEditedTask().getImages().add(fd);
+                ((DatasourceImplementation) getFieldGroup().getDatasource()).setModified(true);
+            }
+            multiUpload.clearUploads();
+
+        });
+
+        multiUpload.addFileUploadErrorListener(event ->
+                showNotification("File upload error", NotificationType.HUMANIZED));
+    }
 
     public void onBtnCreateInGroupClick() {
         Task t = metadata.create(Task.class);
@@ -111,6 +162,21 @@ public class Tasklist extends EntityCombinedScreen {
         setupTestingPlan();
     }
 
+    @Override
+    protected void enableEditControls(boolean creating) {
+        super.enableEditControls(creating);
+        Component multiUploadButton = getComponent("multiUpload");
+        multiUploadButton.setEnabled(true);
+        if (getEditedTask().getVersion()==null) thumbnailsBox.removeAll();
+    }
+
+    @Override
+    protected void disableEditControls() {
+        super.disableEditControls();
+        Component multiUploadButton = getComponent("multiUpload");
+        multiUploadButton.setEnabled(false);
+    }
+
     private void setupTestingPlan(){
         Task item = (Task) getFieldGroup().getDatasource().getItem();
         Component testingPlan = grid.getComponent("testingPlan");
@@ -121,7 +187,6 @@ public class Tasklist extends EntityCombinedScreen {
         } else {
            showTestingPlanAsLink(item);
         }
-        
     }
 
     private void showTestingPlanAsTextField(){
@@ -160,5 +225,66 @@ public class Tasklist extends EntityCombinedScreen {
         } else {
             showTestingPlanAsLink(item);
         }
+    }
+
+    private void getAndShowBookImages() {
+        if (getEditedTask() == null) return;
+        thumbnailsBox.removeAll();
+        getEditedTask().getImages().forEach(this::addThumbnail);
+    }
+
+    private void addThumbnail(FileDescriptor fd) {
+        Image image = componentsFactory.createComponent(Image.class);
+        image.setSource(FileDescriptorResource.class).setFileDescriptor(fd);
+        image.setWidth("200px");
+        image.setScaleMode(Image.ScaleMode.SCALE_DOWN);
+        image.setHeight("200px");
+
+        HBoxLayout imageBox = componentsFactory.createComponent(HBoxLayout.class);
+        imageBox.add(image);
+        VBoxLayout innerButtonBox = componentsFactory.createComponent(VBoxLayout.class);
+        imageBox.add(innerButtonBox);
+
+        Button clearButton = componentsFactory.createComponent(Button.class);
+        clearButton.setCaption("X");
+        clearButton.setAction(new BaseAction("Remove") {
+            @Override
+            public void actionPerform(Component component) {
+                if (getLookupBox().isEnabled()) return;
+                getEditedTask().getImages().remove(fd);
+                imagesToDelete.add(fd);
+                thumbnailsBox.remove(imageBox);
+                ((DatasourceImplementation) getFieldGroup().getDatasource()).setModified(true);
+            }
+        });
+        innerButtonBox.add(clearButton);
+
+        Button showButton = componentsFactory.createComponent(Button.class);
+        showButton.setCaption(getMessage("show"));
+        showButton.setAction(new BaseAction("show") {
+            @Override
+            public void actionPerform(Component component) {
+                AppBeans.get(ExportDisplay.class).show(fd);
+            }
+        });
+        innerButtonBox.add(showButton);
+
+        thumbnailsBox.add(imageBox);
+    }
+
+
+    @Override
+    public void save() {
+        super.save();
+        imagesToDelete.forEach(img -> {
+            try {
+                fileLoader.removeFile(img);
+            } catch (FileStorageException ignore) {
+            }
+        });
+    }
+
+    private Task getEditedTask() {
+        return ((Task) getFieldGroup().getDatasource().getItem());
     }
 }
