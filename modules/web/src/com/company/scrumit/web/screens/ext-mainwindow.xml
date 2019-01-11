@@ -10,7 +10,7 @@
         <split id="foldersSplit">
             <main:workArea id="workArea">
                 <main:initialLayout>
-                    <label value="dashboard"/>
+                    <label value="Dashboard"/>
                 </main:initialLayout>
             </main:workArea>
         </split>

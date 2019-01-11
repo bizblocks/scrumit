@@ -131,16 +131,16 @@ configure(coreModule) {
         dbms = 'postgres'
         host = 'localhost'
         dbName = 'scrumit'
-        dbUser = 'cuba'
-        dbPassword = 'cuba'
+        dbUser = 'postgres'
+        dbPassword = 'postgres'
     }
 
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
         dbms = 'postgres'
         host = 'localhost'
         dbName = 'scrumit'
-        dbUser = 'cuba'
-        dbPassword = 'cuba'
+        dbUser = 'postgres'
+        dbPassword = 'postgres'
     }
 }
 
