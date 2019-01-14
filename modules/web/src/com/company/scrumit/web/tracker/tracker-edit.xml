@@ -126,7 +126,7 @@
                         <lookupField id="status"
                                      colspan="2"
                                      datasource="trackerDs"
-                                     property="status"
+                                     property="statusOld"
                                      width="100%"/>
                         <label value="msg://testingPlan"/>
                         <textField id="testingPlan"/>
@@ -207,6 +207,18 @@
                         </hbox>
                     </row>
                     <row/>
+                    <row>
+                        <label value="msg://com.company.scrumit.entity/Tracker.statusWorkflow"/>
+                        <lookupField datasource="trackerDs"
+                                     property="status"
+                                     width="250px"/>
+                    </row>
+                    <row>
+                        <label value="msg://com.company.scrumit.entity/Tracker.stepName"/>
+                        <textField datasource="trackerDs"
+                                   property="stepName"
+                                   width="250px"/>
+                    </row>
                 </rows>
             </grid>
         </scrollBox>

@@ -45,7 +45,7 @@ public class TaskEntityListener implements BeforeUpdateEntityListener<Task>, Bef
             }
         }
         if (countTask == countControlTask) {
-            parentTracker.setStatus(Status.Done);
+            parentTracker.setStatusOld(Status.Done);
         }
     }
 }

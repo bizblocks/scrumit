@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        class="com.company.scrumit.web.tracker.workflow.frame.TrackerWorkflowBrowseTableFrame"
+        messagesPack="com.company.scrumit.web.tracker.workflow.frame">
+    <dsContext>
+        <groupDatasource id="trackerDs"
+                         class="com.company.scrumit.entity.Tracker"
+                         view="_full"/>
+    </dsContext>
+    <layout expand="trackerTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="trackerTable"
+                datasource="trackerDs"
+                useMaxResults="false"/>
+        <groupTable id="trackerTable"
+                    width="100%">
+            <columns>
+                <group>
+                    <column id="project"/>
+                </group>
+                <column id="type"/>
+                <column id="stepName"/>
+                <column id="status"/>
+                <column id="testingPlan"/>
+                <column id="shortdesc"/>
+                <column id="statusOld"/>
+                <column id="trackerPriorityType"/>
+                <column id="description"/>
+            </columns>
+            <rows datasource="trackerDs"/>
+            <buttonsPanel id="buttonsPanel"/>
+        </groupTable>
+    </layout>
+</window>

@@ -3,6 +3,7 @@ buildscript {
     ext.cubaVersion = '6.10.4'
     repositories {
 
+        mavenLocal()
         maven {
             url 'https://repo.cuba-platform.com/content/groups/work'
             credentials {
@@ -58,6 +59,7 @@ dependencies {
     appComponent("com.haulmont.fts:fts-global:$cubaVersion")
     appComponent("com.haulmont.addon.dnd:cuba-dnd-global:1.4.0")
     appComponent("de.diedavids.cuba.runtimediagnose:runtime-diagnose-global:1.2.0")
+    appComponent("com.groupstp.workflowstp:wfstp-global:1.0")
 
 }
 
@@ -130,7 +132,7 @@ configure(coreModule) {
     task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
         dbms = 'postgres'
         host = 'localhost'
-        dbName = 'scrumit'
+        dbName = 'scrumit4'
         dbUser = 'postgres'
         dbPassword = 'postgres'
     }
@@ -138,7 +140,7 @@ configure(coreModule) {
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
         dbms = 'postgres'
         host = 'localhost'
-        dbName = 'scrumit'
+        dbName = 'scrumit4'
         dbUser = 'postgres'
         dbPassword = 'postgres'
     }

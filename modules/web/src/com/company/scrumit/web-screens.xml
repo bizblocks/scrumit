@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
-<!--    <screen id="scrumit$Tracker.browse"
+    <!--    <screen id="scrumit$Tracker.browse"
             template="com/company/scrumit/web/bugtracker/trackerlist.xml"/>
     <screen id="scrumit$Tracker.edit"
             template="com/company/scrumit/web/bugtracker/tracker-edit.xml"/> -->
@@ -50,4 +50,8 @@
             template="com/company/scrumit/web/tracker/tracker-browse.xml"/>
     <screen id="scrumit$Tracker.edit"
             template="com/company/scrumit/web/tracker/tracker-edit.xml"/>
+    <screen id="tracker-workflow-table"
+            template="com/company/scrumit/web/tracker/workflow/frame/tracker-workflow-browse-table-frame.xml"/>
+    <screen id="tracker-workflow-browse"
+            template="com/company/scrumit/web/tracker/workflow/tracker-workflow-browse.xml"/>
 </screen-config>

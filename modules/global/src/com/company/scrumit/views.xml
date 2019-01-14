@@ -189,4 +189,12 @@
         <property name="performer"
                   view="_minimal"/>
     </view>
+    <view class="com.company.scrumit.entity.Tracker"
+          extends="_minimal"
+          name="tracker-process">
+        <property name="workflow"
+                  view="_minimal"/>
+        <property name="stepName"/>
+        <property name="status"/>
+    </view>
 </views>

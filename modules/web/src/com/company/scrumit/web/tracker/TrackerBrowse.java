@@ -2,9 +2,8 @@ package com.company.scrumit.web.tracker;
 
 import com.company.scrumit.entity.Tracker;
 import com.haulmont.cuba.gui.WindowManager;
-import com.haulmont.cuba.gui.components.AbstractLookup;
-import com.haulmont.cuba.gui.components.CheckBox;
-import com.haulmont.cuba.gui.components.GroupTable;
+import com.haulmont.cuba.gui.components.*;
+
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -29,5 +28,4 @@ public class TrackerBrowse extends AbstractLookup {
         super.init(params);
         checkSelect.addValueChangeListener(e -> trackersTable.setTextSelectionEnabled((Boolean) e.getValue()));
     }
-
 }
