@@ -188,6 +188,8 @@
         <property name="updatedBy"/>
         <property name="performer"
                   view="_minimal"/>
+        <property name="workflow"
+                  view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Tracker"
           extends="_minimal"
@@ -196,5 +198,37 @@
                   view="_minimal"/>
         <property name="stepName"/>
         <property name="status"/>
+        <property name="performer"
+                  view="_minimal"/>
+    </view>
+    <view class="com.groupstp.workflowstp.entity.Workflow"
+          extends="_minimal"
+          name="tracker-workflow-browse">
+        <property name="steps"
+                  view="_minimal">
+            <property name="stage"
+                      view="_minimal">
+                <property name="actors"
+                          view="_minimal"/>
+                <property name="actorsRoles"
+                          view="_minimal"/>
+                <property name="viewers"
+                          view="_minimal"/>
+                <property name="viewersRoles"
+                          view="_minimal"/>
+                <property name="browseScreenGroovyScript"/>
+            </property>
+        </property>
+    </view>
+    <view class="com.haulmont.cuba.security.entity.User"
+          extends="_base"
+          name="user-with-role">
+        <property name="userRoles"
+                  view="_minimal">
+            <property name="user"
+                      view="_minimal"/>
+            <property name="role"
+                      view="_minimal"/>
+        </property>
     </view>
 </views>

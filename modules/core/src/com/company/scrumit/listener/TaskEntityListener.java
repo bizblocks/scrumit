@@ -9,8 +9,10 @@ import com.haulmont.cuba.core.listener.BeforeInsertEntityListener;
 import com.haulmont.cuba.core.listener.BeforeUpdateEntityListener;
 import org.springframework.stereotype.Component;
 
+
 @Component("scrumit_TaskEntityListener")
 public class TaskEntityListener implements BeforeUpdateEntityListener<Task>, BeforeInsertEntityListener<Task> {
+
 
     @Override
     public void onBeforeInsert(Task entity, EntityManager entityManager) {
@@ -28,18 +30,17 @@ public class TaskEntityListener implements BeforeUpdateEntityListener<Task>, Bef
 
     private void updateLevelAndTop(Task entity) {
         Task parent = entity.getTask();
-        entity.setLevel(parent == null ? 0 : parent.getLevel()==null ? 0 : parent.getLevel()+1);
-        entity.setTop(parent == null ? null : parent.getTop()==null ? parent : parent.getTop());
+        entity.setLevel(parent == null ? 0 : parent.getLevel() == null ? 0 : parent.getLevel() + 1);
+        entity.setTop(parent == null ? null : parent.getTop() == null ? parent : parent.getTop());
     }
 
-    private void updateParentBug(Task entity)
-    {
+    private void updateParentBug(Task entity) {
         Tracker parentTracker = entity.getParentBug();
-        if(parentTracker==null)
+        if (parentTracker == null)
             return;
         int countTask = parentTracker.getTask().size();
         int countControlTask = 0;
-        for (Task task: parentTracker.getTask()) {
+        for (Task task : parentTracker.getTask()) {
             if (task.getControl() != null) {
                 countControlTask++;
             }
@@ -48,4 +49,5 @@ public class TaskEntityListener implements BeforeUpdateEntityListener<Task>, Bef
             parentTracker.setStatusOld(Status.Done);
         }
     }
+
 }

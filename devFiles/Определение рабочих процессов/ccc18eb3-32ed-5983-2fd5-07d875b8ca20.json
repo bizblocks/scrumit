@@ -1,0 +1,19 @@
+[
+  {
+    "_entityName": "wfstp$WorkflowDefinition",
+    "id": "ccc18eb3-32ed-5983-2fd5-07d875b8ca20",
+    "workflow": {
+      "_entityName": "wfstp$Workflow",
+      "id": "b11c2aa3-72ab-8428-f44d-c52f47d02515",
+      "code": "П1",
+      "version": 20,
+      "entityName": "scrumit$Tracker",
+      "name": "Проблема",
+      "entityCaption": "Трэкер"
+    },
+    "priority": 20,
+    "version": 1,
+    "conditionGroovyScript": "return true;",
+    "entityName": "scrumit$Tracker"
+  }
+]

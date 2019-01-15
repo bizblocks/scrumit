@@ -5,10 +5,14 @@ import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
 import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.web.task.TaskEdit;
+import com.company.scrumit.web.tracker.component.TrackerRestrictionHelper;
+import com.groupstp.workflowstp.dto.WorkflowExecutionContext;
+import com.groupstp.workflowstp.entity.*;
+import com.groupstp.workflowstp.service.WorkflowService;
+import com.groupstp.workflowstp.util.EqualsUtils;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
-import com.haulmont.cuba.core.global.EntityStates;
-import com.haulmont.cuba.core.global.FileStorageException;
+import com.haulmont.cuba.core.global.*;
 import com.haulmont.cuba.gui.AppConfig;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
@@ -19,16 +23,34 @@ import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
+import com.haulmont.cuba.security.entity.User;
+import org.apache.commons.lang.StringUtils;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class TrackerEdit extends AbstractEditor<Tracker> {
+    public static final String SCREEN_ID = "scrumit$Tracker.edit";
+
+    @Inject
+    private UserSessionSource userSessionSource;
+    @Inject
+    private DataManager dataManager;
+
     @Inject
     private LookupPickerField project;
 
+    @Inject
+    private TrackerRestrictionHelper trackerRestrictionHelper;
+
+    @Inject
+    private Scripting scripting;
+    @Inject
+    private WorkflowService workflowService;
     @Inject
     protected TextField shortdesc;
 
@@ -73,6 +95,12 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Inject
     private ComponentsFactory componentsFactory;
 
+    protected User user;
+    protected Stage stage;
+    protected Workflow workflow;
+    protected WorkflowInstance workflowInstance;
+    protected WorkflowInstanceTask workflowInstanceTask;
+
     @Override
     protected void initNewItem(Tracker item) {
         //item.setFiles(new ArrayList<>());
@@ -84,33 +112,96 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     }
 
     @Override
-    public void postInit(){
+    public void postInit() {
         super.postInit();
         setupTestingPlan();
+        user = getUser();
+        stage = getStage();
+        workflow = getWorkflow();
+        workflowInstance = getWorkflowInstance();
+        workflowInstanceTask = getWorkflowInstanceTask();
     }
 
-    private void setupTestingPlan(){
+    @Nullable
+    private User getUser() {
+        User user = userSessionSource.getUserSession().getCurrentOrSubstitutedUser();
+        if (user != null) {
+            user = dataManager.reload(user, "user-with-role");
+        }
+        return user;
+    }
+
+    @Nullable
+    private Stage getStage() {
+        if (!StringUtils.isEmpty(getItem().getStepName())) {
+            return dataManager.load(Stage.class)
+                    .query("select e from wfstp$Stage e where e.entityName = :entityName and e.name = :name")
+                    .parameter("entityName", getItem().getMetaClass().getName())
+                    .parameter("name", getItem().getStepName())
+                    .view("stage-process")
+                    .optional()
+                    .orElse(null);
+        }
+        return null;
+    }
+
+    @Nullable
+    private Workflow getWorkflow() {
+        return getItem().getWorkflow();
+    }
+
+    @Nullable
+    private WorkflowInstance getWorkflowInstance() {
+        if (workflow != null && !PersistenceHelper.isNew(getItem())) {
+            return dataManager.load(WorkflowInstance.class)
+                    .query("select e from wfstp$WorkflowInstance e where e.entityName = :entityName and e.entityId = :entityId and e.workflow.id = :workflowId order by e.createTs desc")
+                    .parameter("entityName", getItem().getMetaClass().getName())
+                    .parameter("entityId", getItem().getId().toString())
+                    .parameter("workflowId", workflow.getId())
+                    .view("workflowInstance-process")
+                    .optional()
+                    .orElse(null);
+        }
+        return null;
+    }
+
+    @Nullable
+    private WorkflowInstanceTask getWorkflowInstanceTask() {
+        if (workflowInstance != null && stage != null) {
+            return dataManager.load(WorkflowInstanceTask.class)
+                    .query("select e from wfstp$WorkflowInstanceTask e " +
+                            "join wfstp$Step s on e.step.id = s.id " +
+                            "join wfstp$Stage ss on s.stage.id = ss.id " +
+                            "where e.instance.id = :instanceId and ss.id = :stageId order by e.createTs desc")
+                    .parameter("instanceId", workflowInstance.getId())
+                    .parameter("stageId", stage.getId())
+                    .view("workflowInstanceTask-process")
+                    .optional()
+                    .orElse(null);
+        }
+        return null;
+    }
+
+    private void setupTestingPlan() {
         Button btn = (Button) grid.getComponent("okBtn");
         Component testingPlan = grid.getComponent("testingPlan");
         grid.remove(testingPlan);
 
-        if(getItem().getTestingPlan()==null || getItem().getTestingPlan().length()==0 || btn.getCaption().equals("Edit")) {
+        if (getItem().getTestingPlan() == null || getItem().getTestingPlan().length() == 0 || btn.getCaption().equals("Edit")) {
             btn.setCaption("OK");
             TextField textField = componentsFactory.createComponent(TextField.class);
             textField.setId("testingPlan");
             textField.setDatasource(trackerDs, "testingPlan");
             textField.setWidth("100%");
             grid.add(textField, 4, 3);
-        }
-        else{
+        } else {
             btn.setCaption("Edit");
             Link link = componentsFactory.createComponent(Link.class);
             link.setUrl(getItem().getTestingPlan());
             link.setId("testingPlan");
-            try{
-                link.setCaption(getItem().getTestingPlan().substring(0,40) + "...");
-            }
-            catch(Exception e){
+            try {
+                link.setCaption(getItem().getTestingPlan().substring(0, 40) + "...");
+            } catch (Exception e) {
                 link.setCaption(getItem().getTestingPlan());
             }
             link.setWidth("60%");
@@ -119,7 +210,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         }
     }
 
-    public void onOkBtn(){
+    public void onOkBtn() {
         setupTestingPlan();
     }
 
@@ -164,6 +255,42 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 showNotification("File upload error", NotificationType.HUMANIZED));
 
         taskDs.refresh(Collections.singletonMap("project", TaskType.project));
+
+        initWorkflow();
+    }
+
+    protected boolean initWorkflow() {
+        if (stage != null && workflow != null) {//this is screen of one of stage
+            if (EqualsUtils.equalAny(stage.getType(), StageType.USERS_INTERACTION, StageType.ARCHIVE)) {//we need to extend screen by stage
+                if (trackerRestrictionHelper.isActor(user, stage)) {
+                    final String script = stage.getEditorScreenGroovyScript();
+                    if (StringUtils.isEmpty(script)) {
+                        throw new DevelopmentException(String.format(getMessage("queryWorkflowEdit.editorScreenGroovyNotFound"), stage.getName()));
+                    }
+
+                    final Map<String, Object> binding = new HashMap<>();
+
+                    WorkflowExecutionContext ctx = workflowService.getExecutionContext(workflowInstance);
+                    binding.put("entity", getItem());
+                    binding.put("context", ctx.getParams());
+                    binding.put("screen", this);
+                    binding.put("workflowInstance", workflowInstance);
+                    binding.put("workflowInstanceTask", workflowInstanceTask);
+                    try {
+                        scripting.evaluateGroovy(script, binding);
+                    } catch (Exception e) {
+//                            log.error("Failed to evaluate editor screen groovy for workflow instance {}({}) and task {}({})",
+//                                    workflowInstance, workflowInstance.getId(), workflowInstanceTask, workflowInstanceTask.getId());
+
+                        String message = getMessage("queryWorkflowEdit.errorOnScreenExtension");
+                        close(CLOSE_ACTION_ID, true);
+                        throw new DevelopmentException(message);
+                    }
+                    workflowService.setExecutionContext(ctx, workflowInstance);//save parameters since they can be changed
+                }
+            }
+        }
+        return true;
     }
 
     public void createTask() {
@@ -189,8 +316,8 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 item.setDescription(description.getValue());
         }
         TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
-        ((LookupField)((FieldGroup)editor.getComponent("fieldGroup")).getField("type").getComponent()).setValue(TaskType.task);
-        ((LookupField)((FieldGroup)editor.getComponent("fieldGroup")).getField("priority").getComponent()).setValue(Priority.Middle);
+        ((LookupField) ((FieldGroup) editor.getComponent("fieldGroup")).getField("type").getComponent()).setValue(TaskType.task);
+        ((LookupField) ((FieldGroup) editor.getComponent("fieldGroup")).getField("priority").getComponent()).setValue(Priority.Middle);
         editor.getDialogOptions().setResizable(true);
         editor.addCloseListener(actionId -> {
             if (Window.COMMIT_ACTION_ID.equals(actionId)) {
@@ -208,8 +335,8 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     }
 
     public void download() {
-        if (filesTable.getSelected().size() >0) {
-            for(FileDescriptor fileDescriptor: filesTable.getSelected()) {
+        if (filesTable.getSelected().size() > 0) {
+            for (FileDescriptor fileDescriptor : filesTable.getSelected()) {
                 AppConfig.createExportDisplay(this).show(fileDescriptor);
             }
         }

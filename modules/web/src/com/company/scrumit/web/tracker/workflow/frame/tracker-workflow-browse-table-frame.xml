@@ -14,19 +14,19 @@
                 datasource="trackerDs"
                 useMaxResults="false"/>
         <groupTable id="trackerTable"
+                    multiselect="true"
                     width="100%">
             <columns>
                 <group>
                     <column id="project"/>
                 </group>
-                <column id="type"/>
-                <column id="stepName"/>
-                <column id="status"/>
-                <column id="testingPlan"/>
+                <column id="createTs"/>
                 <column id="shortdesc"/>
-                <column id="statusOld"/>
-                <column id="trackerPriorityType"/>
+                <column id="type"/>
                 <column id="description"/>
+                <column id="trackerPriorityType"/>
+                <column id="performer"/>
+                <column id="testingPlan"/>
             </columns>
             <rows datasource="trackerDs"/>
             <buttonsPanel id="buttonsPanel"/>

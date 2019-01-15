@@ -16,6 +16,7 @@ import com.haulmont.cuba.core.entity.annotation.Lookup;
 import com.haulmont.cuba.core.entity.annotation.LookupType;
 import com.groupstp.workflowstp.entity.Workflow;
 import com.groupstp.workflowstp.entity.WorkflowEntityStatus;
+import com.haulmont.cuba.core.entity.annotation.Listeners;
 
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TRACKER")

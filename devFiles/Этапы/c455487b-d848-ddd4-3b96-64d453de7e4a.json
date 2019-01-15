@@ -1,0 +1,38 @@
+[
+  {
+    "_entityName": "wfstp$Stage",
+    "id": "c455487b-d848-ddd4-3b96-64d453de7e4a",
+    "browseScreenGroovyScript": "return true;",
+    "type": "ARCHIVE",
+    "version": 3,
+    "actors": [
+      {
+        "_entityName": "sec$User",
+        "id": "7be5d30c-8fb1-720f-ef7f-db7648509612",
+        "login": "a.honyakov@groupstp.ru",
+        "version": 2,
+        "name": "Антон Хоняков"
+      }
+    ],
+    "actorsRoles": [],
+    "viewers": [],
+    "entityName": "scrumit$Tracker",
+    "viewersRoles": [
+      {
+        "_entityName": "sec$Role",
+        "id": "0c018061-b26f-4de2-a5be-dff348347f93",
+        "version": 0,
+        "name": "Administrators"
+      },
+      {
+        "_entityName": "sec$Role",
+        "id": "16721bb2-84ef-a548-ff67-2b13b0731ff9",
+        "version": 3,
+        "name": "user"
+      }
+    ],
+    "name": "Готово",
+    "editorScreenGroovyScript": "return true;",
+    "entityCaption": "Трэкер"
+  }
+]
