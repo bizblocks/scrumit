@@ -239,7 +239,7 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
                             try {
                                 tr = dataManager.reload(tr, "tracker-process");
                                 if (tr.getStatus() == null) {
-                                    if (tr.getPerformer() == null) {
+                                    if (/*tr.getPerformer() == null*/false) {
                                         message = getMessage("trackerWorkflowBrowseTableFrame.choosePerformer");
                                     } else {
                                         workflowService.startWorkflow(tr, workflowService.determinateWorkflow(tr));
@@ -273,7 +273,7 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
                     Set<Tracker> problems = trackerTable.getSelected();
                     if (!org.apache.commons.collections4.CollectionUtils.isEmpty(problems) && problems.size() > 0) {
                         for (Tracker problem : problems) {
-                            if (problem.getStatus() != null || problem.getPerformer() == null) {
+                            if (problem.getStatus() != null /*|| problem.getPerformer() == null*/) {
                                 return false;
                             }
                         }

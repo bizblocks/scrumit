@@ -21,6 +21,7 @@
                 <group>
                     <column id="project"/>
                 </group>
+                <column id="statusOld"/>
                 <column id="createTs"/>
                 <column id="shortdesc"/>
                 <column id="type"/>

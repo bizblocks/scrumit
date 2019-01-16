@@ -7,6 +7,7 @@ import com.company.scrumit.web.tracker.workflow.frame.TrackerWorkflowBrowseTable
 import com.groupstp.workflowstp.entity.Stage;
 import com.groupstp.workflowstp.entity.Step;
 import com.groupstp.workflowstp.entity.Workflow;
+import com.groupstp.workflowstp.event.WorkflowEvent;
 import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.global.*;
 import com.haulmont.cuba.gui.components.*;
@@ -16,6 +17,7 @@ import com.haulmont.cuba.security.entity.User;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
+import org.springframework.context.event.EventListener;
 
 
 import javax.annotation.Nullable;
@@ -60,6 +62,14 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
         initTabSelection();
     }
 
+
+    @EventListener
+    protected void onWorkflowEvent(WorkflowEvent event) {
+        Set<String> stagesToUpdate = new HashSet<>();
+        if (!StringUtils.isEmpty(event.getCurrentStage())) {
+            stagesToUpdate.add(event.getCurrentStage());
+        }
+    }
     private void initTabSheets(List<Workflow> workflows) {
         //показать вкладку с новыми записями
         showNewTrackerRecords();
@@ -157,7 +167,7 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
         LazyTab lazyTab = new LazyTab(e -> createTab(TabType.NEW, false, Collections.emptyMap()));
         tabsCache.put(key, lazyTab);
         TabSheet.Tab tab = tabSheet.addTab(key, lazyTab.getBox());
-        tab.setCaption(getMessage("newRecords"));
+        tab.setCaption(getMessage("trackerWorkflowBrowse.newRecords"));
     }
 
     private String getKey(String stageName) {

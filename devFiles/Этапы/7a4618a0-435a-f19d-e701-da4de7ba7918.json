@@ -1,0 +1,28 @@
+[
+  {
+    "_entityName": "wfstp$Stage",
+    "id": "7a4618a0-435a-f19d-e701-da4de7ba7918",
+    "type": "ARCHIVE",
+    "version": 1,
+    "actors": [],
+    "actorsRoles": [
+      {
+        "_entityName": "sec$Role",
+        "id": "0c018061-b26f-4de2-a5be-dff348347f93",
+        "version": 0,
+        "name": "Administrators"
+      }
+    ],
+    "viewers": [],
+    "entityName": "scrumit$Tracker",
+    "viewersRoles": [
+      {
+        "_entityName": "sec$Role",
+        "id": "0c018061-b26f-4de2-a5be-dff348347f93"
+      }
+    ],
+    "name": "Отменено",
+    "editorScreenGroovyScript": "//",
+    "entityCaption": "Трэкер"
+  }
+]
