@@ -77,7 +77,7 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
                 sqlQuery += " where e.stepName='" + stage.getName() + "'";
                 break;
             default: {
-                throw new RuntimeException("");
+                throw new RuntimeException(getMessage("trackerWorkflowBrowseTableFrame.unknownTabType"));
             }
         }
         trackerDs.setQuery(sqlQuery);
@@ -126,15 +126,14 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
         Button refreshButton = componentsFactory.createComponent(Button.class);
         refreshButton.setAction(refreshAction);
 
-        //не добавляем кнопки в режиме только просмотр
+        //не добавляем кнопки в режиме только просмотр и не инициализируем расширения
         if (!viewOnly) {
             trackerTable.addAction(editAction);
             buttonsPanel.add(editButton);
+            initWorkflowExtension(params);
         }
         trackerTable.addAction(refreshAction);
         buttonsPanel.add(refreshButton);
-
-        initWorkflowExtension(params);
     }
 
     private void initWorkflowExtension(Map<String, Object> params) {
@@ -151,7 +150,7 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
                         scripting.evaluateGroovy(script, binding);
                     } catch (Exception e) {
                         //log.error("Failed to evaluate browse screen groovy for stage {}({})", stage, stage.getId());
-                        throw new RuntimeException(getMessage("queryWorkflowBrowseTableFrame.errorOnScreenExtension"), e);
+                        throw new RuntimeException(getMessage("trackerWorkflowBrowseTableFrame.errorOnScreenExtension"), e);
                     }
                 }
             }
@@ -162,13 +161,6 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
     //refresh queries table
     public void refresh() {
         trackerDs.refresh();
-    }
-
-    //refresh queries table only if it is contains provided query
-    public void refreshIfContains(UUID queryId) {
-        if (queryId != null && trackerDs.containsItem(queryId)) {
-            refresh();
-        }
     }
 
     private void initNewRecordsView() {
@@ -228,7 +220,7 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
         BaseAction runAction = new BaseAction("run") {
             @Override
             public String getCaption() {
-                return getMessage("sendToWork");
+                return getMessage("trackerWorkflowBrowseTableFrame.startWorkflow");
             }
 
             @Override
@@ -248,16 +240,17 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
                                 tr = dataManager.reload(tr, "tracker-process");
                                 if (tr.getStatus() == null) {
                                     if (tr.getPerformer() == null) {
-                                        message = "Choose performer!";
+                                        message = getMessage("trackerWorkflowBrowseTableFrame.choosePerformer");
                                     } else {
                                         workflowService.startWorkflow(tr, workflowService.determinateWorkflow(tr));
-                                        message = String.format("Problem %s in work!", tr.getId());
+                                        message = String.format(getMessage("trackerWorkflowBrowseTableFrame.workflowStarted"), tr.getId());
                                     }
                                 } else {
-                                    message = String.format("Problem %s already in work!", tr.getId());
+                                    message = String.format(getMessage("trackerWorkflowBrowseTableFrame.alreadyInProgress"), tr.getId());
                                 }
                             } catch (WorkflowException e) {
-                                message = "";
+                                message = String.format(getMessage("trackerWorkflowBrowseTableFrame.workflowFailed"),
+                                        tr.getUuid(), e.getMessage() == null ? getMessage("trackerWorkflowBrowseTableFrame.notAvailable") : e.getMessage());
                             }
                             if (sb.length() > 0) {
                                 sb.append("\n");

@@ -57,8 +57,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Inject
     protected RichTextArea description;
 
-    @Inject
-    protected LookupField status;
 
     @Inject
     protected CollectionDatasource taskDs;
@@ -85,9 +83,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     @Inject
     private HierarchicalDatasource taskParentBugDs;
-
-    @Inject
-    private TabSheet tabSheet;
 
     @Inject
     private GridLayout grid;
