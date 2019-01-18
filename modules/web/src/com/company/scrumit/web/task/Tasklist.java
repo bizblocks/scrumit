@@ -3,6 +3,11 @@ package com.company.scrumit.web.task;
 import com.company.scrumit.entity.Priority;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
+import com.company.scrumit.entity.Tracker;
+import com.groupstp.workflowstp.entity.Stage;
+import com.groupstp.workflowstp.entity.WorkflowInstanceTask;
+import com.groupstp.workflowstp.service.WorkflowService;
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.WindowManager;
@@ -16,8 +21,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
 
-public class Tasklist extends EntityCombinedScreen {
-    private static final long ONEDAY = 24*60*60*1000;
+public class TaskList extends EntityCombinedScreen {
+    private static final long ONEDAY = 24 * 60 * 60 * 1000;
 
     @Inject
     private TreeTable<Task> table;
@@ -25,6 +30,8 @@ public class Tasklist extends EntityCombinedScreen {
     @Inject
     private DataManager dataManager;
 
+    @Inject
+    private WorkflowService workflowService;
     @Named("fieldGroup.duration")
     private TextField durationField;
 
@@ -47,6 +54,8 @@ public class Tasklist extends EntityCombinedScreen {
     private CheckBox checkSelect;
     @Inject
     private GridLayout grid;
+    @Named("fieldGroup.task")
+    private PickerField taskField;
     @Inject
     private ComponentsFactory componentsFactory;
 
@@ -56,13 +65,13 @@ public class Tasklist extends EntityCombinedScreen {
         durationField.addValueChangeListener(this::calcDates);
         beginField.addValueChangeListener(this::calcDates);
         deadlineField.addValueChangeListener(e -> {
-           if(beginField.getValue()==null)
-               return;
-           durationField.setValue((deadlineField.getValue().getTime()-beginField.getValue().getTime())/ONEDAY);
+            if (beginField.getValue() == null)
+                return;
+            durationField.setValue((deadlineField.getValue().getTime() - beginField.getValue().getTime()) / ONEDAY);
         });
         addBeforeCloseWithCloseButtonListener(event -> table.getDatasource().commit());
         addBeforeCloseWithShortcutListener(event -> table.getDatasource().commit());
-        
+
         checkSelect.addValueChangeListener(e -> table.setTextSelectionEnabled((Boolean) e.getValue()));
 
         Datasource editDs = getFieldGroup().getDatasource();
@@ -70,7 +79,6 @@ public class Tasklist extends EntityCombinedScreen {
             setupTestingPlan();
         });
     }
-
 
     public void onBtnCreateInGroupClick() {
         Task t = metadata.create(Task.class);
@@ -91,10 +99,75 @@ public class Tasklist extends EntityCombinedScreen {
 
     public void onBtnDoneClick() {
         Set<Task> tasks = table.getSelected();
+        commitIfNeed(table);
         tasks.forEach(task -> {
             task.setDone(true);
             dataManager.commit(task);
+            task = dataManager.reload(task, "tasks-full");
+            Tracker parentTracker = task.getParentBug();
+            if (parentTracker == null)
+                return;
+            parentTracker = dataManager.reload(parentTracker, "_full");
+            int countTask = parentTracker.getTask().size();
+            int countDoneTask = 0;
+            for (Task trackerTask : parentTracker.getTask()) {
+                trackerTask = dataManager.reload(trackerTask, "tasks-performer-view");
+                if (trackerTask.getDone()) {
+                    countDoneTask++;
+                }
+            }
+            if (countDoneTask == countTask) {
+                Stage stage = getStage(parentTracker);
+                WorkflowInstanceTask instanceTask = workflowService.loadLastProcessingTask(parentTracker, stage);
+                try {
+                    if (instanceTask != null) {
+                        Map params = new HashMap();
+                        params.put("toCheck", "true");
+                        workflowService.finishTask(instanceTask, params);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("Ошибка обработки заявки", e);
+                }
+            }
         });
+        table.getDatasource().refresh();
+    }
+
+
+    public void onBtnChecked() {
+        Set<Task> tasks = table.getSelected();
+        commitIfNeed(table);
+        tasks.forEach(task -> {
+            task.setControl(true);
+            dataManager.commit(task);
+            task = dataManager.reload(task, "tasks-full");
+            Tracker parentTracker = task.getParentBug();
+            if (parentTracker == null)
+                return;
+            parentTracker = dataManager.reload(parentTracker, "_full");
+            int countTask = parentTracker.getTask().size();
+            int countControlTask = 0;
+            for (Task trackerTask : parentTracker.getTask()) {
+                trackerTask = dataManager.reload(trackerTask, "tasks-performer-view");
+                if (trackerTask.getControl()) {
+                    countControlTask++;
+                }
+            }
+            if (countTask == countControlTask) {
+                Stage stage = getStage(parentTracker);
+                WorkflowInstanceTask instanceTask = workflowService.loadLastProcessingTask(parentTracker, stage);
+                try {
+                    if (instanceTask != null) {
+                        Map params = new HashMap();
+                        params.put("isReady", "true");
+                        workflowService.finishTask(instanceTask, params);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("Ошибка обработки заявки", e);
+                }
+            }
+        });
+        table.getDatasource().refresh();
     }
 
     private void calcDates(ValueChangeEvent e) {
@@ -105,13 +178,20 @@ public class Tasklist extends EntityCombinedScreen {
         deadlineField.setValue(d);
     }
 
+
     @Override
     protected void initEditComponents(boolean enabled) {
         super.initEditComponents(enabled);
         setupTestingPlan();
     }
 
-    private void setupTestingPlan(){
+    private static void commitIfNeed(Table<Task> taskTable) {
+        if (taskTable.getDatasource().isModified()) {
+            taskTable.getDatasource().commit();
+        }
+    }
+
+    private void setupTestingPlan() {
         Task item = (Task) getFieldGroup().getDatasource().getItem();
         Component testingPlan = grid.getComponent("testingPlan");
         grid.remove(testingPlan);
@@ -119,12 +199,12 @@ public class Tasklist extends EntityCombinedScreen {
         if (item == null || item.getTestingPlan() == null || item.getTestingPlan().length() == 0) {
             showTestingPlanAsTextField();
         } else {
-           showTestingPlanAsLink(item);
+            showTestingPlanAsLink(item);
         }
-        
+
     }
 
-    private void showTestingPlanAsTextField(){
+    private void showTestingPlanAsTextField() {
         Button btn = (Button) grid.getComponent("okBtn");
         btn.setCaption("OK");
         TextField textField = componentsFactory.createComponent(TextField.class);
@@ -134,7 +214,7 @@ public class Tasklist extends EntityCombinedScreen {
         grid.add(textField, 0, 0);
     }
 
-    private void showTestingPlanAsLink(Task item){
+    private void showTestingPlanAsLink(Task item) {
         Button btn = (Button) grid.getComponent("okBtn");
         btn.setCaption("Edit");
         Link link = componentsFactory.createComponent(Link.class);
@@ -150,7 +230,7 @@ public class Tasklist extends EntityCombinedScreen {
         grid.add(link, 0, 0);
     }
 
-    public void onOkBtn(){
+    public void onOkBtn() {
         Task item = (Task) getFieldGroup().getDatasource().getItem();
         Component testingPlan = grid.getComponent("testingPlan");
         grid.remove(testingPlan);
@@ -161,4 +241,16 @@ public class Tasklist extends EntityCombinedScreen {
             showTestingPlanAsLink(item);
         }
     }
+
+    private Stage getStage(Tracker parentBug) {
+        return dataManager.load(Stage.class)
+                .query("select e from wfstp$Stage e where e.entityName = :entityName and e.name = :name")
+                .parameter("entityName", parentBug.getMetaClass().getName())
+                .parameter("name", parentBug.getStepName())
+                .view("stage-process")
+                .optional()
+                .orElse(null);
+    }
+
+
 }

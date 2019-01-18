@@ -26,7 +26,10 @@
         <property name="parentBug"
                   view="_local"/>
         <property name="top"
-                  view="_minimal"/>
+                  view="_minimal">
+            <property name="task"
+                      view="_minimal"/>
+        </property>
         <property name="sprints"
                   view="_minimal"/>
         <property name="sprintBacklog"
@@ -189,6 +192,8 @@
         <property name="performer"
                   view="_minimal"/>
         <property name="workflow"
+                  view="_minimal"/>
+        <property name="task"
                   view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Tracker"

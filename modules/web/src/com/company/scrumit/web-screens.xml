@@ -21,7 +21,7 @@
     <screen id="scrumit$Task.performerTasks"
             template="com/company/scrumit/web/task/performerview/performer-tasks-window.xml"/>
     <screen id="scrumit$Task.list"
-            template="com/company/scrumit/web/task/tasklist.xml"/>
+            template="com/company/scrumit/web/task/task-list.xml"/>
     <screen id="massInput"
             template="com/company/scrumit/web/task/massInput.xml"/>
     <screen id="importContacts"

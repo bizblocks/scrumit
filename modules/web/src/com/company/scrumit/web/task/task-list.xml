@@ -6,14 +6,11 @@
   -->
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         caption="msg://tasklist"
-        class="com.company.scrumit.web.task.Tasklist"
+        class="com.company.scrumit.web.task.TaskList"
         focusComponent="table"
         lookupComponent="table"
         messagesPack="com.company.scrumit.web.task">
     <dsContext>
-        <datasource id="taskDs"
-                    class="com.company.scrumit.entity.Task"
-                    view="tasks-full"/>
         <hierarchicalDatasource id="tasksDs"
                                 class="com.company.scrumit.entity.Task"
                                 hierarchyProperty="task"
@@ -36,6 +33,9 @@
                 <![CDATA[select t from scrumit$Tracker t]]>
             </query>
         </collectionDatasource>
+        <datasource id="taskDs"
+                    class="com.company.scrumit.entity.Task"
+                    view="tasks-full"/>
     </dsContext>
     <actions>
         <action id="save"
@@ -57,6 +57,7 @@
         <split id="split"
                height="100%"
                orientation="horizontal"
+               responsive="true"
                reversePosition="true"
                width="100%">
             <vbox id="lookupBox"
@@ -72,6 +73,8 @@
                 <treeTable id="table"
                            editable="true"
                            multiselect="true"
+                           responsive="true"
+                           stylename="compact"
                            width="100%">
                     <actions>
                         <action id="create"/>
@@ -97,34 +100,50 @@
                     <rows datasource="tasksDs"/>
                     <rowsCount/>
                     <buttonsPanel id="buttonsPanel"
-                                  alwaysVisible="true">
+                                  responsive="true">
                         <button id="createBtn"
-                                action="table.create"/>
+                                action="table.create"
+                                stylename="icon-only"/>
+                        <button id="editBtn"
+                                action="table.edit"
+                                stylename="icon-only"/>
+                        <button id="refreshBtn"
+                                action="table.refresh"
+                                stylename="icon-only"/>
+                        <popupButton id="btnsAction"
+                                     caption="msg://popupActions"
+                                     popupOpenDirection="BOTTOM_RIGHT">
+                            <actions>
+                                <action id="btnDone"
+                                        caption="msg://btnReady"
+                                        icon="font-icon:CHECK"
+                                        invoke="onBtnDoneClick"/>
+                                <action id="btnChecked"
+                                        caption="msg://btnChecked"
+                                        invoke="onBtnChecked"/>
+                            </actions>
+                        </popupButton>
                         <button id="btnCreateInGroup"
                                 caption="mainMsg://Create in group"
                                 invoke="onBtnCreateInGroupClick"/>
-                        <button id="editBtn"
-                                action="table.edit"/>
+                        <button id="excelBtn"
+                                action="table.excel"
+                                stylename="icon-only"/>
                         <button id="removeBtn"
                                 action="table.remove"/>
-                        <button id="refreshBtn"
-                                action="table.refresh"/>
-                        <button id="excelBtn"
-                                action="table.excel"/>
-                        <button id="btnDone"
-                                caption="msg://Done"
-                                invoke="onBtnDoneClick"/>
                         <button id="btnMassInput"
                                 action="massInput"
                                 caption="mainMsg://Mass input"/>
                         <checkBox id="checkSelect"
-                                  caption="Select text"/>
+                                  caption="Select text"
+                                  width="100%"/>
                     </buttonsPanel>
                 </treeTable>
             </vbox>
             <vbox id="editBox"
                   height="100%"
                   margin="true"
+                  responsive="true"
                   spacing="true">
                 <scrollBox height="100%"
                            spacing="true">
@@ -132,11 +151,9 @@
                                 datasource="taskDs">
                         <column width="300px">
                             <field property="id"/>
-                            <field caption="msg://Parent"
-                                   property="task">
-                                <lookupPickerField id="taskLookup" optionsDatasource="tasksDs" property="task"/>
-                            </field>
-                            <field property="done"/>
+                            <field property="task"/>
+                            <field editable="false"
+                                   property="done"/>
                             <field property="shortdesc"/>
                             <field property="type"/>
                             <field property="begin"/>
@@ -146,7 +163,8 @@
                         <column width="300px">
                             <field property="planningTime"/>
                             <field property="actualTime"/>
-                            <field property="control"/>
+                            <field editable="false"
+                                   property="control"/>
                             <field property="priority"/>
                             <field property="amount"/>
                             <field optionsDatasource="performersDs"
