@@ -57,6 +57,21 @@ public class Tracker extends StandardEntity {
     @OnDelete(DeletePolicy.CASCADE)
     protected FileDescriptor files;
 
+    @JoinTable(name = "SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK",
+        joinColumns = @JoinColumn(name = "TRACKER_ID"),
+        inverseJoinColumns = @JoinColumn(name = "FILE_DESCRIPTOR_ID"))
+    @ManyToMany
+    protected List<FileDescriptor> images;
+
+    public void setImages(List<FileDescriptor> images) {
+        this.images = images;
+    }
+
+    public List<FileDescriptor> getImages() {
+        return images;
+    }
+
+
     public void setTestingPlan(String testingPlan) {
         this.testingPlan = testingPlan;
     }

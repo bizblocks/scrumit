@@ -192,5 +192,7 @@
         <property name="updatedBy"/>
         <property name="performer"
                   view="_minimal"/>
+        <property name="images"
+                  view="_minimal"/>
     </view>
 </views>

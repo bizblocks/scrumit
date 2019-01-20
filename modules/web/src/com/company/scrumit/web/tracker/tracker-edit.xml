@@ -206,6 +206,26 @@
                             </treeTable>
                         </hbox>
                     </row>
+                    <row>
+                        <hbox colspan="6"
+                              spacing="true"
+                              width="100%">
+                            <split height="200px"
+                                   orientation="horizontal"
+                                   pos="8"
+                                   width="100%">
+                                <multiUpload id="multiUploadImages"
+                                             caption="msg://Upload"/>
+                                <scrollBox id="scrollBox"
+                                           height="200px">
+                                    <flowBox id="thumbnailsBox"
+                                             height="200px"
+                                             spacing="true"
+                                             width="100%"/>
+                                </scrollBox>
+                            </split>
+                        </hbox>
+                    </row>
                     <row/>
                 </rows>
             </grid>

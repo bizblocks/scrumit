@@ -7,23 +7,25 @@ import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.web.task.TaskEdit;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
+import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.EntityStates;
+import com.haulmont.cuba.core.global.FileLoader;
 import com.haulmont.cuba.core.global.FileStorageException;
 import com.haulmont.cuba.gui.AppConfig;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.components.actions.BaseAction;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
+import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 
 import javax.inject.Inject;
-import java.util.Collections;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class TrackerEdit extends AbstractEditor<Tracker> {
     @Inject
@@ -87,6 +89,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     public void postInit(){
         super.postInit();
         setupTestingPlan();
+        initPhotoLibrary();
     }
 
     private void setupTestingPlan(){
@@ -213,6 +216,104 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 AppConfig.createExportDisplay(this).show(fileDescriptor);
             }
         }
+    }
+
+    @Inject
+    private FileMultiUploadField multiUploadImages;
+    @Inject
+    private FlowBoxLayout thumbnailsBox;
+    @Inject
+    private FileLoader fileLoader;
+
+    private List<FileDescriptor> imagesToDelete = new ArrayList<>();
+
+    private void initPhotoLibrary() {
+        getAndShowImages();
+        initImagesUpload();
+        getDsContext().addBeforeCommitListener(context -> context.addInstanceToCommit(getEntity()));
+    }
+
+    private Tracker getEntity() {
+        return getItem();
+    }
+
+    private void getAndShowImages() {
+        getEntity().getImages().forEach(this::addThumbnail);
+    }
+
+    private void initImagesUpload() {
+        multiUploadImages.addQueueUploadCompleteListener(() -> {
+            for (Map.Entry<UUID, String> entry : multiUploadImages.getUploadsMap().entrySet()) {
+                UUID fileId = entry.getKey();
+                String fileName = entry.getValue();
+                FileDescriptor fd = fileUploadingAPI.getFileDescriptor(fileId, fileName);
+                // save file to FileStorage
+                try {
+                    fileUploadingAPI.putFileIntoStorage(fileId, fd);
+                } catch (FileStorageException e) {
+                    new RuntimeException("Error saving file to FileStorage", e);
+                }
+                // save file descriptor to database
+                FileDescriptor committedFd = dataSupplier.commit(fd);
+
+                addThumbnail(committedFd);
+                getEntity().getImages().add(fd);
+                ((DatasourceImplementation) trackerDs).setModified(true);
+            }
+            multiUpload.clearUploads();
+
+        });
+        multiUpload.addFileUploadErrorListener(event ->
+                showNotification("File upload error", NotificationType.HUMANIZED));
+    }
+
+    private void addThumbnail(FileDescriptor fd) {
+        Image image = componentsFactory.createComponent(Image.class);
+        image.setSource(FileDescriptorResource.class).setFileDescriptor(fd);
+        image.setWidth("200px");
+        image.setScaleMode(Image.ScaleMode.SCALE_DOWN);
+        image.setHeight("200px");
+
+        HBoxLayout imageBox = componentsFactory.createComponent(HBoxLayout.class);
+        imageBox.add(image);
+        VBoxLayout innerButtonBox = componentsFactory.createComponent(VBoxLayout.class);
+        imageBox.add(innerButtonBox);
+
+        Button clearButton = componentsFactory.createComponent(Button.class);
+        clearButton.setCaption("X");
+        clearButton.setAction(new BaseAction("Remove") {
+            @Override
+            public void actionPerform(Component component) {
+                getEntity().getImages().remove(fd);
+                imagesToDelete.add(fd);
+                thumbnailsBox.remove(imageBox);
+                ((DatasourceImplementation) trackerDs).setModified(true);
+            }
+        });
+        innerButtonBox.add(clearButton);
+
+        Button showButton = componentsFactory.createComponent(Button.class);
+        showButton.setCaption(getMessage("show"));
+        showButton.setAction(new BaseAction("show") {
+            @Override
+            public void actionPerform(Component component) {
+                AppBeans.get(ExportDisplay.class).show(fd);
+            }
+        });
+        innerButtonBox.add(showButton);
+
+        thumbnailsBox.add(imageBox);
+    }
+
+    @Override
+    public boolean commit() {
+        imagesToDelete.forEach(img -> {
+            try {
+                fileLoader.removeFile(img);
+            } catch (FileStorageException ignore) {
+            }
+        });
+        return super.commit();
     }
 }
 
