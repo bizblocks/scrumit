@@ -55,19 +55,6 @@ public class Tasklist extends EntityCombinedScreen {
     @Inject
     private ComponentsFactory componentsFactory;
 
-    @Inject
-    private FileMultiUploadField multiUpload;
-    @Inject
-    private FileUploadingAPI fileUploadingAPI;
-    @Inject
-    private DataSupplier dataSupplier;
-    @Inject
-    private FlowBoxLayout thumbnailsBox;
-    @Inject
-    private FileLoader fileLoader;
-
-    private List<FileDescriptor> imagesToDelete = new ArrayList<>();
-
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
@@ -83,44 +70,11 @@ public class Tasklist extends EntityCombinedScreen {
         
         checkSelect.addValueChangeListener(e -> table.setTextSelectionEnabled((Boolean) e.getValue()));
 
+        table.getDatasource().addItemChangeListener(e -> setupTestingPlan());
+        initPhotoLibrary();
         table.getDatasource().addItemChangeListener(e -> {
-            setupTestingPlan();
-            getAndShowBookImages();
+            getAndShowImages();
         });
-        initFilesUpload();
-        getDsContext().addBeforeCommitListener(context -> context.addInstanceToCommit(getEditedTask()));
-    }
-
-    private void initFilesUpload() {
-        multiUpload.addQueueUploadCompleteListener(() -> {
-            if (getEditedTask().getVersion()==null) {
-                showNotification(getMessage("entityCommitted"));
-                dataManager.commit(getEditedTask());
-                getDsContext().refresh();
-            }
-            for (Map.Entry<UUID, String> entry : multiUpload.getUploadsMap().entrySet()) {
-                UUID fileId = entry.getKey();
-                String fileName = entry.getValue();
-                FileDescriptor fd = fileUploadingAPI.getFileDescriptor(fileId, fileName);
-                // save file to FileStorage
-                try {
-                    fileUploadingAPI.putFileIntoStorage(fileId, fd);
-                } catch (FileStorageException e) {
-                    new RuntimeException("Error saving file to FileStorage", e);
-                }
-                // save file descriptor to database
-                FileDescriptor committedFd = dataSupplier.commit(fd);
-
-                addThumbnail(committedFd);
-                getEditedTask().getImages().add(fd);
-                ((DatasourceImplementation) getFieldGroup().getDatasource()).setModified(true);
-            }
-            multiUpload.clearUploads();
-
-        });
-
-        multiUpload.addFileUploadErrorListener(event ->
-                showNotification("File upload error", NotificationType.HUMANIZED));
     }
 
     public void onBtnCreateInGroupClick() {
@@ -160,21 +114,6 @@ public class Tasklist extends EntityCombinedScreen {
     protected void initEditComponents(boolean enabled) {
         super.initEditComponents(enabled);
         setupTestingPlan();
-    }
-
-    @Override
-    protected void enableEditControls(boolean creating) {
-        super.enableEditControls(creating);
-        Component multiUploadButton = getComponent("multiUpload");
-        multiUploadButton.setEnabled(true);
-        if (getEditedTask().getVersion()==null) thumbnailsBox.removeAll();
-    }
-
-    @Override
-    protected void disableEditControls() {
-        super.disableEditControls();
-        Component multiUploadButton = getComponent("multiUpload");
-        multiUploadButton.setEnabled(false);
     }
 
     private void setupTestingPlan(){
@@ -227,10 +166,66 @@ public class Tasklist extends EntityCombinedScreen {
         }
     }
 
-    private void getAndShowBookImages() {
-        if (getEditedTask() == null) return;
+    @Inject
+    private FileMultiUploadField multiUpload;
+    @Inject
+    private FileUploadingAPI fileUploadingAPI;
+    @Inject
+    private DataSupplier dataSupplier;
+    @Inject
+    private FlowBoxLayout thumbnailsBox;
+    @Inject
+    private FileLoader fileLoader;
+
+    private List<FileDescriptor> imagesToDelete = new ArrayList<>();
+
+    private void initPhotoLibrary() {
+        getAndShowImages();
+        initFilesUpload();
+        getDsContext().addBeforeCommitListener(context -> context.addInstanceToCommit(getEntity()));
+    }
+
+    private Task getEntity() {
+        return ((Task) getFieldGroup().getDatasource().getItem());
+    }
+
+    private void initFilesUpload() {
+        multiUpload.addQueueUploadCompleteListener(() -> {
+            if (getEntity().getVersion() == null) {
+                showNotification(getMessage("entityCommitted"));
+                dataManager.commit(getEntity());
+                getDsContext().refresh();
+            }
+            for (Map.Entry<UUID, String> entry : multiUpload.getUploadsMap().entrySet()) {
+                UUID fileId = entry.getKey();
+                String fileName = entry.getValue();
+                FileDescriptor fd = fileUploadingAPI.getFileDescriptor(fileId, fileName);
+                // save file to FileStorage
+                try {
+                    fileUploadingAPI.putFileIntoStorage(fileId, fd);
+                } catch (FileStorageException e) {
+                    new RuntimeException("Error saving file to FileStorage", e);
+                }
+                // save file descriptor to database
+                FileDescriptor committedFd = dataSupplier.commit(fd);
+
+                addThumbnail(committedFd);
+                getEntity().getImages().add(fd);
+                ((DatasourceImplementation) getFieldGroup().getDatasource()).setModified(true);
+            }
+            multiUpload.clearUploads();
+
+        });
+
+        multiUpload.addFileUploadErrorListener(event ->
+                showNotification("File upload error", NotificationType.HUMANIZED));
+
+    }
+
+    private void getAndShowImages() {
+        if (getEntity() == null) return;
         thumbnailsBox.removeAll();
-        getEditedTask().getImages().forEach(this::addThumbnail);
+        getEntity().getImages().forEach(this::addThumbnail);
     }
 
     private void addThumbnail(FileDescriptor fd) {
@@ -251,7 +246,7 @@ public class Tasklist extends EntityCombinedScreen {
             @Override
             public void actionPerform(Component component) {
                 if (getLookupBox().isEnabled()) return;
-                getEditedTask().getImages().remove(fd);
+                getEntity().getImages().remove(fd);
                 imagesToDelete.add(fd);
                 thumbnailsBox.remove(imageBox);
                 ((DatasourceImplementation) getFieldGroup().getDatasource()).setModified(true);
@@ -272,7 +267,6 @@ public class Tasklist extends EntityCombinedScreen {
         thumbnailsBox.add(imageBox);
     }
 
-
     @Override
     public void save() {
         super.save();
@@ -284,7 +278,19 @@ public class Tasklist extends EntityCombinedScreen {
         });
     }
 
-    private Task getEditedTask() {
-        return ((Task) getFieldGroup().getDatasource().getItem());
+    @Override
+    protected void enableEditControls(boolean creating) {
+        super.enableEditControls(creating);
+        Component multiUploadButton = getComponent("multiUpload");
+        multiUploadButton.setEnabled(true);
+        if (getEntity().getVersion() == null) thumbnailsBox.removeAll();
     }
+
+    @Override
+    protected void disableEditControls() {
+        super.disableEditControls();
+        Component multiUploadButton = getComponent("multiUpload");
+        multiUploadButton.setEnabled(false);
+    }
+
 }
