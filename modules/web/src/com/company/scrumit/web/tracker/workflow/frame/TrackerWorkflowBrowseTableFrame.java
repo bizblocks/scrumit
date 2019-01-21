@@ -164,12 +164,21 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
         refreshAction.setShortcut("CTRL-R");
         Button refreshButton = componentsFactory.createComponent(Button.class);
         refreshButton.setAction(refreshAction);
+        ExcelAction excelAction = new ExcelAction(trackerTable);
+        Button excelButton = componentsFactory.createComponent(Button.class);
+        excelButton.setAction(excelAction);
 
         trackerTable.addAction(editAction);
         buttonsPanel.add(editButton);
 
         trackerTable.addAction(refreshAction);
         buttonsPanel.add(refreshButton);
+
+        trackerTable.addAction(excelAction);
+        buttonsPanel.add(excelButton);
+
+
+
 
         initWorkflowExtension(params);
     }

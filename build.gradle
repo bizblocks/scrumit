@@ -59,7 +59,7 @@ dependencies {
     appComponent("com.haulmont.fts:fts-global:$cubaVersion")
     appComponent("com.haulmont.addon.dnd:cuba-dnd-global:1.4.0")
     appComponent("de.diedavids.cuba.runtimediagnose:runtime-diagnose-global:1.2.0")
-    appComponent("com.groupstp.workflowstp:wfstp-global:1.0")
+    appComponent("com.groupstp.workflowstp:wfstp-global:1.0.4")
 
 }
 
