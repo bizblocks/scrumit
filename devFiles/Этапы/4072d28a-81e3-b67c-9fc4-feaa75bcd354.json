@@ -4,7 +4,7 @@
     "id": "4072d28a-81e3-b67c-9fc4-feaa75bcd354",
     "executionGroovyScript": "import com.company.scrumit.entity.Status;\n\nif (entity.getStatusOld() \u003d\u003d Status.Done){\n    context[\"isReady\"] \u003d \"true\";\n    return true;\n} else if (entity.getStatusOld() \u003d\u003d Status.ToDo){\n    context[\"toDo\"] \u003d \"true\";\n    return true;\n} else if (entity.getStatusOld() \u003d\u003d Status.Doing){\n    context[\"inWork\"] \u003d \"true\";\n    return true;\n} else if (entity.getStatusOld() \u003d\u003d Status.Testing){\n    context[\"toCheck\"] \u003d \"true\";\n    return true;\n} else if (entity.getStatusOld() \u003d\u003d Status.Checked){\n    context[\"wasChecked\"] \u003d \"true\";\n    return true;\n} else if (entity.getStatusOld() \u003d\u003d Status.WontFix || entity.getStatusOld() \u003d\u003d Status.NotABug || entity.getStatusOld() \u003d\u003d Status.Cancelled){\n    context[\"isCancelled\"] \u003d \"true\";\n    return true;\n} else if(entity.getStatusOld() \u003d\u003d null){\n    context[\"toDo\"] \u003d \"true\";\n    return true;\n}\n\nreturn false;",
     "type": "ALGORITHM_EXECUTION",
-    "version": 6,
+    "version": 1,
     "actors": [],
     "actorsRoles": [],
     "viewers": [],

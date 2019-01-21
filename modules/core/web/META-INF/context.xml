@@ -7,7 +7,7 @@
               name="jdbc/CubaDS"
               password="postgres"
               type="javax.sql.DataSource"
-              url="jdbc:postgresql://localhost/scrumit4"
+              url="jdbc:postgresql://localhost/scrumit5"
               username="postgres"/>
     <Manager pathname=""/>
 </Context>

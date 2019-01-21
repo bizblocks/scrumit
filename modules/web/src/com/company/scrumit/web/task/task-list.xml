@@ -121,6 +121,9 @@
                                 <action id="btnChecked"
                                         caption="msg://btnChecked"
                                         invoke="onBtnChecked"/>
+                                <action id="btnHideArchive"
+                                        caption="msg://hideArchive"
+                                        invoke="onBtnHideArchive"/>
                             </actions>
                         </popupButton>
                         <button id="btnCreateInGroup"

@@ -9,6 +9,7 @@ import com.groupstp.workflowstp.exception.WorkflowException;
 import com.groupstp.workflowstp.service.WorkflowService;
 import com.groupstp.workflowstp.util.EqualsUtils;
 import com.groupstp.workflowstp.web.components.ExternalSelectionGroupTable;
+import com.groupstp.workflowstp.web.util.action.AlwaysActiveAction;
 import com.groupstp.workflowstp.web.util.messagedialog.MessageDialog;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Scripting;
@@ -61,10 +62,48 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
+        initFiltersId(params);
         initSqlQuery(params);
         initTableBehaviour(params);
+        //tab opened for view only
+        if (Boolean.TRUE.equals(viewOnly)) {
+            trackerTable.setEditable(false);
+            if (!org.apache.commons.collections4.CollectionUtils.isEmpty(trackerTable.getActions())) {
+                for (Action action : trackerTable.getActions()) {
+                    if (!(action instanceof AlwaysActiveAction) &&
+                            !(action instanceof RefreshAction) &&
+                            !(action instanceof ExcelAction) /*&&
+                            !(action instanceof EditAction)*/) {
+                        action.setEnabled(false);
+                    }
+                }
+            }
+        }
     }
 
+
+    private void initFiltersId(Map<String, Object> params) {
+        //since many instances of this frame can be created for one browse screen we need to specify different frame id
+        //to make generic filters work correctly
+        String id = getTabTypeKey(params);
+        setId(id);
+    }
+
+    private String getTabTypeKey(Map<String, Object> params) {
+        switch (tabType) {
+            case NEW: {
+                return "def";
+            }
+            case WORKFLOW: {
+                return transformIdToKey(params.get(STAGE) == null ? null : ((Stage) params.get(STAGE)).getId());
+            }
+        }
+        return null;
+    }
+
+    private String transformIdToKey(UUID uuid) {
+        return uuid == null ? StringUtils.EMPTY : uuid.toString().replaceAll("\\W", StringUtils.EMPTY);
+    }
 
     private void initSqlQuery(Map<String, Object> params) {
         String sqlQuery = "select e from scrumit$Tracker e";
@@ -126,14 +165,13 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractFrame {
         Button refreshButton = componentsFactory.createComponent(Button.class);
         refreshButton.setAction(refreshAction);
 
-        //не добавляем кнопки в режиме только просмотр и не инициализируем расширения
-        if (!viewOnly) {
-            trackerTable.addAction(editAction);
-            buttonsPanel.add(editButton);
-            initWorkflowExtension(params);
-        }
+        trackerTable.addAction(editAction);
+        buttonsPanel.add(editButton);
+
         trackerTable.addAction(refreshAction);
         buttonsPanel.add(refreshButton);
+
+        initWorkflowExtension(params);
     }
 
     private void initWorkflowExtension(Map<String, Object> params) {

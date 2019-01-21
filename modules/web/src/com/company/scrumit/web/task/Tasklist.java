@@ -112,7 +112,7 @@ public class TaskList extends EntityCombinedScreen {
             int countDoneTask = 0;
             for (Task trackerTask : parentTracker.getTask()) {
                 trackerTask = dataManager.reload(trackerTask, "tasks-performer-view");
-                if (trackerTask.getDone()) {
+                if (trackerTask.getDone()!= null && trackerTask.getDone()) {
                     countDoneTask++;
                 }
             }
@@ -149,7 +149,7 @@ public class TaskList extends EntityCombinedScreen {
             int countControlTask = 0;
             for (Task trackerTask : parentTracker.getTask()) {
                 trackerTask = dataManager.reload(trackerTask, "tasks-performer-view");
-                if (trackerTask.getControl()) {
+                if (trackerTask.getControl()!= null && trackerTask.getControl()) {
                     countControlTask++;
                 }
             }
@@ -253,4 +253,11 @@ public class TaskList extends EntityCombinedScreen {
     }
 
 
+
+    public void onBtnHideArchive(Component source) {
+        String q = tasksDs.getQuery();
+        q = q + " where e.control = false or e.control is null";
+        tasksDs.setQuery(q);
+        tasksDs.refresh();
+    }
 }

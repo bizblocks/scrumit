@@ -236,4 +236,15 @@
                       view="_minimal"/>
         </property>
     </view>
+    <view class="com.company.scrumit.entity.Performer"
+          extends="_base"
+          name="user-with-role">
+        <property name="userRoles"
+                  view="_minimal">
+            <property name="user"
+                      view="_minimal"/>
+            <property name="role"
+                      view="_minimal"/>
+        </property>
+    </view>
 </views>

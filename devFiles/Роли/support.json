@@ -4,7 +4,7 @@
     "id": "9741160c-dacd-0046-34a7-0a17c50cfdae",
     "defaultRole": false,
     "type": "DENYING",
-    "version": 6,
+    "version": 1,
     "permissions": [
       {
         "_entityName": "sec$Permission",
@@ -17,6 +17,18 @@
         "version": 1,
         "value": 1,
         "target": "wfstp$ScreenTableColumnTemplate:read"
+      },
+      {
+        "_entityName": "sec$Permission",
+        "id": "ea5d7b05-f955-3038-684e-217cc589538b",
+        "role": {
+          "_entityName": "sec$Role",
+          "id": "9741160c-dacd-0046-34a7-0a17c50cfdae"
+        },
+        "type": "UI",
+        "version": 1,
+        "value": 0,
+        "target": "scrumit$Task.edit:btnControl"
       },
       {
         "_entityName": "sec$Permission",
@@ -44,7 +56,7 @@
       },
       {
         "_entityName": "sec$Permission",
-        "id": "d3f27ea1-8129-df37-4728-c8a26dec1e60",
+        "id": "54071730-620f-5de0-5975-b9c97320860f",
         "role": {
           "_entityName": "sec$Role",
           "id": "9741160c-dacd-0046-34a7-0a17c50cfdae"
@@ -52,7 +64,7 @@
         "type": "ENTITY_OP",
         "version": 1,
         "value": 1,
-        "target": "scrumit$Performer:read"
+        "target": "wfstp$ScreenConstructor:read"
       },
       {
         "_entityName": "sec$Permission",
@@ -68,7 +80,7 @@
       },
       {
         "_entityName": "sec$Permission",
-        "id": "54071730-620f-5de0-5975-b9c97320860f",
+        "id": "d3f27ea1-8129-df37-4728-c8a26dec1e60",
         "role": {
           "_entityName": "sec$Role",
           "id": "9741160c-dacd-0046-34a7-0a17c50cfdae"
@@ -76,7 +88,7 @@
         "type": "ENTITY_OP",
         "version": 1,
         "value": 1,
-        "target": "wfstp$ScreenConstructor:read"
+        "target": "scrumit$Performer:read"
       },
       {
         "_entityName": "sec$Permission",
@@ -164,18 +176,6 @@
       },
       {
         "_entityName": "sec$Permission",
-        "id": "ae9785fc-e292-7d3f-1bfd-77aa468e00fd",
-        "role": {
-          "_entityName": "sec$Role",
-          "id": "9741160c-dacd-0046-34a7-0a17c50cfdae"
-        },
-        "type": "SCREEN",
-        "version": 1,
-        "value": 1,
-        "target": "scrumit$Task.edit"
-      },
-      {
-        "_entityName": "sec$Permission",
         "id": "27cea028-f7e8-e874-f6be-371ced2f9695",
         "role": {
           "_entityName": "sec$Role",
@@ -185,6 +185,18 @@
         "version": 1,
         "value": 1,
         "target": "scrumit$Tracker:read"
+      },
+      {
+        "_entityName": "sec$Permission",
+        "id": "ae9785fc-e292-7d3f-1bfd-77aa468e00fd",
+        "role": {
+          "_entityName": "sec$Role",
+          "id": "9741160c-dacd-0046-34a7-0a17c50cfdae"
+        },
+        "type": "SCREEN",
+        "version": 1,
+        "value": 1,
+        "target": "scrumit$Task.edit"
       },
       {
         "_entityName": "sec$Permission",
@@ -224,18 +236,6 @@
       },
       {
         "_entityName": "sec$Permission",
-        "id": "9707bf93-d1d6-960f-a59e-99192ff417d8",
-        "role": {
-          "_entityName": "sec$Role",
-          "id": "9741160c-dacd-0046-34a7-0a17c50cfdae"
-        },
-        "type": "ENTITY_OP",
-        "version": 1,
-        "value": 1,
-        "target": "scrumit$Task:create"
-      },
-      {
-        "_entityName": "sec$Permission",
         "id": "b6e92b2d-0982-dac1-12b4-7c515ab74ffd",
         "role": {
           "_entityName": "sec$Role",
@@ -248,18 +248,6 @@
       },
       {
         "_entityName": "sec$Permission",
-        "id": "09c8bcdd-ecea-7a79-5215-107e1c13f353",
-        "role": {
-          "_entityName": "sec$Role",
-          "id": "9741160c-dacd-0046-34a7-0a17c50cfdae"
-        },
-        "type": "SCREEN",
-        "version": 1,
-        "value": 1,
-        "target": "scrumit$Task.list"
-      },
-      {
-        "_entityName": "sec$Permission",
         "id": "191c98ab-25b1-4d72-9c81-85d0bf1bbad3",
         "role": {
           "_entityName": "sec$Role",
@@ -269,6 +257,18 @@
         "version": 1,
         "value": 1,
         "target": "wfstp$Stage:read"
+      },
+      {
+        "_entityName": "sec$Permission",
+        "id": "09c8bcdd-ecea-7a79-5215-107e1c13f353",
+        "role": {
+          "_entityName": "sec$Role",
+          "id": "9741160c-dacd-0046-34a7-0a17c50cfdae"
+        },
+        "type": "SCREEN",
+        "version": 1,
+        "value": 1,
+        "target": "scrumit$Task.list"
       },
       {
         "_entityName": "sec$Permission",

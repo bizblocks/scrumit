@@ -54,4 +54,6 @@
             template="com/company/scrumit/web/tracker/workflow/frame/tracker-workflow-browse-table-frame.xml"/>
     <screen id="tracker-workflow-browse"
             template="com/company/scrumit/web/tracker/workflow/tracker-workflow-browse.xml"/>
+    <screen id="loginWindow"
+            template="com/company/scrumit/web/screens/ext-loginWindow.xml"/>
 </screen-config>

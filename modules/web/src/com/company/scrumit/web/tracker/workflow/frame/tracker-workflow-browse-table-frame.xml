@@ -11,7 +11,8 @@
             spacing="true">
         <filter id="filter"
                 applyTo="trackerTable"
-                datasource="trackerDs"/>
+                datasource="trackerDs"
+                useMaxResults="false"/>
         <groupTable id="trackerTable"
                     editable="true"
                     multiselect="true"

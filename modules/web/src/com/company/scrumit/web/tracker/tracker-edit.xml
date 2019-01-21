@@ -103,7 +103,8 @@
                             </actions>
                         </lookupPickerField>
                         <label value="msg://trackerPriorityType"/>
-                        <lookupField colspan="2"
+                        <lookupField id="priority"
+                                     colspan="2"
                                      datasource="trackerDs"
                                      property="trackerPriorityType"
                                      width="100%"/>
@@ -116,7 +117,8 @@
                                    property="shortdesc"
                                    width="100%"/>
                         <label value="msg://type"/>
-                        <lookupField colspan="2"
+                        <lookupField id="type"
+                                     colspan="2"
                                      datasource="trackerDs"
                                      property="type"
                                      width="100%"/>
