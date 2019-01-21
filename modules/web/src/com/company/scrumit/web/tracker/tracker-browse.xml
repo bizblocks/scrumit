@@ -25,6 +25,7 @@
             <properties include=".*"/>
         </filter>
         <groupTable id="trackersTable"
+                    multiselect="true"
                     width="100%">
             <actions>
                 <action id="create"/>
