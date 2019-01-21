@@ -6,7 +6,7 @@
       "_entityName": "wfstp$Workflow",
       "id": "b11c2aa3-72ab-8428-f44d-c52f47d02515",
       "code": "П1",
-      "version": 20,
+      "version": 1,
       "entityName": "scrumit$Tracker",
       "name": "Проблема",
       "entityCaption": "Трэкер"
