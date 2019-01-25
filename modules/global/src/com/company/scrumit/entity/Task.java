@@ -110,6 +110,21 @@ public class Task extends StandardEntity {
     @Column(name = "SS_ID")
     protected Long ssId;
 
+    @JoinTable(name = "SCRUMIT_PERFORMER_TASK_LINK",
+        joinColumns = @JoinColumn(name = "TASK_ID"),
+        inverseJoinColumns = @JoinColumn(name = "PERFORMER_ID"))
+    @ManyToMany
+    protected List<Performer> performers;
+
+    public void setPerformers(List<Performer> performers) {
+        this.performers = performers;
+    }
+
+    public List<Performer> getPerformers() {
+        return performers;
+    }
+
+
     public void setTestingPlan(String testingPlan) {
         this.testingPlan = testingPlan;
     }

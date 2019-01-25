@@ -130,13 +130,14 @@
                   view="_minimal"/>
         <property name="loginLowerCase"/>
         <property name="password"/>
-        <property name="name"/>
         <property name="firstName"/>
         <property name="lastName"/>
         <property name="middleName"/>
         <property name="email"/>
         <property name="changePasswordAtNextLogon"/>
         <property name="group"
+                  view="_minimal"/>
+        <property name="projects"
                   view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Task"

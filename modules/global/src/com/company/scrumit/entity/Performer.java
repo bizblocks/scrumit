@@ -28,6 +28,21 @@ public class Performer extends User {
     @ManyToMany
     protected List<Team> teams;
 
+    @JoinTable(name = "SCRUMIT_PERFORMER_TASK_LINK",
+        joinColumns = @JoinColumn(name = "PERFORMER_ID"),
+        inverseJoinColumns = @JoinColumn(name = "TASK_ID"))
+    @ManyToMany
+    protected List<Task> projects;
+
+    public void setProjects(List<Task> projects) {
+        this.projects = projects;
+    }
+
+    public List<Task> getProjects() {
+        return projects;
+    }
+
+
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
