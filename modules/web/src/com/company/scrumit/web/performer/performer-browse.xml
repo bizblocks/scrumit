@@ -16,8 +16,6 @@
                     view="performer-view">
             <collectionDatasource id="teamsDs"
                                   property="teams"/>
-            <collectionDatasource id="projectsDs"
-                                  property="projects"/>
         </datasource>
         <groupDatasource id="performersDs"
                          class="com.company.scrumit.entity.Performer"
@@ -136,28 +134,6 @@
                                 <buttonsPanel>
                                     <button action="teamsTable.add"/>
                                     <button action="teamsTable.remove"/>
-                                </buttonsPanel>
-                            </table>
-                        </tab>
-                        <tab id="projectsTab"
-                             caption="msg://projectsTab"
-                             margin="true,false,false,false"
-                             spacing="true">
-                            <table id="projectsTable"
-                                   height="500px"
-                                   width="100%">
-                                <actions>
-                                    <action id="add"/>
-                                    <action id="remove"/>
-                                </actions>
-                                <columns>
-                                    <column id="shortdesc"/>
-                                </columns>
-                                <rows datasource="projectsDs"/>
-                                <buttonsPanel id="buttonsPanel_1">
-                                    <button id="button"
-                                            action="projectsTable.add"/>
-                                    <button action="projectsTable.remove"/>
                                 </buttonsPanel>
                             </table>
                         </tab>

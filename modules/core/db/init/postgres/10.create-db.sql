@@ -398,10 +398,3 @@ alter table SYS_FILE add column TRACKER_ID uuid ^
 alter table SYS_FILE add column DTYPE varchar(100) ^
 update SYS_FILE set DTYPE = 'sys$FileDescriptor' where DTYPE is null ^
 -- end SYS_FILE
--- begin SCRUMIT_PERFORMER_TASK_LINK
-create table SCRUMIT_PERFORMER_TASK_LINK (
-    TASK_ID uuid,
-    PERFORMER_ID uuid,
-    primary key (TASK_ID, PERFORMER_ID)
-)^
--- end SCRUMIT_PERFORMER_TASK_LINK

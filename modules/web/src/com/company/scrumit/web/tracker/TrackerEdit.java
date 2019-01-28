@@ -123,7 +123,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     private User getUser() {
         User user = userSessionSource.getUserSession().getCurrentOrSubstitutedUser();
         if (user != null) {
-            user = dataManager.reload(user, "user-with-role");
+            user = dataManager.reload(user, "user-with-roles");
         }
         return user;
     }

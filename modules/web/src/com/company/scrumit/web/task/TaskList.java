@@ -7,12 +7,12 @@ import com.company.scrumit.entity.Tracker;
 import com.groupstp.workflowstp.entity.Stage;
 import com.groupstp.workflowstp.entity.WorkflowInstanceTask;
 import com.groupstp.workflowstp.service.WorkflowService;
-import com.haulmont.cuba.core.entity.Entity;
+import com.groupstp.workflowstp.web.util.WebUiHelper;
+import com.groupstp.workflowstp.web.util.data.ColumnGenerator;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
-import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
@@ -32,6 +32,9 @@ public class TaskList extends EntityCombinedScreen {
 
     @Inject
     private WorkflowService workflowService;
+
+    @Inject
+    private WebUiHelper webUiHelper;
     @Named("fieldGroup.duration")
     private TextField durationField;
 
@@ -49,8 +52,6 @@ public class TaskList extends EntityCombinedScreen {
     @Inject
     private Metadata metadata;
     @Inject
-    private CollectionDatasource trackerDs;
-    @Inject
     private CheckBox checkSelect;
     @Inject
     private GridLayout grid;
@@ -58,6 +59,8 @@ public class TaskList extends EntityCombinedScreen {
     private PickerField taskField;
     @Inject
     private ComponentsFactory componentsFactory;
+    @Inject
+    private RichTextArea description;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -78,6 +81,29 @@ public class TaskList extends EntityCombinedScreen {
         table.getDatasource().addItemChangeListener(e -> {
             setupTestingPlan();
         });
+
+        //добавляет возможность моментального редактирования по двойному клику
+        initColumns();
+
+    }
+
+    private void initColumns() {
+        webUiHelper.showColumns(table,
+                getAllProperties(), getEditableProperties(),
+                getColumnGenerators(), false);
+    }
+
+    private List<String> getAllProperties() {
+        return Arrays.asList("shortdesc", "priority", "done", "control", "description", "performer", "testingPlan");
+    }
+
+    private List<String> getEditableProperties() {
+        return Arrays.asList("shortdesc", "priority", "performer");
+    }
+
+    private Map<String, ColumnGenerator> getColumnGenerators() {
+        Map<String, ColumnGenerator> result = new HashMap<>();
+        return result;
     }
 
     public void onBtnCreateInGroupClick() {
@@ -112,7 +138,7 @@ public class TaskList extends EntityCombinedScreen {
             int countDoneTask = 0;
             for (Task trackerTask : parentTracker.getTask()) {
                 trackerTask = dataManager.reload(trackerTask, "tasks-performer-view");
-                if (trackerTask.getDone()!= null && trackerTask.getDone()) {
+                if (trackerTask.getDone() != null && trackerTask.getDone()) {
                     countDoneTask++;
                 }
             }
@@ -149,7 +175,7 @@ public class TaskList extends EntityCombinedScreen {
             int countControlTask = 0;
             for (Task trackerTask : parentTracker.getTask()) {
                 trackerTask = dataManager.reload(trackerTask, "tasks-performer-view");
-                if (trackerTask.getControl()!= null && trackerTask.getControl()) {
+                if (trackerTask.getControl() != null && trackerTask.getControl()) {
                     countControlTask++;
                 }
             }
@@ -183,6 +209,8 @@ public class TaskList extends EntityCombinedScreen {
     protected void initEditComponents(boolean enabled) {
         super.initEditComponents(enabled);
         setupTestingPlan();
+        //блокируем/разблокируем поле описания
+        description.setEnabled(enabled);
     }
 
     private static void commitIfNeed(Table<Task> taskTable) {
@@ -251,7 +279,6 @@ public class TaskList extends EntityCombinedScreen {
                 .optional()
                 .orElse(null);
     }
-
 
 
     public void onBtnHideArchive(Component source) {

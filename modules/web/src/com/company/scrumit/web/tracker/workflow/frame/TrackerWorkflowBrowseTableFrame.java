@@ -1,5 +1,8 @@
 package com.company.scrumit.web.tracker.workflow.frame;
 
+import com.company.scrumit.entity.Performer;
+import com.company.scrumit.entity.Task;
+import com.company.scrumit.entity.Team;
 import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.web.tracker.TabType;
 import com.company.scrumit.web.tracker.TrackerEdit;
@@ -19,6 +22,7 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.icons.CubaIcon;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 
+import com.haulmont.cuba.security.entity.User;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -26,6 +30,7 @@ import org.springframework.util.CollectionUtils;
 import javax.inject.Inject;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TrackerWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
 
@@ -112,7 +117,34 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame 
                 break;
             case WORKFLOW:
                 Stage stage = (Stage) params.get(STAGE);
-                sqlQuery += " where e.stepName='" + stage.getName() + "'";
+                StringBuilder sb = new StringBuilder(sqlQuery);
+                sb.append(" where ");
+                sb.append("e.stepName='").append(stage.getName()).append("' ");
+
+                User currentUser = (User) params.get(USER);
+                //todo проверить на существование
+                Performer performer = null;
+                try {
+                    performer = dataManager.load(Performer.class).id(currentUser.getUuid()).view("user-with-roles").one();
+                } catch (Exception e) {
+
+                }
+                if (performer != null) {
+                    List<Task> projects = new ArrayList<>();
+                    List<Team> teams = performer.getTeams();
+                    for (Team team : teams) {
+                        List<Task> teamProjects = team.getProjects();
+                        for (Task task : teamProjects) {
+                            projects.add(task);
+                        }
+                    }
+                    sb.append("and (e.project is null or e.project.id in(")
+                            .append(projects.stream().map(e -> "'" + e.getId() + "'").collect(Collectors.joining(",")))
+                            .append("))");
+                } else {
+                    sb.append("and e.project is null");
+                }
+                sqlQuery = sb.toString();
                 break;
             default: {
                 throw new RuntimeException(getMessage("trackerWorkflowBrowseTableFrame.unknownTabType"));
