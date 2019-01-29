@@ -110,6 +110,7 @@ public class Task extends StandardEntity {
     @Column(name = "SS_ID")
     protected Long ssId;
 
+
     public void setTestingPlan(String testingPlan) {
         this.testingPlan = testingPlan;
     }

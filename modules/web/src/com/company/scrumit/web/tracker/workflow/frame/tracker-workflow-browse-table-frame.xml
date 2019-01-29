@@ -14,14 +14,15 @@
                 datasource="trackerDs"
                 useMaxResults="false"/>
         <groupTable id="trackerTable"
-                    editable="true"
                     multiselect="true"
+                    textSelectionEnabled="true"
                     width="100%">
             <columns>
                 <group>
                     <column id="project"/>
                 </group>
-                <column id="statusOld"/>
+                <column id="statusOld"
+                        visible="false"/>
                 <column id="createTs"/>
                 <column id="shortdesc"/>
                 <column id="type"/>

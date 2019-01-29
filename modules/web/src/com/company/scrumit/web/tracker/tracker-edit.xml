@@ -21,7 +21,7 @@
         </collectionDatasource>
         <hierarchicalDatasource id="taskParentBugDs"
                                 class="com.company.scrumit.entity.Task"
-                                hierarchyProperty=""
+                                hierarchyProperty="top"
                                 view="tasks-full">
             <query>
                 <![CDATA[select e from scrumit$Task e where e.parentBug.id=:ds$trackerDs]]>

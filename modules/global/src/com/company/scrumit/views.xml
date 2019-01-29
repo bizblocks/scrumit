@@ -130,7 +130,6 @@
                   view="_minimal"/>
         <property name="loginLowerCase"/>
         <property name="password"/>
-        <property name="name"/>
         <property name="firstName"/>
         <property name="lastName"/>
         <property name="middleName"/>
@@ -238,12 +237,17 @@
     </view>
     <view class="com.company.scrumit.entity.Performer"
           extends="_base"
-          name="user-with-role">
+          name="user-with-roles">
         <property name="userRoles"
                   view="_minimal">
             <property name="user"
                       view="_minimal"/>
             <property name="role"
+                      view="_minimal"/>
+        </property>
+        <property name="teams"
+                  view="_minimal">
+            <property name="projects"
                       view="_minimal"/>
         </property>
     </view>

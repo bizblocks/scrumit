@@ -5,11 +5,11 @@ import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
 import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.web.task.TaskEdit;
-import com.company.scrumit.web.tracker.component.TrackerRestrictionHelper;
 import com.groupstp.workflowstp.dto.WorkflowExecutionContext;
 import com.groupstp.workflowstp.entity.*;
 import com.groupstp.workflowstp.service.WorkflowService;
 import com.groupstp.workflowstp.util.EqualsUtils;
+import com.groupstp.workflowstp.web.bean.WorkflowWebBean;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.*;
@@ -33,6 +33,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+//todo
+//переделать на новую библиотеку воркфлоу
 public class TrackerEdit extends AbstractEditor<Tracker> {
     public static final String SCREEN_ID = "scrumit$Tracker.edit";
 
@@ -45,7 +47,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     private LookupPickerField project;
 
     @Inject
-    private TrackerRestrictionHelper trackerRestrictionHelper;
+    private WorkflowWebBean workflowWebBean;
 
     @Inject
     private Scripting scripting;
@@ -121,7 +123,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     private User getUser() {
         User user = userSessionSource.getUserSession().getCurrentOrSubstitutedUser();
         if (user != null) {
-            user = dataManager.reload(user, "user-with-role");
+            user = dataManager.reload(user, "user-with-roles");
         }
         return user;
     }
@@ -257,31 +259,14 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     protected boolean initWorkflow() {
         if (stage != null && workflow != null) {//this is screen of one of stage
             if (EqualsUtils.equalAny(stage.getType(), StageType.USERS_INTERACTION, StageType.ARCHIVE)) {//we need to extend screen by stage
-                if (trackerRestrictionHelper.isActor(user, stage)) {
-                    final String script = stage.getEditorScreenGroovyScript();
-                    if (StringUtils.isEmpty(script)) {
-                        throw new DevelopmentException(String.format(getMessage("queryWorkflowEdit.editorScreenGroovyNotFound"), stage.getName()));
-                    }
-
-                    final Map<String, Object> binding = new HashMap<>();
-
-                    WorkflowExecutionContext ctx = workflowService.getExecutionContext(workflowInstance);
-                    binding.put("entity", getItem());
-                    binding.put("context", ctx.getParams());
-                    binding.put("screen", this);
-                    binding.put("workflowInstance", workflowInstance);
-                    binding.put("workflowInstanceTask", workflowInstanceTask);
+                if (workflowWebBean.isActor(user, stage)) {
                     try {
-                        scripting.evaluateGroovy(script, binding);
+                        workflowWebBean.extendEditor(stage, getItem(), this, workflowInstance, workflowInstanceTask);
                     } catch (Exception e) {
-//                            log.error("Failed to evaluate editor screen groovy for workflow instance {}({}) and task {}({})",
-//                                    workflowInstance, workflowInstance.getId(), workflowInstanceTask, workflowInstanceTask.getId());
-
-                        String message = getMessage("queryWorkflowEdit.errorOnScreenExtension");
+                        String message = getMessage("errorOnScreenExtension");
                         close(CLOSE_ACTION_ID, true);
-                        throw new DevelopmentException(message);
+                        throw new RuntimeException(message);
                     }
-                    workflowService.setExecutionContext(ctx, workflowInstance);//save parameters since they can be changed
                 }
             }
         }
