@@ -5,9 +5,7 @@ import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
 import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.web.task.TaskEdit;
-import com.groupstp.workflowstp.dto.WorkflowExecutionContext;
 import com.groupstp.workflowstp.entity.*;
-import com.groupstp.workflowstp.service.WorkflowService;
 import com.groupstp.workflowstp.util.EqualsUtils;
 import com.groupstp.workflowstp.web.bean.WorkflowWebBean;
 import com.haulmont.cuba.core.entity.Entity;
@@ -19,7 +17,6 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
-import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
@@ -29,7 +26,6 @@ import org.apache.commons.lang.StringUtils;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -49,10 +45,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Inject
     private WorkflowWebBean workflowWebBean;
 
-    @Inject
-    private Scripting scripting;
-    @Inject
-    private WorkflowService workflowService;
     @Inject
     protected TextField shortdesc;
 
@@ -82,9 +74,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     @Inject
     private EntityStates entityStates;
-
-    @Inject
-    private HierarchicalDatasource taskParentBugDs;
 
     @Inject
     private GridLayout grid;
@@ -261,7 +250,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
             if (EqualsUtils.equalAny(stage.getType(), StageType.USERS_INTERACTION, StageType.ARCHIVE)) {//we need to extend screen by stage
                 if (workflowWebBean.isActor(user, stage)) {
                     try {
-                        workflowWebBean.extendEditor(stage, getItem(), this, workflowInstance, workflowInstanceTask);
+                        workflowWebBean.extendEditor(getItem(), this, workflowInstanceTask);
                     } catch (Exception e) {
                         String message = getMessage("errorOnScreenExtension");
                         close(CLOSE_ACTION_ID, true);

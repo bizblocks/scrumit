@@ -62,7 +62,7 @@ public class TaskEdit extends AbstractEditor<Task> {
         super.ready();
         //кнопки Контроль и Готово
         btnControl.setEnabled(false);
-        btnReady.setEnabled(false);
+        btnReady.setEnabled(true);
         if (getItem().getDone() != null && getItem().getDone()) {
             btnReady.setEnabled(false);
             btnControl.setEnabled(true);
@@ -93,13 +93,13 @@ public class TaskEdit extends AbstractEditor<Task> {
         int countDoneTask = 0;
         for (Task task : parentTracker.getTask()) {
             task = dataManager.reload(task, "tasks-performer-view");
-            if (task.getDone()) {
+            if (task.getDone() != null && task.getDone()) {
                 countDoneTask++;
             }
         }
         if (countDoneTask == countTask) {
             Stage stage = getStage(parentTracker);
-            WorkflowInstanceTask instanceTask = workflowService.loadLastProcessingTask(parentTracker, stage);
+            WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(parentTracker, stage);
             try {
                 if (instanceTask != null) {
                     Map params = new HashMap();
@@ -126,13 +126,13 @@ public class TaskEdit extends AbstractEditor<Task> {
         int countControlTask = 0;
         for (Task task : parentTracker.getTask()) {
             task = dataManager.reload(task, "tasks-performer-view");
-            if (task.getControl()) {
+            if (task.getControl() != null && task.getControl()) {
                 countControlTask++;
             }
         }
         if (countTask == countControlTask) {
             Stage stage = getStage(parentTracker);
-            WorkflowInstanceTask instanceTask = workflowService.loadLastProcessingTask(parentTracker, stage);
+            WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(parentTracker, stage);
             try {
                 if (instanceTask != null) {
                     Map params = new HashMap();

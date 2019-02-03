@@ -144,7 +144,7 @@ public class TaskList extends EntityCombinedScreen {
             }
             if (countDoneTask == countTask) {
                 Stage stage = getStage(parentTracker);
-                WorkflowInstanceTask instanceTask = workflowService.loadLastProcessingTask(parentTracker, stage);
+                WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(parentTracker, stage);
                 try {
                     if (instanceTask != null) {
                         Map params = new HashMap();
@@ -181,7 +181,7 @@ public class TaskList extends EntityCombinedScreen {
             }
             if (countTask == countControlTask) {
                 Stage stage = getStage(parentTracker);
-                WorkflowInstanceTask instanceTask = workflowService.loadLastProcessingTask(parentTracker, stage);
+                WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(parentTracker, stage);
                 try {
                     if (instanceTask != null) {
                         Map params = new HashMap();
