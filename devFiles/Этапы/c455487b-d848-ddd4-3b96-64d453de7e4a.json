@@ -23,15 +23,15 @@
       },
       {
         "_entityName": "sec$Role",
-        "id": "9741160c-dacd-0046-34a7-0a17c50cfdae",
-        "version": 1,
-        "name": "support"
-      },
-      {
-        "_entityName": "sec$Role",
         "id": "7fc85802-d0e2-5a68-ba0b-5f97fbf204ec",
         "version": 2,
         "name": "developer"
+      },
+      {
+        "_entityName": "sec$Role",
+        "id": "9741160c-dacd-0046-34a7-0a17c50cfdae",
+        "version": 2,
+        "name": "support"
       }
     ],
     "name": "Готово",
