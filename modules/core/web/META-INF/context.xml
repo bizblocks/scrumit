@@ -10,5 +10,4 @@
               url="jdbc:postgresql://localhost/scrumit"
               username="cuba"/>
     <Manager pathname=""/>
-
 </Context>

@@ -2,6 +2,7 @@ package com.company.scrumit.service;
 
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Team;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -18,4 +19,5 @@ public class TaskServiceBean implements TaskService {
     public Set<Task> tasksByTeam(Team team) {
         return null;
     }
+
 }

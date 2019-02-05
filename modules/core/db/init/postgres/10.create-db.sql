@@ -190,9 +190,12 @@ create table SCRUMIT_TRACKER (
     DELETED_BY varchar(50),
     --
     PROJECT_ID uuid,
+    STEP_NAME varchar(255),
+    STATUS_WORK_FLOW integer,
+    WORKFLOW_ID uuid,
     TESTING_PLAN text,
     PERFORMER_ID uuid,
-    SHORTDESC varchar(50) not null,
+    SHORTDESC varchar(100) not null,
     STATUS varchar(50),
     TRACKER_PRIORITY_TYPE varchar(50),
     TYPE_ varchar(50),

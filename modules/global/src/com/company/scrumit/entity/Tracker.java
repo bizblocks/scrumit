@@ -1,5 +1,6 @@
 package com.company.scrumit.entity;
 
+import com.groupstp.workflowstp.entity.WorkflowEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.entity.StandardEntity;
@@ -9,19 +10,35 @@ import com.haulmont.cuba.core.global.DeletePolicy;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
+
 import com.haulmont.cuba.core.entity.annotation.Lookup;
 import com.haulmont.cuba.core.entity.annotation.LookupType;
+import com.groupstp.workflowstp.entity.Workflow;
+import com.groupstp.workflowstp.entity.WorkflowEntityStatus;
+import com.haulmont.cuba.core.entity.annotation.Listeners;
 
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TRACKER")
 @Entity(name = "scrumit$Tracker")
-public class Tracker extends StandardEntity {
+public class Tracker extends StandardEntity implements WorkflowEntity<UUID> {
     private static final long serialVersionUID = -8847125133735817612L;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
+
+    @Column(name = "STEP_NAME")
+    protected String stepName;
+
+
+    @Column(name = "STATUS_WORK_FLOW")
+    protected Integer status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "WORKFLOW_ID")
+    protected Workflow workflow;
 
     @Lob
     @Column(name = "TESTING_PLAN")
@@ -33,11 +50,12 @@ public class Tracker extends StandardEntity {
     protected Performer performer;
 
     @NotNull
-    @Column(name = "SHORTDESC", nullable = false, length = 50)
+    @Column(name = "SHORTDESC", nullable = false, length = 100)
     protected String shortdesc;
 
+
     @Column(name = "STATUS")
-    protected String status;
+    protected String statusOld;
 
     @Column(name = "TRACKER_PRIORITY_TYPE")
     protected String trackerPriorityType;
@@ -56,6 +74,53 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "FILES_ID")
     @OnDelete(DeletePolicy.CASCADE)
     protected FileDescriptor files;
+    public void setStatus(WorkflowEntityStatus status) {
+        this.status = status == null ? null : status.getId();
+    }
+
+    public WorkflowEntityStatus getStatus() {
+        return status == null ? null : WorkflowEntityStatus.fromId(status);
+    }
+
+
+    public void setStatusOld(Status statusOld) {
+        this.statusOld = statusOld == null ? null : statusOld.getId();
+    }
+
+    public Status getStatusOld() {
+        return statusOld == null ? null : Status.fromId(statusOld);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public void setStepName(String stepName) {
+        this.stepName = stepName;
+    }
+
+    public String getStepName() {
+        return stepName;
+    }
+
+
+
+
+
+    public void setWorkflow(Workflow workflow) {
+        this.workflow = workflow;
+    }
+
+    public Workflow getWorkflow() {
+        return workflow;
+    }
+
 
     public void setTestingPlan(String testingPlan) {
         this.testingPlan = testingPlan;
@@ -104,13 +169,7 @@ public class Tracker extends StandardEntity {
 
 
 
-    public void setStatus(Status status) {
-        this.status = status == null ? null : status.getId();
-    }
 
-    public Status getStatus() {
-        return status == null ? null : Status.fromId(status);
-    }
 
     public void setTrackerPriorityType(TrackerPriorityType trackerPriorityType) {
         this.trackerPriorityType = trackerPriorityType == null ? null : trackerPriorityType.getId();

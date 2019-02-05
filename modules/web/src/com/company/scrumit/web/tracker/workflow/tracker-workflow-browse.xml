@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.scrumit.web.tracker.workflow.TrackerWorkflowBrowse"
+        icon="GROUP"
+        messagesPack="com.company.scrumit.web.tracker.workflow">
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <tabSheet id="tabSheet"
+                  height="100%"/>
+    </layout>
+</window>

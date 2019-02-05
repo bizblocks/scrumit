@@ -1,0 +1,41 @@
+[
+  {
+    "_entityName": "wfstp$Stage",
+    "id": "7e605326-a20b-9911-9fb0-93509a5157c0",
+    "browseScreenGroovyScript": "import com.company.scrumit.entity.*;\nimport com.haulmont.cuba.gui.components.*;\nimport com.haulmont.cuba.core.global.*;\nimport org.apache.commons.collections4.*;\nimport com.groupstp.workflowstp.entity.Stage;\nimport com.groupstp.workflowstp.entity.WorkflowInstanceTask;\nimport org.apache.commons.lang.*;\nimport com.haulmont.cuba.gui.icons.*;\nimport com.haulmont.cuba.gui.xml.layout.*;\nimport com.groupstp.workflowstp.service.WorkflowService;\nimport com.haulmont.cuba.gui.components.actions.*;\nimport com.haulmont.chile.core.model.*;\nimport java.util.*;\n\nstage \u003d stage;\nframe \u003d screen;\n\nmessages \u003d AppBeans.get(Messages.NAME);\ncomponentsFactory \u003d AppBeans.get(ComponentsFactory.NAME);\nservice \u003d AppBeans.get(WorkflowService.NAME);\n\ntrackerTable \u003d (Table) frame.getComponentNN(\"trackerTable\");\n\ninitActions();\n\n\nprivate void initActions() {\n    ButtonsPanel buttonsPanel \u003d trackerTable.getButtonsPanel();\n    initReadyAction(trackerTable, buttonsPanel, stage, frame, service, messages);\n}\n\nprivate void initReadyAction(final Table\u003cTracker\u003e trackerTable, final ButtonsPanel buttonsPanel,\n                               final Stage stage, final Frame frame, final WorkflowService service, final Messages messages) {\n    Action action \u003d new BaseAction(\"ready\") {\n        @Override\n        public String getCaption() {\n            return \"Готово\";\n        }\n\n        @Override\n        public String getIcon() {\n            return CubaIcon.OK.source();\n        }\n\n        @Override\n        public void actionPerform(Component component) {\n            Set\u003cTracker\u003e selected \u003d trackerTable.getSelected();\n            if(!CollectionUtils.isEmpty(selected)){\n                commitIfNeed(trackerTable);\n                try{\n                    for (Tracker problem : selected){\n                        try{\n                            WorkflowInstanceTask task \u003d service.getWorkflowInstanceTaskNN(problem,stage);\n                            if (task!\u003dnull){\n                                Map params \u003d new HashMap();\n                                params.put(\"toCheck\",\"true\");\n                                service.finishTask(task,params);\n                            }\n                        } catch(Exception e){\n                            throw new RuntimeException(\"Ошибка обработки\",e);\n                        }\n                    }\n                } finally {\n                    trackerTable.getDatasource().refresh();\n                }\n            }\n            \n        }\n\n        @Override\n        public boolean isPermitted() {\n            if (super.isPermitted()){\n                return !CollectionUtils.isEmpty(trackerTable.getSelected());\n            }\n            return false;\n        }\n    }    \n    Button button \u003d componentsFactory.createComponent(Button.class);\n    button.setAction(action);\n    buttonsPanel.add(button, 0);\n    trackerTable.addAction(action);\n}\n\nprivate static void commitIfNeed(Table\u003cTracker\u003e trackerTable) {\n    if (trackerTable.getDatasource().isModified()) {\n        trackerTable.getDatasource().commit();\n    }\n}\n",
+    "type": "USERS_INTERACTION",
+    "version": 3,
+    "actors": [],
+    "actorsRoles": [
+      {
+        "_entityName": "sec$Role",
+        "id": "0c018061-b26f-4de2-a5be-dff348347f93",
+        "version": 0,
+        "name": "Administrators"
+      },
+      {
+        "_entityName": "sec$Role",
+        "id": "7fc85802-d0e2-5a68-ba0b-5f97fbf204ec",
+        "version": 2,
+        "name": "developer"
+      }
+    ],
+    "viewers": [],
+    "entityName": "scrumit$Tracker",
+    "viewersRoles": [
+      {
+        "_entityName": "sec$Role",
+        "id": "0c018061-b26f-4de2-a5be-dff348347f93"
+      },
+      {
+        "_entityName": "sec$Role",
+        "id": "9741160c-dacd-0046-34a7-0a17c50cfdae",
+        "version": 2,
+        "name": "support"
+      }
+    ],
+    "name": "В работе",
+    "editorScreenGroovyScript": "import com.company.scrumit.entity.*;\nimport com.haulmont.cuba.gui.components.*;\nimport com.haulmont.cuba.core.global.*;\nimport org.apache.commons.collections4.*;\nimport org.apache.commons.lang.*;\nimport com.groupstp.workflowstp.entity.Stage;\nimport com.groupstp.workflowstp.entity.WorkflowInstanceTask;\nimport org.apache.commons.lang.*;\nimport com.haulmont.cuba.gui.icons.*;\nimport com.haulmont.cuba.gui.xml.layout.*;\nimport com.groupstp.workflowstp.service.WorkflowService;\nimport com.haulmont.cuba.gui.components.actions.*;\nimport com.haulmont.chile.core.model.*;\nimport java.util.*;\nimport com.haulmont.cuba.gui.data.*;\nimport com.haulmont.cuba.gui.components.*;\n\nentity \u003d entity;\ntask \u003d workflowInstanceTask;\neditor \u003d screen;\ninstance \u003d workflowInstance;\n\nmessages \u003d AppBeans.get(Messages.NAME);\ncomponentsFactory \u003d AppBeans.get(ComponentsFactory.NAME);\nservice \u003d AppBeans.get(WorkflowService.NAME);\n\ninitActions();\ninitFields();\n\n\nprivate void initFields() {\n    List\u003cString\u003e notEditableProperties \u003d Arrays.asList(\"project\",\"performer\",\"shortdesc\",\"priority\",\"type\");\n    \n    for (String property : notEditableProperties) {\n        editor.getComponentNN(property).setEditable(Boolean.FALSE)\n    }\n}\n\nprivate void initActions() {\n    BoxLayout box \u003d (BoxLayout) editor.getComponentNN(\"bottomPanel\");\n   \n    box.add(getReadyButton(entity, task, editor, service, messages),0);\n    \n    editor.trackerDs.addItemPropertyChangeListener(new Datasource.ItemPropertyChangeListener\u003cTracker\u003e() {\n        @Override\n        public void itemPropertyChanged(Datasource.ItemPropertyChangeEvent\u003cTracker\u003e e) {\n            refreshActionState(box);\n        }\n    });\n    refreshActionState(box);\n}\n\nprivate void refreshActionState(BoxLayout box) {\n    for (Component c : box.getComponents()) {\n        if (c instanceof Component.ActionOwner) {\n            Action action \u003d ((Component.ActionOwner) c).getAction();\n            if (action !\u003d null) {\n                action.refreshState();\n            }\n        }\n    }\n}\n\n\nprivate Button getReadyButton(final Tracker problem, final WorkflowInstanceTask task, final AbstractEditor editor, final WorkflowService service, final Messages messages) {\n    Action action \u003d new BaseAction(\"ready\") {\n        @Override\n        public String getCaption() {\n            return \"Готово\";\n        }\n\n        @Override\n        public String getIcon() {\n            return CubaIcon.OK.source();\n        }\n\n        @Override\n        public void actionPerform(Component component) {\n                try {\n                    commit(editor);\n                    Map params \u003d new HashMap();\n                    params.put(\"toCheck\",\"true\");\n                    service.finishTask(task, params);\n                    editor.close(editor.COMMIT_ACTION_ID, true);\n                } catch (Exception e) {\n                    throw new RuntimeException(\"Ошибка обработки заявки\", e);\n                }\n           \n        }    \n    };\n    \n    Button button \u003d componentsFactory.createComponent(Button.class);\n    button.setAction(action);\n    return button;\n}\n\nprivate static void commit(AbstractEditor editor) {\n    if (editor.isModified()) {\n        editor.commitAndClose();\n    }\n}\n\n\n\n",
+    "entityCaption": "Трэкер"
+  }
+]

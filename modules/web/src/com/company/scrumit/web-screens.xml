@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
-<!--    <screen id="scrumit$Tracker.browse"
+    <!--    <screen id="scrumit$Tracker.browse"
             template="com/company/scrumit/web/bugtracker/trackerlist.xml"/>
     <screen id="scrumit$Tracker.edit"
             template="com/company/scrumit/web/bugtracker/tracker-edit.xml"/> -->
@@ -21,7 +21,7 @@
     <screen id="scrumit$Task.performerTasks"
             template="com/company/scrumit/web/task/performerview/performer-tasks-window.xml"/>
     <screen id="scrumit$Task.list"
-            template="com/company/scrumit/web/task/tasklist.xml"/>
+            template="com/company/scrumit/web/task/task-list.xml"/>
     <screen id="massInput"
             template="com/company/scrumit/web/task/massInput.xml"/>
     <screen id="importContacts"
@@ -50,4 +50,10 @@
             template="com/company/scrumit/web/tracker/tracker-browse.xml"/>
     <screen id="scrumit$Tracker.edit"
             template="com/company/scrumit/web/tracker/tracker-edit.xml"/>
+    <screen id="tracker-workflow-table"
+            template="com/company/scrumit/web/tracker/workflow/frame/tracker-workflow-browse-table-frame.xml"/>
+    <screen id="tracker-workflow-browse"
+            template="com/company/scrumit/web/tracker/workflow/tracker-workflow-browse.xml"/>
+    <screen id="loginWindow"
+            template="com/company/scrumit/web/screens/ext-loginWindow.xml"/>
 </screen-config>

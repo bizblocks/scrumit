@@ -21,7 +21,7 @@
         </collectionDatasource>
         <hierarchicalDatasource id="taskParentBugDs"
                                 class="com.company.scrumit.entity.Task"
-                                hierarchyProperty=""
+                                hierarchyProperty="top"
                                 view="tasks-full">
             <query>
                 <![CDATA[select e from scrumit$Task e where e.parentBug.id=:ds$trackerDs]]>
@@ -103,7 +103,8 @@
                             </actions>
                         </lookupPickerField>
                         <label value="msg://trackerPriorityType"/>
-                        <lookupField colspan="2"
+                        <lookupField id="priority"
+                                     colspan="2"
                                      datasource="trackerDs"
                                      property="trackerPriorityType"
                                      width="100%"/>
@@ -116,18 +117,19 @@
                                    property="shortdesc"
                                    width="100%"/>
                         <label value="msg://type"/>
-                        <lookupField colspan="2"
+                        <lookupField id="type"
+                                     colspan="2"
                                      datasource="trackerDs"
                                      property="type"
                                      width="100%"/>
                     </row>
                     <row>
-                        <label value="msg://status"/>
-                        <lookupField id="status"
-                                     colspan="2"
-                                     datasource="trackerDs"
-                                     property="status"
-                                     width="100%"/>
+                        <label value="msg://com.company.scrumit.entity/Tracker.stepName"/>
+                        <textField colspan="2"
+                                   datasource="trackerDs"
+                                   editable="false"
+                                   property="stepName"
+                                   width="100%"/>
                         <label value="msg://testingPlan"/>
                         <textField id="testingPlan"/>
                         <button id="okBtn"
@@ -206,12 +208,13 @@
                             </treeTable>
                         </hbox>
                     </row>
-                    <row/>
                 </rows>
             </grid>
         </scrollBox>
-        <frame id="windowActions"
-               src="com/company/scrumit/web/frames/actionsEntity.xml"
-               width="AUTO"/>
+        <hbox id="bottomPanel"
+              spacing="true">
+            <frame src="com/company/scrumit/web/frames/actionsEntity.xml"
+                   width="AUTO"/>
+        </hbox>
     </layout>
 </window>

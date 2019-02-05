@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        class="com.company.scrumit.web.screens.ExtAppLoginWindow"
+        extends="/com/haulmont/cuba/web/app/loginwindow/loginwindow.xml"
+        messagesPack="com.company.scrumit.web.screens"
+        xmlns:ext="http://schemas.haulmont.com/cuba/window-ext.xsd">
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <vbox id="loginWrapper">
+            <vbox id="loginMainBox">
+                <hbox id="loginTitleBox">
+                    <label id="welcomeLabel"
+                           visible="false"
+                           width="100%"/>
+                </hbox>
+                <label id="neWelcomLabel"
+                       align="MIDDLE_CENTER"
+                       ext:index="1"
+                       stylename="c-login-caption"
+                       value="mainMsg://loginWindow.welcomeLabel"/>
+            </vbox>
+        </vbox>
+    </layout>
+</window>

@@ -12,7 +12,8 @@ public enum Status implements EnumClass<String> {
     Testing("testing"),
     Checked("checked"),
     WontFix("wontfix"),
-    NotABug("notabug");
+    NotABug("notabug"),
+    Cancelled("cancelled");
 
     private String id;
 

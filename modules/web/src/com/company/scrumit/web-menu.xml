@@ -7,6 +7,7 @@
         <item screen="sprintPlanning"/>
         <item screen="SmartsheetExport"/>
         <item screen="scrumit$Tracker.browse"/>
+        <item screen="tracker-workflow-browse"/>
     </menu>
     <menu id="refs"
           insertBefore="administration">

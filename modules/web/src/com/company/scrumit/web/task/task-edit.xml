@@ -9,9 +9,6 @@
         <datasource id="taskDs"
                     class="com.company.scrumit.entity.Task"
                     view="tasks-full"/>
-        <collectionDatasource id="task1Ds"
-                              class="com.company.scrumit.entity.Task"
-                              view="tasks-full"/>
         <datasource id="trackerDs"
                     class="com.company.scrumit.entity.Tracker"
                     view="_local"/>
@@ -22,23 +19,33 @@
                 <![CDATA[select e from scrumit$Performer e]]>
             </query>
         </collectionDatasource>
+        <collectionDatasource id="tasksDs"
+                              class="com.company.scrumit.entity.Task"
+                              view="_minimal">
+            <query>
+                <![CDATA[select e from scrumit$Task e]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="auto"
                 width="auto"/>
     <layout expand="editBox"
             spacing="true">
         <vbox id="editBox"
-              expand="description"
+              expand="fieldGroupBox"
               margin="false,false,false,true"
+              responsive="true"
               spacing="true">
-            <scrollBox id="fieldGroupBox">
+            <scrollBox id="fieldGroupBox"
+                       responsive="true">
                 <fieldGroup id="fieldGroup"
-                            datasource="taskDs">
+                            datasource="taskDs"
+                            responsive="true">
                     <column width="300px">
                         <field property="id"/>
-                        <field caption="mainMsg://Parent"
-                               property="task"/>
-                        <field property="done"/>
+                        <field property="task"/>
+                        <field editable="false"
+                               property="done"/>
                         <field property="begin"/>
                         <field property="duration"/>
                         <field property="deadline"/>
@@ -47,7 +54,8 @@
                     <column width="300px">
                         <field property="planningTime"/>
                         <field property="actualTime"/>
-                        <field property="control"/>
+                        <field editable="false"
+                               property="control"/>
                         <field property="priority"/>
                         <field property="type"/>
                         <field property="amount"/>
@@ -57,12 +65,23 @@
                 </fieldGroup>
             </scrollBox>
             <richTextArea id="description"
+                          caption="msg://textDescription"
                           datasource="taskDs"
                           property="description"
                           width="100%"/>
         </vbox>
-        <frame id="windowActions"
-               screen="editWindowActions"
-               width="AUTO"/>
+        <buttonsPanel>
+            <button id="btnReady"
+                    caption="msg://btnReady"
+                    invoke="onBtnReadyClick"
+                    stylename="primary"/>
+            <button id="btnControl"
+                    caption="msg://btnControl"
+                    invoke="onBtnControlClick"
+                    stylename="primary"/>
+            <frame id="windowActions"
+                   screen="editWindowActions"
+                   width="AUTO"/>
+        </buttonsPanel>
     </layout>
 </window>

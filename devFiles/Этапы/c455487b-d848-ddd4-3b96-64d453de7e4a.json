@@ -1,0 +1,41 @@
+[
+  {
+    "_entityName": "wfstp$Stage",
+    "id": "c455487b-d848-ddd4-3b96-64d453de7e4a",
+    "browseScreenGroovyScript": "return true;",
+    "type": "ARCHIVE",
+    "version": 2,
+    "actors": [],
+    "actorsRoles": [
+      {
+        "_entityName": "sec$Role",
+        "id": "0c018061-b26f-4de2-a5be-dff348347f93",
+        "version": 0,
+        "name": "Administrators"
+      }
+    ],
+    "viewers": [],
+    "entityName": "scrumit$Tracker",
+    "viewersRoles": [
+      {
+        "_entityName": "sec$Role",
+        "id": "0c018061-b26f-4de2-a5be-dff348347f93"
+      },
+      {
+        "_entityName": "sec$Role",
+        "id": "7fc85802-d0e2-5a68-ba0b-5f97fbf204ec",
+        "version": 2,
+        "name": "developer"
+      },
+      {
+        "_entityName": "sec$Role",
+        "id": "9741160c-dacd-0046-34a7-0a17c50cfdae",
+        "version": 2,
+        "name": "support"
+      }
+    ],
+    "name": "Готово",
+    "editorScreenGroovyScript": "return true;",
+    "entityCaption": "Трэкер"
+  }
+]

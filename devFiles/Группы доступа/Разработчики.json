@@ -1,0 +1,32 @@
+[
+  {
+    "_entityName": "sec$Group",
+    "id": "52740575-fcf2-f6d7-af68-c7bd334875ec",
+    "parent": {
+      "_entityName": "sec$Group",
+      "id": "0fa2b1a5-1d68-4d69-9fbd-dff348347f93",
+      "version": 0,
+      "name": "Company"
+    },
+    "version": 1,
+    "constraints": [
+      {
+        "_entityName": "sec$Constraint",
+        "id": "95576d0e-161e-d6ac-0776-00c7546778f6",
+        "checkType": "MEMORY",
+        "groovyScript": "{E}.performer.id \u003d\u003d userSession.user.id",
+        "filterXml": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e\n\n\u003cfilter\u003e\n  \u003cand\u003e\n    \u003cc name\u003d\"performer.id\" class\u003d\"java.util.UUID\" operatorType\u003d\"EQUAL\" width\u003d\"1\" type\u003d\"PROPERTY\"\u003e\u003c![CDATA[queryEntity.performer.id \u003d :component$filterWithoutId.performer_id87083]]\u003e\n      \u003cparam name\u003d\"component$filterWithoutId.performer_id87083\" javaClass\u003d\"java.util.UUID\"\u003eNULL\u003c/param\u003e\n    \u003c/c\u003e\n  \u003c/and\u003e\n\u003c/filter\u003e\n",
+        "isActive": true,
+        "version": 5,
+        "entityName": "scrumit$Tracker",
+        "operationType": "UPDATE",
+        "group": {
+          "_entityName": "sec$Group",
+          "id": "52740575-fcf2-f6d7-af68-c7bd334875ec"
+        }
+      }
+    ],
+    "name": "Разработчики",
+    "sessionAttributes": []
+  }
+]
