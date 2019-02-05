@@ -16,6 +16,9 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 import java.io.*;
 import java.net.URI;
@@ -24,9 +27,11 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.*;
 import java.util.*;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -37,7 +42,29 @@ public class PayloadServlet extends HttpServlet{
     private static final String SCHEME = "http";
     private static final String HOST = "localhost:8080";
     private static final String PATH_GET_TOKEN = "/app/rest/v2/oauth/token";
+    private static final String DB_URL = "jdbc:postgresql://localhost/scrumit";
+    private static final String USER = "cuba";
+    private static final String PASS = "cuba";
     private String accessToken;
+    private String username;
+    private String password;
+
+    @Inject
+    public TelegramBot telegramBot;
+
+    private void registerBot(){
+        System.getProperties().put( "proxySet", "true" );
+        System.getProperties().put( "socksProxyHost", "127.0.0.1" );
+        System.getProperties().put( "socksProxyPort", "9150" );
+        ApiContextInitializer.init();
+        telegramBot = new TelegramBot();
+        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+        try {
+            telegramBotsApi.registerBot(telegramBot);
+        } catch (TelegramApiRequestException e) {
+            e.printStackTrace();
+        }
+    }
 
     // функция обработки метода GET
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,8 +89,11 @@ public class PayloadServlet extends HttpServlet{
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            geLoginData();
             login();
         } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -89,13 +119,14 @@ public class PayloadServlet extends HttpServlet{
                         String message = commit.getString("message");
                         String author = commit.getJSONObject("author").getString("email");
                         updateTrackerViaService(project, message, author);
-                        /*try {
-                            updateTracker(project, message, author);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }*/
+
+                        String branch = json.getString("ref");
+                        branch = branch.split("/")[branch.split("/").length-1];
+                        String msg = message + "\nUser: " + json.getJSONObject("pusher").getString("name") + "\nProject: " + project + "\nBranch: " + branch;
+                        if(telegramBot==null)
+                            registerBot();
+                        telegramBot.sendMsg(msg);
                     }
-                    System.out.println("project: " + project);
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -120,7 +151,6 @@ public class PayloadServlet extends HttpServlet{
             byte[] result = mac.doFinal(payloadBytes);
 
             String computedHash = toHexString(result);
-            System.out.println("Computed hash: " + computedHash);
             boolean bool = computedHash.equals(expected);
             return bool;
         } catch(NoSuchAlgorithmException e){
@@ -155,9 +185,6 @@ public class PayloadServlet extends HttpServlet{
                     + "&authorEmail=" + authorEmail);
             get.setHeader("Authorization", "Bearer " + accessToken);
 
-
-            System.out.println("Executing request " + get.getRequestLine());
-
             String customerId = httpclient.execute(get, new StringResponseHandler());
         }
     }
@@ -191,8 +218,8 @@ public class PayloadServlet extends HttpServlet{
             // user credentials
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("grant_type", "password"));
-            params.add(new BasicNameValuePair("username", "admin"));
-            params.add(new BasicNameValuePair("password", "admin"));
+            params.add(new BasicNameValuePair("username", username));
+            params.add(new BasicNameValuePair("password", password));
             post.setEntity(new UrlEncodedFormEntity(params));
 
             String json = httpclient.execute(post, new StringResponseHandler());
@@ -201,4 +228,56 @@ public class PayloadServlet extends HttpServlet{
 
         }
     }
+
+    private Connection getConnection(){
+        Connection connection = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
+    private void geLoginData() throws SQLException {
+        Connection connection = getConnection();
+        PreparedStatement pstmnt = null;
+        List<String[]> result = new ArrayList<>();
+        try {
+            if (connection != null) {
+                String selectUsername = "SELECT value_ FROM public.sys_config where name = 'payload.username'";
+                pstmnt = connection.prepareStatement(selectUsername);
+                ResultSet rs = pstmnt.executeQuery();
+                while (rs.next()) {
+                    username = rs.getString(1);
+                }
+                rs.close();
+                pstmnt.clearParameters();
+
+                String selectPassword = "SELECT value_ FROM public.sys_config where name = 'payload.password'";
+                pstmnt = connection.prepareStatement(selectPassword);
+                ResultSet rs1 = pstmnt.executeQuery();
+                while (rs1.next()) {
+                    password = rs1.getString(1);
+                }
+                rs1.close();
+                pstmnt.clearParameters();
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection Failed");
+            e.printStackTrace();
+        } finally {
+            if (pstmnt != null) {
+                pstmnt.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
 }
