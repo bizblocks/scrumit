@@ -7,5 +7,8 @@ public interface GitService {
     String NAME = "scrumit_GitService";
 
     String getAuthenticationData();
-    void updateTracker(String project, String commit, String authorEmail);
+    void updateTracker(String commit, String authorEmail);
+    String getTelegramBotName();
+    String getTelegramBotToken();
+    String getTelegramChatId();
 }

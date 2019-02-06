@@ -31,17 +31,20 @@ import java.sql.*;
 import java.util.*;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class PayloadServlet extends HttpServlet{
 
     static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
+
+    public TelegramBot telegramBot;
+
     public static final String ENC = "UTF-8";
     private static final String SCHEME = "http";
-    private static final String HOST = "localhost:8080";
+    private static final String HOST = "scrum.groupstp.ru:8080";
     private static final String PATH_GET_TOKEN = "/app/rest/v2/oauth/token";
+    private static final String PATH_REST_SERICES = "http://scrum.groupstp.ru:8080/app/rest/v2/services";
     private static final String DB_URL = "jdbc:postgresql://localhost/scrumit";
     private static final String USER = "cuba";
     private static final String PASS = "cuba";
@@ -49,13 +52,10 @@ public class PayloadServlet extends HttpServlet{
     private String username;
     private String password;
 
-    @Inject
-    public TelegramBot telegramBot;
-
     private void registerBot(){
-        System.getProperties().put( "proxySet", "true" );
-        System.getProperties().put( "socksProxyHost", "127.0.0.1" );
-        System.getProperties().put( "socksProxyPort", "9150" );
+//        System.getProperties().put( "proxySet", "true" );
+//        System.getProperties().put( "socksProxyHost", "127.0.0.1" );
+//        System.getProperties().put( "socksProxyPort", "9150" );
         ApiContextInitializer.init();
         telegramBot = new TelegramBot();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
@@ -88,15 +88,6 @@ public class PayloadServlet extends HttpServlet{
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            geLoginData();
-            login();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         String secret = getAuthenticationData();
         if(secret != null) {
             String signature = req.getHeader("X-Hub-Signature").split("=")[1];
@@ -118,7 +109,7 @@ public class PayloadServlet extends HttpServlet{
                         JSONObject commit = commits.getJSONObject(i);
                         String message = commit.getString("message");
                         String author = commit.getJSONObject("author").getString("email");
-                        updateTrackerViaService(project, message, author);
+                        updateTrackerViaService(message, author);
 
                         String branch = json.getString("ref");
                         branch = branch.split("/")[branch.split("/").length-1];
@@ -161,11 +152,20 @@ public class PayloadServlet extends HttpServlet{
         return false;
     }
 
-    private String getAuthenticationData() throws IOException {
+    public String getAuthenticationData() throws IOException {
+        if(accessToken == null) {
+            try {
+                login();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         String secret = null;
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 
-            HttpGet get = new HttpGet("http://localhost:8080/app/rest/v2/services/scrumit_GitService/getAuthenticationData");
+            HttpGet get = new HttpGet(PATH_REST_SERICES + "/scrumit_GitService/getAuthenticationData");
             get.setHeader("Authorization", "Bearer " + accessToken);
 
             secret = httpclient.execute(get, new StringResponseHandler());
@@ -173,20 +173,82 @@ public class PayloadServlet extends HttpServlet{
         return secret;
     }
 
-    private void updateTrackerViaService(String project, String commit, String author) throws IOException {
+    public void updateTrackerViaService(String commit, String author) throws IOException {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-            String projectName = URLEncoder.encode(project, ENC);
             String authorEmail = URLEncoder.encode(author, ENC);
             String commitMessage = URLEncoder.encode(commit, ENC);
 
-            HttpGet get = new HttpGet("http://localhost:8080/app/rest/v2/services/scrumit_GitService/updateTracker?"
-                    + "project=" + projectName
+            HttpGet get = new HttpGet(PATH_REST_SERICES + "/scrumit_GitService/updateTracker?"
                     + "&commit=" + commitMessage
                     + "&authorEmail=" + authorEmail);
             get.setHeader("Authorization", "Bearer " + accessToken);
 
-            String customerId = httpclient.execute(get, new StringResponseHandler());
+            httpclient.execute(get, new StringResponseHandler());
         }
+    }
+
+    public String getTelegramBotName() throws IOException {
+        if(accessToken == null){
+            try {
+                login();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String botName = null;
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+
+            HttpGet get = new HttpGet(PATH_REST_SERICES + "/scrumit_GitService/getTelegramBotName");
+            get.setHeader("Authorization", "Bearer " + accessToken);
+
+            botName = httpclient.execute(get, new StringResponseHandler());
+        }
+        return botName;
+    }
+
+    public String getTelegramBotToken() throws IOException {
+        if(accessToken == null){
+            try {
+                login();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        String botToken = null;
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+
+            HttpGet get = new HttpGet(PATH_REST_SERICES + "/scrumit_GitService/getTelegramBotToken");
+            get.setHeader("Authorization", "Bearer " + accessToken);
+
+            botToken = httpclient.execute(get, new StringResponseHandler());
+        }
+        return botToken;
+    }
+
+    public String getTelegramChatId() throws IOException {
+        if(accessToken == null){
+            try {
+                login();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        String chatId = null;
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+
+            HttpGet get = new HttpGet(PATH_REST_SERICES + "/scrumit_GitService/getTelegramChatId");
+            get.setHeader("Authorization", "Bearer " + accessToken);
+
+            chatId = httpclient.execute(get, new StringResponseHandler());
+        }
+        return chatId;
     }
 
     private static class StringResponseHandler implements ResponseHandler<String> {
@@ -202,7 +264,8 @@ public class PayloadServlet extends HttpServlet{
         }
     }
 
-    private void login() throws IOException, URISyntaxException {
+    private String login() throws IOException, URISyntaxException, SQLException {
+        getLoginData();
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 
             URIBuilder builder = new URIBuilder();
@@ -225,8 +288,8 @@ public class PayloadServlet extends HttpServlet{
             String json = httpclient.execute(post, new StringResponseHandler());
             JSONObject jsonObject = new JSONObject(json);
             accessToken = jsonObject.getString("access_token");
-
         }
+        return accessToken;
     }
 
     private Connection getConnection(){
@@ -242,7 +305,7 @@ public class PayloadServlet extends HttpServlet{
         return connection;
     }
 
-    private void geLoginData() throws SQLException {
+    private void getLoginData() throws SQLException {
         Connection connection = getConnection();
         PreparedStatement pstmnt = null;
         List<String[]> result = new ArrayList<>();
@@ -279,5 +342,4 @@ public class PayloadServlet extends HttpServlet{
             }
         }
     }
-
 }

@@ -1,27 +1,36 @@
 package com.company.scrumit.web.servlet;
 
-import com.company.scrumit.config.ScrumitWebConfig;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import javax.inject.Inject;
+import java.io.IOException;
 
 public class TelegramBot extends TelegramLongPollingBot {
-    @Inject
-    private ScrumitWebConfig config;
+
+    PayloadServlet payloadServlet = new PayloadServlet();
 
     @Override
     public String getBotUsername() {
-        return config.getTelegramBotName();
+        try {
+
+            return payloadServlet.getTelegramBotName();
+        }
+        catch (IOException e){
+            return null;
+        }
     }
 
     @Override
     public String getBotToken() {
-        return config.getTelegramBotToken();
-        //Токен бота
+        try {
+            return payloadServlet.getTelegramBotToken(); //Токен бота
+        }
+        catch (IOException e){
+            return null;
+        }
     }
 
     @Override
@@ -32,11 +41,11 @@ public class TelegramBot extends TelegramLongPollingBot {
                 case "test":
                     sendReplyToMsg(message, "Hello!");
                     break;
-                default: break;                    
+                default: break;
             }
         }
     }
-    
+
     public void sendReplyToMsg(Message message, String text){
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
@@ -47,18 +56,21 @@ public class TelegramBot extends TelegramLongPollingBot {
         try{
             execute(sendMessage);
         } catch(TelegramApiException e){
-            
+
         }
     }
 
     public void sendMsg(String text){
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(config.getTelegramChatId());
-        sendMessage.setText(text);
         try{
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setChatId(payloadServlet.getTelegramChatId());
+            sendMessage.setText(text);
+
             execute(sendMessage);
         } catch(TelegramApiException e){
 
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

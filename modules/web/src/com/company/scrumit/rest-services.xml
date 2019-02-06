@@ -4,9 +4,14 @@
         <method name="getAuthenticationData">
         </method>
         <method name="updateTracker">
-            <param name="project"/>
             <param name="commit"/>
             <param name="authorEmail"/>
+        </method>
+        <method name="getTelegramBotName">
+        </method>
+        <method name="getTelegramBotToken">
+        </method>
+        <method name="getTelegramChatId">
         </method>
     </service>
 </services>
