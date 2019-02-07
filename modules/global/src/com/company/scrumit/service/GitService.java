@@ -10,5 +10,5 @@ public interface GitService {
     void updateTracker(String commit, String authorEmail);
     String getTelegramBotName();
     String getTelegramBotToken();
-    String getTelegramChatId();
+    String getTelegramChatId(String project);
 }

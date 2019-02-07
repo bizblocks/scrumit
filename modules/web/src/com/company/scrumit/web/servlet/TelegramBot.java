@@ -60,17 +60,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    public void sendMsg(String text){
+    public void sendMsg(String chatId, String text){
         try{
             SendMessage sendMessage = new SendMessage();
-            sendMessage.setChatId(payloadServlet.getTelegramChatId());
+            sendMessage.setChatId(chatId);
             sendMessage.setText(text);
-
             execute(sendMessage);
         } catch(TelegramApiException e){
 
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

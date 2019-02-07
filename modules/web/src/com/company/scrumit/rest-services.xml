@@ -12,6 +12,7 @@
         <method name="getTelegramBotToken">
         </method>
         <method name="getTelegramChatId">
+            <param name="project"/>
         </method>
     </service>
 </services>

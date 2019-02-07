@@ -33,33 +33,36 @@ public class GitServiceBean implements GitService {
 
     @Override
     public void updateTracker(String commit, String authorEmail) {
-        System.out.println("GitServiceBean.updateTracker");
         LoadContext<Tracker> loadContext = LoadContext.create(Tracker.class)
-                .setQuery(LoadContext.createQuery("select t from scrumit$Tracker t where t.stepName = :type1 or t.stepName = :type2 or t.stepName = :type3")
-                .setParameter("type1", "Новые")
-                .setParameter("type2", "Сделать")
-                .setParameter("type3", "В работе"))
+                .setQuery(LoadContext.createQuery("select t from scrumit$Tracker t where t.stepName = :type1 or t.stepName = :type2 or t.stepName is null")
+                .setParameter("type1", "Сделать")
+                .setParameter("type2", "В работе"))
                 .setView("_full");
 
         for(Tracker t:dataManager.loadList(loadContext)){
             if(commit.contains(t.getId().toString())){
                 Performer performer = getPerformerByEmail(authorEmail);
-                if(performer != null)
+                if(performer != null) {
                     t.setPerformer(performer);
-                dataManager.commit(t);
-                Stage stage = getStage(t);
-                WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(t, stage);
+                    dataManager.commit(t);
+                    t = dataManager.reload(t, "_full");
+                }
                 try {
-                    if (instanceTask != null) {
-                        Map params = new HashMap();
-                        params.put("toCheck", "true");
-                        workflowService.finishTask(instanceTask, params);
+                    Stage stage = getStage(t);
+                    if(stage == null) {
+                        workflowService.startWorkflow(t, workflowService.determinateWorkflow(t));
+                        t = dataManager.reload(t, "_full");
+                        stage = getStage(t);
                     }
+                    WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(t, stage);
+                        if (instanceTask != null) {
+                            Map params = new HashMap();
+                            params.put("toCheck", "true");
+                            workflowService.finishTask(instanceTask, params);
+                        }
                 } catch (Exception e) {
                     throw new RuntimeException("Ошибка обработки заявки", e);
                 }
-
-                //dataManager.commit(t);
             }
         }
     }
@@ -95,7 +98,11 @@ public class GitServiceBean implements GitService {
     }
 
     @Override
-    public String getTelegramChatId(){
-        return config.getTelegramChatId();
+    public String getTelegramChatId(String project){
+        String chatId = dataManager.loadValue(
+                "select p.telegramChatId from scrumit$ProjectTelegramChatIdLink p where " +
+                        "p.projectName=:project", String.class)
+                        .parameter("project", project).one();
+        return chatId;
     }
 }

@@ -107,16 +107,20 @@ public class PayloadServlet extends HttpServlet{
                     JSONArray commits = json.getJSONArray("commits");
                     for (int i = 0; i < commits.length(); i++) {
                         JSONObject commit = commits.getJSONObject(i);
-                        String message = commit.getString("message");
-                        String author = commit.getJSONObject("author").getString("email");
-                        updateTrackerViaService(message, author);
-
-                        String branch = json.getString("ref");
-                        branch = branch.split("/")[branch.split("/").length-1];
-                        String msg = message + "\nUser: " + json.getJSONObject("pusher").getString("name") + "\nProject: " + project + "\nBranch: " + branch;
-                        if(telegramBot==null)
-                            registerBot();
-                        telegramBot.sendMsg(msg);
+                        boolean distinct = commit.getBoolean("distinct");
+                        if(distinct) {
+                            String message = commit.getString("message");
+                            String author = commit.getJSONObject("author").getString("email");
+                            updateTrackerViaService(message, author);
+                            String branch = json.getString("ref");
+                            branch = branch.split("/")[branch.split("/").length - 1];
+                            String msg = message + "\nUser: " + json.getJSONObject("pusher").getString("name") + "\nProject: " + project + "\nBranch: " + branch;
+                            if (telegramBot == null)
+                                registerBot();
+                            String chatId = getTelegramChatId(project);
+                            if (chatId != null)
+                                telegramBot.sendMsg(chatId, msg);
+                        }
                     }
                 } catch (JSONException e) {
                     // TODO Auto-generated catch block
@@ -230,7 +234,7 @@ public class PayloadServlet extends HttpServlet{
         return botToken;
     }
 
-    public String getTelegramChatId() throws IOException {
+    public String getTelegramChatId(String project) throws IOException {
         if(accessToken == null){
             try {
                 login();
@@ -243,7 +247,8 @@ public class PayloadServlet extends HttpServlet{
         String chatId = null;
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 
-            HttpGet get = new HttpGet(PATH_REST_SERICES + "/scrumit_GitService/getTelegramChatId");
+            HttpGet get = new HttpGet(PATH_REST_SERICES + "/scrumit_GitService/getTelegramChatId?"
+                    + "&project=" + project);
             get.setHeader("Authorization", "Bearer " + accessToken);
 
             chatId = httpclient.execute(get, new StringResponseHandler());
