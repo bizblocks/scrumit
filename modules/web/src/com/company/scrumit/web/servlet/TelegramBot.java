@@ -10,13 +10,13 @@ import java.io.IOException;
 
 public class TelegramBot extends TelegramLongPollingBot {
 
-    PayloadServlet payloadServlet = new PayloadServlet();
+    DataService dataService = new DataService();
 
     @Override
     public String getBotUsername() {
         try {
 
-            return payloadServlet.getTelegramBotName();
+            return dataService.getTelegramBotName();
         }
         catch (IOException e){
             return null;
@@ -26,7 +26,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         try {
-            return payloadServlet.getTelegramBotToken(); //Токен бота
+            return dataService.getTelegramBotToken(); //Токен бота
         }
         catch (IOException e){
             return null;
