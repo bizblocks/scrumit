@@ -3,9 +3,6 @@ package com.company.scrumit.web.servlet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -23,18 +20,11 @@ public class PayloadServlet extends HttpServlet{
 
     public TelegramBot telegramBot;
 
-    private void registerBot(){
+    private void registerBot(String token){
 //        System.getProperties().put( "proxySet", "true" );
 //        System.getProperties().put( "socksProxyHost", "127.0.0.1" );
 //        System.getProperties().put( "socksProxyPort", "9150" );
-        ApiContextInitializer.init();
-        telegramBot = new TelegramBot();
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-        try {
-            telegramBotsApi.registerBot(telegramBot);
-        } catch (TelegramApiRequestException e) {
-            e.printStackTrace();
-        }
+        telegramBot = new TelegramBot(token);
     }
 
     // функция обработки метода GET
@@ -88,10 +78,10 @@ public class PayloadServlet extends HttpServlet{
                             branch = branch.split("/")[branch.split("/").length - 1];
                             String msg = message + "\nUser: " + json.getJSONObject("pusher").getString("name") + "\nProject: " + project + "\nBranch: " + branch;
                             if (telegramBot == null)
-                                registerBot();
+                                registerBot(dataService.getTelegramBotToken());
                             String chatId = dataService.getTelegramChatId(project);
                             if (chatId != null)
-                                telegramBot.sendMsg(chatId, msg);
+                                telegramBot.sendMessage(chatId, msg);
                         }
                     }
                 } catch (JSONException e) {

@@ -154,7 +154,6 @@ configure(webModule) {
     dependencies {
         provided(servletApi)
         compile(globalModule)
-        compile(files("${rootProject.projectDir}/lib/telegrambots-4.1-jar-with-dependencies.jar"))
     }
 
     task webArchive(type: Zip) {
