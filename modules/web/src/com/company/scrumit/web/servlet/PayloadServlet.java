@@ -76,7 +76,7 @@ public class PayloadServlet extends HttpServlet{
                             dataService.updateTrackerViaService(message, author);
                             String branch = json.getString("ref");
                             branch = branch.split("/")[branch.split("/").length - 1];
-                            String msg = message + "\nUser: " + json.getJSONObject("pusher").getString("name") + "\nProject: " + project + "\nBranch: " + branch;
+                            String msg = message + "\nUser: " + json.getJSONObject("pusher").getString("name") + "\nBranch: " + branch;
                             if (telegramBot == null)
                                 registerBot(dataService.getTelegramBotToken());
                             String chatId = dataService.getTelegramChatId(project);
