@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$1"=="" ]; then
+if [ -z "$1" ]; then
     echo  "Usage: $0 component"
     exit
 fi
