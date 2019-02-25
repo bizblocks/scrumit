@@ -1,6 +1,6 @@
 #!/bin/bash
 
-projname=rtneo
+projname=scrumit
 today=$(date +%Y%m%d)
 
 scripts/dumpdb.sh
