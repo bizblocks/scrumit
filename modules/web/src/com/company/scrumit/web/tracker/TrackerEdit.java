@@ -68,7 +68,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     private DataSupplier dataSupplier;
 
     @Inject
-    private Table<FileDescriptor> filesTable;
+    private Table<Files> filesTable;
 
     @Inject
     private EntityStates entityStates;
@@ -308,8 +308,8 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     public void download() {
         if (filesTable.getSelected().size() > 0) {
-            for (FileDescriptor fileDescriptor : filesTable.getSelected()) {
-                AppConfig.createExportDisplay(this).show(fileDescriptor);
+            for (Files files : filesTable.getSelected()) {
+                AppConfig.createExportDisplay(this).show(files.getFile());
             }
         }
     }
