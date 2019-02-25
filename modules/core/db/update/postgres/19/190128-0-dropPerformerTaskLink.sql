@@ -1,1 +1,0 @@
-alter table scrumit_performer_task_link rename to SCRUMIT_PERFORMER_TASK_LINK__U90226 ;

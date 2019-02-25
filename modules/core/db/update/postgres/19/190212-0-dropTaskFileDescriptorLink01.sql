@@ -1,0 +1,1 @@
+alter table scrumit_task_file_descriptor_link rename to SCRUMIT_TASK_FILE_DESCRIPTOR_LINK__U83534 ;
