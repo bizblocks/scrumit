@@ -49,10 +49,7 @@
         <entity class="com.company.scrumit.entity.Link">
             <include re=".*"/>
         </entity>
-        <entity class="com.company.scrumit.entity.File">
-            <include re=".*"/>
-        </entity>
-        <entity class="com.company.scrumit.entity.TasksFile">
+        <entity class="com.company.scrumit.entity.Files">
             <include re=".*"/>
         </entity>
         <entity class="com.company.scrumit.entity.TaskDuration">

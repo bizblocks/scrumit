@@ -1,9 +1,6 @@
 package com.company.scrumit.web.tracker;
 
-import com.company.scrumit.entity.Priority;
-import com.company.scrumit.entity.Task;
-import com.company.scrumit.entity.TaskType;
-import com.company.scrumit.entity.Tracker;
+import com.company.scrumit.entity.*;
 import com.company.scrumit.web.task.TaskEdit;
 import com.groupstp.workflowstp.entity.*;
 import com.groupstp.workflowstp.util.EqualsUtils;
@@ -14,6 +11,7 @@ import com.haulmont.cuba.core.global.*;
 import com.haulmont.cuba.gui.AppConfig;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.components.Link;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
@@ -81,11 +79,11 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Inject
     private ComponentsFactory componentsFactory;
 
-    protected User user;
-    protected Stage stage;
+    private User user;
+    private Stage stage;
     protected Workflow workflow;
-    protected WorkflowInstance workflowInstance;
-    protected WorkflowInstanceTask workflowInstanceTask;
+    private WorkflowInstance workflowInstance;
+    private WorkflowInstanceTask workflowInstanceTask;
 
     @Override
     protected void initNewItem(Tracker item) {
@@ -217,16 +215,21 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 try {
                     fileUploadingAPI.putFileIntoStorage(fileId, fd);
                 } catch (FileStorageException e) {
-                    throw new RuntimeException("Error saving file to FileStorage", e);
+                    throw new RuntimeException(getMessage("Error saving file to FileStorage"), e);
                 }
 
                 // save file descriptor to database
                 FileDescriptor committedFd = dataSupplier.commit(fd);
 
                 // add reloaded FileDescriptor
-                //getItem().getFiles().add(committedFd);
+                Files file = dataManager.create(Files.class);
+                file.setDescription(fd.getName()+":"+fd.getSize());
+                file.setEntity(getItem().getUuid());
+                file.setFile(committedFd);
+                dataManager.commit(file);
+                //getItem().getFiles().add(file);
             }
-            showNotification("Uploaded files: " + multiUpload.getUploadsMap().values(), NotificationType.HUMANIZED);
+            showNotification(getMessage("Uploaded files") + multiUpload.getUploadsMap().values(), NotificationType.HUMANIZED);
             multiUpload.clearUploads();
 
             // commit Foo to save changes
@@ -238,7 +241,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         });
 
         multiUpload.addFileUploadErrorListener(event ->
-                showNotification("File upload error", NotificationType.HUMANIZED));
+                showNotification(getMessage("File upload error"), NotificationType.HUMANIZED));
 
         taskDs.refresh(Collections.singletonMap("project", TaskType.project));
 
@@ -292,7 +295,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
             if (Window.COMMIT_ACTION_ID.equals(actionId)) {
                 Object item1 = editor.getItem();
                 if (item1 != null) {
-                    Boolean modifed = dataSource.isModified();
+                    boolean modifed = dataSource.isModified();
                     dataSource.addItem((Entity) item1);
                     ((DatasourceImplementation) dataSource).setModified(modifed);
                 }

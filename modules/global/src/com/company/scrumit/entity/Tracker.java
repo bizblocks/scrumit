@@ -70,10 +70,7 @@ public class Tracker extends StandardEntity implements WorkflowEntity<UUID> {
     @OneToMany(mappedBy = "parentBug")
     protected List<Task> task;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FILES_ID")
-    @OnDelete(DeletePolicy.CASCADE)
-    protected FileDescriptor files;
+
     public void setStatus(WorkflowEntityStatus status) {
         this.status = status == null ? null : status.getId();
     }
@@ -139,14 +136,6 @@ public class Tracker extends StandardEntity implements WorkflowEntity<UUID> {
         return performer;
     }
 
-
-    public FileDescriptor getFiles() {
-        return files;
-    }
-
-    public void setFiles(FileDescriptor files) {
-        this.files = files;
-    }
 
 
     public Task getProject() {

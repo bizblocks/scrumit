@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.scrumit.web.files.FilesBrowse"
+        focusComponent="filesesTable"
+        lookupComponent="filesesTable"
+        messagesPack="com.company.scrumit.web.files">
+    <dsContext>
+        <groupDatasource id="filesesDs"
+                         class="com.company.scrumit.entity.Files"
+                         view="files-browser">
+            <query>
+                <![CDATA[select e from scrumit$Files e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="filesesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="filesesTable"
+                datasource="filesesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="filesesTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="description"/>
+                <column id="entity"/>
+                <column id="file"/>
+            </columns>
+            <rows datasource="filesesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="filesesTable.create"/>
+                <button id="editBtn"
+                        action="filesesTable.edit"/>
+                <button id="removeBtn"
+                        action="filesesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

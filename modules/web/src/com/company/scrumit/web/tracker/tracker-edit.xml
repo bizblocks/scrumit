@@ -8,10 +8,7 @@
     <dsContext>
         <datasource id="trackerDs"
                     class="com.company.scrumit.entity.Tracker"
-                    view="_full">
-            <collectionDatasource id="filesDs"
-                                  property="files"/>
-        </datasource>
+                    view="_full"/>
         <collectionDatasource id="taskDs"
                               class="com.company.scrumit.entity.Task"
                               view="tasks-full">
@@ -38,6 +35,13 @@
         <collectionDatasource id="performersDs"
                               class="com.company.scrumit.entity.Performer"
                               view="_minimal"/>
+        <collectionDatasource id="filesDs"
+                              class="com.company.scrumit.entity.Files"
+                              view="_local">
+            <query>
+                <![CDATA[select e from scrumit$Files e where e.entity = :ds$trackerDs.id]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="600"
                 width="800"/>
@@ -155,14 +159,12 @@
                                     <action id="remove"/>
                                 </actions>
                                 <columns>
-                                    <column id="name"/>
-                                    <column id="createDate"/>
-                                    <column id="extension"/>
+                                    <column id="description"/>
                                 </columns>
                                 <rows datasource="filesDs"/>
                                 <buttonsPanel>
                                     <multiUpload id="multiUpload"
-                                                 caption="Upload files"/>
+                                                 caption="msg://Upload files"/>
                                     <button caption="msg://download"
                                             invoke="download"/>
                                     <button action="filesTable.add"/>

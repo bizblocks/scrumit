@@ -182,8 +182,6 @@
           name="_full">
         <property name="project"
                   view="tasks-full"/>
-        <property name="files"
-                  view="_local"/>
         <property name="createTs"/>
         <property name="createdBy"/>
         <property name="updateTs"/>
@@ -225,7 +223,7 @@
         </property>
     </view>
     <view class="com.haulmont.cuba.security.entity.User"
-          extends="_base"
+          extends="_local"
           name="user-with-role">
         <property name="userRoles"
                   view="_minimal">
@@ -236,7 +234,7 @@
         </property>
     </view>
     <view class="com.company.scrumit.entity.Performer"
-          extends="_base"
+          extends="_local"
           name="user-with-roles">
         <property name="userRoles"
                   view="_minimal">
@@ -249,6 +247,14 @@
                   view="_minimal">
             <property name="projects"
                       view="_minimal"/>
+        </property>
+    </view>
+    <view class="com.company.scrumit.entity.Files"
+          extends="_local"
+          name="files-browser">
+        <property name="file"
+                  view="_minimal">
+            <property name="size"/>
         </property>
     </view>
 </views>

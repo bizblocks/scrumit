@@ -19,8 +19,7 @@
         <class>com.company.scrumit.entity.Deadlines</class>
         <class>com.company.scrumit.entity.SprintBacklog</class>
         <class>com.company.scrumit.entity.Link</class>
-        <class>com.company.scrumit.entity.File</class>
-        <class>com.company.scrumit.entity.TasksFile</class>
+        <class>com.company.scrumit.entity.Files</class>
         <class>com.company.scrumit.entity.TaskDuration</class>
         <class>com.company.scrumit.entity.MeetingsTask</class>
         <class>com.company.scrumit.entity.ContactsStatus</class>

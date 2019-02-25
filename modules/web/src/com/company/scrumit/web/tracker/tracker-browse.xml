@@ -48,7 +48,6 @@
                 <column id="statusOld"
                         editable="true"/>
                 <column id="description"/>
-                <column id="files"/>
                 <column id="trackerPriorityType"
                         editable="true"/>
                 <column id="performer"/>
