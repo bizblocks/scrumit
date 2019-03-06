@@ -9,4 +9,4 @@ project=$1
 git clone https://github.com/bizblocks/$project
 
 pushd $project
-./installComponents.sh
+scripts/installComponent.sh workflow-stp
