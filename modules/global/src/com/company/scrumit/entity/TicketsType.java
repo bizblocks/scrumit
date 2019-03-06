@@ -8,7 +8,8 @@ import javax.annotation.Nullable;
 public enum TicketsType implements EnumClass<String> {
 
     bug("bug"),
-    feature("feature");
+    feature("feature"),
+    research("research");
 
     private String id;
 
