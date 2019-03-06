@@ -19,7 +19,7 @@ public class Task extends StandardEntity {
     private static final long serialVersionUID = 8919522312858052940L;
 
     @NotNull
-    @Column(name = "SHORTDESC", nullable = false, unique = true, length = 50)
+    @Column(name = "SHORTDESC", nullable = false, unique = true, length = 100)
     protected String shortdesc;
 
     @Lob

@@ -58,6 +58,8 @@
         <property name="performer"
                   view="_minimal"/>
         <property name="testingPlan"/>
+        <property name="planningTime"/>
+        <property name="actualTime"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"

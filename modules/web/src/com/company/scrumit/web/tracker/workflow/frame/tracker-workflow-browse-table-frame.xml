@@ -21,6 +21,8 @@
                 <group>
                     <column id="project"/>
                 </group>
+                <column id="id"
+                        caption="ID"/>
                 <column id="statusOld"
                         visible="false"/>
                 <column id="createTs"/>

@@ -18,18 +18,10 @@
         </collectionDatasource>
         <hierarchicalDatasource id="taskParentBugDs"
                                 class="com.company.scrumit.entity.Task"
-                                hierarchyProperty="top"
-                                view="tasks-full">
-            <query>
-                <![CDATA[select e from scrumit$Task e where e.parentBug.id=:ds$trackerDs]]>
-            </query>
-        </hierarchicalDatasource>
-        <hierarchicalDatasource id="taskOfBugDs"
-                                class="com.company.scrumit.entity.Task"
                                 hierarchyProperty="task"
                                 view="task-tree">
             <query>
-                <![CDATA[select e from scrumit$Task e]]>
+                <![CDATA[select e from scrumit$Task e where e.parentBug.id=:ds$trackerDs]]>
             </query>
         </hierarchicalDatasource>
         <collectionDatasource id="performersDs"
@@ -72,6 +64,7 @@
                                    width="100%"/>
                         <label value="msg://com.company.scrumit.entity/Tracker.performer"/>
                         <lookupPickerField id="performer"
+                                           colspan="2"
                                            datasource="trackerDs"
                                            optionsDatasource="performersDs"
                                            property="performer"
@@ -85,8 +78,6 @@
                                         openType="DIALOG"/>
                             </actions>
                         </lookupPickerField>
-                        <button caption="msg://createTask"
-                                invoke="createTask"/>
                     </row>
                     <row>
                         <label value="msg://Parent"/>
@@ -164,11 +155,15 @@
                                 <rows datasource="filesDs"/>
                                 <buttonsPanel>
                                     <multiUpload id="multiUpload"
-                                                 caption="msg://Upload files"/>
+                                                 caption="msg://Upload files"
+                                                 icon="UPLOAD"/>
                                     <button caption="msg://download"
+                                            icon="DOWNLOAD"
                                             invoke="download"/>
-                                    <button action="filesTable.add"/>
-                                    <button action="filesTable.remove"/>
+                                    <button action="filesTable.add"
+                                            icon="ADD_ACTION"/>
+                                    <button action="filesTable.remove"
+                                            icon="REMOVE_ACTION"/>
                                 </buttonsPanel>
                             </table>
                         </hbox>
@@ -180,11 +175,14 @@
                             <treeTable id="tasksTable"
                                        caption="msg://Tasks"
                                        height="300px"
+                                       presentations="true"
+                                       textSelectionEnabled="true"
                                        width="100%">
                                 <actions>
                                     <action id="refresh"/>
                                     <action id="edit"/>
                                     <action id="remove"/>
+                                    <action id="excel"/>
                                 </actions>
                                 <columns>
                                     <column id="shortdesc"/>
@@ -200,12 +198,27 @@
                                 <rowsCount/>
                                 <buttonsPanel id="buttonsPanel"
                                               alwaysVisible="true">
-                                    <button id="createBtn"
-                                            action="tasksTable.refresh"/>
-                                    <button id="editBtn"
-                                            action="tasksTable.edit"/>
-                                    <button id="removeBtn"
-                                            action="tasksTable.remove"/>
+                                    <button id="createTaskBtn"
+                                            caption="msg://createTask"
+                                            icon="ADD_ACTION"
+                                            invoke="createTask"/>
+                                    <button id="createSubTaskBtn"
+                                            caption="msg://Creats Subtask"
+                                            icon="CLONE"
+                                            invoke="onCreateSubTaskBtnClick"/>
+                                    <button id="refreshTasksBtn"
+                                            action="tasksTable.refresh"
+                                            icon="REFRESH"
+                                            invoke="onRefreshTasksBtnClick"/>
+                                    <button id="editTaskBtn"
+                                            action="tasksTable.edit"
+                                            icon="EDIT_ACTION"/>
+                                    <button id="removeTaskBtn"
+                                            action="tasksTable.remove"
+                                            icon="REMOVE"/>
+                                    <button id="excelBtn"
+                                            action="tasksTable.excel"
+                                            icon="EXCEL_ACTION"/>
                                 </buttonsPanel>
                             </treeTable>
                         </hbox>

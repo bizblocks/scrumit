@@ -15,6 +15,7 @@ import com.haulmont.cuba.gui.components.Link;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
+import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
@@ -171,7 +172,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         Component testingPlan = grid.getComponent("testingPlan");
         grid.remove(testingPlan);
 
-        if (getItem().getTestingPlan() == null || getItem().getTestingPlan().length() == 0 || btn.getCaption().equals("Edit")) {
+        if (getItem().getTestingPlan() == null || getItem().getTestingPlan().length() == 0 || "Edit".equals(btn.getCaption())) {
             btn.setCaption("OK");
             TextField textField = componentsFactory.createComponent(TextField.class);
             textField.setId("testingPlan");
@@ -206,39 +207,8 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     @Override
     public void ready() {
-        multiUpload.addQueueUploadCompleteListener(() -> {
-            for (Map.Entry<UUID, String> entry : multiUpload.getUploadsMap().entrySet()) {
-                UUID fileId = entry.getKey();
-                String fileName = entry.getValue();
-                FileDescriptor fd = fileUploadingAPI.getFileDescriptor(fileId, fileName);
-                // save file to FileStorage
-                try {
-                    fileUploadingAPI.putFileIntoStorage(fileId, fd);
-                } catch (FileStorageException e) {
-                    throw new RuntimeException(getMessage("Error saving file to FileStorage"), e);
-                }
-
-                // save file descriptor to database
-                FileDescriptor committedFd = dataSupplier.commit(fd);
-
-                // add reloaded FileDescriptor
-                Files file = dataManager.create(Files.class);
-                file.setDescription(fd.getName()+":"+fd.getSize());
-                file.setEntity(getItem().getUuid());
-                file.setFile(committedFd);
-                dataManager.commit(file);
-                //getItem().getFiles().add(file);
-            }
-            showNotification(getMessage("Uploaded files") + multiUpload.getUploadsMap().values(), NotificationType.HUMANIZED);
-            multiUpload.clearUploads();
-
-            // commit Foo to save changes
-            Tracker committedFoo = dataSupplier.commit(getItem());
-            setItem(committedFoo);
-
-            // refresh datasource to show changes
-            filesDs.refresh();
-        });
+        multiUpload.addQueueUploadCompleteListener(
+                this::queueUploadComplete);
 
         multiUpload.addFileUploadErrorListener(event ->
                 showNotification(getMessage("File upload error"), NotificationType.HUMANIZED));
@@ -246,9 +216,11 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         taskDs.refresh(Collections.singletonMap("project", TaskType.project));
 
         initWorkflow();
+
+        tasksTable.expandAll();
     }
 
-    protected boolean initWorkflow() {
+    private boolean initWorkflow() {
         if (stage != null && workflow != null) {//this is screen of one of stage
             if (EqualsUtils.equalAny(stage.getType(), StageType.USERS_INTERACTION, StageType.ARCHIVE)) {//we need to extend screen by stage
                 if (workflowWebBean.isActor(user, stage)) {
@@ -312,6 +284,79 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 AppConfig.createExportDisplay(this).show(files.getFile());
             }
         }
+    }
+    
+    @Inject
+    private TreeTable<Task> tasksTable;
+
+    public void onCreateSubTaskBtnClick() {
+        Task subtask = dataManager.create(Task.class);
+        Task task = tasksTable.getSingleSelected();
+
+        try {
+            subtask.setShortdesc("[subtask-"+subtask.getId()+"]");
+            subtask.setTask(task);
+            subtask.setParentBug(getItem());
+            subtask.setPerformer(getItem().getPerformer());
+            subtask.setBegin(task.getBegin());
+            subtask.setDeadline(task.getDeadline());
+            subtask.setType(TaskType.task);
+            dataManager.commit(subtask);
+        }catch (Exception e)
+        {
+            return;
+        }
+        subtask = dataManager.reload(subtask, "_local");
+        try {
+            subtask.setDuration(task.getDeadline().compareTo(task.getBegin()));
+        }catch (Exception e) { }
+        dataManager.commit(subtask);
+
+        tasksTable.getDatasource().refresh();
+    }
+
+    private void queueUploadComplete() {
+        // save file to FileStorage
+        // save file descriptor to database
+        // add reloaded FileDescriptor
+        //getItem().getFiles().add(file);
+        // commit Foo to save changes
+        // refresh datasource to show changes
+        for (Map.Entry<UUID, String> entry : multiUpload.getUploadsMap().entrySet()) {
+            UUID fileId = entry.getKey();
+            String fileName = entry.getValue();
+            FileDescriptor fd = fileUploadingAPI.getFileDescriptor(fileId, fileName);
+            // save file to FileStorage
+            try {
+                fileUploadingAPI.putFileIntoStorage(fileId, fd);
+            } catch (FileStorageException e) {
+                throw new RuntimeException(getMessage("Error saving file to FileStorage"), e);
+            }
+
+            // save file descriptor to database
+            FileDescriptor committedFd = dataSupplier.commit(fd);
+
+            // add reloaded FileDescriptor
+            Files file = dataManager.create(Files.class);
+            file.setDescription(fd.getName() + ":" + fd.getSize());
+            file.setEntity(getItem().getUuid());
+            file.setFile(committedFd);
+            dataManager.commit(file);
+            //getItem().getFiles().add(file);
+        }
+        showNotification(getMessage("Uploaded files") + multiUpload.getUploadsMap().values(), NotificationType.HUMANIZED);
+        multiUpload.clearUploads();
+
+        // commit Foo to save changes
+        Tracker committedFoo = dataSupplier.commit(getItem());
+        setItem(committedFoo);
+
+        // refresh datasource to show changes
+        filesDs.refresh();
+    }
+
+    public void onRefreshTasksBtnClick() {
+        tasksTable.getDatasource().refresh();
     }
 }
 

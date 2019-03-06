@@ -99,7 +99,7 @@ create table SCRUMIT_TASK (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    SHORTDESC varchar(50) not null,
+    SHORTDESC varchar(100) not null,
     TESTING_PLAN text,
     PLANNING_TIME double precision,
     ACTUAL_TIME double precision,
@@ -289,23 +289,6 @@ create table SCRUMIT_LINK (
     primary key (ID)
 )^
 -- end SCRUMIT_LINK
--- begin SCRUMIT_TASKS_FILE
-create table SCRUMIT_TASKS_FILE (
-    ID uuid,
-    VERSION integer not null,
-    CREATE_TS timestamp,
-    CREATED_BY varchar(50),
-    UPDATE_TS timestamp,
-    UPDATED_BY varchar(50),
-    DELETE_TS timestamp,
-    DELETED_BY varchar(50),
-    --
-    TASK_ID uuid,
-    FILE_ID uuid,
-    --
-    primary key (ID)
-)^
--- end SCRUMIT_TASKS_FILE
 -- begin SCRUMIT_TASK_DURATION
 create table SCRUMIT_TASK_DURATION (
     ID uuid,
@@ -391,13 +374,6 @@ alter table SEC_USER add column CONTACT_ID uuid ^
 alter table SEC_USER add column DTYPE varchar(100) ^
 update SEC_USER set DTYPE = 'sec$User' where DTYPE is null ^
 -- end SEC_USER
--- begin SYS_FILE
-alter table SYS_FILE add column DESCRIPTION varchar(255) ^
-alter table SYS_FILE add column FILE_ID uuid ^
-alter table SYS_FILE add column TRACKER_ID uuid ^
-alter table SYS_FILE add column DTYPE varchar(100) ^
-update SYS_FILE set DTYPE = 'sys$FileDescriptor' where DTYPE is null ^
--- end SYS_FILE
 -- begin SCRUMIT_PROJECT_TELEGRAM_CHAT_ID_LINK
 create table SCRUMIT_PROJECT_TELEGRAM_CHAT_ID_LINK (
     ID uuid,
@@ -415,3 +391,21 @@ create table SCRUMIT_PROJECT_TELEGRAM_CHAT_ID_LINK (
     primary key (ID)
 )^
 -- end SCRUMIT_PROJECT_TELEGRAM_CHAT_ID_LINK
+-- begin SCRUMIT_FILES
+create table SCRUMIT_FILES (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    DESCRIPTION text,
+    ENTITY uuid,
+    FILE_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_FILES

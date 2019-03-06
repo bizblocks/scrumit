@@ -42,7 +42,7 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
     @Inject
     private WorkflowWebBean workflowWebBean;
 
-    protected User user;
+    private User user;
 
     private Map<String, LazyTab> tabsCache = new HashMap<>();
 
@@ -125,7 +125,8 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
         params.put(TrackerWorkflowBrowseTableFrame.TAB_TYPE, tabType);
         params.put(TrackerWorkflowBrowseTableFrame.VIEW_ONLY, viewOnly);
         //direct init frame
-        return (TrackerWorkflowBrowseTableFrame) openFrame(null, TrackerWorkflowBrowseTableFrame.SCREEN_ID, params);
+        TrackerWorkflowBrowseTableFrame res = (TrackerWorkflowBrowseTableFrame) openFrame(null, TrackerWorkflowBrowseTableFrame.SCREEN_ID, params);
+        return res;
     }
 
     @Override
@@ -176,7 +177,7 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
         }
     }
 
-    protected User getUser() {
+    private User getUser() {
         User user = userSessionSource.getUserSession().getCurrentOrSubstitutedUser();
         if (user == null) {
             throw new DevelopmentException(getMessage("queryWorkflowBrowseTableFrame.userNotFound"));
