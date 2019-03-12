@@ -3,7 +3,7 @@
 projname=scrumit
 today=$(date +%Y%m%d)
 
-scripts/dumpdb.sh
+scripts/dumpdb.sh $projname
 pushd ..
 
 mkdir backup/$today
