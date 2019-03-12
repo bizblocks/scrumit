@@ -223,6 +223,12 @@
                             </treeTable>
                         </hbox>
                     </row>
+                    <row>
+                        <label value="msg://com.company.scrumit.entity/Tracker.wikiUrl"/>
+                        <textField datasource="trackerDs"
+                                   property="wikiUrl"
+                                   width="250px"/>
+                    </row>
                 </rows>
             </grid>
         </scrollBox>

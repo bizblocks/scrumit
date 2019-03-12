@@ -71,6 +71,18 @@ public class Tracker extends StandardEntity implements WorkflowEntity<UUID> {
     protected List<Task> task;
 
 
+    @Column(name = "WIKI_URL", length = 1024)
+    protected String wikiUrl;
+
+    public void setWikiUrl(String wikiUrl) {
+        this.wikiUrl = wikiUrl;
+    }
+
+    public String getWikiUrl() {
+        return wikiUrl;
+    }
+
+
     public void setStatus(WorkflowEntityStatus status) {
         this.status = status == null ? null : status.getId();
     }

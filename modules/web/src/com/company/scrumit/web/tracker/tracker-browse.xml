@@ -53,6 +53,7 @@
                 <column id="performer"/>
                 <column id="testingPlan"/>
                 <column id="status"/>
+                <column id="wikiUrl"/>
             </columns>
             <rows datasource="trackersDs"/>
             <rowsCount/>

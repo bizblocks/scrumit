@@ -32,6 +32,7 @@
                 <column id="trackerPriorityType"/>
                 <column id="performer"/>
                 <column id="testingPlan"/>
+                <column id="wikiUrl"/>
             </columns>
             <rows datasource="trackerDs"/>
             <buttonsPanel id="buttonsPanel"/>
