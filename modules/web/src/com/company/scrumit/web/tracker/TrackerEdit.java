@@ -237,6 +237,9 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         return true;
     }
 
+    /**
+     * создаёт задачу из текущего инцидента
+     */
     public void createTask() {
         LookupPickerField lookupPickerField = ((LookupPickerField) getComponent("project"));
         final CollectionDatasource dataSource = lookupPickerField.getOptionsDatasource();
@@ -263,6 +266,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         ((LookupField) ((FieldGroup) editor.getComponent("fieldGroup")).getField("type").getComponent()).setValue(TaskType.task);
         ((LookupField) ((FieldGroup) editor.getComponent("fieldGroup")).getField("priority").getComponent()).setValue(Priority.Middle);
         editor.getDialogOptions().setResizable(true);
+
         editor.addCloseListener(actionId -> {
             if (Window.COMMIT_ACTION_ID.equals(actionId)) {
                 Object item1 = editor.getItem();
@@ -289,9 +293,15 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Inject
     private TreeTable<Task> tasksTable;
 
+    /**
+     * создаёт подзадачу для текущей заадчи
+     */
     public void onCreateSubTaskBtnClick() {
         Task subtask = dataManager.create(Task.class);
         Task task = tasksTable.getSingleSelected();
+
+        if(task==null)
+            return;
 
         try {
             subtask.setShortdesc("[subtask-"+subtask.getId()+"]");
@@ -304,15 +314,19 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
             dataManager.commit(subtask);
         }catch (Exception e)
         {
-            return;
+            throw e;
         }
         subtask = dataManager.reload(subtask, "_local");
+
         try {
             subtask.setDuration(task.getDeadline().compareTo(task.getBegin()));
         }catch (Exception e) { }
+
         dataManager.commit(subtask);
 
         tasksTable.getDatasource().refresh();
+        tasksTable.expand(task);
+        tasksTable.scrollTo(subtask);
     }
 
     private void queueUploadComplete() {

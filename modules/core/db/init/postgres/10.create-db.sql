@@ -200,7 +200,7 @@ create table SCRUMIT_TRACKER (
     TRACKER_PRIORITY_TYPE varchar(50),
     TYPE_ varchar(50),
     DESCRIPTION text,
-    FILES_ID uuid,
+    WIKI_URL varchar(1024),
     --
     primary key (ID)
 )^
