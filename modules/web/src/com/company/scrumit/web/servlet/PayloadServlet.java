@@ -73,7 +73,8 @@ public class PayloadServlet extends HttpServlet{
                         if(distinct) {
                             String message = commit.getString("message");
                             String author = commit.getJSONObject("author").getString("email");
-                            dataService.updateTrackerViaService(message, author);
+                            if(message.contains(" done"))
+                                dataService.updateTrackerViaService(message, author);
                             String branch = json.getString("ref");
                             branch = branch.split("/")[branch.split("/").length - 1];
                             String msg = message + "\nUser: " + json.getJSONObject("pusher").getString("name") + "\nBranch: " + branch;

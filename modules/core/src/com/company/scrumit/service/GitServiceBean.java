@@ -40,7 +40,7 @@ public class GitServiceBean implements GitService {
                 .setView("_full");
 
         for(Tracker t:dataManager.loadList(loadContext)){
-            if(commit.contains(t.getId().toString())){
+            if(commit.contains(t.getId().toString() + " done")){
                 Performer performer = getPerformerByEmail(authorEmail);
                 if(performer != null) {
                     t.setPerformer(performer);
