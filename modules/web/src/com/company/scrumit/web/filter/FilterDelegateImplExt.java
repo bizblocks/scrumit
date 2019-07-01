@@ -2,6 +2,8 @@ package com.company.scrumit.web.filter;
 
 import com.google.common.base.Strings;
 import com.haulmont.bali.datastruct.Node;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.filter.ConditionsTree;
 import com.haulmont.cuba.gui.components.filter.FilterDelegateImpl;
@@ -11,6 +13,7 @@ import com.haulmont.cuba.gui.icons.CubaIcon;
 import org.eclipse.persistence.internal.sessions.DirectCollectionChangeRecord;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +67,9 @@ public class FilterDelegateImplExt extends FilterDelegateImpl {
         if(resetAll!=null)
             resetAll.setVisible(editable && userCanEditFilers());
     }
+
+    @Inject
+    private WindowManager windowManager;
 
     @Override
     protected void applyFts() {

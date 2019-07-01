@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         class="com.company.scrumit.web.tracker.workflow.frame.TrackerWorkflowBrowseTableFrame"
-        messagesPack="com.company.scrumit.web.tracker.workflow.frame">
+        messagesPack="com.company.scrumit.web.tracker.workflow.frame"
+        wf:actions="trackerTable"
+        xmlns:wf="http://schemas.groupstp.com/wf/0.1/wf-schema.xsd">
     <dsContext>
         <groupDatasource id="trackerDs"
                          class="com.company.scrumit.entity.Tracker"

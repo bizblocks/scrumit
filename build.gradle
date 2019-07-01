@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '6.10.4'
+    ext.cubaVersion = '6.10.9'
     repositories {
 
         mavenLocal()
@@ -18,7 +18,9 @@ buildscript {
                 password(rootProject.hasProperty('premiumRepoPass') ? rootProject['premiumRepoPass'] : System.getenv('CUBA_PREMIUM_PASSWORD'))
             }
         }
-
+        maven {
+            url "https://mymavenrepo.com/repo/8nW04Xlvs0TNbEzfXmWz"
+        }
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
@@ -59,7 +61,7 @@ dependencies {
     appComponent("com.haulmont.fts:fts-global:$cubaVersion")
     appComponent("com.haulmont.addon.dnd:cuba-dnd-global:1.4.0")
     appComponent("de.diedavids.cuba.runtimediagnose:runtime-diagnose-global:1.2.0")
-    appComponent("com.groupstp.workflowstp:wfstp-global:1.0.7")
+    appComponent("com.groupstp.workflowstp:wfstp-global:2.0.3")
 
 }
 
