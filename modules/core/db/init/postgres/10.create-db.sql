@@ -109,6 +109,7 @@ create table SCRUMIT_TASK (
     PRIORITY varchar(50),
     REALDURATION integer,
     TYPE_ varchar(50),
+    ESTIMATION_ID uuid,
     DESCRIPTION text,
     PERFORMER_ID uuid,
     DEADLINE date,
@@ -409,3 +410,21 @@ create table SCRUMIT_FILES (
     primary key (ID)
 )^
 -- end SCRUMIT_FILES
+-- begin SCRUMIT_TASK_ESTIMATION
+create table SCRUMIT_TASK_ESTIMATION (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    NAME varchar(255) not null,
+    DESCRIPTION varchar(255) not null,
+    VALUE_ double precision not null,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_TASK_ESTIMATION

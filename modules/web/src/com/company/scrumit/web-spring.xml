@@ -20,6 +20,7 @@
                        value="com.company.scrumit.service.SmartSheetService"/>
                 <entry key="scrumit_GitService"
                        value="com.company.scrumit.service.GitService"/>
+                <entry key="scrumit_TaskEstimationService" value="com.company.scrumit.service.TaskEstimationService"/>
             </map>
         </property>
     </bean>

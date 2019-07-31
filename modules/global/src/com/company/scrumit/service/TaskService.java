@@ -11,5 +11,6 @@ public interface TaskService {
     String NAME = "scrumit_TaskService";
 
     Set<Task> tasksByProject(Task project);
+
     Set<Task> tasksByTeam(Team team);
 }

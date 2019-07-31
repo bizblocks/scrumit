@@ -55,6 +55,10 @@ public class Task extends StandardEntity {
     @Column(name = "TYPE_")
     protected String type;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ESTIMATION_ID")
+    protected TaskEstimation estimation;
+
     @Lob
     @Column(name = "DESCRIPTION")
     protected String description;
@@ -96,19 +100,27 @@ public class Task extends StandardEntity {
 
 
     @JoinTable(name = "SCRUMIT_COMMAND_TASK_LINK",
-        joinColumns = @JoinColumn(name = "TASK_ID"),
-        inverseJoinColumns = @JoinColumn(name = "COMMAND_ID"))
+            joinColumns = @JoinColumn(name = "TASK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "COMMAND_ID"))
     @ManyToMany
     protected List<Team> teams;
 
     @JoinTable(name = "SCRUMIT_SPRINT_TASK_LINK",
-        joinColumns = @JoinColumn(name = "TASK_ID"),
-        inverseJoinColumns = @JoinColumn(name = "SPRINT_ID"))
+            joinColumns = @JoinColumn(name = "TASK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "SPRINT_ID"))
     @ManyToMany
     protected List<Sprint> sprints;
 
     @Column(name = "SS_ID")
     protected Long ssId;
+
+    public void setEstimation(TaskEstimation estimation) {
+        this.estimation = estimation;
+    }
+
+    public TaskEstimation getEstimation() {
+        return estimation;
+    }
 
 
     public void setTestingPlan(String testingPlan) {

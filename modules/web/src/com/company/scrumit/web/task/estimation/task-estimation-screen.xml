@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        class="com.company.scrumit.web.task.estimation.TaskEstimationScreen"
+        messagesPack="com.company.scrumit.web"
+        caption="msg://menu-config.TaskEstimationScreen.caption">
+    <dsContext>
+        <collectionDatasource id="tasksDs" class="com.company.scrumit.entity.Task" view="tasks-full">
+            <query><![CDATA[
+            select distinct
+                projects
+            from scrumit$Team team
+                join team.members members
+                join team.members membersAll
+                join membersAll.teams teams
+                join teams.projects projects
+            where
+                projects.estimation is null
+            ]]>
+                <filter>
+                    <and>
+                        <c>members.id = :custom$userId</c>
+                    </and>
+                </filter>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <actions>
+        <action id="estimateTask" invoke="onEstimateTaskClick"/>
+        <action id="update" caption="msg://update" invoke="onUpdateClick"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <table id="table">
+            <columns>
+                <column id="shortdesc"/>
+                <column id="testingPlan"/>
+                <column id="planningTime"/>
+                <column id="actualTime"/>
+                <column id="done"/>
+                <column id="control"/>
+                <column id="priority"/>
+                <column id="realduration"/>
+                <column id="type"/>
+                <column id="description"/>
+                <column id="deadline"/>
+                <column id="level"/>
+                <column id="begin"/>
+                <column id="duration"/>
+                <column id="amount"/>
+                <column id="ssId"/>
+            </columns>
+            <rows datasource="tasksDs"/>
+            <buttonsPanel>
+                <button id="estimate" caption="msg://button.estimate.task" action="estimateTask" enable="false"/>
+                <button caption="msg://update" action="update"/>
+            </buttonsPanel>
+        </table>
+    </layout>
+</window>
