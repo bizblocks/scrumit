@@ -88,9 +88,9 @@ public class TaskList extends EntityCombinedScreen {
     }
 
     private void initColumns() {
-        webUiHelper.showColumns(table,
-                getAllProperties(), getEditableProperties(),
-                getColumnGenerators(), false);
+//        webUiHelper.showColumns(table,
+//                getAllProperties(), getEditableProperties(),
+//                getColumnGenerators(), false);
     }
 
     private List<String> getAllProperties() {
