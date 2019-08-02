@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.scrumit.web.task.estimation.TaskEstimationBrowse"
+        focusComponent="taskEstimationsTable"
+        lookupComponent="taskEstimationsTable"
+        messagesPack="com.company.scrumit.web.task">
+    <dsContext>
+        <groupDatasource id="taskEstimationsDs"
+                         class="com.company.scrumit.entity.TaskEstimation"
+                         view="_local">
+            <query>
+                <![CDATA[select e from scrumit$TaskEstimation e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="taskEstimationsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="taskEstimationsTable"
+                datasource="taskEstimationsDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="taskEstimationsTable"
+                    width="100%">
+            <actions>
+                <action id="create"
+                        openType="NEW_TAB"/>
+                <action id="edit"
+                        openType="NEW_TAB"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="name" caption="mainMsg://name"/>
+                <column id="description" caption="mainMsg://description"/>
+                <column id="value" caption="msg://estimation.value"/>
+            </columns>
+            <rows datasource="taskEstimationsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="taskEstimationsTable.create"/>
+                <button id="editBtn" action="taskEstimationsTable.edit"/>
+                <button id="removeBtn" action="taskEstimationsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>

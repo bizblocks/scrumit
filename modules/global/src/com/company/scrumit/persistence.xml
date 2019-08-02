@@ -24,5 +24,6 @@
         <class>com.company.scrumit.entity.MeetingsTask</class>
         <class>com.company.scrumit.entity.ContactsStatus</class>
         <class>com.company.scrumit.entity.ProjectTelegramChatIdLink</class>
+        <class>com.company.scrumit.entity.TaskEstimation</class>
     </persistence-unit>
 </persistence>

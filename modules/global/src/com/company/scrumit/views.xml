@@ -13,29 +13,20 @@
     <view class="com.company.scrumit.entity.Task"
           extends="_local"
           name="tasks-full">
-        <property name="performer"
-                  view="_local"/>
-        <property name="task"
-                  view="_minimal">
+        <property name="parentBug" view="_local"/>
+        <property name="estimation" view="_minimal"/>
+        <property name="performer" view="_local"/>
+        <property name="task" view="_minimal">
+            <property name="task" view="_minimal"/>
             <property name="level"/>
-            <property name="top"
-                      view="_minimal"/>
-            <property name="task"
-                      view="_minimal"/>
+            <property name="top" view="_minimal"/>
         </property>
-        <property name="parentBug"
-                  view="_local"/>
-        <property name="top"
-                  view="_minimal">
-            <property name="task"
-                      view="_minimal"/>
+        <property name="top" view="_minimal">
+            <property name="task" view="_minimal"/>
         </property>
-        <property name="sprints"
-                  view="_minimal"/>
-        <property name="sprintBacklog"
-                  view="_minimal"/>
-        <property name="teams"
-                  view="_minimal"/>
+        <property name="sprintBacklog" view="_minimal"/>
+        <property name="teams" view="_minimal"/>
+        <property name="sprints" view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"

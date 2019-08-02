@@ -61,5 +61,8 @@
         <entity class="com.company.scrumit.entity.ContactsStatus">
             <include re=".*"/>
         </entity>
+        <entity class="com.company.scrumit.entity.TaskEstimation">
+            <include re=".*"/>
+        </entity>
     </entities>
 </fts-config>
