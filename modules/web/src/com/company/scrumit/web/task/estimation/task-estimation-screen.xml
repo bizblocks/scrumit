@@ -31,7 +31,7 @@
     <dialogMode height="600"
                 width="800"/>
     <layout>
-        <table id="table">
+        <table id="table" width="100%" height="100%">
             <columns>
                 <column id="shortdesc"/>
                 <column id="testingPlan"/>
@@ -51,8 +51,7 @@
                 <column id="ssId"/>
             </columns>
             <rows datasource="tasksDs"/>
-            <buttonsPanel>
-                <button id="estimate" caption="msg://button.estimate.task" action="estimateTask" enable="false"/>
+            <buttonsPanel id="buttonsPanelScales">
                 <button caption="msg://update" action="update"/>
             </buttonsPanel>
         </table>
