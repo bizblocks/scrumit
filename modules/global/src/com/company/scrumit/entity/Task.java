@@ -89,27 +89,46 @@ public class Task extends StandardEntity {
     @Column(name = "AMOUNT")
     protected Integer amount;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SPRINT_BACKLOG_ID")
     protected SprintBacklog sprintBacklog;
 
-
     @JoinTable(name = "SCRUMIT_COMMAND_TASK_LINK",
-        joinColumns = @JoinColumn(name = "TASK_ID"),
-        inverseJoinColumns = @JoinColumn(name = "COMMAND_ID"))
+            joinColumns = @JoinColumn(name = "TASK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "COMMAND_ID"))
     @ManyToMany
     protected List<Team> teams;
 
     @JoinTable(name = "SCRUMIT_SPRINT_TASK_LINK",
-        joinColumns = @JoinColumn(name = "TASK_ID"),
-        inverseJoinColumns = @JoinColumn(name = "SPRINT_ID"))
+            joinColumns = @JoinColumn(name = "TASK_ID"),
+            inverseJoinColumns = @JoinColumn(name = "SPRINT_ID"))
     @ManyToMany
     protected List<Sprint> sprints;
 
     @Column(name = "SS_ID")
     protected Long ssId;
 
+    @Transient
+    private  List<Task> children;
+
+    @Transient
+    protected  Task parent;
+
+    public Task getParent() {
+        return parent;
+    }
+
+    public void setParent(Task parent) {
+        this.parent = parent;
+    }
+
+    public List<Task> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Task> children) {
+        this.children = children;
+    }
 
     public void setTestingPlan(String testingPlan) {
         this.testingPlan = testingPlan;
