@@ -5,6 +5,7 @@ import com.company.scrumit.web.task.TaskEdit;
 import com.groupstp.workflowstp.entity.*;
 import com.groupstp.workflowstp.util.EqualsUtils;
 import com.groupstp.workflowstp.web.bean.WorkflowWebBean;
+import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.global.*;
@@ -15,18 +16,28 @@ import com.haulmont.cuba.gui.components.Link;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
-import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.cuba.security.entity.User;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
+import org.jsoup.select.NodeTraversor;
+import org.jsoup.select.NodeVisitor;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import java.util.Collections;
-import java.util.Map;
-import java.util.UUID;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //todo
 //переделать на новую библиотеку воркфлоу
@@ -35,6 +46,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     @Inject
     private UserSessionSource userSessionSource;
+
     @Inject
     private DataManager dataManager;
 
@@ -50,6 +62,8 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     @Inject
     protected RichTextArea description;
 
+    @Inject
+    private Label label;
 
     @Inject
     protected CollectionDatasource taskDs;
@@ -79,6 +93,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     @Inject
     private ComponentsFactory componentsFactory;
+
 
     private User user;
     private Stage stage;
@@ -259,8 +274,10 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
             if (shortdesc.getValue() != null) {
                 item.setShortdesc(shortdesc.getValue());
             }
-            if (description.getValue() != null)
+            if (description.getValue() != null) {
                 item.setDescription(description.getValue());
+            }
+
         }
         TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
         ((LookupField) ((FieldGroup) editor.getComponent("fieldGroup")).getField("type").getComponent()).setValue(TaskType.task);
@@ -289,7 +306,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
             }
         }
     }
-    
+
     @Inject
     private TreeTable<Task> tasksTable;
 
@@ -300,11 +317,11 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         Task subtask = dataManager.create(Task.class);
         Task task = tasksTable.getSingleSelected();
 
-        if(task==null)
+        if (task == null)
             return;
 
         try {
-            subtask.setShortdesc("[subtask-"+subtask.getId()+"]");
+            subtask.setShortdesc("[subtask-" + subtask.getId() + "]");
             subtask.setTask(task);
             subtask.setParentBug(getItem());
             subtask.setPerformer(getItem().getPerformer());
@@ -312,15 +329,15 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
             subtask.setDeadline(task.getDeadline());
             subtask.setType(TaskType.task);
             dataManager.commit(subtask);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             throw e;
         }
         subtask = dataManager.reload(subtask, "_local");
 
         try {
             subtask.setDuration(task.getDeadline().compareTo(task.getBegin()));
-        }catch (Exception e) { }
+        } catch (Exception e) {
+        }
 
         dataManager.commit(subtask);
 
@@ -371,6 +388,92 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     public void onRefreshTasksBtnClick() {
         tasksTable.getDatasource().refresh();
+    }
+
+    public void checkBtnClick() {
+        String html = description.getValue();
+        if (html.contains("ol") && !html.contains("ul")) {
+            getTextFromDescription(html, "ol:first-of-type");
+        }
+        if (!html.contains("ol") && html.contains("ul")) {
+            getTextFromDescription(html, "ul:first-of-type");
+        }
+
+    }
+
+    private Task getTaskByText(String text) {
+        Task task = dataManager.create(Task.class);
+
+        String regex = "\\d{2}\\.\\d{2}\\.\\d{2}";
+
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(text);
+
+        if (matcher.find()) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
+
+            String date = text.substring(matcher.start(), matcher.end());
+            String title = text.substring(0, matcher.start());
+            task.setShortdesc(title);
+            try {
+                task.setDeadline(dateFormat.parse(date));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            task.setChildren(null);
+
+        } else {
+            task.setShortdesc(text);
+            task.setDeadline(null);
+            task.setChildren(null);
+        }
+
+        return task;
+    }
+
+    private List<Task> generateTreeTask(Element element) {
+        List<Task> taskList = new ArrayList<>();
+        Task task = new Task();
+        Elements children = element.children();
+
+        for (Element child : children) {
+
+            if (child.tagName().equals("li")) {
+
+                if (child.nextElementSibling() != null) {
+
+                    if (child.nextElementSibling().tagName().equals("ul")
+                            || child.nextElementSibling().tagName().equals("ol")) {
+                        task = getTaskByText(child.text());
+                        task.setChildren(generateTreeTask(child.nextElementSibling()));
+                        taskList.add(task);
+                    } else {
+                        taskList.add(getTaskByText(child.text()));
+                    }
+                }
+                else {
+                    taskList.add(getTaskByText(child.text()));
+                }
+
+            } else if (task.getShortdesc().equals(null)) {
+                taskList.add(getTaskByText(child.text()));
+                return taskList;
+            }
+        }
+
+        return taskList;
+    }
+
+    private void getTextFromDescription(String html, String tag) {
+        Document doc = Jsoup.parse(html);
+        Element firstNode = doc.select(tag).first();
+        List<Task> taskList = generateTreeTask(firstNode);
+
+        TrackerCreate window = (TrackerCreate) openWindow("tracker-create",
+                WindowManager.OpenType.DIALOG,
+                ParamsMap.of(
+                        "taskList", taskList
+                ));
     }
 }
 

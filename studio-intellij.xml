@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CubaPluginProjectSettings">
+    <option name="isOneToOneIndex" value="false" />
+    <option name="isNewFkConstraintNaming" value="false" />
+    <option name="isJoinedInheritanceDeleteCascade" value="false" />
+    <option name="excludedScripts">
+      <map>
+        <entry key="postgres">
+          <value>
+            <map>
+              <entry key="180810-1-createScrumitTrackerFileDescriptorLink01.sql" value="create table SCRUMIT_TRACKER_FILE_DESCRIPTOR_LINK (&#10;    TRACKER_ID uuid,&#10;    FILE_DESCRIPTOR_ID uuid,&#10;    primary key (TRACKER_ID, FILE_DESCRIPTOR_ID);" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

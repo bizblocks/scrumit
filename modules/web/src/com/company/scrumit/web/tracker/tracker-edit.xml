@@ -35,6 +35,8 @@
             </query>
         </collectionDatasource>
     </dsContext>
+
+
     <dialogMode height="600"
                 width="800"/>
     <layout expand="scroll"
@@ -241,10 +243,22 @@
                 </rows>
             </grid>
         </scrollBox>
+
+
         <hbox id="bottomPanel"
-              spacing="true">
-            <frame src="com/company/scrumit/web/frames/actionsEntity.xml"
-                   width="AUTO"/>
+              spacing="true"  stylename="cuba-edit-window-actions">
+            <button id="windowCommit" action="windowCommit" icon="icons/ok.png" align="TOP_CENTER" width="100%"/>
+            <button id="windowCommitAndClose" action="windowCommitAndClose" icon="icons/ok.png" align="TOP_CENTER" width="100%"/>
+            <button id="btnGenerateTasksFromDesc"
+                    invoke="checkBtnClick"
+                    icon="PLUS"
+                    caption="msg://btnGenerate"
+                    align="TOP_CENTER"/>
+            <button id="windowClose" action="windowClose" icon="icons/cancel.png" align="TOP_CENTER" width="100%"/>
         </hbox>
     </layout>
+
+
+
+
 </window>

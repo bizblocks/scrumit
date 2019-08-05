@@ -60,4 +60,6 @@
             template="com/company/scrumit/web/files/files-browse.xml"/>
     <screen id="screen"
             template="com/company/scrumit/web/screens/screen.xml"/>
+    <screen id="tracker-create"
+            template="com/company/scrumit/web/tracker/tracker-create.xml"/>
 </screen-config>
