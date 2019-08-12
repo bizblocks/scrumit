@@ -238,6 +238,15 @@
                                    property="wikiUrl"
                                    width="250px"/>
                     </row>
+                    <row>
+                        <button id="makeUrlBtn"
+                                caption="msg://Make URL"
+                                invoke="onMakeUrlBtnClick"/>
+                        <textField datasource="trackerDs"
+                                   editable="false"
+                                   property="url"
+                                   width="250px"/>
+                    </row>
                 </rows>
             </grid>
         </scrollBox>

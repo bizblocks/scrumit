@@ -35,9 +35,16 @@
                 <column id="performer"/>
                 <column id="testingPlan"/>
                 <column id="wikiUrl"/>
+                <column id="url"
+                        link="true"
+                        linkScreenOpenType="NEW_TAB"/>
             </columns>
             <rows datasource="trackerDs"/>
-            <buttonsPanel id="buttonsPanel"/>
+            <buttonsPanel id="buttonsPanel">
+                <button id="makeUrlBtn"
+                        caption="msg://Make URL"
+                        invoke="onMakeUrlBtnClick"/>
+            </buttonsPanel>
         </groupTable>
     </layout>
 </window>

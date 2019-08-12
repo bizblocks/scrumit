@@ -20,10 +20,11 @@
                        value="com.company.scrumit.service.SmartSheetService"/>
                 <entry key="scrumit_GitService"
                        value="com.company.scrumit.service.GitService"/>
+                <entry key="scrumit_UrlService"
+                       value="com.company.scrumit.service.UrlService"/>
             </map>
         </property>
     </bean>
-
     <bean id="cuba_FilterDelegate"
           class="com.company.scrumit.web.filter.FilterDelegateImplExt"
           scope="prototype"/>

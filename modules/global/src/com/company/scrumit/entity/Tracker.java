@@ -29,6 +29,9 @@ public class Tracker extends StandardEntity implements WorkflowEntity<UUID> {
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
 
+    @Column(name = "URL", length = 1024)
+    protected String url;
+
     @Column(name = "STEP_NAME")
     protected String stepName;
 
@@ -73,6 +76,15 @@ public class Tracker extends StandardEntity implements WorkflowEntity<UUID> {
 
     @Column(name = "WIKI_URL", length = 1024)
     protected String wikiUrl;
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
 
     public void setWikiUrl(String wikiUrl) {
         this.wikiUrl = wikiUrl;
