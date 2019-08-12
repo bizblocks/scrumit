@@ -1,6 +1,7 @@
 package com.company.scrumit.web.tracker;
 
 import com.company.scrumit.entity.*;
+import com.company.scrumit.service.UrlService;
 import com.company.scrumit.web.task.TaskEdit;
 import com.groupstp.workflowstp.entity.*;
 import com.groupstp.workflowstp.util.EqualsUtils;
@@ -79,6 +80,9 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     @Inject
     private ComponentsFactory componentsFactory;
+
+    @Inject
+    private UrlService urlService;
 
     private User user;
     private Stage stage;
@@ -371,6 +375,14 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     public void onRefreshTasksBtnClick() {
         tasksTable.getDatasource().refresh();
+    }
+
+    public void onMakeUrlBtnClick() {
+        Tracker selectedTracker = trackerDs.getItem();
+
+        String url = urlService.MakeOpenUrl(UrlService.Command.OPEN, SCREEN_ID, selectedTracker.getId());
+
+        selectedTracker.setUrl(url);
     }
 }
 

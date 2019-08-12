@@ -4,6 +4,7 @@ import com.company.scrumit.entity.Performer;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Team;
 import com.company.scrumit.entity.Tracker;
+import com.company.scrumit.service.UrlService;
 import com.company.scrumit.web.tracker.TabType;
 import com.company.scrumit.web.tracker.TrackerEdit;
 import com.groupstp.workflowstp.entity.Stage;
@@ -54,6 +55,10 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame 
     private WorkflowService workflowService;
     @Inject
     protected WorkflowWebBean workflowWebBean;
+
+    @Inject
+    private UrlService urlService;
+
     @WindowParam(name = TAB_TYPE, required = true)
     protected TabType tabType;
 
@@ -368,6 +373,23 @@ public class TrackerWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame 
         }
     }
 
+
+    public void onMakeUrlBtnClick() {
+        Tracker selectedTracker = trackerDs.getItem();
+        if (selectedTracker == null) {
+            showNotification("Выберите трэкер");
+            return;
+        }
+
+        String url = urlService.MakeOpenUrl(UrlService.Command.OPEN,"scrumit$Tracker.edit", selectedTracker.getId());
+
+        selectedTracker.setUrl(url);
+        dataManager.commit(selectedTracker);
+
+        trackerDs.refresh();
+
+        showNotification("Готово", NotificationType.TRAY);
+    }
 }
 
 
