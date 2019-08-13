@@ -22,6 +22,8 @@
                        value="com.company.scrumit.service.GitService"/>
                 <entry key="scrumit_UrlService"
                        value="com.company.scrumit.service.UrlService"/>
+                <entry key="scrumit_MailService"
+                       value="com.company.scrumit.service.MailService"/>
             </map>
         </property>
     </bean>

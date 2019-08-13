@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editorCaption"
+        class="com.company.scrumit.web.incomingmessage.IncomingMessageEdit"
+        datasource="incomingMessageDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.scrumit.web.incomingmessage">
+    <dsContext>
+        <datasource id="incomingMessageDs"
+                    class="com.company.scrumit.entity.IncomingMessage"
+                    view="_local"/>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="incomingMessageDs">
+            <column width="250px">
+                <field property="sender"/>
+                <field property="subject"/>
+                <field property="body"
+                       rows="5"/>
+                <field property="recipients"
+                       rows="5"/>
+                <field property="send_date"/>
+            </column>
+        </fieldGroup>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

@@ -9,6 +9,7 @@
         <item screen="scrumit$Tracker.browse"/>
         <item screen="tracker-workflow-browse"/>
         <item screen="screen"/>
+        <item screen="scrumit$IncomingMessage.browse"/>
     </menu>
     <menu id="refs"
           insertBefore="administration">

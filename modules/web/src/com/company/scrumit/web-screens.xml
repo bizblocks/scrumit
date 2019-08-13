@@ -60,4 +60,8 @@
             template="com/company/scrumit/web/files/files-browse.xml"/>
     <screen id="screen"
             template="com/company/scrumit/web/screens/screen.xml"/>
+    <screen id="scrumit$IncomingMessage.browse"
+            template="com/company/scrumit/web/incomingmessage/incoming-message-browse.xml"/>
+    <screen id="scrumit$IncomingMessage.edit"
+            template="com/company/scrumit/web/incomingmessage/incoming-message-edit.xml"/>
 </screen-config>

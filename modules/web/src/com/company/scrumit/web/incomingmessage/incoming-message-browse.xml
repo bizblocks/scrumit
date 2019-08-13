@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.scrumit.web.incomingmessage.IncomingMessageBrowse"
+        focusComponent="incomingMessagesTable"
+        lookupComponent="incomingMessagesTable"
+        messagesPack="com.company.scrumit.web.incomingmessage">
+    <dsContext>
+        <groupDatasource id="incomingMessagesDs"
+                         class="com.company.scrumit.entity.IncomingMessage"
+                         view="_local">
+            <query>
+                <![CDATA[select e from scrumit$IncomingMessage e]]>
+            </query>
+        </groupDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="incomingMessagesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="incomingMessagesTable"
+                datasource="incomingMessagesDs">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="incomingMessagesTable"
+                    width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="sender"/>
+                <column id="subject"/>
+                <column id="body"/>
+                <column id="recipients"/>
+                <column id="send_date"/>
+            </columns>
+            <rows datasource="incomingMessagesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="incomingMessagesTable.create"/>
+                <button id="editBtn"
+                        action="incomingMessagesTable.edit"/>
+                <button id="removeBtn"
+                        action="incomingMessagesTable.remove"/>
+                <button id="readLastMessageBtn"
+                        caption="Read Last Message"
+                        invoke="onReadLastMessageBtnClick"/>
+            </buttonsPanel>
+        </groupTable>
+    </layout>
+</window>
