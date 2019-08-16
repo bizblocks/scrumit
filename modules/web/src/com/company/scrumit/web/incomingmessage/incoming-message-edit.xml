@@ -20,12 +20,17 @@
                 <field property="sender"/>
                 <field property="subject"/>
                 <field property="body"
-                       rows="5"/>
+                       rows="20"
+                       width="100%"/>
                 <field property="recipients"
                        rows="5"/>
                 <field property="send_date"/>
+                <field property="message_id"/>
             </column>
         </fieldGroup>
+        <optionsGroup datasource="incomingMessageDs"
+                      optionsEnum="com.company.scrumit.entity.MailType"
+                      property="type"/>
         <frame id="windowActions"
                screen="editWindowActions"/>
     </layout>
