@@ -17,6 +17,12 @@ public class IncomingMessage extends StandardEntity {
     @Column(name = "SENDER", length = 150)
     protected String sender;
 
+    @Column(name = "MESSAGE_ID")
+    protected String message_id;
+
+    @Column(name = "TYPE_")
+    protected String type;
+
     @Column(name = "SUBJECT")
     protected String subject;
 
@@ -34,6 +40,24 @@ public class IncomingMessage extends StandardEntity {
 
     @Column(name = "ATTACHMENTS")
     protected byte[] attachments;
+
+    public void setMessage_id(String message_id) {
+        this.message_id = message_id;
+    }
+
+    public String getMessage_id() {
+        return message_id;
+    }
+
+
+    public void setType(MailType type) {
+        this.type = type == null ? null : type.getId();
+    }
+
+    public MailType getType() {
+        return type == null ? null : MailType.fromId(type);
+    }
+
 
     public void setSender(String sender) {
         this.sender = sender;

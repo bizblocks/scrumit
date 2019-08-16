@@ -421,6 +421,8 @@ create table SCRUMIT_INCOMING_MESSAGE (
     DELETED_BY varchar(50),
     --
     SENDER varchar(150),
+    MESSAGE_ID varchar(255),
+    TYPE_ varchar(50),
     SUBJECT varchar(255),
     BODY_ text,
     RECIPIENTS text,
