@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        class="com.company.scrumit.web.tracker.TrackerCreate"
+        focusComponent="label"
+        messagesPack="com.company.scrumit.web.tracker">
+
+    <dsContext>
+        <hierarchicalDatasource id="generatedTaskListDS"
+                                class="com.company.scrumit.entity.Task"
+                                refreshMode="NEVER"
+                                hierarchyProperty="parent"/>
+        <groupDatasource id="selectedDs"
+                         refreshMode="NEVER"
+                         class="com.company.scrumit.entity.Task"
+                         view="_local"/>
+    </dsContext>
+
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scroll"
+            spacing="true">
+        <scrollBox id="scroll">
+            <vbox width="100%"
+                  margin="true">
+                <label id="label"
+                       value="msg://tasksAndSubtasks"
+                       width="100%"
+                       align="MIDDLE_LEFT"/>
+            </vbox>
+            <treeTable id="tasksTable"
+                       width="765"
+                       editable="true">
+                <columns>
+                    <column id="shortdesc"
+                            editable="true"
+                            required="true"/>
+                    <column id="deadline"
+                            editable="true"
+                            required="true"/>
+                    <column id="checkBox"
+                            caption="msg://saveTasks"/>
+                    <!--                        generator="generateCheckBox"/>-->
+                </columns>
+                <rows datasource="generatedTaskListDS"/>
+            </treeTable>
+        </scrollBox>
+        <hbox id="buttonsBox"
+              align="BOTTOM_RIGHT"
+              spacing="true"
+              margin="true">
+            <button id="closeBtn"
+                    caption="msg://closeTasks"
+                    invoke="closeWindow"/>
+            <button id="saveBtn"
+                    caption="msg://saveTasks"
+                    icon="SAVE"
+                    invoke="saveTasks"/>
+        </hbox>
+    </layout>
+
+</window>

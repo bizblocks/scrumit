@@ -48,7 +48,7 @@ cuba {
     }
     tomcat {
         dir = "$project.rootDir/deploy/tomcat"
-        
+
 
     }
     ide {
@@ -91,6 +91,7 @@ configure(globalModule) {
 
     dependencies {
         compile('com.smartsheet:smartsheet-sdk-java:2.2.5')
+//        compile ('org.jsoup:jsoup:1.12.1')
     }
     entitiesEnhancing {
         main { enabled = true }
@@ -194,7 +195,10 @@ configure(webModule) {
         appName = "${modulePrefix}"
         appJars(modulePrefix + '-global', modulePrefix + '-web')
     }
-    task buildScssThemes(type: CubaWebScssThemeCreation)
+//    task buildScssThemes(type: CubaWebScssThemeCreation)
+    task buildScssThemes(type: CubaWebScssThemeCreation) {
+        themes = ['halo']
+    }
     task deployThemes(type: CubaDeployThemeTask, dependsOn: buildScssThemes)
     assemble.dependsOn buildScssThemes
 }
