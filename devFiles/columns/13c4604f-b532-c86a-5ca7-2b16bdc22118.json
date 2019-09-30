@@ -1,0 +1,13 @@
+[
+  {
+    "_entityName": "wfstp$ScreenTableColumnTemplate",
+    "id": "13c4604f-b532-c86a-5ca7-2b16bdc22118",
+    "columnId": "description",
+    "editable": false,
+    "caption": "Описание",
+    "version": 23,
+    "generatorScript": "import com.haulmont.cuba.gui.components.Component;\nimport com.haulmont.cuba.gui.components.Label;\nimport com.haulmont.cuba.gui.components.PopupView;\nimport com.haulmont.cuba.gui.components.Table;\nimport com.haulmont.cuba.gui.xml.layout.ComponentsFactory;\nimport com.company.scrumit.entity.Tracker;\n\nreturn new Table.ColumnGenerator\u003cTracker\u003e() {\n    \n    final ComponentsFactory componentsFactory \u003d AppBeans.get(ComponentsFactory.class)\n    \n    @Override\n    public Component generateCell(Tracker tracker) {\n        \n        \n        def description \u003d tracker.description \u003d\u003d null ? \"\" : tracker.description\n        def shortdesc \u003d description.substring(0, Math.min(description.length(), 50))\n        \n        PopupView popupView \u003d componentsFactory.createComponent(PopupView.class)\n        popupView.setMinimizedValue(shortdesc)\n    \n        Label label \u003d componentsFactory.createComponent(Label.class)\n        label.setValue(description)\n        label.setHtmlEnabled(true)\n        \n        popupView.setPopupContent(label)\n    \n        return popupView\n    }\n}\n",
+    "entityName": "scrumit$Tracker",
+    "name": "Описание"
+  }
+]

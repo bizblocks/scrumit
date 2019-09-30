@@ -30,7 +30,8 @@
                 <column id="createTs"/>
                 <column id="shortdesc"/>
                 <column id="type"/>
-                <column id="description"/>
+                <column id="description"
+                        maxTextLength="100"/>
                 <column id="trackerPriorityType"/>
                 <column id="performer"/>
                 <column id="testingPlan"/>
