@@ -4,7 +4,10 @@
         class="com.company.scrumit.web.tracker.TrackerEdit"
         datasource="trackerDs"
         focusComponent="grid"
-        messagesPack="com.company.scrumit.web.tracker">
+        messagesPack="com.company.scrumit.web.tracker"
+        wf:actions="bottomPanel"
+        xmlns:wf="http://schemas.groupstp.com/wf/0.1/wf-schema.xsd"
+        >
     <dsContext>
         <datasource id="trackerDs"
                     class="com.company.scrumit.entity.Tracker"
