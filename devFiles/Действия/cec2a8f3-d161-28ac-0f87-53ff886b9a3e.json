@@ -1,0 +1,18 @@
+[
+  {
+    "_entityName": "wfstp$ScreenActionTemplate",
+    "id": "cec2a8f3-d161-28ac-0f87-53ff886b9a3e",
+    "availableInExternalSystem": false,
+    "icon": "font-icon:HAND_O_RIGHT",
+    "caption": "К внедрению",
+    "permitItemsCount": 0,
+    "version": 2,
+    "script": "Map params \u003d MapHelper.asMap(\"wasChecked\", \"true\", \"прочее\", null);//перечислить все возможные пути в null\nWebUiHelper.performWorkflowAction(entity, target, workflowInstanceTask, workflowInstance, stage, screen, params);",
+    "permitItemsType": "MORE",
+    "alwaysEnabled": false,
+    "entityName": "scrumit$Tracker",
+    "name": "Кнопка к внедрению",
+    "permitRequired": true,
+    "buttonAction": true
+  }
+]

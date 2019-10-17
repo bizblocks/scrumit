@@ -4,7 +4,7 @@
     "id": "b11c2aa3-72ab-8428-f44d-c52f47d02515",
     "code": "П1",
     "active": true,
-    "version": 1,
+    "version": 15,
     "steps": [
       {
         "_entityName": "wfstp$Step",
@@ -42,12 +42,12 @@
                 "id": "b11c2aa3-72ab-8428-f44d-c52f47d02515"
               },
               "start": false,
-              "version": 1,
+              "version": 4,
               "stage": {
                 "_entityName": "wfstp$Stage",
                 "id": "703211e4-8e12-855a-716d-47659ff77a13",
                 "type": "USERS_INTERACTION",
-                "version": 6,
+                "version": 12,
                 "entityName": "scrumit$Tracker",
                 "name": "Сделать",
                 "entityCaption": "Трэкер"
@@ -56,8 +56,8 @@
                 {
                   "_entityName": "wfstp$StepDirection",
                   "id": "b967739f-0061-72c6-12c3-b80b7b6bed70",
-                  "version": 1,
-                  "conditionGroovyScript": "return \"true\".equalsIgnoreCase(context[\"isReady\"]);",
+                  "version": 2,
+                  "conditionGroovyScript": "return ${isReady} \u003d\u003d \"true\"",
                   "from": {
                     "_entityName": "wfstp$Step",
                     "id": "b7717320-b29e-f874-f704-5e1737afb9d5"
@@ -75,7 +75,7 @@
                       "_entityName": "wfstp$Stage",
                       "id": "c455487b-d848-ddd4-3b96-64d453de7e4a",
                       "type": "ARCHIVE",
-                      "version": 2,
+                      "version": 3,
                       "entityName": "scrumit$Tracker",
                       "name": "Готово",
                       "entityCaption": "Трэкер"
@@ -88,8 +88,8 @@
                 {
                   "_entityName": "wfstp$StepDirection",
                   "id": "51c84d17-2254-3137-a64c-85646494f487",
-                  "version": 1,
-                  "conditionGroovyScript": "return \"true\".equalsIgnoreCase(context[\"toCheck\"]);",
+                  "version": 2,
+                  "conditionGroovyScript": "return ${toCheck} \u003d\u003d \"true\"",
                   "from": {
                     "_entityName": "wfstp$Step",
                     "id": "b7717320-b29e-f874-f704-5e1737afb9d5"
@@ -102,12 +102,12 @@
                       "id": "b11c2aa3-72ab-8428-f44d-c52f47d02515"
                     },
                     "start": false,
-                    "version": 1,
+                    "version": 3,
                     "stage": {
                       "_entityName": "wfstp$Stage",
                       "id": "196a2ba4-260f-3406-2cdb-1e14cd943a3d",
                       "type": "USERS_INTERACTION",
-                      "version": 6,
+                      "version": 7,
                       "entityName": "scrumit$Tracker",
                       "name": "На проверке",
                       "entityCaption": "Трэкер"
@@ -116,8 +116,8 @@
                       {
                         "_entityName": "wfstp$StepDirection",
                         "id": "8fd8b4e7-33b9-4e2b-faaa-d5d469e59eb2",
-                        "version": 1,
-                        "conditionGroovyScript": "return \"true\".equalsIgnoreCase(context[\"isReady\"]);",
+                        "version": 2,
+                        "conditionGroovyScript": "return ${isReady} \u003d\u003d \"true\"",
                         "from": {
                           "_entityName": "wfstp$Step",
                           "id": "48d87670-2677-7a9a-7d9f-9253cf70fdad"
@@ -131,8 +131,8 @@
                       {
                         "_entityName": "wfstp$StepDirection",
                         "id": "49fb71ab-18cc-86cb-d339-dccebf61162c",
-                        "version": 1,
-                        "conditionGroovyScript": "return \"true\".equalsIgnoreCase(context[\"wasChecked\"]);",
+                        "version": 2,
+                        "conditionGroovyScript": "return ${wasChecked} \u003d\u003d \"true\"",
                         "from": {
                           "_entityName": "wfstp$Step",
                           "id": "48d87670-2677-7a9a-7d9f-9253cf70fdad"
@@ -145,12 +145,12 @@
                             "id": "b11c2aa3-72ab-8428-f44d-c52f47d02515"
                           },
                           "start": false,
-                          "version": 1,
+                          "version": 3,
                           "stage": {
                             "_entityName": "wfstp$Stage",
                             "id": "3e71b518-600f-eb52-42c8-b464f79f969f",
                             "type": "USERS_INTERACTION",
-                            "version": 3,
+                            "version": 9,
                             "entityName": "scrumit$Tracker",
                             "name": "Проверено",
                             "entityCaption": "Трэкер"
@@ -159,8 +159,8 @@
                             {
                               "_entityName": "wfstp$StepDirection",
                               "id": "99ea3919-e690-7c51-10d4-9878d98b1247",
-                              "version": 1,
-                              "conditionGroovyScript": "return \"true\".equalsIgnoreCase(context[\"isReady\"]);",
+                              "version": 2,
+                              "conditionGroovyScript": "return ${isReady} \u003d\u003d \"true\"",
                               "from": {
                                 "_entityName": "wfstp$Step",
                                 "id": "e893c791-ce00-a2ff-c513-bfdf3912325b"
@@ -170,6 +170,38 @@
                                 "id": "69c5605c-59bb-0b38-06bf-dc0f6c4cbd90"
                               },
                               "order": 1
+                            },
+                            {
+                              "_entityName": "wfstp$StepDirection",
+                              "id": "e8c1d119-f9cc-5c9b-4d6e-4c7c1a4542b3",
+                              "version": 1,
+                              "conditionGroovyScript": "return ${reject} \u003d\u003d \"true\"",
+                              "from": {
+                                "_entityName": "wfstp$Step",
+                                "id": "e893c791-ce00-a2ff-c513-bfdf3912325b"
+                              },
+                              "to": {
+                                "_entityName": "wfstp$Step",
+                                "id": "cc8dfde5-db99-1400-581f-25de93d51abb",
+                                "workflow": {
+                                  "_entityName": "wfstp$Workflow",
+                                  "id": "b11c2aa3-72ab-8428-f44d-c52f47d02515"
+                                },
+                                "start": false,
+                                "version": 1,
+                                "stage": {
+                                  "_entityName": "wfstp$Stage",
+                                  "id": "7a4618a0-435a-f19d-e701-da4de7ba7918",
+                                  "type": "ARCHIVE",
+                                  "version": 3,
+                                  "entityName": "scrumit$Tracker",
+                                  "name": "Отменено",
+                                  "entityCaption": "Трэкер"
+                                },
+                                "directions": [],
+                                "order": 7
+                              },
+                              "order": 2
                             }
                           ],
                           "order": 5
@@ -179,8 +211,8 @@
                       {
                         "_entityName": "wfstp$StepDirection",
                         "id": "80791a89-a429-c9d7-8d2a-5a0b80b8f1b3",
-                        "version": 1,
-                        "conditionGroovyScript": "return \"true\".equalsIgnoreCase(context[\"toDo\"]);",
+                        "version": 2,
+                        "conditionGroovyScript": "return ${toDo} \u003d\u003d \"true\"",
                         "from": {
                           "_entityName": "wfstp$Step",
                           "id": "48d87670-2677-7a9a-7d9f-9253cf70fdad"
@@ -190,6 +222,21 @@
                           "id": "b7717320-b29e-f874-f704-5e1737afb9d5"
                         },
                         "order": 3
+                      },
+                      {
+                        "_entityName": "wfstp$StepDirection",
+                        "id": "4539e966-f87b-a402-9295-c8442b0dba78",
+                        "version": 1,
+                        "conditionGroovyScript": "return ${reject} \u003d\u003d \"true\"",
+                        "from": {
+                          "_entityName": "wfstp$Step",
+                          "id": "48d87670-2677-7a9a-7d9f-9253cf70fdad"
+                        },
+                        "to": {
+                          "_entityName": "wfstp$Step",
+                          "id": "cc8dfde5-db99-1400-581f-25de93d51abb"
+                        },
+                        "order": 4
                       }
                     ],
                     "order": 4
@@ -199,8 +246,8 @@
                 {
                   "_entityName": "wfstp$StepDirection",
                   "id": "5327b0db-3d51-0c8c-f2b3-133e97fd8a07",
-                  "version": 1,
-                  "conditionGroovyScript": "return \"true\".equalsIgnoreCase(context[\"inWork\"]);",
+                  "version": 2,
+                  "conditionGroovyScript": "return ${inWork} \u003d\u003d \"true\"",
                   "from": {
                     "_entityName": "wfstp$Step",
                     "id": "b7717320-b29e-f874-f704-5e1737afb9d5"
@@ -213,12 +260,12 @@
                       "id": "b11c2aa3-72ab-8428-f44d-c52f47d02515"
                     },
                     "start": false,
-                    "version": 1,
+                    "version": 3,
                     "stage": {
                       "_entityName": "wfstp$Stage",
                       "id": "7e605326-a20b-9911-9fb0-93509a5157c0",
                       "type": "USERS_INTERACTION",
-                      "version": 3,
+                      "version": 8,
                       "entityName": "scrumit$Tracker",
                       "name": "В работе",
                       "entityCaption": "Трэкер"
@@ -227,8 +274,8 @@
                       {
                         "_entityName": "wfstp$StepDirection",
                         "id": "b11eed6c-357c-3a72-b552-7678ed084861",
-                        "version": 1,
-                        "conditionGroovyScript": "return \"true\".equalsIgnoreCase(context[\"isReady\"]);",
+                        "version": 2,
+                        "conditionGroovyScript": "return ${isReady} \u003d\u003d \"true\"",
                         "from": {
                           "_entityName": "wfstp$Step",
                           "id": "57373174-a17f-3724-0cb6-27403a132153"
@@ -242,8 +289,8 @@
                       {
                         "_entityName": "wfstp$StepDirection",
                         "id": "cda1259b-659e-074f-08ae-a287bd036535",
-                        "version": 1,
-                        "conditionGroovyScript": "return \"true\".equalsIgnoreCase(context[\"toCheck\"]);",
+                        "version": 2,
+                        "conditionGroovyScript": "return ${toCheck} \u003d\u003d \"true\"",
                         "from": {
                           "_entityName": "wfstp$Step",
                           "id": "57373174-a17f-3724-0cb6-27403a132153"
@@ -253,11 +300,41 @@
                           "id": "48d87670-2677-7a9a-7d9f-9253cf70fdad"
                         },
                         "order": 2
+                      },
+                      {
+                        "_entityName": "wfstp$StepDirection",
+                        "id": "8360f0b3-a7f9-8604-510b-36a34c7a47d0",
+                        "version": 1,
+                        "conditionGroovyScript": "return ${reject} \u003d\u003d \"true\"",
+                        "from": {
+                          "_entityName": "wfstp$Step",
+                          "id": "57373174-a17f-3724-0cb6-27403a132153"
+                        },
+                        "to": {
+                          "_entityName": "wfstp$Step",
+                          "id": "cc8dfde5-db99-1400-581f-25de93d51abb"
+                        },
+                        "order": 3
                       }
                     ],
                     "order": 3
                   },
                   "order": 3
+                },
+                {
+                  "_entityName": "wfstp$StepDirection",
+                  "id": "025ddb35-8112-9689-968d-5693dd2d3531",
+                  "version": 1,
+                  "conditionGroovyScript": "return ${reject} \u003d\u003d \"true\"",
+                  "from": {
+                    "_entityName": "wfstp$Step",
+                    "id": "b7717320-b29e-f874-f704-5e1737afb9d5"
+                  },
+                  "to": {
+                    "_entityName": "wfstp$Step",
+                    "id": "cc8dfde5-db99-1400-581f-25de93d51abb"
+                  },
+                  "order": 4
                 }
               ],
               "order": 2
@@ -335,24 +412,7 @@
             },
             "to": {
               "_entityName": "wfstp$Step",
-              "id": "cc8dfde5-db99-1400-581f-25de93d51abb",
-              "workflow": {
-                "_entityName": "wfstp$Workflow",
-                "id": "b11c2aa3-72ab-8428-f44d-c52f47d02515"
-              },
-              "start": false,
-              "version": 1,
-              "stage": {
-                "_entityName": "wfstp$Stage",
-                "id": "7a4618a0-435a-f19d-e701-da4de7ba7918",
-                "type": "ARCHIVE",
-                "version": 2,
-                "entityName": "scrumit$Tracker",
-                "name": "Отменено",
-                "entityCaption": "Трэкер"
-              },
-              "directions": [],
-              "order": 7
+              "id": "cc8dfde5-db99-1400-581f-25de93d51abb"
             },
             "order": 6
           }

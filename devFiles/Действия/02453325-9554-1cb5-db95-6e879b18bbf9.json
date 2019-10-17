@@ -1,0 +1,18 @@
+[
+  {
+    "_entityName": "wfstp$ScreenActionTemplate",
+    "id": "02453325-9554-1cb5-db95-6e879b18bbf9",
+    "availableInExternalSystem": false,
+    "icon": "font-icon:CHECK",
+    "caption": "Закрыть инцидент",
+    "permitItemsCount": 0,
+    "version": 1,
+    "script": "Map params \u003d MapHelper.asMap(\"isReady\", \"true\", \"прочее\", null);//перечислить все возможные пути в null\nWebUiHelper.performWorkflowAction(entity, target, workflowInstanceTask, workflowInstance, stage, screen, params);",
+    "permitItemsType": "MORE",
+    "alwaysEnabled": false,
+    "entityName": "scrumit$Tracker",
+    "name": "Кнопка закрыть инцидент",
+    "permitRequired": true,
+    "buttonAction": true
+  }
+]
