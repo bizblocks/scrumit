@@ -17,7 +17,7 @@ import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.icons.CubaIcon;
 import com.haulmont.cuba.security.entity.User;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -160,7 +160,7 @@ public class PerformerTasksWindow extends AbstractWindow {
 
 
     public void onComment() {
-        String message = commentTextArea.getValue();
+        String message = (String) commentTextArea.getValue();
         Task task = tasksTable.getSingleSelected();
         if (!StringUtils.isEmpty(message) && task != null) {
             TaskComment comment = metadata.create(TaskComment.class);

@@ -8,10 +8,7 @@ import com.groupstp.workflowstp.entity.WorkflowInstanceTask;
 import com.groupstp.workflowstp.service.WorkflowService;
 import com.haulmont.cuba.core.global.DataManager;
 
-import com.haulmont.cuba.gui.components.AbstractEditor;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.DateField;
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.Datasource;
 
 
@@ -27,11 +24,11 @@ public class TaskEdit extends AbstractEditor<Task> {
 
 
     @Named("fieldGroup.deadline")
-    private DateField deadlineField;
+    private DateField<Date> deadlineField;
     @Named("fieldGroup.begin")
-    private DateField beginField;
+    private DateField<Date> beginField;
     @Named("fieldGroup.duration")
-    private TextField durationField;
+    private TextField<Integer> durationField;
     @Inject
     private Button btnControl;
 
@@ -53,7 +50,7 @@ public class TaskEdit extends AbstractEditor<Task> {
         deadlineField.addValueChangeListener(e -> {
             if (beginField.getValue() == null)
                 return;
-            durationField.setValue((deadlineField.getValue().getTime() - beginField.getValue().getTime()) / ONEDAY);
+            durationField.setValue((int) ((deadlineField.getValue().getTime() - beginField.getValue().getTime()) / ONEDAY));
         });
     }
 
@@ -72,7 +69,7 @@ public class TaskEdit extends AbstractEditor<Task> {
         }
     }
 
-    private void calcDates(ValueChangeEvent e) {
+    private void calcDates(HasValue.ValueChangeEvent e) {
         if (beginField.getValue() == null || durationField.getValue() == null)
             return;
         Date d = beginField.getValue();

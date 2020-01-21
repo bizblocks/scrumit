@@ -20,7 +20,7 @@ import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.cuba.security.entity.User;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -267,12 +267,12 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
         if (entityStates.isDetached(getItem())) {
             item.setParentBug(getItem());
             if (project.getValue() != null) {
-                item.setTask(project.getValue());
+                item.setTask((Task) project.getValue());
                 if (((Task) project.getValue()).getPerformer() != null)
                     item.setPerformer(((Task) project.getValue()).getPerformer());
             }
             if (shortdesc.getValue() != null) {
-                item.setShortdesc(shortdesc.getValue());
+                item.setShortdesc((String) shortdesc.getValue());
             }
             if (description.getValue() != null) {
                 item.setDescription(description.getValue());

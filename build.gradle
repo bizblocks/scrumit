@@ -14,8 +14,8 @@ buildscript {
         maven {
             url 'https://repo.cuba-platform.com/content/groups/premium'
             credentials {
-                username(rootProject.hasProperty('premiumRepoUser') ? rootProject['premiumRepoUser'] : System.getenv('CUBA_PREMIUM_USER'))
-                password(rootProject.hasProperty('premiumRepoPass') ? rootProject['premiumRepoPass'] : System.getenv('CUBA_PREMIUM_PASSWORD'))
+                username(rootProject.hasProperty('premiumRepoUser') ? rootProject['premiumRepoUser'] : '180518001555')
+                password(rootProject.hasProperty('premiumRepoPass') ? rootProject['premiumRepoPass'] : 'eijQBeIEAJoR')
             }
         }
         maven {
@@ -57,9 +57,9 @@ cuba {
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
 //    appComponent("com.haulmont.fts:fts-global:$cubaVersion")
-    appComponent("com.haulmont.addon.dnd:cuba-dnd-global:1.4.0")
+    appComponent("com.haulmont.addon.dnd:cuba-dnd-global:1.5.0")
     appComponent("de.diedavids.cuba.runtimediagnose:runtime-diagnose-global:1.2.0")
-    appComponent("com.groupstp.workflowstp:wfstp-global:2.0.4")
+    appComponent("com.groupstp.workflowstp:wfstp-global:2.1.0")
     appComponent("com.haulmont.fts:fts-global:$cubaVersion")
 
 }

@@ -27,7 +27,7 @@ public class FilterDelegateImplExt extends FilterDelegateImpl {
     @Override
     protected void createControlsLayoutForFts() {
         super.createControlsLayoutForFts();
-        resetAll = componentsFactory.createComponent(Button.class);
+        resetAll = uiComponents.create(Button.class);
         resetAll.setCaption(messages.getMessage(getClass(), "resetFilter"));
         resetAll.setIcon(CubaIcon.CANCEL.source());
         resetAll.setAction(new AbstractAction("reset") {

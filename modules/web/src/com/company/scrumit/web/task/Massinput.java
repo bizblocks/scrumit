@@ -54,7 +54,7 @@ public class Massinput extends AbstractWindow {
             return;
         }
         Task task = new Task();
-        task.setTask(parent.getValue());
+        task.setTask((Task) parent.getValue());
         task.setPriority(Priority.Middle);
         task.setType(TaskType.task);
         newTasksDs.addItem(task);

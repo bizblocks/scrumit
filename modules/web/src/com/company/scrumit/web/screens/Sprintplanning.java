@@ -72,11 +72,11 @@ public class Sprintplanning extends AbstractWindow {
     private Metadata metadata;
 
     public void onBtnCreateSprintClick() {
-        Set<Task> s = twins.getValue();
+        Set<Task> s = (Set<Task>) twins.getValue();
         Sprint sprint = metadata.create(Sprint.class);
-        sprint.setTeam(team.getValue());
-        sprint.setPeriodStart(dateStart.getValue());
-        Date d = dateStart.getValue();
+        sprint.setTeam((Team) team.getValue());
+        sprint.setPeriodStart((Date) dateStart.getValue());
+        Date d = (Date) dateStart.getValue();
         d.setTime(d.getTime()+((Team)team.getValue()).getSprintSize()*ONE_DAY);
         sprint.setPeriodEnd(d);
         sprint.setTasks(s);

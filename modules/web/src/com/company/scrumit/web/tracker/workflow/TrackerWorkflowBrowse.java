@@ -15,7 +15,7 @@ import com.haulmont.cuba.gui.settings.Settings;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.cuba.security.entity.User;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 import org.springframework.context.event.EventListener;
 
@@ -243,11 +243,11 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
                         Element e = settings.get(id + "." + name);
                         if (e != null) {
                             ((HasSettings) component).applySettings(e);
-                            if (component instanceof Component.HasPresentations && e.attributeValue("presentation") != null) {
+                            if (component instanceof HasPresentations && e.attributeValue("presentation") != null) {
                                 final String def = e.attributeValue("presentation");
                                 if (!StringUtils.isEmpty(def)) {
                                     UUID defaultId = UUID.fromString(def);
-                                    ((Component.HasPresentations) component).applyPresentationAsDefault(defaultId);
+                                    ((HasPresentations) component).applyPresentationAsDefault(defaultId);
                                 }
                             }
                         }
