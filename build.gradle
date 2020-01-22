@@ -14,8 +14,8 @@ buildscript {
         maven {
             url 'https://repo.cuba-platform.com/content/groups/premium'
             credentials {
-                username(rootProject.hasProperty('premiumRepoUser') ? rootProject['premiumRepoUser'] : '180518001555')
-                password(rootProject.hasProperty('premiumRepoPass') ? rootProject['premiumRepoPass'] : 'eijQBeIEAJoR')
+                username(rootProject.hasProperty('premiumRepoUser') ? rootProject['premiumRepoUser'] : System.getenv('CUBA_PREMIUM_USER'))
+                password(rootProject.hasProperty('premiumRepoPass') ? rootProject['premiumRepoPass'] : System.getenv('CUBA_PREMIUM_PASSWORD'))
             }
         }
         maven {
