@@ -6,21 +6,13 @@
     <dsContext>
         <collectionDatasource id="tasksDs" class="com.company.scrumit.entity.Task" view="tasks-full">
             <query><![CDATA[
-            select distinct
-                projects
-            from scrumit$Team team
-                join team.members members
-                join team.members membersAll
-                join membersAll.teams teams
-                join teams.projects projects
-            where
-                projects.estimation is null
+            select e from scrumit$Task e
             ]]>
-                <filter>
-                    <and>
-                        <c>members.id = :custom$userId</c>
-                    </and>
-                </filter>
+<!--                <filter>-->
+<!--                    <and>-->
+<!--                        <c>members.id = :custom$userId</c>-->
+<!--                    </and>-->
+<!--                </filter>-->
             </query>
         </collectionDatasource>
     </dsContext>
