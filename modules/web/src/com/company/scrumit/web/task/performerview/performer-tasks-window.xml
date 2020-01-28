@@ -62,6 +62,7 @@
                         <column id="control"/>
                         <column id="planningTime"/>
                         <column id="actualTime"/>
+                        <column id="task"/>
                     </columns>
                     <rows datasource="tasksDs"/>
                     <rowsCount/>

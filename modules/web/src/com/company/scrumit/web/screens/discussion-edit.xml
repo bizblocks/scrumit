@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        class="com.company.scrumit.web.screens.DiscussionEdit"
+        messagesPack="com.company.scrumit.web.screens">
+    <dsContext>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true">
+        <grid spacing="true" width="100%" height="100%">
+            <columns count="1"/>
+            <rows>
+                <row flex="0">
+                    <scrollBox height="100%"
+                                >
+                        <vbox spacing="true" margin="true" height="70%" id="dialogSpace">
+                        </vbox>
+                    </scrollBox>
+                </row>
+                <row>
+                    <vbox id="inputBox" spacing="true" margin="true" height="100%">
+                        <richTextArea id="inputField" width="100%" height="auto"/>
+                        <button id="sendBtn" invoke="onSendBtnClick" caption="msg://send" align="BOTTOM_RIGHT"/>
+                    </vbox>
+                </row>
+            </rows>
+        </grid>
+    </layout>
+</window>

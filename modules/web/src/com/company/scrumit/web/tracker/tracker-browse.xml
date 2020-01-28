@@ -45,11 +45,9 @@
                 <column id="createTs"/>
                 <column id="shortdesc"/>
                 <column id="type"/>
-                <column id="statusOld"
-                        editable="true"/>
+                <column id="statusOld" editable="true"/>
                 <column id="description"/>
-                <column id="trackerPriorityType"
-                        editable="true"/>
+                <column id="trackerPriorityType" editable="true"/>
                 <column id="performer"/>
                 <column id="testingPlan"/>
                 <column id="status"/>
@@ -70,6 +68,7 @@
                         action="trackersTable.refresh"/>
                 <button id="excelBtn"
                         action="trackersTable.excel"/>
+                <button id="openDiscussionBtn" caption="msg://openDiscussion" invoke="onOpenDiscussionBtnClick"/>
                 <checkBox id="checkSelect"
                           align="MIDDLE_LEFT"
                           caption="msg://Select text"

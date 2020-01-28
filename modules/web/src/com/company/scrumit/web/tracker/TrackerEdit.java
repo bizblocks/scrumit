@@ -3,8 +3,11 @@ package com.company.scrumit.web.tracker;
 import com.company.scrumit.entity.*;
 import com.company.scrumit.web.task.TaskEdit;
 import com.groupstp.workflowstp.entity.*;
+import com.groupstp.workflowstp.exception.WorkflowException;
+import com.groupstp.workflowstp.service.WorkflowService;
 import com.groupstp.workflowstp.util.EqualsUtils;
 import com.groupstp.workflowstp.web.bean.WorkflowWebBean;
+import com.groupstp.workflowstp.web.util.messagedialog.MessageDialog;
 import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.FileDescriptor;
@@ -16,20 +19,17 @@ import com.haulmont.cuba.gui.components.Link;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
+import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 import com.haulmont.cuba.gui.data.impl.DatasourceImplementation;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.cuba.security.entity.User;
 import org.apache.commons.lang.StringUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
-import org.jsoup.select.NodeTraversor;
-import org.jsoup.select.NodeVisitor;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -73,6 +73,9 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
     @Inject
     private CollectionDatasource<FileDescriptor, UUID> filesDs;
+
+
+
     @Inject
     private FileMultiUploadField multiUpload;
 
@@ -100,11 +103,9 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     protected Workflow workflow;
     private WorkflowInstance workflowInstance;
     private WorkflowInstanceTask workflowInstanceTask;
+    @Inject
+    private WorkflowService workflowService;
 
-    @Override
-    protected void initNewItem(Tracker item) {
-        //item.setFiles(new ArrayList<>());
-    }
 
     @Override
     public void init(Map<String, Object> params) {
@@ -230,27 +231,11 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
         taskDs.refresh(Collections.singletonMap("project", TaskType.project));
 
-        initWorkflow();
+     //   initWorkflow();
 
         tasksTable.expandAll();
     }
 
-    private boolean initWorkflow() {
-        if (stage != null && workflow != null) {//this is screen of one of stage
-            if (EqualsUtils.equalAny(stage.getType(), StageType.USERS_INTERACTION, StageType.ARCHIVE)) {//we need to extend screen by stage
-                if (workflowWebBean.isActor(user, stage)) {
-                    try {
-                        workflowWebBean.extendEditor(getItem(), this, workflowInstanceTask);
-                    } catch (Exception e) {
-                        String message = getMessage("errorOnScreenExtension");
-                        close(CLOSE_ACTION_ID, true);
-                        throw new RuntimeException(message);
-                    }
-                }
-            }
-        }
-        return true;
-    }
 
     /**
      * создаёт задачу из текущего инцидента
@@ -279,7 +264,8 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
             }
 
         }
-        TaskEdit editor = (TaskEdit) lookupPickerField.getFrame().openEditor(item, WindowManager.OpenType.DIALOG);
+
+        AbstractEditor editor =  openEditor(item, WindowManager.OpenType.DIALOG);
         ((LookupField) ((FieldGroup) editor.getComponent("fieldGroup")).getField("type").getComponent()).setValue(TaskType.task);
         ((LookupField) ((FieldGroup) editor.getComponent("fieldGroup")).getField("priority").getComponent()).setValue(Priority.Middle);
         editor.getDialogOptions().setResizable(true);
@@ -294,6 +280,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 }
                 dataSource.addItem((Entity) item1);
                 dataSource.refresh();
+                tasksTable.getDatasource().refresh();
             }
             lookupPickerField.requestFocus();
         });
@@ -315,13 +302,14 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
      */
     public void onCreateSubTaskBtnClick() {
         Task subtask = dataManager.create(Task.class);
-        Task task = tasksTable.getSingleSelected();
+        Task task = dataManager.reload(tasksTable.getSingleSelected(),"tasks-full");
 
         if (task == null)
             return;
 
         try {
             subtask.setShortdesc("[subtask-" + subtask.getId() + "]");
+            task.getChildren().add(subtask);
             subtask.setTask(task);
             subtask.setParentBug(getItem());
             subtask.setPerformer(getItem().getPerformer());
@@ -329,6 +317,8 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
             subtask.setDeadline(task.getDeadline());
             subtask.setType(TaskType.task);
             dataManager.commit(subtask);
+            dataManager.commit(task);
+
         } catch (Exception e) {
             throw e;
         }
@@ -343,7 +333,6 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
 
         tasksTable.getDatasource().refresh();
         tasksTable.expand(task);
-        tasksTable.scrollTo(subtask);
     }
 
     private void queueUploadComplete() {
@@ -474,6 +463,44 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 ParamsMap.of(
                         "taskList", taskList
                 ));
+    }
+
+    public void onInWorkBtnClick() {
+        final Set<Task> records = tasksTable.getSelected();
+        if (!CollectionUtils.isEmpty(records)) {
+            try {
+                StringBuilder sb = new StringBuilder();
+                for (Task tr : records) {
+                    String message;
+                    try {
+                        tr = dataManager.reload(tr, "Task-process");
+                        if (tr.getStatus() == null) {
+                            if (/*tr.getPerformer() == null*/false) {
+                                message = getMessage("TaskWorkflowBrowseTableFrame.choosePerformer");
+                            } else {
+                                workflowService.startWorkflow(tr, workflowService.determinateWorkflow(tr));
+                                message = String.format(getMessage("TaskWorkflowBrowseTableFrame.workflowStarted"), tr.getId());
+                            }
+                        } else {
+                            message = String.format(getMessage("TaskWorkflowBrowseTableFrame.alreadyInProgress"), tr.getId());
+                        }
+                    } catch (WorkflowException e) {
+                        message = String.format(getMessage("TaskWorkflowBrowseTableFrame.workflowFailed"),
+                                tr.getUuid(), e.getMessage() == null ? getMessage("TaskWorkflowBrowseTableFrame.notAvailable") : e.getMessage());
+                    }
+                    if (sb.length() > 0) {
+                        sb.append("\n");
+                    }
+                    sb.append(message);
+                }
+                String message = sb.toString();
+                if (!StringUtils.isEmpty(message)) {
+                    MessageDialog.showText(getFrame(), message, false, true);
+                }
+            } finally {
+                taskDs.refresh();
+            }
+        }
     }
 }
 

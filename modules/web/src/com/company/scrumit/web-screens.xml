@@ -50,19 +50,23 @@
             template="com/company/scrumit/web/tracker/tracker-browse.xml"/>
     <screen id="scrumit$Tracker.edit"
             template="com/company/scrumit/web/tracker/tracker-edit.xml"/>
-    <screen id="tracker-workflow-table"
-            template="com/company/scrumit/web/tracker/workflow/frame/tracker-workflow-browse-table-frame.xml"/>
     <screen id="tracker-workflow-browse"
-            template="com/company/scrumit/web/tracker/workflow/tracker-workflow-browse.xml"/>
+            template="/com/company/scrumit/web/task/workflow/tracker-workflow-browse.xml"/>
     <screen id="loginWindow"
             template="com/company/scrumit/web/screens/ext-loginWindow.xml"/>
     <screen id="scrumit$Files.browse"
             template="com/company/scrumit/web/files/files-browse.xml"/>
     <screen id="screen"
             template="com/company/scrumit/web/screens/screen.xml"/>
-    <screen id="scrumit_TaskEstimationScreen" template="/com/company/scrumit/web/task/estimation/task-estimation-screen.xml"/>
-    <screen id="scrumit$TaskEstimation.browse" template="/com/company/scrumit/web/task/estimation/task-estimation-browse.xml"/>
-    <screen id="scrumit$TaskEstimation.edit" template="/com/company/scrumit/web/task/estimation/task-estimation-edit.xml"/>
+    <screen id="scrumit_TaskEstimationScreen"
+            template="/com/company/scrumit/web/task/estimation/task-estimation-screen.xml"/>
+    <screen id="scrumit$TaskEstimation.browse"
+            template="/com/company/scrumit/web/task/estimation/task-estimation-browse.xml"/>
+    <screen id="scrumit$TaskEstimation.edit"
+            template="/com/company/scrumit/web/task/estimation/task-estimation-edit.xml"/>
     <screen id="tracker-create"
             template="com/company/scrumit/web/tracker/tracker-create.xml"/>
+    <screen id="Task-workflow-table"
+            template="/com/company/scrumit/web/task/workflow/frame/tracker-workflow-browse-table-frame.xml"/>
+    <screen id="scrumit_DiscussionEdit" template="com/company/scrumit/web/screens/discussion-edit.xml"/>
 </screen-config>

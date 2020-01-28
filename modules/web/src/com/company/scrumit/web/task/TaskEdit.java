@@ -26,15 +26,14 @@ public class TaskEdit extends AbstractEditor<Task> {
     private static final long ONEDAY = 24 * 60 * 60 * 1000;
 
 
+    public static final String SCREEN_ID = " scrumit$Task.edit";
+
     @Named("fieldGroup.deadline")
     private DateField deadlineField;
     @Named("fieldGroup.begin")
     private DateField beginField;
     @Named("fieldGroup.duration")
     private TextField durationField;
-    @Inject
-    private Button btnControl;
-
     @Inject
     private Button btnReady;
     @Inject
@@ -61,14 +60,11 @@ public class TaskEdit extends AbstractEditor<Task> {
     public void ready() {
         super.ready();
         //кнопки Контроль и Готово
-        btnControl.setEnabled(false);
         btnReady.setEnabled(true);
         if (getItem().getDone() != null && getItem().getDone()) {
             btnReady.setEnabled(false);
-            btnControl.setEnabled(true);
         }
         if (getItem().getControl() != null && getItem().getControl()) {
-            btnControl.setEnabled(false);
         }
     }
 
@@ -99,7 +95,7 @@ public class TaskEdit extends AbstractEditor<Task> {
         }
         if (countDoneTask == countTask) {
             Stage stage = getStage(parentTracker);
-            WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(parentTracker, stage);
+            WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(getItem(), stage);
             try {
                 if (instanceTask != null) {
                     Map params = new HashMap();
@@ -113,38 +109,7 @@ public class TaskEdit extends AbstractEditor<Task> {
         this.close(this.COMMIT_ACTION_ID, true);
     }
 
-    public void onBtnControlClick() {
-        getItem().setControl(true);
-        if (this.isModified()) {
-            this.commitAndClose();
-        }
-        Tracker parentTracker = getItem().getParentBug();
-        if (parentTracker == null)
-            return;
-        parentTracker = dataManager.reload(parentTracker, "_full");
-        int countTask = parentTracker.getTask().size();
-        int countControlTask = 0;
-        for (Task task : parentTracker.getTask()) {
-            task = dataManager.reload(task, "tasks-performer-view");
-            if (task.getControl() != null && task.getControl()) {
-                countControlTask++;
-            }
-        }
-        if (countTask == countControlTask) {
-            Stage stage = getStage(parentTracker);
-            WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(parentTracker, stage);
-            try {
-                if (instanceTask != null) {
-                    Map params = new HashMap();
-                    params.put("isReady", "true");
-                    workflowService.finishTask(instanceTask, params);
-                }
-            } catch (Exception e) {
-                throw new RuntimeException("Ошибка обработки заявки", e);
-            }
-        }
-        this.close(this.COMMIT_ACTION_ID, true);
-    }
+
 
     private Stage getStage(Tracker parentBug) {
         return dataManager.load(Stage.class)

@@ -1,33 +1,30 @@
 package com.company.scrumit.entity;
 
+import com.groupstp.workflowstp.entity.Workflow;
 import com.groupstp.workflowstp.entity.WorkflowEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
-import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.core.entity.StandardEntity;
-import com.haulmont.cuba.core.entity.annotation.OnDelete;
-import com.haulmont.cuba.core.global.DeletePolicy;
+import com.haulmont.cuba.core.entity.annotation.Lookup;
+import com.haulmont.cuba.core.entity.annotation.LookupType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-import com.haulmont.cuba.core.entity.annotation.Lookup;
-import com.haulmont.cuba.core.entity.annotation.LookupType;
-import com.groupstp.workflowstp.entity.Workflow;
-import com.groupstp.workflowstp.entity.WorkflowEntityStatus;
-import com.haulmont.cuba.core.entity.annotation.Listeners;
-
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TRACKER")
 @Entity(name = "scrumit$Tracker")
-public class Tracker extends StandardEntity implements WorkflowEntity<UUID> {
+public class Tracker extends StandardEntity  {
     private static final long serialVersionUID = -8847125133735817612L;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
+
+    @Column(name = "INCIDENT_STATUS")
+    protected Integer incidentStatus;
 
     @Column(name = "STEP_NAME")
     protected String stepName;
@@ -74,21 +71,48 @@ public class Tracker extends StandardEntity implements WorkflowEntity<UUID> {
     @Column(name = "WIKI_URL", length = 1024)
     protected String wikiUrl;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "tracker")
+    protected Discussion discussion;
+
+    public IncidentStatus getIncidentStatus() {
+        return incidentStatus == null ? null : IncidentStatus.fromId(incidentStatus);
+    }
+
+    public void setIncidentStatus(IncidentStatus incidentStatus) {
+        this.incidentStatus = incidentStatus == null ? null : incidentStatus.getId();
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public Discussion getDiscussion() {
+        return discussion;
+    }
+
+    public void setDiscussion(Discussion discussion) {
+        this.discussion = discussion;
+    }
+
+//    public WorkflowEntityStatus getStatus() {
+//        return status;
+//    }
+//
+//    @Override
+//    public void setStatus(WorkflowEntityStatus status) {
+//        this.status = status;
+//    }
+
     public void setWikiUrl(String wikiUrl) {
         this.wikiUrl = wikiUrl;
     }
 
     public String getWikiUrl() {
         return wikiUrl;
-    }
-
-
-    public void setStatus(WorkflowEntityStatus status) {
-        this.status = status == null ? null : status.getId();
-    }
-
-    public WorkflowEntityStatus getStatus() {
-        return status == null ? null : WorkflowEntityStatus.fromId(status);
     }
 
 
@@ -99,16 +123,6 @@ public class Tracker extends StandardEntity implements WorkflowEntity<UUID> {
     public Status getStatusOld() {
         return statusOld == null ? null : Status.fromId(statusOld);
     }
-
-
-
-
-
-
-
-
-
-
 
     public void setStepName(String stepName) {
         this.stepName = stepName;

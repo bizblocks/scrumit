@@ -75,10 +75,6 @@
                     caption="msg://btnReady"
                     invoke="onBtnReadyClick"
                     stylename="primary"/>
-            <button id="btnControl"
-                    caption="msg://btnControl"
-                    invoke="onBtnControlClick"
-                    stylename="primary"/>
             <frame id="windowActions"
                    screen="editWindowActions"
                    width="AUTO"/>

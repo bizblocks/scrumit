@@ -25,5 +25,7 @@
         <class>com.company.scrumit.entity.ContactsStatus</class>
         <class>com.company.scrumit.entity.ProjectTelegramChatIdLink</class>
         <class>com.company.scrumit.entity.TaskEstimation</class>
+        <class>com.company.scrumit.entity.Discussion</class>
+        <class>com.company.scrumit.entity.Message</class>
     </persistence-unit>
 </persistence>

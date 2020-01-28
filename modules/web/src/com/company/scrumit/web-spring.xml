@@ -21,6 +21,7 @@
                 <entry key="scrumit_GitService"
                        value="com.company.scrumit.service.GitService"/>
                 <entry key="scrumit_TaskEstimationService" value="com.company.scrumit.service.TaskEstimationService"/>
+                <entry key="scrumit_TrackerService" value="com.company.scrumit.service.TrackerService"/>
             </map>
         </property>
     </bean>

@@ -1,6 +1,7 @@
 package com.company.scrumit.web.tracker;
 
 import com.company.scrumit.entity.Tracker;
+import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
 
@@ -27,5 +28,12 @@ public class TrackerBrowse extends AbstractLookup {
     public void init(Map<String, Object> params) {
         super.init(params);
         checkSelect.addValueChangeListener(e -> trackersTable.setTextSelectionEnabled((Boolean) e.getValue()));
+    }
+
+    public void onOpenDiscussionBtnClick() {
+        Tracker selected = trackersTable.getSingleSelected();
+
+
+        openFrame(this,"scrumit_DiscussionEdit", ParamsMap.of("tracker",selected));
     }
 }

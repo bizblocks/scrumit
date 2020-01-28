@@ -38,6 +38,7 @@
                         caption="ID"/>
                 <column id="priority"/>
                 <column id="control"/>
+                <column id="task"/>
             </columns>
             <rows datasource="tasksDs"/>
             <rowsCount/>
