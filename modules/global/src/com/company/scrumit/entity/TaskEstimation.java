@@ -15,15 +15,15 @@ public class TaskEstimation extends StandardEntity {
     private static final long serialVersionUID = 9092560208258651043L;
 
     @NotNull
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME")
     protected String name;
 
     @NotNull
-    @Column(name = "DESCRIPTION", nullable = false)
+    @Column(name = "DESCRIPTION")
     protected String description;
 
     @NotNull
-    @Column(name = "VALUE_", nullable = false)
+    @Column(name = "VALUE_")
     protected Double value;
 
     public void setValue(Double value) {

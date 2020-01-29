@@ -3,6 +3,7 @@ package com.company.scrumit.web.task.estimation;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskEstimation;
 import com.company.scrumit.service.TaskEstimationService;
+import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.AbstractWindow;
@@ -34,6 +35,10 @@ public class TaskEstimationScreen extends AbstractWindow {
     @Inject
     private UserSessionSource userSessionSource;
 
+
+    @Inject
+    private DataManager dataManager;
+
     private User currentUser;
 
     @Override
@@ -56,9 +61,9 @@ public class TaskEstimationScreen extends AbstractWindow {
 
         Task singleSelected = table.getSingleSelected();
         if (singleSelected != null) {
-
             Map<String, Object> params = new HashMap<>();
-//            params.put("taskId", taskId);
+            params.put("taskId", singleSelected.getId());
+            params.put("desc", singleSelected.getShortdesc());
             openLookup(TaskEstimation.class, this::onEstimationLookup, WindowManager.OpenType.DIALOG, params);
         }
     }

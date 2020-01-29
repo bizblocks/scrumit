@@ -8,11 +8,6 @@
             <query><![CDATA[
             select e from scrumit$Task e
             ]]>
-<!--                <filter>-->
-<!--                    <and>-->
-<!--                        <c>members.id = :custom$userId</c>-->
-<!--                    </and>-->
-<!--                </filter>-->
             </query>
         </collectionDatasource>
     </dsContext>

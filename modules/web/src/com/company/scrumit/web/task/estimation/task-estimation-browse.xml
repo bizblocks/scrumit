@@ -26,11 +26,8 @@
         <groupTable id="taskEstimationsTable"
                     width="100%">
             <actions>
-                <action id="create"
-                        openType="NEW_TAB"/>
                 <action id="edit"
                         openType="NEW_TAB"/>
-                <action id="remove"/>
             </actions>
             <columns>
                 <column id="name" caption="mainMsg://name"/>
@@ -41,9 +38,7 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="taskEstimationsTable.create"/>
                 <button id="editBtn" action="taskEstimationsTable.edit"/>
-                <button id="removeBtn" action="taskEstimationsTable.remove"/>
             </buttonsPanel>
         </groupTable>
     </layout>
