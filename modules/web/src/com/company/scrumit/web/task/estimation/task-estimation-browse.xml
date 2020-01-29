@@ -10,7 +10,9 @@
                          class="com.company.scrumit.entity.TaskEstimation"
                          view="_local">
             <query>
-                <![CDATA[select e from scrumit$TaskEstimation e]]>
+                <![CDATA[select e from scrumit$TaskEstimation e
+                       where e.value = null
+]]>
             </query>
         </groupDatasource>
     </dsContext>
@@ -18,11 +20,6 @@
                 width="800"/>
     <layout expand="taskEstimationsTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="taskEstimationsTable"
-                datasource="taskEstimationsDs">
-            <properties include=".*"/>
-        </filter>
         <groupTable id="taskEstimationsTable"
                     width="100%">
             <actions>
@@ -30,7 +27,7 @@
                         openType="NEW_TAB"/>
             </actions>
             <columns>
-                <column id="name" caption="mainMsg://name"/>
+                <column id="taskId" caption="mainMsg://taskId"/>
                 <column id="description" caption="mainMsg://description"/>
                 <column id="value" caption="msg://estimation.value"/>
             </columns>

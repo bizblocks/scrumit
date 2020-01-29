@@ -26,15 +26,8 @@ public class TaskEstimationBrowse extends AbstractLookup {
         super.init(params);
         currentUser = userSessionSource.getUserSession().getCurrentOrSubstitutedUser();
         TaskEstimation taskEstimation = new TaskEstimation();
-        taskEstimation.setId((UUID) params.get("taskId"));
+        taskEstimation.setTaskId( params.get("taskId").toString());
         taskEstimation.setDescription((String) params.get("desc"));
         taskEstimationsDs.addItem(taskEstimation);
-//        refreshTasks();
-    }
-
-    private void refreshTasks() {
-        Map<String, Object> params = new HashMap<>();
-        params.put("userId", currentUser.getId());
-        taskEstimationsDs.refresh();
     }
 }

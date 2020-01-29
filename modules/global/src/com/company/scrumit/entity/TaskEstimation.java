@@ -8,15 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@NamePattern("%s|name")
+@NamePattern("%s|taskId")
 @Table(name = "SCRUMIT_TASK_ESTIMATION")
 @Entity(name = "scrumit$TaskEstimation")
 public class TaskEstimation extends StandardEntity {
     private static final long serialVersionUID = 9092560208258651043L;
 
     @NotNull
-    @Column(name = "NAME")
-    protected String name;
+    @Column(name = "taskId")
+    protected String taskId;
 
     @NotNull
     @Column(name = "DESCRIPTION")
@@ -42,11 +42,11 @@ public class TaskEstimation extends StandardEntity {
         this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

@@ -250,4 +250,5 @@
             <property name="size"/>
         </property>
     </view>
+    <view entity="scrumit$TaskEstimation" name="tasks-estimation" extends="_local"/>
 </views>
