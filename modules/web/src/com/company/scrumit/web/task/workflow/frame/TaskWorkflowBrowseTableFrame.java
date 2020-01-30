@@ -165,11 +165,11 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
         trackerTable.setDatasource(trackerDs);
         trackerTable.setWidthFull();
         trackerTable.setHeightFull();
-        trackerTable.groupByColumns("project","incidentStatus");
         trackerTable.setColumnCaption("incidentStatus","Статус инцидента");
         trackerTable.removeColumn(trackerTable.getColumn("description"));
         this.add(trackerTable);
         trackerDs.refresh();
+        trackerTable.groupByColumns("project","incidentStatus");
         expand(trackerTable);
     }
 
@@ -198,6 +198,12 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
             query.append(" (e.").append(property).append(" is null or e.").append(property).append(".id in(")
                     .append(projects.stream().map(e -> "'" + e.getId() + "'").collect(Collectors.joining(",")))
                     .append("))");
+            if (!isIncidentsTab){
+                query.append(" or (e.type ='").append(TaskType.fromId("project")).append("' and e.id in(")
+                        .append(projects.stream().map(e -> "'" + e.getId() + "'").collect(Collectors.joining(",")))
+                        .append("))");
+
+            }
         } else {
             query.append("and e.").append(property).append(" is null");
         }
@@ -341,8 +347,6 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
         addEditAction(taskTable);
         addRefreshAction(taskTable);
         addExcelAction(taskTable);
-
-        taskTable.sort("top", Table.SortDirection.ASCENDING);
 
         //инициализировать расширения
         initWorkflowExtension(params);

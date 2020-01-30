@@ -18,11 +18,11 @@
                 datasource="taskDs"
                 useMaxResults="false"/>
         <buttonsPanel id="buttonsPanel"/>
-        <treeTable id="taskTable" height="100%" width="100%" textSelectionEnabled="true" aggregatable="true">
+        <treeTable id="taskTable" height="100%" width="100%" textSelectionEnabled="true" aggregatable="true"
+                   responsive="true">
             <columns>
                 <column id="shortdesc"/>
-                <column id="top"/>
-                <column id="parentBug" link="true" linkScreen="scrumit$Tracker.edit" linkScreenOpenType="NEW_TAB"/>
+                <column id="parentBug" link="true" linkScreen="scrumit$Tracker.edit" linkScreenOpenType="DIALOG"/>
                 <column id="begin"/>
                 <column id="duration"/>
                 <column id="done"/>
@@ -33,9 +33,7 @@
                 <column id="priority"/>
                 <column id="realduration"/>
                 <column id="type"/>
-                <column id="description"/>
                 <column id="deadline"/>
-                <column id="level"/>
                 <column id="amount"/>
                 <column id="ssId"/>
             </columns>

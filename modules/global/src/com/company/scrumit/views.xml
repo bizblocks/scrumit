@@ -155,12 +155,11 @@
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
           name="task-top">
-        <property name="top"
-                  view="_minimal"/>
-        <property name="level"/>
-        <property name="performer"
-                  view="_minimal"/>
         <property name="testingPlan"/>
+        <property name="type"/>
+        <property name="performer" view="_minimal"/>
+        <property name="level"/>
+        <property name="top" view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Meeting"
           extends="_local"
