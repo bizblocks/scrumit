@@ -20,12 +20,16 @@ public class TrackerServiceBean implements TrackerService {
         Boolean isNew = Boolean.FALSE;
         Boolean isDone = Boolean.FALSE;
         Boolean isInWork = Boolean.FALSE;
-        for (Task task : incident.getTask()) {
-            task = dataManager.reload(task, "task-tree");
-            result = checkStatusByChildrenRecursive(isNew, isDone, isInWork, task);
+        if (!incident.getTask().isEmpty()) {
+            for (Task task : incident.getTask()) {
+                task = dataManager.reload(task, "task-tree");
+                result = checkStatusByChildrenRecursive(isNew, isDone, isInWork, task);
+                incident.setIncidentStatus(result);
+            }
+        }else {
+            result = IncidentStatus.NEW;
+            incident.setIncidentStatus(result);
         }
-
-        incident.setIncidentStatus(result);
         dataManager.commit(incident);
         return result;
     }

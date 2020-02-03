@@ -1,11 +1,10 @@
 package com.company.scrumit.web.tracker;
 
 import com.company.scrumit.entity.*;
-import com.company.scrumit.web.task.TaskEdit;
+import com.company.scrumit.service.TrackerService;
 import com.groupstp.workflowstp.entity.*;
 import com.groupstp.workflowstp.exception.WorkflowException;
 import com.groupstp.workflowstp.service.WorkflowService;
-import com.groupstp.workflowstp.util.EqualsUtils;
 import com.groupstp.workflowstp.web.bean.WorkflowWebBean;
 import com.groupstp.workflowstp.web.util.messagedialog.MessageDialog;
 import com.haulmont.bali.util.ParamsMap;
@@ -105,11 +104,16 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     private WorkflowInstanceTask workflowInstanceTask;
     @Inject
     private WorkflowService workflowService;
+    @Inject
+    private TrackerService trackerService;
 
 
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
+        addCloseWithCommitListener(() -> {
+            trackerService.updateIncidentStatus(getItem());
+        });
     }
 
     @Override

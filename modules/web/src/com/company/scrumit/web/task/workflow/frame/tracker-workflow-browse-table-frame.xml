@@ -22,7 +22,7 @@
                    responsive="true">
             <columns>
                 <column id="shortdesc"/>
-                <column id="parentBug" link="true" linkScreen="scrumit$Tracker.edit" linkScreenOpenType="DIALOG"/>
+                <column id="parentBug" link="true" linkScreen="scrumit$Tracker.edit" linkScreenOpenType="NEW_TAB"/>
                 <column id="begin"/>
                 <column id="duration"/>
                 <column id="done"/>

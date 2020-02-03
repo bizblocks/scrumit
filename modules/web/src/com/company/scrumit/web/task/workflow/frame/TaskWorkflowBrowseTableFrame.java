@@ -11,7 +11,6 @@ import com.groupstp.workflowstp.web.bean.WorkflowWebBean;
 import com.groupstp.workflowstp.web.components.AbstractXmlDescriptorFrame;
 import com.groupstp.workflowstp.web.components.ExternalSelectionGroupTable;
 import com.groupstp.workflowstp.web.util.action.AlwaysActiveAction;
-import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.WindowParam;
@@ -49,8 +48,6 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
     @Inject
     protected DataManager dataManager;
     @Inject
-    private WorkflowService workflowService;
-    @Inject
     protected WorkflowWebBean workflowWebBean;
     @WindowParam(name = TAB_TYPE, required = true)
     protected TabType tabType;
@@ -59,8 +56,6 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
     protected Boolean viewOnly;
     @Inject
     private UserSession userSession;
-    @Inject
-    private TrackerService trackerService;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -69,10 +64,10 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
         initFiltersId(params);
 
         //инициализация запроса
-        if (TabType.NEW.equals(tabType)){
+        if (TabType.NEW.equals(tabType)) {
             String query = initSqlQuery(params);
             replaceTable(query);
-        }else {
+        } else {
             initSqlQuery(params);
         }
 
@@ -127,7 +122,7 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
                 sqlQuery = "select e from scrumit$Tracker e ";
                 StringBuilder trackerQuery = new StringBuilder(sqlQuery);
                 trackerQuery.append(" where ");
-                addTeamFiltration(trackerQuery,params,true);
+                addTeamFiltration(trackerQuery, params, true);
                 sqlQuery = trackerQuery.toString();
                 break;
             case WORKFLOW:
@@ -138,7 +133,7 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
                 workflowQuery.append("e.stepName='").append(stage.getName()).append("' ");
                 workflowQuery.append(" and ");
 
-                addTeamFiltration(workflowQuery,params,false);
+                addTeamFiltration(workflowQuery, params, false);
                 sqlQuery = workflowQuery.toString();
                 taskDs.setQuery(sqlQuery);
                 break;
@@ -152,7 +147,7 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
     }
 
     private void replaceTable(String trackerQuery) {
-        GroupDatasource<Tracker,UUID> trackerDs = new DsBuilder(getDsContext())
+        GroupDatasource<Tracker, UUID> trackerDs = new DsBuilder(getDsContext())
                 .setJavaClass(Tracker.class)
                 .setViewName("tracker-newTab")
                 .setId("trackerDs")
@@ -165,19 +160,19 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
         trackerTable.setDatasource(trackerDs);
         trackerTable.setWidthFull();
         trackerTable.setHeightFull();
-        trackerTable.setColumnCaption("incidentStatus","Статус инцидента");
+        trackerTable.setColumnCaption("incidentStatus", "Статус инцидента");
         trackerTable.removeColumn(trackerTable.getColumn("description"));
         this.add(trackerTable);
         trackerDs.refresh();
-        trackerTable.groupByColumns("project","incidentStatus");
+        trackerTable.groupByColumns("project", "incidentStatus");
         expand(trackerTable);
     }
 
 
-    private void addTeamFiltration(StringBuilder query,Map<String, Object> params, boolean isIncidentsTab) {
-        String property = isIncidentsTab?"project":"top";
+    private void addTeamFiltration(StringBuilder query, Map<String, Object> params, boolean isIncidentsTab) {
+        String property = isIncidentsTab ? "project" : "top";
         User currentUser = (User) params.get(USER);
-        if (currentUser==null){
+        if (currentUser == null) {
             currentUser = userSession.getUser();
         }
         Performer performer = null;
@@ -198,7 +193,7 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
             query.append(" (e.").append(property).append(" is null or e.").append(property).append(".id in(")
                     .append(projects.stream().map(e -> "'" + e.getId() + "'").collect(Collectors.joining(",")))
                     .append("))");
-            if (!isIncidentsTab){
+            if (!isIncidentsTab) {
                 query.append(" or (e.type ='").append(TaskType.fromId("project")).append("' and e.id in(")
                         .append(projects.stream().map(e -> "'" + e.getId() + "'").collect(Collectors.joining(",")))
                         .append("))");
@@ -235,11 +230,18 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
             public String getWindowId() {
                 return TrackerEdit.SCREEN_ID;
             }
+
+            @Override
+            public void actionPerform(Component component) {
+                openEditor(dataManager.create(Tracker.class), WindowManager.OpenType.NEW_TAB).addCloseWithCommitListener(() -> {
+                    trackerTable.getDatasource().refresh();
+                });
+            }
         };
         Button createButton = componentsFactory.createComponent(Button.class);
         createButton.setAction(createAction);
 
-        RemoveAction removeAction = new RemoveAction(trackerTable,true,"removeTracker") {
+        RemoveAction removeAction = new RemoveAction(trackerTable, true, "removeTracker") {
             @Override
             public boolean isPermitted() {
                 if (super.isPermitted()) {
@@ -373,7 +375,7 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
 
 
     public void addEditAction(Table table) {
-        EditAction editAction = EditAction.create(table, WindowManager.OpenType.NEW_TAB,TaskEdit.SCREEN_ID);
+        EditAction editAction = EditAction.create(table, WindowManager.OpenType.NEW_TAB, TaskEdit.SCREEN_ID);
         Button editButton = componentsFactory.createComponent(Button.class);
         editButton.setAction(editAction);
         table.addAction(editAction);
