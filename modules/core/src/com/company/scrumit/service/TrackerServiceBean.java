@@ -16,6 +16,7 @@ public class TrackerServiceBean implements TrackerService {
 
     @Override
     public IncidentStatus updateIncidentStatus(Tracker incident) {
+        incident = dataManager.reload(incident,"tracker-newTab");
         IncidentStatus result = null;
         Boolean isNew = Boolean.FALSE;
         Boolean isDone = Boolean.FALSE;
