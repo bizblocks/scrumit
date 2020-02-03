@@ -23,6 +23,7 @@
             <columns>
                 <column id="shortdesc"/>
                 <column id="parentBug" link="true" linkScreen="scrumit$Tracker.edit" linkScreenOpenType="NEW_TAB"/>
+                <column id="createTs" caption="msg://creationTime"/>
                 <column id="begin"/>
                 <column id="duration"/>
                 <column id="done"/>

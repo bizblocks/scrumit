@@ -188,8 +188,8 @@
                                 <columns>
                                     <column id="shortdesc"/>
                                     <column id="id"/>
-                                    <column id="stepName"/>
-                                    <column id="status"/>
+                                    <column id="stepName" caption="msg://stage"/>
+                                    <column id="status" caption="msg://status"/>
                                     <column id="testingPlan"/>
                                     <column id="planningTime"/>
                                     <column id="actualTime"/>

@@ -72,6 +72,7 @@
             <property name="stepName"/>
             <property name="status"/>
         </property>
+        <property name="createTs"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
