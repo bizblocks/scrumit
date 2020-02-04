@@ -3,14 +3,15 @@
         class="com.company.scrumit.web.task.estimation.TaskEstimationScreen"
         messagesPack="com.company.scrumit.web"
         caption="msg://menu-config.TaskEstimationScreen.caption">
-    <dsContext>
-        <collectionDatasource id="tasksDs" class="com.company.scrumit.entity.Task" view="tasks-full">
-            <query><![CDATA[
-            select e from scrumit$Task e
-            ]]>
-            </query>
-        </collectionDatasource>
-    </dsContext>
+
+    <data>
+        <collection id="taskDc" class="com.company.scrumit.entity.Task" view="tasks-full">
+            <loader id="taskDl">
+
+            </loader>
+        </collection>
+
+    </data>
     <actions>
         <action id="estimateTask" invoke="onEstimateTaskClick"/>
         <action id="update" caption="msg://update" invoke="onUpdateClick"/>
@@ -18,7 +19,8 @@
     <dialogMode height="600"
                 width="800"/>
     <layout>
-        <table id="table">
+        <table id="table"
+        dataContainer="taskDc">
             <columns>
                 <column id="shortdesc"/>
                 <column id="testingPlan"/>
@@ -37,7 +39,6 @@
                 <column id="amount"/>
                 <column id="ssId"/>
             </columns>
-            <rows datasource="tasksDs"/>
             <buttonsPanel>
                 <button id="estimate" caption="msg://button.estimate.task" action="estimateTask" enable="false"/>
                 <button caption="msg://update" action="update"/>

@@ -22,6 +22,5 @@
         <item screen="scrumit$Performer.browse"/>
         <item screen="scrumit$ContactsStatus.browse"/>
         <item screen="scrumit$City.browse"/>
-        <item screen="scrumit$TaskEstimation.browse"/>
     </menu>
 </menu-config>

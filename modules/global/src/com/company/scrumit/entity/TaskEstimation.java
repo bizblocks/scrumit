@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @NamePattern("%s|taskId")
 @Table(name = "SCRUMIT_TASK_ESTIMATION")
@@ -16,15 +17,22 @@ public class TaskEstimation extends StandardEntity {
 
     @NotNull
     @Column(name = "taskId")
-    protected String taskId;
+    protected UUID taskId;
 
     @NotNull
     @Column(name = "DESCRIPTION")
     protected String description;
 
+    @Column(name = "USERID")
+    protected UUID userID;
+
     @NotNull
     @Column(name = "VALUE_")
     protected Double value;
+
+    public void setUserID(UUID userID) {this.userID = userID;}
+
+    public UUID getUserID() {return userID;}
 
     public void setValue(Double value) {
         this.value = value;
@@ -42,11 +50,11 @@ public class TaskEstimation extends StandardEntity {
         this.description = description;
     }
 
-    public String getTaskId() {
+    public UUID getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(String taskId) {
+    public void setTaskId(UUID taskId) {
         this.taskId = taskId;
     }
 }

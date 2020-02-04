@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
-        caption="msg://editorCaption"
-        class="com.company.scrumit.web.task.estimation.TaskEstimationEdit"
-        datasource="taskEstimationDs"
-        focusComponent="fieldGroup"
-        messagesPack="com.company.scrumit.web.task">
-    <dsContext>
-        <datasource id="taskEstimationDs"
-                    class="com.company.scrumit.entity.TaskEstimation"
-                    view="_local"/>
-    </dsContext>
-    <dialogMode height="600"
-                width="800"/>
-    <layout expand="windowActions" spacing="true">
-        <fieldGroup id="fieldGroup" datasource="taskEstimationDs">
-            <column width="250px">
-                <field property="name"/>
-                <field property="description"/>
-                <field property="value"/>
-            </column>
-        </fieldGroup>
-        <frame id="windowActions"
-               screen="editWindowActions"/>
+        caption="Task estimation">
+
+    <data>
+        <collection id="taskEstimationDs" class="com.company.scrumit.entity.TaskEstimation" view="_local">
+            <loader id="taskEstimationDl">
+                <query>
+                    select e from scrumit$TaskEstimation e
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <layout>
+        <label id="taskId" value="TaskId" stylename="bold"/>
+        <label id="userId" value="userId" stylename="bold"/>
+        <textField id="value" width="100%" inputPrompt="Enter here your value"/>
+        <hbox spacing="true">
+            <button id="saveBtn" caption="Save"/>
+            <button id="closeBtn" caption="Close"/>
+        </hbox>
     </layout>
 </window>

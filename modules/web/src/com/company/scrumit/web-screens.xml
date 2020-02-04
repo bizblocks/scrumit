@@ -61,7 +61,6 @@
     <screen id="screen"
             template="com/company/scrumit/web/screens/screen.xml"/>
     <screen id="scrumit_TaskEstimationScreen" template="/com/company/scrumit/web/task/estimation/task-estimation-screen.xml"/>
-    <screen id="scrumit$TaskEstimation.browse" template="/com/company/scrumit/web/task/estimation/task-estimation-browse.xml"/>
     <screen id="scrumit$TaskEstimation.edit" template="/com/company/scrumit/web/task/estimation/task-estimation-edit.xml"/>
     <screen id="tracker-create"
             template="com/company/scrumit/web/tracker/tracker-create.xml"/>
