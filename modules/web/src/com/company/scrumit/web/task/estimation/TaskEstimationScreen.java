@@ -58,6 +58,10 @@ public class TaskEstimationScreen extends Screen {
 
     @Subscribe
     protected void onInit(InitEvent event) {
+        getTaskDc();
+    }
+
+    private void getTaskDc() {
         currentUser = userSessionSource.getUserSession().getCurrentOrSubstitutedUser();
         List<Task> allTasks =  dataManager.loadList(LoadContext.create(Task.class).setQuery(
                 LoadContext.createQuery("select e from scrumit$Task e")
@@ -90,9 +94,5 @@ public class TaskEstimationScreen extends Screen {
             screen.setTaskEstimationDs(taskId, currentUser.getId());
             screen.show();
         }
-    }
-
-    public void onUpdateClick() {
-
     }
 }

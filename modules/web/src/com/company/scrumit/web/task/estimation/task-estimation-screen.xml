@@ -14,7 +14,6 @@
     </data>
     <actions>
         <action id="estimateTask" invoke="onEstimateTaskClick"/>
-        <action id="update" caption="msg://update" invoke="onUpdateClick"/>
     </actions>
     <dialogMode height="600"
                 width="800"/>
@@ -41,7 +40,6 @@
             </columns>
             <buttonsPanel>
                 <button id="estimate" caption="msg://button.estimate.task" action="estimateTask" enable="false"/>
-                <button caption="msg://update" action="update"/>
             </buttonsPanel>
         </table>
     </layout>
