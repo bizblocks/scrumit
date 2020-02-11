@@ -1,5 +1,6 @@
 package com.company.scrumit.web.task.estimation;
 
+import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskEstimation;
 import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.DataManager;
@@ -59,7 +60,39 @@ public class TaskEstimationEdit extends Screen {
         taskEstimation.setValue(Double.valueOf(value.getValue()));
         CommitContext commitContext = new CommitContext(taskEstimation);
         dataManager.commit(commitContext);
+        calculateTaskAverageEstimation();
         closeWithDefaultAction();
+    }
+
+    private void calculateTaskAverageEstimation() {
+        List<TaskEstimation> estimatedTasks = getAllTaskEstimationsObjectsFromDb();
+        estimatedTasks = estimatedTasks.stream().filter(t->t.getTaskId().
+                equals(UUID.fromString(taskId.getValue()))).collect(Collectors.toList());
+        double sum = 0.0;
+        for (int i = 0; i < estimatedTasks.size(); i++) {
+            sum += estimatedTasks.get(i).getValue();
+        }
+        double result = sum/estimatedTasks.size();
+        Task task = getTaskByIdFromDb();
+        task.setAverageEstimated(result);
+        CommitContext commitContext = new CommitContext(task);
+        dataManager.commit(commitContext);
+    }
+
+    public List<TaskEstimation> getAllTaskEstimationsObjectsFromDb() {
+        LoadContext context = LoadContext.create(TaskEstimation.class)
+                .setQuery(LoadContext.createQuery(
+                        "select e from scrumit$TaskEstimation e "));
+        List<TaskEstimation> estimatedTasks = dataManager.loadList(context);
+        return estimatedTasks;
+    }
+
+    private Task getTaskByIdFromDb() {
+        Task task =  dataManager.loadList(LoadContext.create(Task.class).setQuery(
+                LoadContext.createQuery("select e from scrumit$Task e where e.id = '" + taskId.getValue() + "'")
+        )).get(0);
+
+        return task;
     }
 
     @Subscribe("closeBtn")

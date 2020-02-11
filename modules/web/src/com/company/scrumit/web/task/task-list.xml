@@ -161,6 +161,7 @@
                             <field property="type"/>
                             <field property="begin"/>
                             <field property="duration"/>
+                            <field property="averageEstimated"/>
                             <field property="deadline"/>
                         </column>
                         <column width="300px">

@@ -85,6 +85,14 @@ public class TaskEstimationScreen extends Screen {
         }
     }
 
+    public List<TaskEstimation> getAllTaskEstimationsObjectsFromDb() {
+        LoadContext context = LoadContext.create(TaskEstimation.class)
+                .setQuery(LoadContext.createQuery(
+                        "select e from scrumit$TaskEstimation e "));
+        List<TaskEstimation> estimatedTasks = dataManager.loadList(context);
+        return estimatedTasks;
+    }
+
     public void onEstimateTaskClick() {
 
         Task singleSelected = table.getSingleSelected();
