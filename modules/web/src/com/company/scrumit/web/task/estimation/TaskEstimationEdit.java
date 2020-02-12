@@ -19,13 +19,12 @@ import java.util.stream.Collectors;
 @UiController("TaskEstimationEdit")
 @UiDescriptor("task-estimation-edit.xml")
 @EditedEntityContainer("taskEstimationDs")
-@DialogMode(forceDialog = true, width = "600px", height = "400")
+@DialogMode(forceDialog = true, width = "300px", height = "200")
 public class TaskEstimationEdit extends Screen {
-    @Inject
-    private Label<String> taskId;
 
-    @Inject
-    private Label<String> userId;
+    private UUID taskId;
+
+    private UUID userId;
 
     @Inject
     private TextField<String> value;
@@ -40,23 +39,19 @@ public class TaskEstimationEdit extends Screen {
         List<TaskEstimation> estimatedTasks = dataManager.loadList(context);
         estimatedTasks = estimatedTasks.stream().filter(t->t.getUserID().equals(userId)).collect(Collectors.toList());
         List<UUID> taskIds = estimatedTasks.stream().map(TaskEstimation::getTaskId).collect(Collectors.toList());
+        this.taskId = taskId;
+        this.userId = userId;
         if (taskIds.contains(taskId)) {
             this.value.setValue("Already Estimated!");
             this.value.setEditable(false);
-        } else {
-            TaskEstimation taskEstimation = new TaskEstimation();
-            taskEstimation.setTaskId(taskId);
-            this.taskId.setValue(taskId.toString());
-            taskEstimation.setUserID(userId);
-            this.userId.setValue(userId.toString());
         }
     }
 
     @Subscribe("saveBtn")
     protected  void onSaveBtnClick(Button.ClickEvent event) {
         TaskEstimation taskEstimation = dataManager.create(TaskEstimation.class);
-        taskEstimation.setUserID(UUID.fromString(userId.getValue()));
-        taskEstimation.setTaskId(UUID.fromString(taskId.getValue()));
+        taskEstimation.setUserID(userId);
+        taskEstimation.setTaskId(taskId);
         taskEstimation.setValue(Double.valueOf(value.getValue()));
         CommitContext commitContext = new CommitContext(taskEstimation);
         dataManager.commit(commitContext);
@@ -67,7 +62,7 @@ public class TaskEstimationEdit extends Screen {
     private void calculateTaskAverageEstimation() {
         List<TaskEstimation> estimatedTasks = getAllTaskEstimationsObjectsFromDb();
         estimatedTasks = estimatedTasks.stream().filter(t->t.getTaskId().
-                equals(UUID.fromString(taskId.getValue()))).collect(Collectors.toList());
+                equals(taskId)).collect(Collectors.toList());
         double sum = 0.0;
         for (int i = 0; i < estimatedTasks.size(); i++) {
             sum += estimatedTasks.get(i).getValue();
@@ -89,7 +84,7 @@ public class TaskEstimationEdit extends Screen {
 
     private Task getTaskByIdFromDb() {
         Task task =  dataManager.loadList(LoadContext.create(Task.class).setQuery(
-                LoadContext.createQuery("select e from scrumit$Task e where e.id = '" + taskId.getValue() + "'")
+                LoadContext.createQuery("select e from scrumit$Task e where e.id = '" + taskId + "'")
         )).get(0);
 
         return task;

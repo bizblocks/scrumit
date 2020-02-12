@@ -12,8 +12,7 @@
         </collection>
     </data>
     <layout>
-        <label id="taskId" value="TaskId" stylename="bold"/>
-        <label id="userId" value="userId" stylename="bold"/>
+
         <textField id="value" width="100%" inputPrompt="Enter here your value"/>
         <hbox spacing="true">
             <button id="saveBtn" caption="Save"/>
