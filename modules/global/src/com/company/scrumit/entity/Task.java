@@ -29,6 +29,28 @@ public class Task extends StandardEntity {
     @Column(name = "PLANNING_TIME")
     protected Double planningTime;
 
+    public Double getAverageEstimated() {
+        return averageEstimated;
+    }
+
+    public void setAverageEstimated(Double averageEstimated) {
+        this.averageEstimated = averageEstimated;
+    }
+
+    @Column(name = "AVERAGE_ESTIMATED")
+    protected Double averageEstimated;
+
+    public Double getVariance() {
+        return variance;
+    }
+
+    public void setVariance(Double variance) {
+        this.variance = variance;
+    }
+
+    @Column(name = "VARIANCE")
+    protected Double variance;
+
     @Column(name = "ACTUAL_TIME")
     protected Double actualTime;
 

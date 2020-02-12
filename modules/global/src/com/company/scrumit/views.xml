@@ -40,6 +40,7 @@
         <property name="done"/>
         <property name="realduration"/>
         <property name="type"/>
+        <property name="averageEstimated"/>
         <property name="deadline"/>
         <property name="begin"/>
         <property name="duration"/>
