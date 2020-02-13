@@ -10,6 +10,7 @@ import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.Label;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.security.entity.User;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -63,24 +64,40 @@ public class TaskEstimationEdit extends Screen {
         List<TaskEstimation> estimatedTasks = getAllTaskEstimationsObjectsFromDb();
         estimatedTasks = estimatedTasks.stream().filter(t->t.getTaskId().
                 equals(taskId)).collect(Collectors.toList());
+        if(getUSersList().size() != estimatedTasks.size()) {
+            return;
+        }
         double sum = 0.0;
         for (int i = 0; i < estimatedTasks.size(); i++) {
             sum += estimatedTasks.get(i).getValue();
         }
         double result = sum/estimatedTasks.size();
+        double variance = 0.0;
+        for (int i = 0; i < estimatedTasks.size(); i++) {
+            variance+=(estimatedTasks.get(i).getValue()-result) * (estimatedTasks.get(i).getValue()-result);
+        }
+        variance /=estimatedTasks.size();
         Task task = getTaskByIdFromDb();
         task.setAverageEstimated(result);
+        task.setVariance(variance);
         CommitContext commitContext = new CommitContext(task);
         dataManager.commit(commitContext);
     }
 
-    public List<TaskEstimation> getAllTaskEstimationsObjectsFromDb() {
+    private List<TaskEstimation> getAllTaskEstimationsObjectsFromDb() {
         LoadContext context = LoadContext.create(TaskEstimation.class)
                 .setQuery(LoadContext.createQuery(
                         "select e from scrumit$TaskEstimation e "));
         List<TaskEstimation> estimatedTasks = dataManager.loadList(context);
         return estimatedTasks;
     }
+
+    private List<User> getUSersList() {
+        List<User> usersList = dataManager.loadList(LoadContext.create(User.class).setQuery(
+                LoadContext.createQuery("select u from sec$User u")));
+        return usersList;
+    }
+
 
     private Task getTaskByIdFromDb() {
         Task task =  dataManager.loadList(LoadContext.create(Task.class).setQuery(
