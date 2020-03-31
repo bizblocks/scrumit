@@ -5,6 +5,7 @@ import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.TaskType;
 import com.company.scrumit.entity.Tracker;
 import com.groupstp.workflowstp.entity.Stage;
+import com.groupstp.workflowstp.entity.WorkflowEntity;
 import com.groupstp.workflowstp.entity.WorkflowInstanceTask;
 import com.groupstp.workflowstp.service.WorkflowService;
 import com.groupstp.workflowstp.web.util.WebUiHelper;
@@ -130,21 +131,9 @@ public class TaskList extends EntityCombinedScreen {
             task.setDone(true);
             dataManager.commit(task);
             task = dataManager.reload(task, "tasks-full");
-            Tracker parentTracker = task.getParentBug();
-            if (parentTracker == null)
-                return;
-            parentTracker = dataManager.reload(parentTracker, "_full");
-            int countTask = parentTracker.getTask().size();
-            int countDoneTask = 0;
-            for (Task trackerTask : parentTracker.getTask()) {
-                trackerTask = dataManager.reload(trackerTask, "tasks-performer-view");
-                if (trackerTask.getDone() != null && trackerTask.getDone()) {
-                    countDoneTask++;
-                }
-            }
-            if (countDoneTask == countTask) {
-                Stage stage = getStage(parentTracker);
-                WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(parentTracker, stage);
+
+                Stage stage = getStage(task);
+                WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(task, stage);
                 try {
                     if (instanceTask != null) {
                         Map params = new HashMap();
@@ -154,7 +143,7 @@ public class TaskList extends EntityCombinedScreen {
                 } catch (Exception e) {
                     throw new RuntimeException("Ошибка обработки заявки", e);
                 }
-            }
+
         });
         table.getDatasource().refresh();
     }
@@ -167,21 +156,10 @@ public class TaskList extends EntityCombinedScreen {
             task.setControl(true);
             dataManager.commit(task);
             task = dataManager.reload(task, "tasks-full");
-            Tracker parentTracker = task.getParentBug();
-            if (parentTracker == null)
-                return;
-            parentTracker = dataManager.reload(parentTracker, "_full");
-            int countTask = parentTracker.getTask().size();
-            int countControlTask = 0;
-            for (Task trackerTask : parentTracker.getTask()) {
-                trackerTask = dataManager.reload(trackerTask, "tasks-performer-view");
-                if (trackerTask.getControl() != null && trackerTask.getControl()) {
-                    countControlTask++;
-                }
-            }
-            if (countTask == countControlTask) {
-                Stage stage = getStage(parentTracker);
-                WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(parentTracker, stage);
+
+
+                Stage stage = getStage(task);
+                WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(task, stage);
                 try {
                     if (instanceTask != null) {
                         Map params = new HashMap();
@@ -191,7 +169,7 @@ public class TaskList extends EntityCombinedScreen {
                 } catch (Exception e) {
                     throw new RuntimeException("Ошибка обработки заявки", e);
                 }
-            }
+
         });
         table.getDatasource().refresh();
     }
@@ -270,11 +248,11 @@ public class TaskList extends EntityCombinedScreen {
         }
     }
 
-    private Stage getStage(Tracker parentBug) {
+    private Stage getStage(WorkflowEntity entity) {
         return dataManager.load(Stage.class)
                 .query("select e from wfstp$Stage e where e.entityName = :entityName and e.name = :name")
-                .parameter("entityName", parentBug.getMetaClass().getName())
-                .parameter("name", parentBug.getStepName())
+                .parameter("entityName", entity.getMetaClass().getName())
+                .parameter("name", entity.getStepName())
                 .view("stage-process")
                 .optional()
                 .orElse(null);

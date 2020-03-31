@@ -96,6 +96,7 @@
                                 maxTextLength="100"/>
                         <column id="performer"/>
                         <column id="testingPlan"/>
+                        <column id="task"/>
                     </columns>
                     <rows datasource="tasksDs"/>
                     <rowsCount/>
@@ -114,16 +115,10 @@
                                      caption="msg://popupActions"
                                      popupOpenDirection="BOTTOM_RIGHT">
                             <actions>
-                                <action id="btnDone"
-                                        caption="msg://btnReady"
-                                        icon="font-icon:CHECK"
+                                <action id="btnDone" caption="msg://btnReady" icon="font-icon:CHECK"
                                         invoke="onBtnDoneClick"/>
-                                <action id="btnChecked"
-                                        caption="msg://btnChecked"
-                                        invoke="onBtnChecked"/>
-                                <action id="btnHideArchive"
-                                        caption="msg://hideArchive"
-                                        invoke="onBtnHideArchive"/>
+                                <action id="btnChecked" caption="msg://btnChecked" invoke="onBtnChecked"/>
+                                <action id="btnHideArchive" caption="msg://hideArchive" invoke="onBtnHideArchive"/>
                             </actions>
                         </popupButton>
                         <button id="btnCreateInGroup"
@@ -155,8 +150,7 @@
                         <column width="300px">
                             <field property="id"/>
                             <field property="task"/>
-                            <field editable="false"
-                                   property="done"/>
+                            <field editable="false" property="done"/>
                             <field property="shortdesc"/>
                             <field property="type"/>
                             <field property="begin"/>
@@ -166,14 +160,11 @@
                         <column width="300px">
                             <field property="planningTime"/>
                             <field property="actualTime"/>
-                            <field editable="false"
-                                   property="control"/>
+                            <field editable="false" property="control"/>
                             <field property="priority"/>
                             <field property="amount"/>
-                            <field optionsDatasource="performersDs"
-                                   property="performer"/>
-                            <field optionsDatasource="trackerDs"
-                                   property="parentBug"/>
+                            <field optionsDatasource="performersDs" property="performer"/>
+                            <field optionsDatasource="trackerDs" property="parentBug"/>
                         </column>
                     </fieldGroup>
                     <groupBox caption="msg://description">
@@ -199,6 +190,12 @@
                                 <button id="okBtn"
                                         caption="OK"
                                         invoke="onOkBtn"/>
+                            </row>
+                            <row>
+                                <label value="msg://com.company.scrumit.entity/Task.task"/>
+                                <pickerField datasource="taskDs"
+                                             property="task"
+                                             width="250px"/>
                             </row>
                         </rows>
                     </grid>

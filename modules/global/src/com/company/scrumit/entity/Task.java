@@ -1,5 +1,8 @@
 package com.company.scrumit.entity;
 
+import com.groupstp.workflowstp.entity.Workflow;
+import com.groupstp.workflowstp.entity.WorkflowEntity;
+import com.groupstp.workflowstp.entity.WorkflowEntityStatus;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
@@ -10,17 +13,32 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 @Listeners("scrumit_TaskEntityListener")
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TASK")
 @Entity(name = "scrumit$Task")
-public class Task extends StandardEntity {
+public class Task extends StandardEntity implements WorkflowEntity<UUID> {
     private static final long serialVersionUID = 8919522312858052940L;
 
     @NotNull
-    @Column(name = "SHORTDESC", nullable = false, unique = true, length = 100)
+    @Column(name = "SHORTDESC", nullable = false, length = 100)
     protected String shortdesc;
+
+
+    @Column(name = "STEP_NAME")
+    protected String stepName;
+
+
+    @Column(name = "STATUS_WORK_FLOW")
+    protected Integer status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "WORKFLOW_ID")
+    protected Workflow workflow;
 
     @Lob
     @Column(name = "TESTING_PLAN")
@@ -120,19 +138,9 @@ public class Task extends StandardEntity {
         return estimation;
     }
 
-    @Transient
+    @OneToMany(mappedBy = "task")
+    @OnDelete(DeletePolicy.CASCADE)
     private  List<Task> children;
-
-    @Transient
-    protected  Task parent;
-
-    public Task getParent() {
-        return parent;
-    }
-
-    public void setParent(Task parent) {
-        this.parent = parent;
-    }
 
     public List<Task> getChildren() {
         return children;
@@ -193,6 +201,13 @@ public class Task extends StandardEntity {
         return parentBug;
     }
 
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
 
     public void setDuration(Integer duration) {
         this.duration = duration;
@@ -282,13 +297,6 @@ public class Task extends StandardEntity {
         return type == null ? null : TaskType.fromId(type);
     }
 
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
 
     public void setAmount(Integer amount) {
         this.amount = amount;
@@ -336,5 +344,34 @@ public class Task extends StandardEntity {
 
     public String getShortdesc() {
         return shortdesc;
+    }
+
+
+    @Override
+    public String getStepName() {
+        return stepName;
+    }
+
+    @Override
+    public void setStepName(String stepName) {
+        this.stepName = stepName;
+    }
+
+    public void setStatus(WorkflowEntityStatus status) {
+        this.status = status == null ? null : status.getId();
+    }
+
+    public WorkflowEntityStatus getStatus() {
+        return status == null ? null : WorkflowEntityStatus.fromId(status);
+    }
+
+    @Override
+    public Workflow getWorkflow() {
+        return workflow;
+    }
+
+    @Override
+    public void setWorkflow(Workflow workflow) {
+        this.workflow = workflow;
     }
 }

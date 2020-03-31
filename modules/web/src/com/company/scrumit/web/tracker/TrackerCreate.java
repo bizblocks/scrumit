@@ -83,7 +83,7 @@ public class TrackerCreate  extends AbstractWindow {
         List<Task> childrenTask = task.getChildren();
         if (childrenTask != null) {
             for (Task child : childrenTask) {
-                child.setParent(task);
+                child.setTask(task);
                 getHierarchicalDatasource(child);
             }
         }
@@ -112,7 +112,7 @@ public class TrackerCreate  extends AbstractWindow {
 
             try {
                 subtask.setDeadline(task.getDeadline());
-                if (task.getParent() != null) {
+                if (task.getTask() != null) {
                     subtask.setShortdesc("[subtask-" + subtask.getId() + "]");
                 } else {
                     subtask.setShortdesc(String.valueOf(subtask.getId()));

@@ -26,6 +26,8 @@
                 <![CDATA[select e from scrumit$Task e]]>
             </query>
         </collectionDatasource>
+        <datasource id="projectIdentificatorDs" class="com.company.scrumit.entity.ProjectIdentificator"
+                    view="projectIdentificator-view"/>
     </dsContext>
     <dialogMode height="auto"
                 width="auto"/>
@@ -44,8 +46,7 @@
                     <column width="300px">
                         <field property="id"/>
                         <field property="task"/>
-                        <field editable="false"
-                               property="done"/>
+                        <field editable="false" property="done"/>
                         <field property="begin"/>
                         <field property="duration"/>
                         <field property="deadline"/>
@@ -54,13 +55,11 @@
                     <column width="300px">
                         <field property="planningTime"/>
                         <field property="actualTime"/>
-                        <field editable="false"
-                               property="control"/>
+                        <field editable="false" property="control"/>
                         <field property="priority"/>
-                        <field property="type"/>
+                        <field property="type" id="type"/>
                         <field property="amount"/>
-                        <field optionsDatasource="performersDs"
-                               property="performer"/>
+                        <field optionsDatasource="performersDs" property="performer"/>
                     </column>
                 </fieldGroup>
             </scrollBox>
@@ -74,10 +73,6 @@
             <button id="btnReady"
                     caption="msg://btnReady"
                     invoke="onBtnReadyClick"
-                    stylename="primary"/>
-            <button id="btnControl"
-                    caption="msg://btnControl"
-                    invoke="onBtnControlClick"
                     stylename="primary"/>
             <frame id="windowActions"
                    screen="editWindowActions"

@@ -10,6 +10,9 @@
         <item screen="tracker-workflow-browse"/>
         <item screen="screen"/>
         <item screen="scrumit_TaskEstimationScreen"/>
+        <item id="tracker-browse"
+              openType="NEW_TAB"
+              screen="scrumit$Tracker.browse"/>
     </menu>
     <menu id="refs"
           insertBefore="administration">

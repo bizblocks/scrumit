@@ -1,4 +1,4 @@
-package com.company.scrumit.web.tracker;
+package com.company.scrumit.web.task;
 
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
 

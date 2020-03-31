@@ -13,44 +13,66 @@
     <view class="com.company.scrumit.entity.Task"
           extends="_local"
           name="tasks-full">
-        <property name="parentBug" view="_local"/>
-        <property name="estimation" view="_minimal"/>
-        <property name="performer" view="_local"/>
-        <property name="task" view="_minimal">
-            <property name="task" view="_minimal"/>
+        <property name="parentBug"
+                  view="_local"/>
+        <property name="estimation"
+                  view="_minimal"/>
+        <property name="performer"
+                  view="_local"/>
+        <property name="task"
+                  view="_minimal">
+            <property name="task"
+                      view="_minimal"/>
             <property name="level"/>
-            <property name="top" view="_minimal"/>
+            <property name="top"
+                      view="_minimal"/>
         </property>
-        <property name="top" view="_minimal">
-            <property name="task" view="_minimal"/>
+        <property name="top"
+                  view="_minimal">
+            <property name="task"
+                      view="_minimal"/>
         </property>
-        <property name="sprintBacklog" view="_minimal"/>
-        <property name="teams" view="_minimal"/>
-        <property name="sprints" view="_minimal"/>
+        <property name="sprintBacklog"
+                  view="_minimal"/>
+        <property name="teams"
+                  view="_minimal"/>
+        <property name="sprints"
+                  view="_minimal"/>
+        <property name="createTs"/>
+        <property name="children"
+                  view="_minimal">
+            <property name="stepName"/>
+        </property>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
           name="task-tree">
-        <property name="task"
-                  view="_minimal"/>
-        <property name="level"/>
-        <property name="top"
-                  view="_minimal"/>
-        <property name="description"/>
-        <property name="done"/>
-        <property name="realduration"/>
-        <property name="type"/>
-        <property name="deadline"/>
-        <property name="begin"/>
-        <property name="duration"/>
-        <property name="amount"/>
-        <property name="control"/>
-        <property name="priority"/>
-        <property name="performer"
-                  view="_minimal"/>
+        <property name="stepName"/>
+        <property name="status"/>
         <property name="testingPlan"/>
         <property name="planningTime"/>
         <property name="actualTime"/>
+        <property name="parentBug" view="_minimal"/>
+        <property name="done"/>
+        <property name="control"/>
+        <property name="priority"/>
+        <property name="realduration"/>
+        <property name="type"/>
+        <property name="description"/>
+        <property name="performer" view="_minimal"/>
+        <property name="deadline"/>
+        <property name="task" view="_minimal"/>
+        <property name="level"/>
+        <property name="top" view="_minimal"/>
+        <property name="begin"/>
+        <property name="duration"/>
+        <property name="amount"/>
+        <property name="ssId"/>
+        <property name="children" view="_minimal">
+            <property name="stepName"/>
+            <property name="status"/>
+        </property>
+        <property name="createTs"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
@@ -134,12 +156,11 @@
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
           name="task-top">
-        <property name="top"
-                  view="_minimal"/>
-        <property name="level"/>
-        <property name="performer"
-                  view="_minimal"/>
         <property name="testingPlan"/>
+        <property name="type"/>
+        <property name="performer" view="_minimal"/>
+        <property name="level"/>
+        <property name="top" view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Meeting"
           extends="_local"
@@ -173,18 +194,17 @@
     <view class="com.company.scrumit.entity.Tracker"
           extends="_local"
           name="_full">
-        <property name="project"
-                  view="tasks-full"/>
+        <property name="project" view="tasks-full"/>
+        <property name="workflow" view="_minimal"/>
+        <property name="performer" view="_minimal"/>
+        <property name="task" view="_minimal">
+            <property name="top" view="_minimal"/>
+        </property>
+        <property name="discussion" view="_minimal"/>
         <property name="createTs"/>
         <property name="createdBy"/>
         <property name="updateTs"/>
         <property name="updatedBy"/>
-        <property name="performer"
-                  view="_minimal"/>
-        <property name="workflow"
-                  view="_minimal"/>
-        <property name="task"
-                  view="_minimal"/>
     </view>
     <view class="com.company.scrumit.entity.Tracker"
           extends="_minimal"
@@ -249,5 +269,85 @@
                   view="_minimal">
             <property name="size"/>
         </property>
+    </view>
+    <view class="com.groupstp.workflowstp.entity.Workflow"
+          extends="_minimal"
+          name="task-workflow-browse">
+        <property name="steps"
+                  view="_minimal">
+            <property name="stage"
+                      view="_minimal">
+                <property name="actors"
+                          view="_minimal"/>
+                <property name="actorsRoles"
+                          view="_minimal"/>
+                <property name="viewers"
+                          view="_minimal"/>
+                <property name="viewersRoles"
+                          view="_minimal"/>
+                <property name="browseScreenGroovyScript"/>
+            </property>
+        </property>
+    </view>
+    <view class="com.company.scrumit.entity.Task"
+          extends="_local"
+          name="Task-process">
+        <property name="workflow"
+                  view="_minimal"/>
+        <property name="performer"
+                  view="_minimal"/>
+    </view>
+    <view entity="scrumit$Tracker" name="trackerWithtaskWorkflow" extends="_full">
+        <property name="task" view="_minimal">
+            <property name="stepName"/>
+            <property name="status"/>
+            <property name="workflow" view="_minimal"/>
+            <property name="parentBug" view="_minimal"/>
+            <property name="tracker" view="_minimal"/>
+        </property>
+    </view>
+    <view entity="scrumit$Task" name="task-workflow" extends="_local">
+        <property name="workflow" view="_minimal"/>
+    </view>
+    <view entity="scrumit$Discussion" name="discussion-full" extends="_local">
+        <property name="tracker" view="_minimal"/>
+        <property name="initiator" view="_minimal"/>
+        <property name="messages" view="_minimal">
+            <property name="text"/>
+            <property name="discussion" view="_local"/>
+            <property name="autor" view="_minimal">
+                <property name="email"/>
+            </property>
+            <property name="attachment" view="_minimal"/>
+        </property>
+    </view>
+    <view entity="scrumit$Tracker" name="tracker-taskWorkflow" extends="_minimal">
+        <property name="project" view="_minimal"/>
+        <property name="incidentStatus"/>
+        <property name="status"/>
+        <property name="testingPlan"/>
+        <property name="performer" view="_minimal"/>
+        <property name="trackerPriorityType"/>
+        <property name="type"/>
+        <property name="description"/>
+        <property name="task" view="_minimal">
+            <property name="status"/>
+        </property>
+    </view>
+    <view entity="scrumit$Tracker" name="tracker-newTab" extends="_minimal">
+        <property name="project" view="_minimal"/>
+        <property name="number"/>
+        <property name="incidentStatus"/>
+        <property name="testingPlan"/>
+        <property name="performer" view="_minimal"/>
+        <property name="trackerPriorityType"/>
+        <property name="type"/>
+        <property name="task" view="_minimal"/>
+    </view>
+    <view entity="scrumit$ProjectIdentificator" name="projectIdentificator-view" extends="_local">
+        <property name="project" view="_minimal"/>
+    </view>
+    <view entity="scrumit$Tracker" name="tracker-number">
+        <property name="number"/>
     </view>
 </views>

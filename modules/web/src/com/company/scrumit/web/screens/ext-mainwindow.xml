@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
-        class="com.company.scrumit.web.screens.ExtAppMainWindow"
-        extends="/com/haulmont/cuba/web/app/mainwindow/mainwindow.xml"
-        messagesPack="com.company.scrumit.web.screens"
-        xmlns:main="http://schemas.haulmont.com/cuba/mainwindow.xsd">
-    <dialogMode height="600"
-                width="800"/>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd" xmlns:main="http://schemas.haulmont.com/cuba/mainwindow.xsd"
+        class="com.company.scrumit.web.screens.ExtAppMainWindow" messagesPack="com.company.scrumit.web.screens"
+        extends="/com/haulmont/cuba/web/app/mainwindow/mainwindow.xml">
+    <dialogMode height="600" width="800"/>
     <layout>
         <split id="foldersSplit">
             <main:workArea id="workArea">

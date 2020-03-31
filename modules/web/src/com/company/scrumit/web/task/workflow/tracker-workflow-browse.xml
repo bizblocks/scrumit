@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
-        caption="msg://caption"
-        class="com.company.scrumit.web.tracker.workflow.TrackerWorkflowBrowse"
+        caption="msg://Workflow"
+        class="com.company.scrumit.web.task.workflow.TaskWorkflowBrowse"
         icon="GROUP"
-        messagesPack="com.company.scrumit.web.tracker.workflow">
+        messagesPack="com.company.scrumit.web.task.workflow">
     <dialogMode height="600"
                 width="800"/>
     <layout>

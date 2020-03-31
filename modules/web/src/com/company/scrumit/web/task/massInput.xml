@@ -85,6 +85,7 @@
                 <column id="performer"
                         editable="true"
                         optionsDatasource="performersDs"/>
+                <column id="parent"/>
             </columns>
             <rows datasource="newTasksDs"/>
         </table>

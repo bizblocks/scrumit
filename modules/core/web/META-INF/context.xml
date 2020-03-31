@@ -1,5 +1,15 @@
 <Context>
     <!-- Database connection -->
+    <Manager pathname=""/>
+    <!--<Resource driverClassName="org.postgresql.Driver"
+          maxIdle="2"
+          maxTotal="20"
+          maxWaitMillis="5000"
+          name="jdbc/CubaDS"
+          password="cuba"
+          type="javax.sql.DataSource"
+          url="jdbc:postgresql://localhost/scrumit"
+          username="cuba"/>-->
     <Resource driverClassName="org.postgresql.Driver"
               maxIdle="2"
               maxTotal="20"
@@ -9,5 +19,4 @@
               type="javax.sql.DataSource"
               url="jdbc:postgresql://localhost/scrumit"
               username="cuba"/>
-    <Manager pathname=""/>
 </Context>

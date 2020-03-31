@@ -138,6 +138,7 @@
                         <column id="duration"/>
                         <column id="amount"/>
                         <column id="control"/>
+                        <column id="task"/>
                     </columns>
                     <rows datasource="tasksDs1"/>
                     <buttonsPanel id="buttonsPanelTasks"

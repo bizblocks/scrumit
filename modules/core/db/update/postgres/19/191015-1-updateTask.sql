@@ -1,0 +1,1 @@
+drop index IDX_SCRUMIT_TASK_UK_SHORTDESC ;

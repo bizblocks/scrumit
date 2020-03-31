@@ -1,8 +1,8 @@
-package com.company.scrumit.web.tracker.workflow;
+package com.company.scrumit.web.task.workflow;
 
-import com.company.scrumit.entity.Tracker;
-import com.company.scrumit.web.tracker.TabType;
-import com.company.scrumit.web.tracker.workflow.frame.TrackerWorkflowBrowseTableFrame;
+import com.company.scrumit.entity.Task;
+import com.company.scrumit.web.task.TabType;
+import com.company.scrumit.web.task.workflow.frame.TaskWorkflowBrowseTableFrame;
 import com.groupstp.workflowstp.entity.Stage;
 import com.groupstp.workflowstp.entity.Step;
 import com.groupstp.workflowstp.entity.Workflow;
@@ -27,7 +27,7 @@ import java.util.function.Function;
 
 import static com.haulmont.cuba.gui.ComponentsHelper.walkComponents;
 
-public class TrackerWorkflowBrowse extends AbstractLookup {
+public class TaskWorkflowBrowse extends AbstractLookup {
 
     @Inject
     private DataManager dataManager;
@@ -56,7 +56,7 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
 
     private void initTabSheets(List<Workflow> workflows) {
         //показать вкладку с новыми записями
-        showNewTrackerRecords();
+        showNewTaskRecords();
         //показать вкладки рабочего процесса
         showWorkflowSpecificTabs(workflows);
     }
@@ -92,9 +92,10 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
                         String stageName = stage.getName();
                         String key = getKey(stageName);
                         LazyTab lazyTab = new LazyTab(e -> createTab(TabType.WORKFLOW, !actor,
-                                ParamsMap.of(TrackerWorkflowBrowseTableFrame.STAGE, stage, TrackerWorkflowBrowseTableFrame.USER, user)
+                                ParamsMap.of(TaskWorkflowBrowseTableFrame.STAGE, stage, TaskWorkflowBrowseTableFrame.USER, user)
                         ));
-                        tabsCache.put(key, lazyTab);
+                        //tabsCache.put(key, lazyTab);
+                        tabsCache.put(key,lazyTab);
                         TabSheet.Tab tab = tabSheet.addTab(key, lazyTab.getBox());
                         tab.setCaption(stageName);
                     }
@@ -103,12 +104,12 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
         }
     }
 
-    private void showNewTrackerRecords() {
+    private void showNewTaskRecords() {
         String key = getKey(TabType.NEW.getId());
         LazyTab lazyTab = new LazyTab(e -> createTab(TabType.NEW, false, Collections.emptyMap()));
         tabsCache.put(key, lazyTab);
         TabSheet.Tab tab = tabSheet.addTab(key, lazyTab.getBox());
-        tab.setCaption(getMessage("trackerWorkflowBrowse.newRecords"));
+        tab.setCaption(getMessage("TaskWorkflowBrowse.incidents"));
     }
 
     private String getKey(String stageName) {
@@ -118,14 +119,14 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
     /**
      * initialize and open specified queries tab
      */
-    private TrackerWorkflowBrowseTableFrame createTab(TabType tabType,
-                                                      boolean viewOnly,
-                                                      Map<String, Object> additionalParams) {
+    private TaskWorkflowBrowseTableFrame createTab(TabType tabType,
+                                                   boolean viewOnly,
+                                                   Map<String, Object> additionalParams) {
         Map<String, Object> params = new HashMap<>(additionalParams);
-        params.put(TrackerWorkflowBrowseTableFrame.TAB_TYPE, tabType);
-        params.put(TrackerWorkflowBrowseTableFrame.VIEW_ONLY, viewOnly);
+        params.put(TaskWorkflowBrowseTableFrame.TAB_TYPE, tabType);
+        params.put(TaskWorkflowBrowseTableFrame.VIEW_ONLY, viewOnly);
         //direct init frame
-        TrackerWorkflowBrowseTableFrame res = (TrackerWorkflowBrowseTableFrame) openFrame(null, TrackerWorkflowBrowseTableFrame.SCREEN_ID, params);
+        TaskWorkflowBrowseTableFrame res = (TaskWorkflowBrowseTableFrame) openFrame(null, TaskWorkflowBrowseTableFrame.SCREEN_ID, params);
         return res;
     }
 
@@ -180,19 +181,19 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
     private User getUser() {
         User user = userSessionSource.getUserSession().getCurrentOrSubstitutedUser();
         if (user == null) {
-            throw new DevelopmentException(getMessage("queryWorkflowBrowseTableFrame.userNotFound"));
+            throw new DevelopmentException(getMessage("TaskWorkflowBrowseTableFrame.userNotFound"));
         }
         return user;
     }
 
     @Nullable
     private List<Workflow> getActiveWorkflows() {
-        String entityName = metadata.getClassNN(Tracker.class).getName();
+        String entityName = metadata.getClassNN(Task.class).getName();
         List<Workflow> list = dataManager.loadList(LoadContext.create(Workflow.class)
                 .setQuery(new LoadContext.Query("select e from wfstp$Workflow e where " +
                         "e.active = true and e.entityName = :entityName order by e.order asc")
                         .setParameter("entityName", entityName))
-                .setView("tracker-workflow-browse"));
+                .setView("task-workflow-browse"));
         if (!CollectionUtils.isEmpty(list)) {
             return list;
         }
@@ -204,10 +205,10 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
      */
     private final class LazyTab {
         private BoxLayout box;
-        private Function<BoxLayout, TrackerWorkflowBrowseTableFrame> creator;
-        private TrackerWorkflowBrowseTableFrame frame;
+        private Function<BoxLayout, TaskWorkflowBrowseTableFrame> creator;
+        private TaskWorkflowBrowseTableFrame frame;
 
-        LazyTab(Function<BoxLayout, TrackerWorkflowBrowseTableFrame> creator) {
+        LazyTab(Function<BoxLayout, TaskWorkflowBrowseTableFrame> creator) {
             //функция, возваращающая фрейм
             this.creator = creator;
             //место для размещения фрейма
@@ -229,7 +230,7 @@ public class TrackerWorkflowBrowse extends AbstractLookup {
             return frame != null;
         }
 
-        TrackerWorkflowBrowseTableFrame getFrame() {
+        TaskWorkflowBrowseTableFrame getFrame() {
             if (frame == null) {
                 frame = creator.apply(box);
                 box.add(frame);

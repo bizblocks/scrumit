@@ -64,5 +64,14 @@
         <entity class="com.company.scrumit.entity.TaskEstimation">
             <include re=".*"/>
         </entity>
+        <entity class="com.company.scrumit.entity.Discussion">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.Message">
+            <include re=".*"/>
+        </entity>
+        <entity class="com.company.scrumit.entity.ProjectIdentificator">
+            <include re=".*"/>
+        </entity>
     </entities>
 </fts-config>

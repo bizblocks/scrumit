@@ -24,7 +24,7 @@
                                 hierarchyProperty="task"
                                 view="task-tree">
             <query>
-                <![CDATA[select e from scrumit$Task e where e.parentBug.id=:ds$trackerDs]]>
+                <![CDATA[select e from scrumit$Task e where e.parentBug=:ds$trackerDs]]>
             </query>
         </hierarchicalDatasource>
         <collectionDatasource id="performersDs"
@@ -189,22 +189,25 @@
                                     <action id="excel"/>
                                 </actions>
                                 <columns>
-                                    <column id="shortdesc"
-                                            editable="true"/>
-                                    <column id="priority"
-                                            editable="true"/>
-                                    <column id="done"
-                                            editable="true"/>
-                                    <column id="type"
-                                            editable="true"/>
-                                    <column id="control"
-                                            editable="true"/>
-                                    <column id="description"
-                                            editable="true"/>
-                                    <column id="planningTime"
-                                            editable="true"/>
-                                    <column id="actualTime"
-                                            editable="true"/>
+                                    <column id="shortdesc"/>
+                                    <column id="id"/>
+                                    <column id="stepName" caption="msg://stage"/>
+                                    <column id="status" caption="msg://status"/>
+                                    <column id="testingPlan"/>
+                                    <column id="planningTime"/>
+                                    <column id="actualTime"/>
+                                    <column id="done"/>
+                                    <column id="control"/>
+                                    <column id="priority"/>
+                                    <column id="realduration"/>
+                                    <column id="type"/>
+                                    <column id="description"/>
+                                    <column id="deadline"/>
+                                    <column id="level"/>
+                                    <column id="begin"/>
+                                    <column id="duration"/>
+                                    <column id="amount"/>
+                                    <column id="ssId"/>
                                 </columns>
                                 <rows datasource="taskParentBugDs"/>
                                 <rowsCount/>
@@ -218,6 +221,10 @@
                                             caption="msg://Creats Subtask"
                                             icon="CLONE"
                                             invoke="onCreateSubTaskBtnClick"/>
+                                    <button id="inWorkBtn"
+                                            caption="msg://InWork"
+                                            icon="PAPER_PLANE"
+                                            invoke="onInWorkBtnClick"/>
                                     <button id="refreshTasksBtn"
                                             action="tasksTable.refresh"
                                             icon="REFRESH"
@@ -240,6 +247,12 @@
                         <textField datasource="trackerDs"
                                    property="wikiUrl"
                                    width="250px"/>
+                    </row>
+                    <row>
+                        <label value="msg://com.company.scrumit.entity/Task.task"/>
+                        <pickerField datasource="taskParentBugDs"
+                                     property="task"
+                                     width="250px"/>
                     </row>
                 </rows>
             </grid>

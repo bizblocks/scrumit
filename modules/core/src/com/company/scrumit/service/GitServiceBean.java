@@ -2,6 +2,7 @@ package com.company.scrumit.service;
 
 import com.company.scrumit.config.ScrumitWebConfig;
 import com.company.scrumit.entity.Performer;
+import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Tracker;
 import com.groupstp.workflowstp.entity.Stage;
 import com.groupstp.workflowstp.entity.WorkflowInstanceTask;
@@ -33,25 +34,24 @@ public class GitServiceBean implements GitService {
 
     @Override
     public void updateTracker(String commit, String authorEmail) {
-        LoadContext<Tracker> loadContext = LoadContext.create(Tracker.class)
-                .setQuery(LoadContext.createQuery("select t from scrumit$Tracker t where t.stepName = :type1 or t.stepName = :type2 or t.stepName is null")
-                .setParameter("type1", "Сделать")
-                .setParameter("type2", "В работе"))
-                .setView("_full");
+        LoadContext<Task> loadContext = LoadContext.create(Task.class)
+                .setQuery(LoadContext.createQuery("select t from scrumit$Task t where t.stepName = :type1 or t.stepName is null")
+                .setParameter("type1", "В работе"))
+                .setView("Task-process");
 
-        for(Tracker t:dataManager.loadList(loadContext)){
+        for(Task t:dataManager.loadList(loadContext)){
             if(commit.contains(t.getId().toString() + " done")){
                 Performer performer = getPerformerByEmail(authorEmail);
                 if(performer != null) {
                     t.setPerformer(performer);
                     dataManager.commit(t);
-                    t = dataManager.reload(t, "_full");
+                    t = dataManager.reload(t, "Task-process");
                 }
                 try {
                     Stage stage = getStage(t);
                     if(stage == null) {
                         workflowService.startWorkflow(t, workflowService.determinateWorkflow(t));
-                        t = dataManager.reload(t, "_full");
+                        t = dataManager.reload(t, "Task-process");
                         stage = getStage(t);
                     }
                     WorkflowInstanceTask instanceTask = workflowService.getWorkflowInstanceTaskNN(t, stage);
@@ -67,11 +67,11 @@ public class GitServiceBean implements GitService {
         }
     }
 
-    private Stage getStage(Tracker parentBug) {
+    private Stage getStage(Task task) {
         return dataManager.load(Stage.class)
                 .query("select e from wfstp$Stage e where e.entityName = :entityName and e.name = :name")
-                .parameter("entityName", parentBug.getMetaClass().getName())
-                .parameter("name", parentBug.getStepName())
+                .parameter("entityName", task.getMetaClass().getName())
+                .parameter("name", task.getStepName())
                 .view("stage-process")
                 .optional()
                 .orElse(null);

@@ -100,6 +100,9 @@ create table SCRUMIT_TASK (
     DELETED_BY varchar(50),
     --
     SHORTDESC varchar(100) not null,
+    STEP_NAME varchar(255),
+    STATUS_WORK_FLOW integer,
+    WORKFLOW_ID uuid,
     TESTING_PLAN text,
     PLANNING_TIME double precision,
     ACTUAL_TIME double precision,
@@ -290,6 +293,24 @@ create table SCRUMIT_LINK (
     primary key (ID)
 )^
 -- end SCRUMIT_LINK
+-- begin SCRUMIT_FILES
+create table SCRUMIT_FILES (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    DESCRIPTION text,
+    ENTITY uuid,
+    FILE_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_FILES
 -- begin SCRUMIT_TASK_DURATION
 create table SCRUMIT_TASK_DURATION (
     ID uuid,
@@ -342,6 +363,41 @@ create table SCRUMIT_CONTACTS_STATUS (
     primary key (ID)
 )^
 -- end SCRUMIT_CONTACTS_STATUS
+-- begin SCRUMIT_PROJECT_TELEGRAM_CHAT_ID_LINK
+create table SCRUMIT_PROJECT_TELEGRAM_CHAT_ID_LINK (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    PROJECT_NAME varchar(50),
+    TELEGRAM_CHAT_ID varchar(100),
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_PROJECT_TELEGRAM_CHAT_ID_LINK
+-- begin SCRUMIT_TASK_ESTIMATION
+create table SCRUMIT_TASK_ESTIMATION (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    NAME varchar(255) not null,
+    DESCRIPTION varchar(255) not null,
+    VALUE_ double precision not null,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_TASK_ESTIMATION
 -- begin SCRUMIT_CHAT_ROOM_PERFORMER_LINK
 create table SCRUMIT_CHAT_ROOM_PERFORMER_LINK (
     CHAT_ROOM_ID uuid,
@@ -375,56 +431,3 @@ alter table SEC_USER add column CONTACT_ID uuid ^
 alter table SEC_USER add column DTYPE varchar(100) ^
 update SEC_USER set DTYPE = 'sec$User' where DTYPE is null ^
 -- end SEC_USER
--- begin SCRUMIT_PROJECT_TELEGRAM_CHAT_ID_LINK
-create table SCRUMIT_PROJECT_TELEGRAM_CHAT_ID_LINK (
-    ID uuid,
-    VERSION integer not null,
-    CREATE_TS timestamp,
-    CREATED_BY varchar(50),
-    UPDATE_TS timestamp,
-    UPDATED_BY varchar(50),
-    DELETE_TS timestamp,
-    DELETED_BY varchar(50),
-    --
-    PROJECT_NAME varchar(50),
-    TELEGRAM_CHAT_ID varchar(100),
-    --
-    primary key (ID)
-)^
--- end SCRUMIT_PROJECT_TELEGRAM_CHAT_ID_LINK
--- begin SCRUMIT_FILES
-create table SCRUMIT_FILES (
-    ID uuid,
-    VERSION integer not null,
-    CREATE_TS timestamp,
-    CREATED_BY varchar(50),
-    UPDATE_TS timestamp,
-    UPDATED_BY varchar(50),
-    DELETE_TS timestamp,
-    DELETED_BY varchar(50),
-    --
-    DESCRIPTION text,
-    ENTITY uuid,
-    FILE_ID uuid,
-    --
-    primary key (ID)
-)^
--- end SCRUMIT_FILES
--- begin SCRUMIT_TASK_ESTIMATION
-create table SCRUMIT_TASK_ESTIMATION (
-    ID uuid,
-    VERSION integer not null,
-    CREATE_TS timestamp,
-    CREATED_BY varchar(50),
-    UPDATE_TS timestamp,
-    UPDATED_BY varchar(50),
-    DELETE_TS timestamp,
-    DELETED_BY varchar(50),
-    --
-    NAME varchar(255) not null,
-    DESCRIPTION varchar(255) not null,
-    VALUE_ double precision not null,
-    --
-    primary key (ID)
-)^
--- end SCRUMIT_TASK_ESTIMATION

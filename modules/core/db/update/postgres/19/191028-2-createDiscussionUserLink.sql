@@ -1,0 +1,2 @@
+alter table SCRUMIT_DISCUSSION_USER_LINK add constraint FK_DISUSE_DISCUSSION foreign key (DISCUSSION_ID) references SCRUMIT_DISCUSSION(ID);
+alter table SCRUMIT_DISCUSSION_USER_LINK add constraint FK_DISUSE_USER foreign key (USER_ID) references SEC_USER(ID);
