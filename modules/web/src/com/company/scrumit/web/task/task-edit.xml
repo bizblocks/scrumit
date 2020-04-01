@@ -28,6 +28,11 @@
         </collectionDatasource>
         <datasource id="projectIdentificatorDs" class="com.company.scrumit.entity.ProjectIdentificator"
                     view="projectIdentificator-view"/>
+        <collectionDatasource id="taskClassesDs" class="com.company.scrumit.entity.TaskClass" view="taskClass-view">
+            <query>
+                <![CDATA[select e from scrumit_TaskClass e ]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="auto"
                 width="auto"/>
@@ -53,6 +58,7 @@
                         <field property="shortdesc"/>
                     </column>
                     <column width="300px">
+                        <field id="taskClass" property="taskClass" optionsDatasource="taskClassesDs"/>
                         <field property="planningTime"/>
                         <field property="actualTime"/>
                         <field editable="false" property="control"/>

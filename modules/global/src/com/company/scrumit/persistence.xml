@@ -28,5 +28,6 @@
         <class>com.company.scrumit.entity.Discussion</class>
         <class>com.company.scrumit.entity.Message</class>
         <class>com.company.scrumit.entity.ProjectIdentificator</class>
+        <class>com.company.scrumit.entity.TaskClass</class>
     </persistence-unit>
 </persistence>

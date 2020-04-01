@@ -32,7 +32,7 @@
                 <column id="actualTime"/>
                 <column id="control"/>
                 <column id="priority"/>
-                <column id="realduration"/>
+                <column id="realdurationHours"/>
                 <column id="type"/>
                 <column id="deadline"/>
                 <column id="amount"/>

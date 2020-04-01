@@ -2,7 +2,7 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://browseCaption"
         focusComponent="meetingsTable"
-        messagesPack="com.company.scrumit.web.screens.meeting">
+        messagesPack="com.company.scrumit.web.meeting">
     <data readOnly="true">
         <collection id="meetingsDc"
                     class="com.company.scrumit.entity.Meeting"

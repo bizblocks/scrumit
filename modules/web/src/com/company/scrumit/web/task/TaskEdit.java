@@ -1,12 +1,9 @@
 package com.company.scrumit.web.task;
 
+import com.company.scrumit.entity.*;
 import com.company.scrumit.entity.ProjectIdentificator;
-import com.company.scrumit.entity.ProjectIdentificator;
-import com.company.scrumit.entity.Task;
 
 import com.company.scrumit.entity.TaskType;
-import com.company.scrumit.entity.TaskType;
-import com.company.scrumit.entity.Tracker;
 import com.company.scrumit.service.ProjectIdentificatorService;
 import com.groupstp.workflowstp.entity.Stage;
 import com.groupstp.workflowstp.entity.WorkflowInstanceTask;
@@ -59,6 +56,10 @@ public class TaskEdit extends AbstractEditor<Task> {
     private ComponentsFactory componentsFactory;
     @Inject
     private ProjectIdentificatorService projectIdentificatorService;
+    @Named("fieldGroup.planningTime")
+    private TextField<Double> planningTimeField;
+    @Named("fieldGroup.taskClass")
+    private LookupPickerField<TaskClass> taskClassField;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -101,6 +102,11 @@ public class TaskEdit extends AbstractEditor<Task> {
                 if (field!=null)
                     fieldGroup.removeField(field);
             }
+        });
+        taskClassField.addValueChangeListener(taskClassValueChangeEvent -> {
+            TaskClass taskClass = (TaskClass) (((HasValue.ValueChangeEvent) taskClassValueChangeEvent).getValue());
+            if (taskClass.getAverageDurationHours()!=null)
+                planningTimeField.setValue(Double.valueOf(taskClass.getAverageDurationHours().toString()));
         });
     }
 

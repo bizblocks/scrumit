@@ -1,4 +1,4 @@
-package com.company.scrumit.web.screens.meeting;
+package com.company.scrumit.web.meeting;
 
 import com.haulmont.cuba.gui.screen.*;
 import com.company.scrumit.entity.Meeting;
