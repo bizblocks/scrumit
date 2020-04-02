@@ -13,10 +13,7 @@ import com.haulmont.cuba.gui.data.HierarchicalDatasource;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SprintBrowse extends EntityCombinedScreen {
 
@@ -63,7 +60,14 @@ public class SprintBrowse extends EntityCombinedScreen {
         tasksDs1.addCollectionChangeListener(e -> {
             if(!e.getOperation().equals(CollectionDatasource.Operation.ADD))
                 return;
-            sprintDs.getItem().getTasks().addAll(e.getItems());
+            if (sprintDs.getItem().getTasks()!=null){
+                sprintDs.getItem().getTasks().addAll(e.getItems());
+            }else {
+                Set<Task> tasks = new HashSet<>();
+                tasks.addAll(e.getItems());
+                sprintDs.getItem().setTasks(tasks);
+            }
+
         });
     }
 

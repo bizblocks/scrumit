@@ -128,16 +128,16 @@
                     <columns>
                         <column id="shortdesc"/>
                         <column id="priority"/>
-                        <column id="level"/>
-                        <column id="description"/>
                         <column id="done"/>
+                        <column id="performer"/>
+                        <column id="planningTime"/>
                         <column id="realdurationHours"/>
                         <column id="type"/>
                         <column id="deadline"/>
                         <column id="begin"/>
                         <column id="duration"/>
                         <column id="amount"/>
-                        <column id="control"/>
+                        <column id="description"/>
                         <column id="task"/>
                     </columns>
                     <rows datasource="tasksDs1"/>
