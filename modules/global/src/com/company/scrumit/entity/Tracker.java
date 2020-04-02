@@ -58,7 +58,7 @@ public class Tracker extends StandardEntity {
     protected String statusOld;
 
     @Column(name = "TRACKER_PRIORITY_TYPE")
-    protected String trackerPriorityType;
+    protected Integer trackerPriorityType;
 
     @Column(name = "TYPE_")
     protected String type;

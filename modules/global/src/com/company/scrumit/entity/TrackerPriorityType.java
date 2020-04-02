@@ -3,30 +3,31 @@ package com.company.scrumit.entity;
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
 
 import javax.annotation.Nullable;
+import javax.persistence.criteria.CriteriaBuilder;
 
 
-public enum TrackerPriorityType implements EnumClass<String> {
+public enum TrackerPriorityType implements EnumClass<Integer> {
 
-    Critical("critical"),
-    Cosmetic("cosmetic"),
-    Hinder("hinder"),
-    Inessential("inessential"),
-    Speed("speed"),
-    Current("current"),
-    Security("security");
+    Critical(2),
+    Cosmetic(6),
+    Hinder(3),
+    Inessential(7),
+    Speed(4),
+    Current(5),
+    Security(1);
 
-    private String id;
+    private Integer id;
 
-    TrackerPriorityType(String value) {
+    TrackerPriorityType(int value) {
         this.id = value;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     @Nullable
-    public static TrackerPriorityType fromId(String id) {
+    public static TrackerPriorityType fromId(Integer id) {
         for (TrackerPriorityType at : TrackerPriorityType.values()) {
             if (at.getId().equals(id)) {
                 return at;
