@@ -29,6 +29,10 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
     protected String shortdesc;
 
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "START_WORK")
+    protected Date startWork;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TASK_CLASS_ID")
     protected TaskClass taskClass;
@@ -51,8 +55,11 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
     @Column(name = "PLANNING_TIME")
     protected Double planningTime;
 
+    /**
+     * Текущее время выполнения задачи в минутах
+     */
     @Column(name = "ACTUAL_TIME")
-    protected Double actualTime;
+    protected Integer actualTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_BUG_ID")
@@ -146,21 +153,38 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
     @OnDelete(DeletePolicy.CASCADE)
     private List<Task> children;
 
+    public void setActualTime(Integer actualTime) {
+        this.actualTime = actualTime;
+    }
+
+    public Integer getActualTime() {
+        return actualTime;
+    }
+
+    public Date getStartWork() {
+
+        return startWork;
+    }
+
+    public void setStartWork(Date startWork) {
+        this.startWork = startWork;
+    }
+    @Override
+    public void setStatus(WorkflowEntityStatus status) {
+        this.status = status.getId();
+    }
+
+    @Override
+    public WorkflowEntityStatus getStatus() {
+        return WorkflowEntityStatus.fromId(this.status);
+    }
+
     public TaskClass getTaskClass() {
         return taskClass;
     }
 
     public void setTaskClass(TaskClass taskClass) {
         this.taskClass = taskClass;
-    }
-    
-    @Override
-    public void setStatus(WorkflowEntityStatus status) {
-
-    }
-    @Override
-    public WorkflowEntityStatus getStatus() {
-        return null;
     }
 
     public List<Task> getChildren() {
@@ -186,14 +210,6 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
 
     public Double getPlanningTime() {
         return planningTime;
-    }
-
-    public void setActualTime(Double actualTime) {
-        this.actualTime = actualTime;
-    }
-
-    public Double getActualTime() {
-        return actualTime;
     }
 
 
@@ -387,6 +403,8 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
     public void setWorkflow(Workflow workflow) {
         this.workflow = workflow;
     }
+
+
 
 
 }

@@ -5,16 +5,15 @@ import com.company.scrumit.entity.ProjectIdentificator;
 
 import com.company.scrumit.entity.TaskType;
 import com.company.scrumit.service.ProjectIdentificatorService;
+import com.company.scrumit.service.TaskClassService;
 import com.groupstp.workflowstp.entity.Stage;
 import com.groupstp.workflowstp.entity.WorkflowInstanceTask;
 import com.groupstp.workflowstp.service.WorkflowService;
 import com.haulmont.cuba.core.global.DataManager;
 
+import com.haulmont.cuba.core.global.PersistenceHelper;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.Datasource;
-import com.haulmont.cuba.gui.screen.Subscribe;
-import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
-import com.haulmont.cuba.web.gui.components.WebLookupField;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.cuba.web.gui.components.WebLookupField;
 
@@ -60,6 +59,8 @@ public class TaskEdit extends AbstractEditor<Task> {
     private TextField<Double> planningTimeField;
     @Named("fieldGroup.taskClass")
     private LookupPickerField<TaskClass> taskClassField;
+    @Inject
+    private TaskClassService taskClassService;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -105,8 +106,14 @@ public class TaskEdit extends AbstractEditor<Task> {
         });
         taskClassField.addValueChangeListener(taskClassValueChangeEvent -> {
             TaskClass taskClass = (TaskClass) (((HasValue.ValueChangeEvent) taskClassValueChangeEvent).getValue());
-            if (taskClass.getAverageDurationHours()!=null)
-                planningTimeField.setValue(Double.valueOf(taskClass.getAverageDurationHours().toString()));
+            if (taskClass!=null){
+                    taskClassService.updateAverageHoursDurationForTaskClass(taskClass);
+                    taskClass = dataManager.reload(taskClass, "taskClass-full");
+                    if (taskClass.getAverageDurationHours()!=null)
+                        planningTimeField.setValue(Double.valueOf(taskClass.getAverageDurationHours().toString()));
+
+            }
+
         });
     }
 

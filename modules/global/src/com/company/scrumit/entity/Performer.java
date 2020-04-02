@@ -1,13 +1,15 @@
 package com.company.scrumit.entity;
 
 import com.haulmont.chile.core.annotations.NamePattern;
+import com.haulmont.cuba.core.entity.annotation.Extends;
 import com.haulmont.cuba.security.entity.User;
 
 import javax.persistence.*;
 import java.util.List;
 
-@NamePattern("%s %s|login,name")
+@NamePattern("%s %s|name,login")
 @Entity(name = "scrumit$Performer")
+@Extends(User.class)
 public class Performer extends User {
     private static final long serialVersionUID = 6564112011977325025L;
 

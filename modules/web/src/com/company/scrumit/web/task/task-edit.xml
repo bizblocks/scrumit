@@ -28,7 +28,7 @@
         </collectionDatasource>
         <datasource id="projectIdentificatorDs" class="com.company.scrumit.entity.ProjectIdentificator"
                     view="projectIdentificator-view"/>
-        <collectionDatasource id="taskClassesDs" class="com.company.scrumit.entity.TaskClass" view="taskClass-view">
+        <collectionDatasource id="taskClassesDs" class="com.company.scrumit.entity.TaskClass" view="taskClass-full">
             <query>
                 <![CDATA[select e from scrumit_TaskClass e ]]>
             </query>

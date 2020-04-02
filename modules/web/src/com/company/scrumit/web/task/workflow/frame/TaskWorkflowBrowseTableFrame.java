@@ -178,7 +178,7 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
         }
         Performer performer = null;
         try {
-            performer = dataManager.load(Performer.class).id(currentUser.getUuid()).view("user-with-roles").one();
+            performer = dataManager.load(Performer.class).id(currentUser.getUuid()).view("performer-with-roles-and-teams").one();
         } catch (Exception e) {
 
         }

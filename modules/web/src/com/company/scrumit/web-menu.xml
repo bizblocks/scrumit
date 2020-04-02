@@ -27,5 +27,6 @@
         <item screen="scrumit$ContactsStatus.browse"/>
         <item screen="scrumit$City.browse"/>
         <item screen="scrumit$TaskEstimation.browse"/>
+        <item screen="scrumit_HumanResourcesAccount.browse"/>
     </menu>
 </menu-config>

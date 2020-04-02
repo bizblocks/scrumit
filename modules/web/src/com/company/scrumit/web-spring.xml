@@ -24,6 +24,8 @@
                 <entry key="scrumit_ProjectIdentificatorService"
                        value="com.company.scrumit.service.ProjectIdentificatorService"/>
                 <entry key="scrumit_TaskClassService" value="com.company.scrumit.service.TaskClassService"/>
+                <entry key="scrumit_HumanResourcesAccountService"
+                       value="com.company.scrumit.service.HumanResourcesAccountService"/>
             </map>
         </property>
     </bean>

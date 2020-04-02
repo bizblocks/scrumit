@@ -6,7 +6,7 @@
     <data>
         <instance id="taskClassDc"
                   class="com.company.scrumit.entity.TaskClass"
-                  view="taskClass-view">
+                  view="taskClass-full">
             <loader/>
         </instance>
     </data>

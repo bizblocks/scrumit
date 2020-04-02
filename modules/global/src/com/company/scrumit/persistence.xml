@@ -29,5 +29,6 @@
         <class>com.company.scrumit.entity.Message</class>
         <class>com.company.scrumit.entity.ProjectIdentificator</class>
         <class>com.company.scrumit.entity.TaskClass</class>
+        <class>com.company.scrumit.entity.HumanResourcesAccount</class>
     </persistence-unit>
 </persistence>

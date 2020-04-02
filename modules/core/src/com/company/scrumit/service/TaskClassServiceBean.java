@@ -17,10 +17,11 @@ public class TaskClassServiceBean implements TaskClassService {
 
     @Override
     public Integer updateAverageHoursDurationForTaskClass(TaskClass taskClass) {
+        taskClass = dataManager.reload(taskClass,"taskClass-full");
         List<Task> tasks = dataManager.load(Task.class)
                 .query("select f from scrumit$Task f where f.taskClass = :taskClass")
                 .parameter("taskClass", taskClass)
-                .view("taskClass-view")
+                .view("task-tree")
                 .list();
 
         int averageDurationHours = (int) Math.ceil(tasks.stream()
