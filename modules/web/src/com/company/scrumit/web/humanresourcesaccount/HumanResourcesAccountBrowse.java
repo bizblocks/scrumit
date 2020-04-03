@@ -1,4 +1,4 @@
-package com.company.scrumit.web.screens.humanresourcesaccount;
+package com.company.scrumit.web.humanresourcesaccount;
 
 import com.haulmont.cuba.gui.screen.*;
 import com.company.scrumit.entity.HumanResourcesAccount;

@@ -26,6 +26,7 @@
                 <column id="createTs" caption="msg://creationTime"/>
                 <column id="begin"/>
                 <column id="duration"/>
+                <column id="returnComment"/>
                 <column id="done"/>
                 <column id="testingPlan"/>
                 <column id="planningTime"/>

@@ -2,6 +2,7 @@ package com.company.scrumit.web.task.workflow.frame;
 
 import com.company.scrumit.entity.*;
 import com.company.scrumit.service.TrackerService;
+import com.company.scrumit.web.screens.Screen;
 import com.company.scrumit.web.task.TabType;
 import com.company.scrumit.web.task.TaskEdit;
 import com.company.scrumit.web.tracker.TrackerEdit;
@@ -29,7 +30,7 @@ import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
+public class TaskWorkflowBrowseTableFrame extends Screen {
 
     public static final String SCREEN_ID = "Task-workflow-table";
     public static final String TAB_TYPE = "tabType";
@@ -165,6 +166,15 @@ public class TaskWorkflowBrowseTableFrame extends AbstractXmlDescriptorFrame {
         trackerTable.removeColumn(trackerTable.getColumn("description"));
         this.add(trackerTable);
         trackerDs.refresh();
+        trackerTable.setStyleProvider((entity, property) -> {
+            if (property == null && entity!=null) {
+                if (entity.getTask().isEmpty()) {
+                    return "overdue-query";
+                }
+            }
+
+            return null;
+        });
         trackerTable.groupByColumns("project", "incidentStatus");
         expand(trackerTable);
     }

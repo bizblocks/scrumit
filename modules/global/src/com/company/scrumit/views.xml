@@ -38,6 +38,7 @@
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
           name="task-tree">
+        <property name="returnComment"/>
         <property name="startWork"/>
         <property name="stepName"/>
         <property name="status"/>
@@ -341,5 +342,8 @@
     <view entity="scrumit_HumanResourcesAccount" name="humanResourcesAccount-view" extends="_local">
         <property name="task" view="_minimal"/>
         <property name="performer" view="_minimal"/>
+    </view>
+    <view entity="scrumit$Tracker" name="tracker-with-tasks" extends="_minimal">
+        <property name="task" view="_minimal"/>
     </view>
 </views>

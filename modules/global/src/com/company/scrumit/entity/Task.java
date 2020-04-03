@@ -21,13 +21,17 @@ import java.util.UUID;
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TASK")
 @Entity(name = "scrumit$Task")
-public class Task extends StandardEntity implements WorkflowEntity<UUID> {
+public class Task extends StandardEntity implements ExtWorkflowEntity<UUID> {
     private static final long serialVersionUID = 8919522312858052940L;
 
     @NotNull
     @Column(name = "SHORTDESC", nullable = false, length = 100)
     protected String shortdesc;
 
+
+    @Lob
+    @Column(name = "RETURN_COMMENT")
+    protected String returnComment;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "START_WORK")
@@ -153,6 +157,22 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
     @OnDelete(DeletePolicy.CASCADE)
     private List<Task> children;
 
+    public String getReturnComment() {
+        return returnComment;
+    }
+
+    public void setReturnComment(String returnComment) {
+        this.returnComment = returnComment;
+    }
+
+    public void setStatus(WorkflowEntityStatus status) {
+        this.status = status.getId();
+    }
+
+    public WorkflowEntityStatus getStatus() {
+        return WorkflowEntityStatus.fromId(status);
+    }
+
     public void setActualTime(Integer actualTime) {
         this.actualTime = actualTime;
     }
@@ -168,15 +188,6 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
 
     public void setStartWork(Date startWork) {
         this.startWork = startWork;
-    }
-    @Override
-    public void setStatus(WorkflowEntityStatus status) {
-        this.status = status.getId();
-    }
-
-    @Override
-    public WorkflowEntityStatus getStatus() {
-        return WorkflowEntityStatus.fromId(this.status);
     }
 
     public TaskClass getTaskClass() {

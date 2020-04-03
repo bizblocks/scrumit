@@ -39,7 +39,7 @@
     <layout expand="editBox"
             spacing="true">
         <vbox id="editBox"
-              expand="fieldGroupBox"
+              expand="description"
               margin="false,false,false,true"
               responsive="true"
               spacing="true">

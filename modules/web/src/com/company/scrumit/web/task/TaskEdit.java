@@ -61,6 +61,10 @@ public class TaskEdit extends AbstractEditor<Task> {
     private LookupPickerField<TaskClass> taskClassField;
     @Inject
     private TaskClassService taskClassService;
+    @Inject
+    private VBoxLayout editBox;
+    @Inject
+    private RichTextArea description;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -115,8 +119,21 @@ public class TaskEdit extends AbstractEditor<Task> {
             }
 
         });
+
     }
 
+    @Override
+    protected void postInit() {
+        super.postInit();
+        if (getItem().getReturnComment()!=null){
+            TextArea area = componentsFactory.createComponent(TextArea.class);
+            area.setValue(getItem().getReturnComment());
+            area.setEditable(false);
+            area.setCaption(getMessage("comment_on_return"));
+            area.setWidthFull();
+            editBox.add(area,editBox.indexOf(description));
+        }
+    }
 
     @Override
     public void ready() {
