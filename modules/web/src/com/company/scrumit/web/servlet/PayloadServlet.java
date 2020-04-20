@@ -3,6 +3,8 @@ package com.company.scrumit.web.servlet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +17,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class PayloadServlet extends HttpServlet{
+
 
     static final String HMAC_SHA1_ALGORITHM = "HmacSHA1";
 
@@ -52,7 +55,12 @@ public class PayloadServlet extends HttpServlet{
         DataService dataService = new DataService();
         String secret = dataService.getAuthenticationData();
         if(secret != null) {
-            String signature = req.getHeader("X-Hub-Signature").split("=")[1];
+            String signature = "";
+                if (req.getHeader("X-Hub-Signature")!=null){
+                    signature = req.getHeader("X-Hub-Signature").split("=")[1];
+                }else {
+                    signature = req.getHeader("X-Gitlab-Token");
+                }
             StringBuilder builder = new StringBuilder();
             String aux = "";
 
