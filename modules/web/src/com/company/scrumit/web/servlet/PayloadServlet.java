@@ -52,7 +52,12 @@ public class PayloadServlet extends HttpServlet{
         DataService dataService = new DataService();
         String secret = dataService.getAuthenticationData();
         if(secret != null) {
-            String signature = req.getHeader("X-Hub-Signature").split("=")[1];
+            String signature = "";
+            if (req.getHeader("X-Hub-Signature")!=null){
+                signature = req.getHeader("X-Hub-Signature").split("=")[1];
+            }else {
+                signature = req.getHeader("X-Gitlab-Token");
+            }
             StringBuilder builder = new StringBuilder();
             String aux = "";
 
