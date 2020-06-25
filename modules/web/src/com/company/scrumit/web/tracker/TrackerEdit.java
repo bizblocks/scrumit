@@ -1,6 +1,7 @@
 package com.company.scrumit.web.tracker;
 
 import com.company.scrumit.entity.*;
+import com.company.scrumit.service.MailListService;
 import com.company.scrumit.service.TrackerService;
 import com.groupstp.workflowstp.entity.*;
 import com.groupstp.workflowstp.exception.WorkflowException;
@@ -27,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -34,6 +36,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -108,6 +111,8 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     private WorkflowService workflowService;
     @Inject
     private TrackerService trackerService;
+    @Inject
+    private MailListService mailListService;
 
 
     @Override
@@ -486,6 +491,18 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                             } else {
                                 workflowService.startWorkflow(tr, workflowService.determinateWorkflow(tr));
                                 message = String.format(getMessage("TaskWorkflowBrowseTableFrame.workflowStarted"), tr.getId());
+                                String email = trackerService.getEmailFormString(getItem().getInitiatorEmail());
+                                if (email != null){
+                                    Map<String, Serializable> params = new HashMap<>();
+                                    params.put("shortDesc",getItem().getShortdesc());
+                                    params.put("trackerNumber",getItem().getNumber());
+                                    mailListService.sendEmail(
+                                            email,
+                                            getItem().getShortdesc(),
+                                            "com/company/scrumit/templates/notification_about_inWork.txt",
+                                            params
+                                    );
+                                }
                             }
                         } else {
                             message = String.format(getMessage("TaskWorkflowBrowseTableFrame.alreadyInProgress"), tr.getId());
@@ -501,7 +518,7 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                 }
                 String message = sb.toString();
                 if (!StringUtils.isEmpty(message)) {
-                    MessageDialog.showText(getFrame(), message, false, true);
+                   showNotification(message,NotificationType.WARNING);
                 }
             } finally {
                 taskDs.refresh();

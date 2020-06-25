@@ -194,6 +194,9 @@ create table SCRUMIT_TRACKER (
     DELETED_BY varchar(50),
     --
     PROJECT_ID uuid,
+    INITIATOR varchar(255),
+    NUMBER_ varchar(255),
+    INCIDENT_STATUS integer,
     STEP_NAME varchar(255),
     STATUS_WORK_FLOW integer,
     WORKFLOW_ID uuid,
@@ -201,7 +204,7 @@ create table SCRUMIT_TRACKER (
     PERFORMER_ID uuid,
     SHORTDESC varchar(100) not null,
     STATUS varchar(50),
-    TRACKER_PRIORITY_TYPE varchar(50),
+    TRACKER_PRIORITY_TYPE integer,
     TYPE_ varchar(50),
     DESCRIPTION text,
     WIKI_URL varchar(1024),
@@ -431,3 +434,93 @@ alter table SEC_USER add column CONTACT_ID uuid ^
 alter table SEC_USER add column DTYPE varchar(100) ^
 update SEC_USER set DTYPE = 'sec$User' where DTYPE is null ^
 -- end SEC_USER
+-- begin SCRUMIT_DISCUSSION
+create table SCRUMIT_DISCUSSION (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    TRACKER_ID uuid,
+    INITIATOR_ID uuid not null,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_DISCUSSION
+-- begin SCRUMIT_HUMAN_RESOURCES_ACCOUNT
+create table SCRUMIT_HUMAN_RESOURCES_ACCOUNT (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    TASK_ID uuid,
+    DATE_ date,
+    START_TIME timestamp,
+    END_T_IME timestamp,
+    PERFORMER_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_HUMAN_RESOURCES_ACCOUNT
+-- begin SCRUMIT_MESSAGE
+create table SCRUMIT_MESSAGE (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    TEXT text,
+    DISCUSSION_ID uuid,
+    AUTOR_ID uuid,
+    ATTACHMENT_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_MESSAGE
+-- begin SCRUMIT_PROJECT_IDENTIFICATOR
+create table SCRUMIT_PROJECT_IDENTIFICATOR (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    IDENTIFICATOR varchar(255),
+    PROJECT_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_PROJECT_IDENTIFICATOR
+-- begin SCRUMIT_TASK_CLASS
+create table SCRUMIT_TASK_CLASS (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    NAME varchar(255),
+    AVERAGE_DURATION_HOURS integer,
+    --
+    primary key (ID)
+)^
+-- end SCRUMIT_TASK_CLASS

@@ -346,4 +346,7 @@
     <view entity="scrumit$Tracker" name="tracker-with-tasks" extends="_minimal">
         <property name="task" view="_minimal"/>
     </view>
+    <view entity="scrumit_ExtConnectionData" name="extConnectionData-full" extends="_local">
+        <property name="project" view="_minimal"/>
+    </view>
 </views>

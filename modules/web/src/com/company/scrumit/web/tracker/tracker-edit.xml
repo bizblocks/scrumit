@@ -135,6 +135,11 @@
                                 invoke="onOkBtn"/>
                     </row>
                     <row>
+                        <label value="msg://initiator_email"/>
+                        <textField id="initiatorEmail" datasource="trackerDs" property="initiatorEmail" colspan="1"
+                                   width="100%"/>
+                    </row>
+                    <row>
                         <hbox colspan="6"
                               spacing="true"
                               width="100%">
@@ -254,6 +259,7 @@
                                      property="task"
                                      width="250px"/>
                     </row>
+                    <row/>
                 </rows>
             </grid>
         </scrollBox>

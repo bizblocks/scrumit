@@ -1,5 +1,6 @@
 package com.company.scrumit.service;
 
+import com.company.scrumit.core.StringUtil;
 import com.company.scrumit.entity.IncidentStatus;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Tracker;
@@ -13,6 +14,8 @@ public class TrackerServiceBean implements TrackerService {
 
     @Inject
     private DataManager dataManager;
+    @Inject
+    private StringUtil stringUtil;
 
     @Override
     public IncidentStatus updateIncidentStatus(Tracker incident) {
@@ -65,5 +68,10 @@ public class TrackerServiceBean implements TrackerService {
             } else return IncidentStatus.DONE;
         }
 
+    }
+
+    @Override
+    public String getEmailFormString(String source){
+        return stringUtil.getEmailFromString(source);
     }
 }
