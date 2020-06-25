@@ -9,7 +9,8 @@ public enum TicketsType implements EnumClass<String> {
 
     bug("bug"),
     feature("feature"),
-    research("research");
+    research("research"),
+    SUPPORT("SUPPORT");
 
     private String id;
 

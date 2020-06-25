@@ -7,4 +7,6 @@ public interface TrackerService {
     String NAME = "scrumit_TrackerService";
 
     IncidentStatus updateIncidentStatus(Tracker incident);
+
+    String getEmailFormString(String source);
 }

@@ -30,7 +30,7 @@ import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TaskWorkflowBrowseTableFrame extends Screen {
+public class TaskWorkflowBrowseTableFrame extends AbstractFrame {
 
     public static final String SCREEN_ID = "Task-workflow-table";
     public static final String TAB_TYPE = "tabType";

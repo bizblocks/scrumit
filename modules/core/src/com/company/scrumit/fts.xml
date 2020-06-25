@@ -79,5 +79,8 @@
         <entity class="com.company.scrumit.entity.HumanResourcesAccount">
             <include re=".*"/>
         </entity>
+        <entity class="com.company.scrumit.entity.ExtConnectionData">
+            <include re=".*"/>
+        </entity>
     </entities>
 </fts-config>

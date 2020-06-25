@@ -23,6 +23,9 @@ public class Tracker extends StandardEntity {
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
 
+    @Column(name = "INITIATOR")
+    protected String initiatorEmail;
+
     @Column(name = "NUMBER_", unique = true)
     protected String number;
 
@@ -76,6 +79,14 @@ public class Tracker extends StandardEntity {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "tracker")
     protected Discussion discussion;
+
+    public String getInitiatorEmail() {
+        return initiatorEmail;
+    }
+
+    public void setInitiatorEmail(String initiatorEmail) {
+        this.initiatorEmail = initiatorEmail;
+    }
 
     public String getNumber() {
         return number;

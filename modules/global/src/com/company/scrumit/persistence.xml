@@ -30,5 +30,6 @@
         <class>com.company.scrumit.entity.ProjectIdentificator</class>
         <class>com.company.scrumit.entity.TaskClass</class>
         <class>com.company.scrumit.entity.HumanResourcesAccount</class>
+        <class>com.company.scrumit.entity.ExtConnectionData</class>
     </persistence-unit>
 </persistence>
