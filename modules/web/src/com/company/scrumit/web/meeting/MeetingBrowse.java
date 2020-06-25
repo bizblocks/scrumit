@@ -1,6 +1,11 @@
 package com.company.scrumit.web.meeting;
 
-import com.haulmont.cuba.gui.components.AbstractLookup;
+import com.haulmont.cuba.gui.screen.*;
+import com.company.scrumit.entity.Meeting;
 
-public class MeetingBrowse extends AbstractLookup {
+@UiController("scrumit$Meeting.browse")
+@UiDescriptor("meeting-browse.xml")
+@LookupComponent("meetingsTable")
+@LoadDataBeforeShow
+public class MeetingBrowse extends StandardLookup<Meeting> {
 }

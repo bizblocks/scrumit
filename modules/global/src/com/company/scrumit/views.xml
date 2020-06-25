@@ -13,40 +13,33 @@
     <view class="com.company.scrumit.entity.Task"
           extends="_local"
           name="tasks-full">
-        <property name="parentBug"
-                  view="_local"/>
-        <property name="estimation"
-                  view="_minimal"/>
-        <property name="performer"
-                  view="_local"/>
-        <property name="task"
-                  view="_minimal">
-            <property name="task"
-                      view="_minimal"/>
+        <property name="taskClass" view="_minimal">
+            <property name="averageDurationHours"/>
+        </property>
+        <property name="parentBug" view="_local"/>
+        <property name="estimation" view="_minimal"/>
+        <property name="performer" view="_local"/>
+        <property name="task" view="_minimal">
+            <property name="task" view="_minimal"/>
             <property name="level"/>
-            <property name="top"
-                      view="_minimal"/>
+            <property name="top" view="_minimal"/>
         </property>
-        <property name="top"
-                  view="_minimal">
-            <property name="task"
-                      view="_minimal"/>
+        <property name="top" view="_minimal">
+            <property name="task" view="_minimal"/>
         </property>
-        <property name="sprintBacklog"
-                  view="_minimal"/>
-        <property name="teams"
-                  view="_minimal"/>
-        <property name="sprints"
-                  view="_minimal"/>
-        <property name="createTs"/>
-        <property name="children"
-                  view="_minimal">
+        <property name="sprintBacklog" view="_minimal"/>
+        <property name="teams" view="_minimal"/>
+        <property name="sprints" view="_minimal"/>
+        <property name="children" view="_minimal">
             <property name="stepName"/>
         </property>
+        <property name="createTs"/>
     </view>
     <view class="com.company.scrumit.entity.Task"
           extends="_minimal"
           name="task-tree">
+        <property name="returnComment"/>
+        <property name="startWork"/>
         <property name="stepName"/>
         <property name="status"/>
         <property name="testingPlan"/>
@@ -56,7 +49,7 @@
         <property name="done"/>
         <property name="control"/>
         <property name="priority"/>
-        <property name="realduration"/>
+        <property name="realdurationHours"/>
         <property name="type"/>
         <property name="description"/>
         <property name="performer" view="_minimal"/>
@@ -111,24 +104,20 @@
     <view class="com.company.scrumit.entity.Sprint"
           extends="_local"
           name="sprint-view">
-        <property name="team"
-                  view="_minimal">
+        <property name="team" view="_minimal">
             <property name="smartsheetId"/>
         </property>
-        <property name="tasks"
-                  view="_minimal">
+        <property name="tasks" view="_minimal">
             <property name="deadline"/>
             <property name="begin"/>
             <property name="done"/>
-            <property name="realduration"/>
+            <property name="realdurationHours"/>
             <property name="type"/>
             <property name="description"/>
-            <property name="performer"
-                      view="_minimal"/>
+            <property name="performer" view="_minimal"/>
             <property name="duration"/>
             <property name="amount"/>
-            <property name="task"
-                      view="_minimal">
+            <property name="task" view="_minimal">
                 <property name="ssId"/>
             </property>
             <property name="control"/>
@@ -249,17 +238,10 @@
     <view class="com.company.scrumit.entity.Performer"
           extends="_local"
           name="user-with-roles">
-        <property name="userRoles"
-                  view="_minimal">
-            <property name="user"
-                      view="_minimal"/>
-            <property name="role"
-                      view="_minimal"/>
-        </property>
-        <property name="teams"
-                  view="_minimal">
-            <property name="projects"
-                      view="_minimal"/>
+        <property name="teams" view="_minimal"/>
+        <property name="userRoles" view="_minimal">
+            <property name="user" view="_minimal"/>
+            <property name="role" view="_minimal"/>
         </property>
     </view>
     <view class="com.company.scrumit.entity.Files"
@@ -336,11 +318,32 @@
     </view>
     <view entity="scrumit$Tracker" name="tracker-newTab" extends="_minimal">
         <property name="project" view="_minimal"/>
+        <property name="number"/>
         <property name="incidentStatus"/>
         <property name="testingPlan"/>
         <property name="performer" view="_minimal"/>
         <property name="trackerPriorityType"/>
         <property name="type"/>
+        <property name="task" view="_minimal"/>
+    </view>
+    <view entity="scrumit$ProjectIdentificator" name="projectIdentificator-view" extends="_local">
+        <property name="project" view="_minimal"/>
+    </view>
+    <view entity="scrumit$Tracker" name="tracker-number">
+        <property name="number"/>
+    </view>
+    <view entity="scrumit_TaskClass" name="taskClass-full" extends="_local"/>
+    <view entity="scrumit$Performer" name="performer-with-roles-and-teams" extends="_local">
+        <property name="teams" view="_minimal">
+            <property name="projects" view="_minimal"/>
+        </property>
+        <property name="userRoles" view="_minimal"/>
+    </view>
+    <view entity="scrumit_HumanResourcesAccount" name="humanResourcesAccount-view" extends="_local">
+        <property name="task" view="_minimal"/>
+        <property name="performer" view="_minimal"/>
+    </view>
+    <view entity="scrumit$Tracker" name="tracker-with-tasks" extends="_minimal">
         <property name="task" view="_minimal"/>
     </view>
 </views>

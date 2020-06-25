@@ -1,52 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://browseCaption"
-        class="com.company.scrumit.web.meeting.MeetingBrowse"
         focusComponent="meetingsTable"
-        lookupComponent="meetingsTable"
         messagesPack="com.company.scrumit.web.meeting">
-    <dsContext>
-        <groupDatasource id="meetingsDs"
-                         class="com.company.scrumit.entity.Meeting"
-                         view="meeting-view">
-            <query>
-                <![CDATA[select e from scrumit$Meeting e]]>
-            </query>
-        </groupDatasource>
-    </dsContext>
+    <data readOnly="true">
+        <collection id="meetingsDc"
+                    class="com.company.scrumit.entity.Meeting"
+                    view="meeting-view">
+            <loader id="meetingsDl">
+                <query>
+                    <![CDATA[select e from scrumit$Meeting e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="meetingsTable"
             spacing="true">
         <filter id="filter"
                 applyTo="meetingsTable"
-                datasource="meetingsDs">
+                dataLoader="meetingsDl">
             <properties include=".*"/>
         </filter>
         <groupTable id="meetingsTable"
-                    width="100%">
+                    width="100%"
+                    dataContainer="meetingsDc">
             <actions>
-                <action id="create"/>
-                <action id="edit"/>
-                <action id="remove"/>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="sprint"/>
-                <column id="comment"/>
+                <column id="sprint" caption="msg://sprint"/>
                 <column id="type"/>
+                <column id="comment"/>
                 <column id="date"/>
             </columns>
-            <rows datasource="meetingsDs"/>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn"
-                        action="meetingsTable.create"/>
-                <button id="editBtn"
-                        action="meetingsTable.edit"/>
-                <button id="removeBtn"
-                        action="meetingsTable.remove"/>
+                <button id="createBtn" action="meetingsTable.create"/>
+                <button id="editBtn" action="meetingsTable.edit"/>
+                <button id="removeBtn" action="meetingsTable.remove"/>
             </buttonsPanel>
         </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
     </layout>
 </window>

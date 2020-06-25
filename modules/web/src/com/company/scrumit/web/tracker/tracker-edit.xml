@@ -4,7 +4,10 @@
         class="com.company.scrumit.web.tracker.TrackerEdit"
         datasource="trackerDs"
         focusComponent="grid"
-        messagesPack="com.company.scrumit.web.tracker">
+        messagesPack="com.company.scrumit.web.tracker"
+        wf:actions="bottomPanel"
+        xmlns:wf="http://schemas.groupstp.com/wf/0.1/wf-schema.xsd"
+        >
     <dsContext>
         <datasource id="trackerDs"
                     class="com.company.scrumit.entity.Tracker"
@@ -21,7 +24,7 @@
                                 hierarchyProperty="task"
                                 view="task-tree">
             <query>
-                <![CDATA[select e from scrumit$Task e where e.parentBug.id=:ds$trackerDs]]>
+                <![CDATA[select e from scrumit$Task e where e.parentBug=:ds$trackerDs]]>
             </query>
         </hierarchicalDatasource>
         <collectionDatasource id="performersDs"
@@ -196,7 +199,7 @@
                                     <column id="done"/>
                                     <column id="control"/>
                                     <column id="priority"/>
-                                    <column id="realduration"/>
+                                    <column id="realdurationHours"/>
                                     <column id="type"/>
                                     <column id="description"/>
                                     <column id="deadline"/>

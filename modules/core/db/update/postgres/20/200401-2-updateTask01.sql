@@ -1,0 +1,2 @@
+alter table SCRUMIT_TASK add constraint FK_SCRUMIT_TASK_TASK_CLASS foreign key (TASK_CLASS_ID) references SCRUMIT_TASK_CLASS(ID);
+create index IDX_SCRUMIT_TASK_TASK_CLASS on SCRUMIT_TASK (TASK_CLASS_ID);

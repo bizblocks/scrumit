@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd"
-       xmlns:context="http://www.springframework.org/schema/context">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:gui="http://schemas.haulmont.com/cuba/spring/cuba-gui.xsd">
     <!-- Annotation-based beans -->
     <context:component-scan base-package="com.company.scrumit"/>
     <bean class="com.haulmont.cuba.web.sys.remoting.WebRemoteProxyBeanCreator">
@@ -22,6 +21,11 @@
                        value="com.company.scrumit.service.GitService"/>
                 <entry key="scrumit_TaskEstimationService" value="com.company.scrumit.service.TaskEstimationService"/>
                 <entry key="scrumit_TrackerService" value="com.company.scrumit.service.TrackerService"/>
+                <entry key="scrumit_ProjectIdentificatorService"
+                       value="com.company.scrumit.service.ProjectIdentificatorService"/>
+                <entry key="scrumit_TaskClassService" value="com.company.scrumit.service.TaskClassService"/>
+                <entry key="scrumit_HumanResourcesAccountService"
+                       value="com.company.scrumit.service.HumanResourcesAccountService"/>
             </map>
         </property>
     </bean>
@@ -29,4 +33,5 @@
     <bean id="cuba_FilterDelegate"
           class="com.company.scrumit.web.filter.FilterDelegateImplExt"
           scope="prototype"/>
+    <gui:screens base-packages="com.company.scrumit.web"/>
 </beans>

@@ -1,18 +1,21 @@
 package com.company.scrumit.web.task;
 
-import com.company.scrumit.entity.Task;
+import com.company.scrumit.entity.*;
+import com.company.scrumit.entity.ProjectIdentificator;
 
-import com.company.scrumit.entity.Tracker;
+import com.company.scrumit.entity.TaskType;
+import com.company.scrumit.service.ProjectIdentificatorService;
+import com.company.scrumit.service.TaskClassService;
 import com.groupstp.workflowstp.entity.Stage;
 import com.groupstp.workflowstp.entity.WorkflowInstanceTask;
 import com.groupstp.workflowstp.service.WorkflowService;
 import com.haulmont.cuba.core.global.DataManager;
 
-import com.haulmont.cuba.gui.components.AbstractEditor;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.DateField;
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.core.global.PersistenceHelper;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.data.Datasource;
+import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
+import com.haulmont.cuba.web.gui.components.WebLookupField;
 
 
 import javax.inject.Inject;
@@ -29,20 +32,39 @@ public class TaskEdit extends AbstractEditor<Task> {
     public static final String SCREEN_ID = " scrumit$Task.edit";
 
     @Named("fieldGroup.deadline")
-    private DateField deadlineField;
+    private DateField<Date> deadlineField;
     @Named("fieldGroup.begin")
-    private DateField beginField;
+    private DateField<Date> beginField;
     @Named("fieldGroup.duration")
-    private TextField durationField;
+    private TextField<Integer> durationField;
+    @Named("fieldGroup.type")
+    private WebLookupField typeField;
     @Inject
     private Button btnReady;
     @Inject
     private WorkflowService workflowService;
     @Inject
     private DataManager dataManager;
-
     @Inject
     private Datasource<Task> taskDs;
+    @Inject
+    private FieldGroup fieldGroup;
+    @Inject
+    private Datasource<ProjectIdentificator> projectIdentificatorDs;
+    @Inject
+    private ComponentsFactory componentsFactory;
+    @Inject
+    private ProjectIdentificatorService projectIdentificatorService;
+    @Named("fieldGroup.planningTime")
+    private TextField<Double> planningTimeField;
+    @Named("fieldGroup.taskClass")
+    private LookupPickerField<TaskClass> taskClassField;
+    @Inject
+    private TaskClassService taskClassService;
+    @Inject
+    private VBoxLayout editBox;
+    @Inject
+    private RichTextArea description;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -52,8 +74,65 @@ public class TaskEdit extends AbstractEditor<Task> {
         deadlineField.addValueChangeListener(e -> {
             if (beginField.getValue() == null)
                 return;
-            durationField.setValue((deadlineField.getValue().getTime() - beginField.getValue().getTime()) / ONEDAY);
+            durationField.setValue((int) ((deadlineField.getValue().getTime() - beginField.getValue().getTime()) / ONEDAY));
         });
+        typeField.addValueChangeListener(e -> {
+            if (((HasValue.ValueChangeEvent) e).getValue().equals(TaskType.project)){
+                ProjectIdentificator identificator = projectIdentificatorService.getProjectIdentificatorByProject(taskDs.getItem());
+                if (identificator!=null){
+                    projectIdentificatorDs.setItem(identificator);
+                }else {
+                    identificator = dataManager.create(ProjectIdentificator.class);
+                    identificator.setProject(taskDs.getItem());
+                    projectIdentificatorDs.setItem(identificator);
+
+                }
+                FieldGroup.FieldConfig field = fieldGroup.createField("identificator");
+                field.setDatasource(projectIdentificatorDs);
+                field.setProperty("identificator");
+                field.setCaption(getMessage("project_id"));
+                field.setComponent(componentsFactory.createComponent(TextField.class));
+                ((TextField) field.getComponent()).setValue(projectIdentificatorDs.getItem().getIdentificator());
+                field.setRequired(true);
+                field.setVisible(true);
+                field.setEnabled(true);
+                ((TextField)field.getComponent()).addTextChangeListener(textChangeEvent -> {
+                    projectIdentificatorDs.getItem().setIdentificator(textChangeEvent.getText());
+                });
+                fieldGroup.addField(field);
+
+            }else {
+                projectIdentificatorDs.setItem(null);
+                FieldGroup.FieldConfig field = fieldGroup.getField("identificator");
+                if (field!=null)
+                    fieldGroup.removeField(field);
+            }
+        });
+        taskClassField.addValueChangeListener(taskClassValueChangeEvent -> {
+            TaskClass taskClass = (TaskClass) (((HasValue.ValueChangeEvent) taskClassValueChangeEvent).getValue());
+            if (taskClass!=null){
+                    taskClassService.updateAverageHoursDurationForTaskClass(taskClass);
+                    taskClass = dataManager.reload(taskClass, "taskClass-full");
+                    if (taskClass.getAverageDurationHours()!=null)
+                        planningTimeField.setValue(Double.valueOf(taskClass.getAverageDurationHours().toString()));
+
+            }
+
+        });
+
+    }
+
+    @Override
+    protected void postInit() {
+        super.postInit();
+        if (getItem().getReturnComment()!=null){
+            TextArea area = componentsFactory.createComponent(TextArea.class);
+            area.setValue(getItem().getReturnComment());
+            area.setEditable(false);
+            area.setCaption(getMessage("comment_on_return"));
+            area.setWidthFull();
+            editBox.add(area,editBox.indexOf(description));
+        }
     }
 
     @Override
@@ -68,7 +147,7 @@ public class TaskEdit extends AbstractEditor<Task> {
         }
     }
 
-    private void calcDates(ValueChangeEvent e) {
+    private void calcDates(HasValue.ValueChangeEvent e) {
         if (beginField.getValue() == null || durationField.getValue() == null)
             return;
         Date d = beginField.getValue();

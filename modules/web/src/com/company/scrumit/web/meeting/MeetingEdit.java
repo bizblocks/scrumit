@@ -1,9 +1,6 @@
 package com.company.scrumit.web.meeting;
 
-import com.company.scrumit.entity.Meeting;
-import com.company.scrumit.entity.MeetingType;
-import com.company.scrumit.entity.MeetingsTask;
-import com.company.scrumit.entity.Task;
+import com.company.scrumit.entity.*;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
@@ -34,7 +31,7 @@ public class MeetingEdit extends AbstractEditor<Meeting> {
     private LookupField typeField;
 
     @Named("fieldGroup.sprint")
-    private PickerField sprintField;
+    private PickerField<Sprint> sprintField;
 
     @Inject
     private DataManager dataManager;

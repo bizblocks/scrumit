@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-@NamePattern("%s: %tD - %tD|team,periodStart,periodEnd")
+@NamePattern("%s: %s - %s|team,periodStart,periodEnd")
 @Table(name = "SCRUMIT_SPRINT")
 @Entity(name = "scrumit$Sprint")
 public class Sprint extends StandardEntity {

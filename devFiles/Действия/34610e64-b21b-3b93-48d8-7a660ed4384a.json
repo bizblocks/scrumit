@@ -1,0 +1,18 @@
+[
+  {
+    "_entityName": "wfstp$ScreenActionTemplate",
+    "id": "34610e64-b21b-3b93-48d8-7a660ed4384a",
+    "availableInExternalSystem": false,
+    "icon": "font-icon:STOP",
+    "caption": "Отправить на доработку",
+    "permitItemsCount": 0,
+    "version": 4,
+    "script": "Map params \u003d MapHelper.asMap(\"toDo\", \"true\", \"прочее\", null);//перечислить все возможные пути в null\nWebUiHelper.performWorkflowAction(entity, target, workflowInstanceTask, workflowInstance, stage, screen, params);",
+    "permitItemsType": "MORE",
+    "alwaysEnabled": false,
+    "entityName": "scrumit$Tracker",
+    "name": "Кнопка отправить на доработку",
+    "permitRequired": true,
+    "buttonAction": true
+  }
+]

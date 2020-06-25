@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="humanResourcesAccountsTable"
+        messagesPack="com.company.scrumit.web.humanresourcesaccount">
+    <data readOnly="true">
+        <collection id="humanResourcesAccountsDc"
+                    class="com.company.scrumit.entity.HumanResourcesAccount"
+                    view="humanResourcesAccount-view">
+            <loader id="humanResourcesAccountsDl">
+                <query>
+                    <![CDATA[select e from scrumit_HumanResourcesAccount e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="humanResourcesAccountsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="humanResourcesAccountsTable"
+                dataLoader="humanResourcesAccountsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="humanResourcesAccountsTable"
+                    width="100%"
+                    dataContainer="humanResourcesAccountsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="date"/>
+                <column id="performer"/>
+                <column id="task"/>
+                <column id="startTime"/>
+                <column id="endTIme"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="humanResourcesAccountsTable.create"/>
+                <button id="editBtn" action="humanResourcesAccountsTable.edit"/>
+                <button id="removeBtn" action="humanResourcesAccountsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

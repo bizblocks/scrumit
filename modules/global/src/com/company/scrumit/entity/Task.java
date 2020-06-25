@@ -8,26 +8,38 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.Listeners;
 import com.haulmont.cuba.core.entity.annotation.Lookup;
 import com.haulmont.cuba.core.entity.annotation.LookupType;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import com.haulmont.cuba.core.entity.annotation.OnDelete;
-import com.haulmont.cuba.core.global.DeletePolicy;
 
 @Listeners("scrumit_TaskEntityListener")
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TASK")
 @Entity(name = "scrumit$Task")
-public class Task extends StandardEntity implements WorkflowEntity<UUID> {
+public class Task extends StandardEntity implements ExtWorkflowEntity<UUID> {
     private static final long serialVersionUID = 8919522312858052940L;
 
     @NotNull
     @Column(name = "SHORTDESC", nullable = false, length = 100)
     protected String shortdesc;
 
+
+    @Lob
+    @Column(name = "RETURN_COMMENT")
+    protected String returnComment;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "START_WORK")
+    protected Date startWork;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TASK_CLASS_ID")
+    protected TaskClass taskClass;
 
     @Column(name = "STEP_NAME")
     protected String stepName;
@@ -47,8 +59,11 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
     @Column(name = "PLANNING_TIME")
     protected Double planningTime;
 
+    /**
+     * Текущее время выполнения задачи в минутах
+     */
     @Column(name = "ACTUAL_TIME")
-    protected Double actualTime;
+    protected Integer actualTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_BUG_ID")
@@ -68,7 +83,7 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
     protected String priority;
 
     @Column(name = "REALDURATION")
-    protected Integer realduration;
+    protected Integer realdurationHours;
 
     @Column(name = "TYPE_")
     protected String type;
@@ -140,7 +155,48 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
 
     @OneToMany(mappedBy = "task")
     @OnDelete(DeletePolicy.CASCADE)
-    private  List<Task> children;
+    private List<Task> children;
+
+    public String getReturnComment() {
+        return returnComment;
+    }
+
+    public void setReturnComment(String returnComment) {
+        this.returnComment = returnComment;
+    }
+
+    public void setStatus(WorkflowEntityStatus status) {
+        this.status = status.getId();
+    }
+
+    public WorkflowEntityStatus getStatus() {
+        return WorkflowEntityStatus.fromId(status);
+    }
+
+    public void setActualTime(Integer actualTime) {
+        this.actualTime = actualTime;
+    }
+
+    public Integer getActualTime() {
+        return actualTime;
+    }
+
+    public Date getStartWork() {
+
+        return startWork;
+    }
+
+    public void setStartWork(Date startWork) {
+        this.startWork = startWork;
+    }
+
+    public TaskClass getTaskClass() {
+        return taskClass;
+    }
+
+    public void setTaskClass(TaskClass taskClass) {
+        this.taskClass = taskClass;
+    }
 
     public List<Task> getChildren() {
         return children;
@@ -165,14 +221,6 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
 
     public Double getPlanningTime() {
         return planningTime;
-    }
-
-    public void setActualTime(Double actualTime) {
-        this.actualTime = actualTime;
-    }
-
-    public Double getActualTime() {
-        return actualTime;
     }
 
 
@@ -273,12 +321,12 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
         return teams;
     }
 
-    public void setRealduration(Integer realduration) {
-        this.realduration = realduration;
+    public void setRealdurationHours(Integer realdurationHours) {
+        this.realdurationHours = realdurationHours;
     }
 
-    public Integer getRealduration() {
-        return realduration;
+    public Integer getRealdurationHours() {
+        return realdurationHours;
     }
 
     public void setSprintBacklog(SprintBacklog sprintBacklog) {
@@ -357,14 +405,6 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
         this.stepName = stepName;
     }
 
-    public void setStatus(WorkflowEntityStatus status) {
-        this.status = status == null ? null : status.getId();
-    }
-
-    public WorkflowEntityStatus getStatus() {
-        return status == null ? null : WorkflowEntityStatus.fromId(status);
-    }
-
     @Override
     public Workflow getWorkflow() {
         return workflow;
@@ -374,4 +414,8 @@ public class Task extends StandardEntity implements WorkflowEntity<UUID> {
     public void setWorkflow(Workflow workflow) {
         this.workflow = workflow;
     }
+
+
+
+
 }

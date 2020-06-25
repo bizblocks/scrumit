@@ -26,13 +26,20 @@
                 <![CDATA[select e from scrumit$Task e]]>
             </query>
         </collectionDatasource>
+        <datasource id="projectIdentificatorDs" class="com.company.scrumit.entity.ProjectIdentificator"
+                    view="projectIdentificator-view"/>
+        <collectionDatasource id="taskClassesDs" class="com.company.scrumit.entity.TaskClass" view="taskClass-full">
+            <query>
+                <![CDATA[select e from scrumit_TaskClass e ]]>
+            </query>
+        </collectionDatasource>
     </dsContext>
     <dialogMode height="auto"
                 width="auto"/>
     <layout expand="editBox"
             spacing="true">
         <vbox id="editBox"
-              expand="fieldGroupBox"
+              expand="description"
               margin="false,false,false,true"
               responsive="true"
               spacing="true">
@@ -44,23 +51,21 @@
                     <column width="300px">
                         <field property="id"/>
                         <field property="task"/>
-                        <field editable="false"
-                               property="done"/>
+                        <field editable="false" property="done"/>
                         <field property="begin"/>
                         <field property="duration"/>
                         <field property="deadline"/>
                         <field property="shortdesc"/>
                     </column>
                     <column width="300px">
+                        <field id="taskClass" property="taskClass" optionsDatasource="taskClassesDs"/>
                         <field property="planningTime"/>
                         <field property="actualTime"/>
-                        <field editable="false"
-                               property="control"/>
+                        <field editable="false" property="control"/>
                         <field property="priority"/>
-                        <field property="type"/>
+                        <field property="type" id="type"/>
                         <field property="amount"/>
-                        <field optionsDatasource="performersDs"
-                               property="performer"/>
+                        <field optionsDatasource="performersDs" property="performer"/>
                     </column>
                 </fieldGroup>
             </scrollBox>

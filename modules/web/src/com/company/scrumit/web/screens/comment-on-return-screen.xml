@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://caption"
+        messagesPack="com.company.scrumit.web.screens">
+    <layout expand="textArea">
+        <textArea id="textArea" height="100%" width="100%" caption="msg://enter_comment_on_return"/>
+        <button id="button" align="TOP_RIGHT" caption="msg://ok" invoke="onButtonClick"/>
+    </layout>
+</window>

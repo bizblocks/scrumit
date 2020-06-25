@@ -136,7 +136,7 @@ public class Smartsheetexport extends AbstractLookup {
     private DataManager dataManager;
 
     private void export() throws SmartsheetException {
-        Smartsheet ss = SmartsheetFactory.createDefaultClient(token.getValue());
+        Smartsheet ss = SmartsheetFactory.createDefaultClient((String) token.getValue());
         Sheet sheet = ss.sheetResources().getSheet(sheetId,
                 null,
                 null,

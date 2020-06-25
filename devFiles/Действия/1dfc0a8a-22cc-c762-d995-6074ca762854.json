@@ -1,0 +1,18 @@
+[
+  {
+    "_entityName": "wfstp$ScreenActionTemplate",
+    "id": "1dfc0a8a-22cc-c762-d995-6074ca762854",
+    "icon": "font-icon:CLOSE",
+    "caption": "Отменить заявку",
+    "permitItemsCount": 0,
+    "version": 1,
+    "script": "Map params \u003d MapHelper.asMap(\"reject\", \"true\", \"прочее\", null);//перечислить все возможные пути в null\r\nWebUiHelper.performWorkflowAction(entity, target, workflowInstanceTask, workflowInstance, stage, screen, params);",
+    "permitItemsType": "MORE",
+    "alwaysEnabled": false,
+    "entityName": "scrumit$Tracker",
+    "name": "Кнопка отмены",
+    "permitRequired": true,
+    "style": "danger",
+    "buttonAction": true
+  }
+]

@@ -37,13 +37,13 @@ public class TaskList extends EntityCombinedScreen {
     @Inject
     private WebUiHelper webUiHelper;
     @Named("fieldGroup.duration")
-    private TextField durationField;
+    private TextField<Integer> durationField;
 
     @Named("fieldGroup.deadline")
-    private DateField deadlineField;
+    private DateField<Date> deadlineField;
 
     @Named("fieldGroup.begin")
-    private DateField beginField;
+    private DateField<Date> beginField;
     @Named("fieldGroup.control")
     private CheckBox control;
     @Inject
@@ -71,7 +71,7 @@ public class TaskList extends EntityCombinedScreen {
         deadlineField.addValueChangeListener(e -> {
             if (beginField.getValue() == null)
                 return;
-            durationField.setValue((deadlineField.getValue().getTime() - beginField.getValue().getTime()) / ONEDAY);
+            durationField.setValue((int) ((deadlineField.getValue().getTime() - beginField.getValue().getTime()) / ONEDAY));
         });
         addBeforeCloseWithCloseButtonListener(event -> table.getDatasource().commit());
         addBeforeCloseWithShortcutListener(event -> table.getDatasource().commit());
@@ -174,7 +174,7 @@ public class TaskList extends EntityCombinedScreen {
         table.getDatasource().refresh();
     }
 
-    private void calcDates(ValueChangeEvent e) {
+    private void calcDates(HasValue.ValueChangeEvent e) {
         if (beginField.getValue() == null || durationField.getValue() == null)
             return;
         Date d = beginField.getValue();

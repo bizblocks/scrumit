@@ -26,13 +26,14 @@
                 <column id="createTs" caption="msg://creationTime"/>
                 <column id="begin"/>
                 <column id="duration"/>
+                <column id="returnComment"/>
                 <column id="done"/>
                 <column id="testingPlan"/>
                 <column id="planningTime"/>
                 <column id="actualTime"/>
                 <column id="control"/>
                 <column id="priority"/>
-                <column id="realduration"/>
+                <column id="realdurationHours"/>
                 <column id="type"/>
                 <column id="deadline"/>
                 <column id="amount"/>

@@ -1,27 +1,30 @@
 package com.company.scrumit.entity;
 
 import com.groupstp.workflowstp.entity.Workflow;
-import com.groupstp.workflowstp.entity.WorkflowEntity;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.Listeners;
 import com.haulmont.cuba.core.entity.annotation.Lookup;
 import com.haulmont.cuba.core.entity.annotation.LookupType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
 
 @NamePattern("%s|shortdesc")
 @Table(name = "SCRUMIT_TRACKER")
 @Entity(name = "scrumit$Tracker")
-public class Tracker extends StandardEntity  {
+@Listeners("scrumit_TrackerEntityListener")
+public class Tracker extends StandardEntity {
     private static final long serialVersionUID = -8847125133735817612L;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PROJECT_ID")
     protected Task project;
+
+    @Column(name = "NUMBER_", unique = true)
+    protected String number;
 
     @Column(name = "INCIDENT_STATUS")
     protected Integer incidentStatus;
@@ -55,7 +58,7 @@ public class Tracker extends StandardEntity  {
     protected String statusOld;
 
     @Column(name = "TRACKER_PRIORITY_TYPE")
-    protected String trackerPriorityType;
+    protected Integer trackerPriorityType;
 
     @Column(name = "TYPE_")
     protected String type;
@@ -73,6 +76,14 @@ public class Tracker extends StandardEntity  {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "tracker")
     protected Discussion discussion;
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
     public IncidentStatus getIncidentStatus() {
         return incidentStatus == null ? null : IncidentStatus.fromId(incidentStatus);

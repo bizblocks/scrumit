@@ -13,6 +13,7 @@
         <item id="tracker-browse"
               openType="NEW_TAB"
               screen="scrumit$Tracker.browse"/>
+        <item screen="scrumit_TaskClass.browse"/>
     </menu>
     <menu id="refs"
           insertBefore="administration">
@@ -26,5 +27,6 @@
         <item screen="scrumit$ContactsStatus.browse"/>
         <item screen="scrumit$City.browse"/>
         <item screen="scrumit$TaskEstimation.browse"/>
+        <item screen="scrumit_HumanResourcesAccount.browse"/>
     </menu>
 </menu-config>

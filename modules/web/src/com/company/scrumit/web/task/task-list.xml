@@ -150,8 +150,7 @@
                         <column width="300px">
                             <field property="id"/>
                             <field property="task"/>
-                            <field editable="false"
-                                   property="done"/>
+                            <field editable="false" property="done"/>
                             <field property="shortdesc"/>
                             <field property="type"/>
                             <field property="begin"/>
@@ -162,14 +161,11 @@
                         <column width="300px">
                             <field property="planningTime"/>
                             <field property="actualTime"/>
-                            <field editable="false"
-                                   property="control"/>
+                            <field editable="false" property="control"/>
                             <field property="priority"/>
                             <field property="amount"/>
-                            <field optionsDatasource="performersDs"
-                                   property="performer"/>
-                            <field optionsDatasource="trackerDs"
-                                   property="parentBug"/>
+                            <field optionsDatasource="performersDs" property="performer"/>
+                            <field optionsDatasource="trackerDs" property="parentBug"/>
                         </column>
                     </fieldGroup>
                     <groupBox caption="msg://description">
