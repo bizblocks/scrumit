@@ -1,8 +1,7 @@
 package com.company.scrumit.service;
 
-import com.company.scrumit.core.StringUtil;
+import com.company.scrumit.utils.StringUtil;
 import com.company.scrumit.entity.*;
-import com.groupstp.mailreader.entity.ConnectionData;
 import com.groupstp.mailreader.entity.ResultMessage;
 import com.groupstp.mailreader.service.ReceiveEmailsService;
 import com.haulmont.cuba.core.app.EmailService;
@@ -12,17 +11,13 @@ import com.haulmont.cuba.core.global.EmailInfo;
 import com.haulmont.cuba.core.global.Metadata;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service(MailListService.NAME)
 public class MailListServiceBean implements MailListService {
@@ -72,6 +67,13 @@ public class MailListServiceBean implements MailListService {
                     tracker.setProject(connectionData.getProject());
                     tracker.setNumber(projectIdentificatorService.generateTrackerNumber(tracker));
                     task.setTop(connectionData.getProject());
+                    task.setTask(connectionData.getProject());
+                    TaskClass taskClass = dataManager.load(TaskClass.class)
+                            .query("select f from scrumit_TaskClass f where f.name = :name")
+                            .parameter("name", "support")
+                            .view("taskClass-full")
+                            .one();
+                    task.setTaskClass(taskClass);
 
                 }
                 task = dataManager.commit(task);

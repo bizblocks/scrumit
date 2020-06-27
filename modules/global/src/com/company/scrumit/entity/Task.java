@@ -1,7 +1,6 @@
 package com.company.scrumit.entity;
 
 import com.groupstp.workflowstp.entity.Workflow;
-import com.groupstp.workflowstp.entity.WorkflowEntity;
 import com.groupstp.workflowstp.entity.WorkflowEntityStatus;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
@@ -28,6 +27,9 @@ public class Task extends StandardEntity implements ExtWorkflowEntity<UUID> {
     @Column(name = "SHORTDESC", nullable = false, length = 100)
     protected String shortdesc;
 
+
+    @Column(name = "ABERANCE")
+    protected Integer aberrance;
 
     @Lob
     @Column(name = "RETURN_COMMENT")
@@ -57,7 +59,7 @@ public class Task extends StandardEntity implements ExtWorkflowEntity<UUID> {
     protected String testingPlan;
 
     @Column(name = "PLANNING_TIME")
-    protected Double planningTime;
+    protected Integer planningTime;
 
     /**
      * Текущее время выполнения задачи в минутах
@@ -83,7 +85,7 @@ public class Task extends StandardEntity implements ExtWorkflowEntity<UUID> {
     protected String priority;
 
     @Column(name = "REALDURATION")
-    protected Integer realdurationHours;
+    protected Integer realdurationMins;
 
     @Column(name = "TYPE_")
     protected String type;
@@ -157,12 +159,20 @@ public class Task extends StandardEntity implements ExtWorkflowEntity<UUID> {
     @OnDelete(DeletePolicy.CASCADE)
     private List<Task> children;
 
-    public String getReturnComment() {
-        return returnComment;
+    public void setPlanningTime(Integer planningTime) {
+        this.planningTime = planningTime;
     }
 
-    public void setReturnComment(String returnComment) {
-        this.returnComment = returnComment;
+    public Integer getPlanningTime() {
+        return planningTime;
+    }
+
+    public Integer getAberrance() {
+        return aberrance;
+    }
+
+    public void setAberrance(Integer aberrance) {
+        this.aberrance = aberrance;
     }
 
     public void setStatus(WorkflowEntityStatus status) {
@@ -171,6 +181,14 @@ public class Task extends StandardEntity implements ExtWorkflowEntity<UUID> {
 
     public WorkflowEntityStatus getStatus() {
         return WorkflowEntityStatus.fromId(status);
+    }
+
+    public String getReturnComment() {
+        return returnComment;
+    }
+
+    public void setReturnComment(String returnComment) {
+        this.returnComment = returnComment;
     }
 
     public void setActualTime(Integer actualTime) {
@@ -212,15 +230,6 @@ public class Task extends StandardEntity implements ExtWorkflowEntity<UUID> {
 
     public String getTestingPlan() {
         return testingPlan;
-    }
-
-
-    public void setPlanningTime(Double planningTime) {
-        this.planningTime = planningTime;
-    }
-
-    public Double getPlanningTime() {
-        return planningTime;
     }
 
 
@@ -321,12 +330,12 @@ public class Task extends StandardEntity implements ExtWorkflowEntity<UUID> {
         return teams;
     }
 
-    public void setRealdurationHours(Integer realdurationHours) {
-        this.realdurationHours = realdurationHours;
+    public void setRealdurationMins(Integer realdurationMins) {
+        this.realdurationMins = realdurationMins;
     }
 
-    public Integer getRealdurationHours() {
-        return realdurationHours;
+    public Integer getRealdurationMins() {
+        return realdurationMins;
     }
 
     public void setSprintBacklog(SprintBacklog sprintBacklog) {

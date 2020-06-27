@@ -1,6 +1,6 @@
 package com.company.scrumit.service;
 
-import com.company.scrumit.core.StringUtil;
+import com.company.scrumit.utils.StringUtil;
 import com.company.scrumit.entity.IncidentStatus;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Tracker;

@@ -40,6 +40,9 @@
           name="task-tree">
         <property name="returnComment"/>
         <property name="startWork"/>
+        <property name="taskClass" view="_minimal">
+            <property name="name"/>
+        </property>
         <property name="stepName"/>
         <property name="status"/>
         <property name="testingPlan"/>
@@ -49,7 +52,7 @@
         <property name="done"/>
         <property name="control"/>
         <property name="priority"/>
-        <property name="realdurationHours"/>
+        <property name="realdurationMins"/>
         <property name="type"/>
         <property name="description"/>
         <property name="performer" view="_minimal"/>
@@ -111,7 +114,7 @@
             <property name="deadline"/>
             <property name="begin"/>
             <property name="done"/>
-            <property name="realdurationHours"/>
+            <property name="realdurationMins"/>
             <property name="type"/>
             <property name="description"/>
             <property name="performer" view="_minimal"/>
@@ -340,13 +343,22 @@
         <property name="userRoles" view="_minimal"/>
     </view>
     <view entity="scrumit_HumanResourcesAccount" name="humanResourcesAccount-view" extends="_local">
-        <property name="task" view="_minimal"/>
+        <property name="task" view="_minimal">
+            <property name="planningTime"/>
+        </property>
         <property name="performer" view="_minimal"/>
     </view>
     <view entity="scrumit$Tracker" name="tracker-with-tasks" extends="_minimal">
         <property name="task" view="_minimal"/>
     </view>
     <view entity="scrumit_ExtConnectionData" name="extConnectionData-full" extends="_local">
-        <property name="project" view="_minimal"/>
+        <property name="project" view="_minimal">
+            <property name="level"/>
+            <property name="top" view="_minimal"/>
+        </property>
+    </view>
+    <view entity="scrumit$Task" name="task-isInWork" extends="_minimal">
+        <property name="startWork"/>
+        <property name="actualTime"/>
     </view>
 </views>

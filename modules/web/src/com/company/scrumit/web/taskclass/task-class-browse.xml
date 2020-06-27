@@ -33,6 +33,7 @@
             </actions>
             <columns>
                 <column property="name"/>
+                <column property="localizedName" caption="msg://localized_name"/>
                 <column property="averageDurationHours"/>
             </columns>
             <buttonsPanel id="buttonsPanel"

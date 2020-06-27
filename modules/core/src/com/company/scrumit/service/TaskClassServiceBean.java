@@ -25,9 +25,9 @@ public class TaskClassServiceBean implements TaskClassService {
                 .list();
 
         int averageDurationHours = (int) Math.ceil(tasks.stream()
-                .filter(task -> task.getRealdurationHours()!=null)
-                .collect(Collectors.averagingInt(value -> value.getRealdurationHours())));
-        if (taskClass.getAverageDurationHours()!=averageDurationHours){
+                .filter(task -> task.getRealdurationMins()!=null)
+                .collect(Collectors.averagingInt(value -> value.getRealdurationMins())));
+        if (taskClass.getAverageDurationHours() == null || taskClass.getAverageDurationHours()!=averageDurationHours){
             taskClass.setAverageDurationHours(averageDurationHours);
             taskClass = dataManager.commit(taskClass);
         }

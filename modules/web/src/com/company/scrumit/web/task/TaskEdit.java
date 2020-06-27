@@ -6,6 +6,7 @@ import com.company.scrumit.entity.ProjectIdentificator;
 import com.company.scrumit.entity.TaskType;
 import com.company.scrumit.service.ProjectIdentificatorService;
 import com.company.scrumit.service.TaskClassService;
+import com.company.scrumit.utils.StringUtil;
 import com.groupstp.workflowstp.entity.Stage;
 import com.groupstp.workflowstp.entity.WorkflowInstanceTask;
 import com.groupstp.workflowstp.service.WorkflowService;
@@ -20,6 +21,7 @@ import com.haulmont.cuba.web.gui.components.WebLookupField;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.time.Duration;
 import java.util.Date;
 
 import java.util.HashMap;
@@ -56,7 +58,7 @@ public class TaskEdit extends AbstractEditor<Task> {
     @Inject
     private ProjectIdentificatorService projectIdentificatorService;
     @Named("fieldGroup.planningTime")
-    private TextField<Double> planningTimeField;
+    private TextField<Integer> planningTimeField;
     @Named("fieldGroup.taskClass")
     private LookupPickerField<TaskClass> taskClassField;
     @Inject
@@ -65,10 +67,16 @@ public class TaskEdit extends AbstractEditor<Task> {
     private VBoxLayout editBox;
     @Inject
     private RichTextArea description;
+    @Inject
+    private StringUtil stringUtil;
 
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
+        FieldGroup.FieldConfig actualTime = fieldGroup.createField("actualTime");
+        actualTime.setComponent(componentsFactory.createComponent(TextField.class));
+        fieldGroup.addField(actualTime,1,2);
+        actualTime.setEditable(false);
         durationField.addValueChangeListener(this::calcDates);
         beginField.addValueChangeListener(this::calcDates);
         deadlineField.addValueChangeListener(e -> {
@@ -114,7 +122,7 @@ public class TaskEdit extends AbstractEditor<Task> {
                     taskClassService.updateAverageHoursDurationForTaskClass(taskClass);
                     taskClass = dataManager.reload(taskClass, "taskClass-full");
                     if (taskClass.getAverageDurationHours()!=null)
-                        planningTimeField.setValue(Double.valueOf(taskClass.getAverageDurationHours().toString()));
+                        planningTimeField.setValue(taskClass.getAverageDurationHours());
 
             }
 
@@ -132,6 +140,13 @@ public class TaskEdit extends AbstractEditor<Task> {
             area.setCaption(getMessage("comment_on_return"));
             area.setWidthFull();
             editBox.add(area,editBox.indexOf(description));
+        }
+        if (getItem().getActualTime()!=null){
+            Duration duration = Duration.ofMinutes(getItem().getActualTime());
+            TextField actualTime = (TextField) fieldGroup.getField("actualTime").getComponent();
+            actualTime.setCaption(getMessage("actual_time"));
+            actualTime.setValue(stringUtil.formatDurationToString(duration));
+            actualTime.setWidth("100%");
         }
     }
 

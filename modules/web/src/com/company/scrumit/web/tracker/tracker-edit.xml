@@ -204,7 +204,7 @@
                                     <column id="done"/>
                                     <column id="control"/>
                                     <column id="priority"/>
-                                    <column id="realdurationHours"/>
+                                    <column id="realdurationMins"/>
                                     <column id="type"/>
                                     <column id="description"/>
                                     <column id="deadline"/>

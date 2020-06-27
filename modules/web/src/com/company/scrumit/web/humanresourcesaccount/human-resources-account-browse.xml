@@ -18,11 +18,6 @@
                 width="800"/>
     <layout expand="humanResourcesAccountsTable"
             spacing="true">
-        <filter id="filter"
-                applyTo="humanResourcesAccountsTable"
-                dataLoader="humanResourcesAccountsDl">
-            <properties include=".*"/>
-        </filter>
         <groupTable id="humanResourcesAccountsTable"
                     width="100%"
                     dataContainer="humanResourcesAccountsDc">
@@ -37,14 +32,9 @@
                 <column id="task"/>
                 <column id="startTime"/>
                 <column id="endTIme"/>
+                <column id="duration"/>
             </columns>
             <rowsCount/>
-            <buttonsPanel id="buttonsPanel"
-                          alwaysVisible="true">
-                <button id="createBtn" action="humanResourcesAccountsTable.create"/>
-                <button id="editBtn" action="humanResourcesAccountsTable.edit"/>
-                <button id="removeBtn" action="humanResourcesAccountsTable.remove"/>
-            </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>

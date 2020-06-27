@@ -15,8 +15,9 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="taskClassDc">
             <column width="250px">
-                <textField id="nameField" property="name"/>
+                <textField id="nameField" property="name" required="true"/>
                 <textField id="averageDurationHoursField" property="averageDurationHours"/>
+                <textField id="localizedNameField" property="localizedName" required="true"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

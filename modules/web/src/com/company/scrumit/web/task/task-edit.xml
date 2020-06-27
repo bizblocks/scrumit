@@ -60,7 +60,6 @@
                     <column width="300px">
                         <field id="taskClass" property="taskClass" optionsDatasource="taskClassesDs"/>
                         <field property="planningTime"/>
-                        <field property="actualTime"/>
                         <field editable="false" property="control"/>
                         <field property="priority"/>
                         <field property="type" id="type"/>

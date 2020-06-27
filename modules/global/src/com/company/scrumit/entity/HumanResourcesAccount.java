@@ -17,6 +17,9 @@ public class HumanResourcesAccount extends StandardEntity {
     @JoinColumn(name = "TASK_ID")
     protected Task task;
 
+    @Column(name = "DURATION")
+    protected String duration;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "DATE_")
     protected Date date;
@@ -32,6 +35,14 @@ public class HumanResourcesAccount extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PERFORMER_ID")
     protected Performer performer;
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
 
     public void setDate(Date date) {
         this.date = date;

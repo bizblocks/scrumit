@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@NamePattern("%s|name")
+@NamePattern("%s|localizedName")
 @Table(name = "SCRUMIT_TASK_CLASS")
 @Entity(name = "scrumit_TaskClass")
 public class TaskClass extends StandardEntity {
@@ -16,8 +16,19 @@ public class TaskClass extends StandardEntity {
     @Column(name = "NAME")
     protected String name;
 
+    @Column(name = "LOCALIZED_NAME")
+    protected String localizedName;
+
     @Column(name = "AVERAGE_DURATION_HOURS")
     protected Integer averageDurationHours;
+
+    public String getLocalizedName() {
+        return localizedName;
+    }
+
+    public void setLocalizedName(String localizedName) {
+        this.localizedName = localizedName;
+    }
 
     public Integer getAverageDurationHours() {
         return averageDurationHours;

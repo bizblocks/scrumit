@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://caption"
+        messagesPack="com.company.scrumit.web.screens">
+    <data>
+        <keyValueCollection id="totalsData">
+            <properties>
+                <property name="emp" class="com.company.scrumit.entity.Performer"/>
+                <property name="aberrance" datatype="string"/>
+                <property name="task" class="com.company.scrumit.entity.Task"/>
+                <property name="totalDuration" datatype="long"/>
+            </properties>
+        </keyValueCollection>
+        <collection id="performersDc" class="com.company.scrumit.entity.Performer" view="performer-view">
+            <loader id="performersDl">
+                <query>
+                    <![CDATA[select e from scrumit$Performer e ]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="humanResourcesAccountDc" class="com.company.scrumit.entity.HumanResourcesAccount" view="humanResourcesAccount-view">
+            <loader id="humanResourcesAccountDl"/>
+        </instance>
+    </data>
+    <layout>
+        <vbox spacing="true">
+            <hbox spacing="true">
+                <dateField id="beginDateField" caption="msg://begin_date" resolution="DAY"/>
+                <dateField id="endDateField" caption="msg://end_date" resolution="DAY"/>
+                <lookupField caption="msg://performer" dataContainer="humanResourcesAccountDc"
+                             optionsContainer="performersDc" property="performer"/>
+                <button id="refreshTotalsTable" align="BOTTOM_LEFT" caption="msg://refresh_totals_table"
+                        invoke="onRefreshTotalsTableClick"/>
+            </hbox>
+            <button id="showDetailsBtn" caption="msg://show_details" enable="false"/>
+            <groupTable id="totalsTable" height="auto" width="100%" dataContainer="totalsData" aggregatable="true">
+                <columns>
+                    <column id="emp" caption="msg://performer"/>
+                    <column id="aberrance" caption="msg://aberrance"/>
+                    <column id="task" caption="msg://task"/>
+                    <column id="totalDuration" caption="msg://total_duration"/>
+                </columns>
+            </groupTable>
+        </vbox>
+    </layout>
+</window>

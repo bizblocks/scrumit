@@ -131,7 +131,7 @@
                         <column id="done"/>
                         <column id="performer"/>
                         <column id="planningTime"/>
-                        <column id="realdurationHours"/>
+                        <column id="realdurationMins"/>
                         <column id="type"/>
                         <column id="deadline"/>
                         <column id="begin"/>

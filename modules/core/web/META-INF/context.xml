@@ -8,7 +8,7 @@
           name="jdbc/CubaDS"
           password="cuba"
           type="javax.sql.DataSource"
-          url="jdbc:postgresql://localhost/scrumit"
+          url="jdbc:postgresql://localhost/scrumitTestFinal"
           username="cuba"/>-->
     <Resource driverClassName="org.postgresql.Driver"
               maxIdle="2"
@@ -17,6 +17,6 @@
               name="jdbc/CubaDS"
               password="cuba"
               type="javax.sql.DataSource"
-              url="jdbc:postgresql://localhost/scrumit"
+              url="jdbc:postgresql://localhost/scrumitTest"
               username="cuba"/>
 </Context>
