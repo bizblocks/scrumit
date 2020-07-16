@@ -1,0 +1,1 @@
+alter table SCRUMIT_TASK_CLASS add column LOCALIZED_NAME varchar(255) ;
