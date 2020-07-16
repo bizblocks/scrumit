@@ -75,6 +75,7 @@ public class TaskEdit extends AbstractEditor<Task> {
         super.init(params);
         FieldGroup.FieldConfig actualTime = fieldGroup.createField("actualTime");
         actualTime.setComponent(componentsFactory.createComponent(TextField.class));
+        actualTime.setCaption(getMessage("actual_time"));
         fieldGroup.addField(actualTime,1,2);
         actualTime.setEditable(false);
         durationField.addValueChangeListener(this::calcDates);
@@ -144,7 +145,6 @@ public class TaskEdit extends AbstractEditor<Task> {
         if (getItem().getActualTime()!=null){
             Duration duration = Duration.ofMinutes(getItem().getActualTime());
             TextField actualTime = (TextField) fieldGroup.getField("actualTime").getComponent();
-            actualTime.setCaption(getMessage("actual_time"));
             actualTime.setValue(stringUtil.formatDurationToString(duration));
             actualTime.setWidth("100%");
         }

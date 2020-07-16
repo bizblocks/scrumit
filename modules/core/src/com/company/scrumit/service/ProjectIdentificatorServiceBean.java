@@ -35,16 +35,22 @@ public class ProjectIdentificatorServiceBean implements ProjectIdentificatorServ
             return null;
         }
         Tracker lastTracker = dataManager.load(Tracker.class)
-                .query("select f from scrumit$Tracker f order by f.createTs desc")
+                .query("select f from scrumit$Tracker f where f.project = :project order by f.createTs desc")
+                .parameter("project",tracker.getProject())
                 .view("tracker-number")
-                .one();
+                .optional().orElse(null);
         long number;
-        if (lastTracker.getNumber()!=null){
-            number = Long.parseLong(lastTracker.getNumber().replaceAll(identificator.getIdentificator(),""));
-
+        if (lastTracker == null){
+            number = 0;
         }else {
-            return null;
+            if (lastTracker.getNumber()!=null){
+                number = Long.parseLong(lastTracker.getNumber().replaceAll(identificator.getIdentificator(),""));
+
+            }else {
+                return null;
+            }
         }
+
         return identificator.getIdentificator()+(number+1);
     }
     @Override
