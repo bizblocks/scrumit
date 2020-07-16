@@ -41,7 +41,7 @@ public class MailListServiceBean implements MailListService {
             resultMessages.forEach(resultMessage -> {
                String email = stringUtil.getEmailFromString(resultMessage.getRecipient());
                 Tracker tracker = metadata.create(Tracker.class);
-                tracker.setShortdesc(resultMessage.getSubject());
+                tracker.setShortdesc(resultMessage.getSubject()!=null ? resultMessage.getSubject() : "(без темы)");
                 String content = resultMessage.getTextContent();
 
 
