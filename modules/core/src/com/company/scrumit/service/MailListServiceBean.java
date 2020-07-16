@@ -54,7 +54,7 @@ public class MailListServiceBean implements MailListService {
                 Task task = metadata.create(Task.class);
                 task.setDescription(content);
                 task.setPriority(Priority.Middle);
-                task.setShortdesc(resultMessage.getSubject());
+                task.setShortdesc(resultMessage.getSubject()!=null ? resultMessage.getSubject() : "(без темы)");
                 tracker.setIncidentStatus(IncidentStatus.NEW);
                 tracker.setInitiatorEmail(resultMessage.getFrom());
 
