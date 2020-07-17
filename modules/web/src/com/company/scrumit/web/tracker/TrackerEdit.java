@@ -491,6 +491,9 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                             } else {
                                 workflowService.startWorkflow(tr, workflowService.determinateWorkflow(tr));
                                 message = String.format(getMessage("TaskWorkflowBrowseTableFrame.workflowStarted"), tr.getId());
+                                tr = dataManager.reload(tr,"Task-process");
+                                tr.setPerformer((Performer) user);
+                                tr = dataManager.commit(tr);
                                 String email = trackerService.getEmailFormString(getItem().getInitiatorEmail());
                                 if (email != null){
                                     Map<String, Serializable> params = new HashMap<>();
