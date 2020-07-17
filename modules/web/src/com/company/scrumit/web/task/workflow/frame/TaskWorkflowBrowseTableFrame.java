@@ -2,6 +2,7 @@ package com.company.scrumit.web.task.workflow.frame;
 
 import com.company.scrumit.entity.*;
 import com.company.scrumit.service.TrackerService;
+import com.company.scrumit.utils.StringUtil;
 import com.company.scrumit.web.screens.Screen;
 import com.company.scrumit.web.task.TabType;
 import com.company.scrumit.web.task.TaskEdit;
@@ -27,6 +28,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
+import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -57,6 +59,8 @@ public class TaskWorkflowBrowseTableFrame extends AbstractFrame {
     protected Boolean viewOnly;
     @Inject
     private UserSession userSession;
+    @Inject
+    private StringUtil stringUtil;
 
     @Override
     public void init(Map<String, Object> params) {
@@ -271,6 +275,8 @@ public class TaskWorkflowBrowseTableFrame extends AbstractFrame {
         };
         Button removeButton = componentsFactory.createComponent(Button.class);
         removeButton.setAction(removeAction);
+
+
 //        BaseAction runAction = new BaseAction("run") {
 //            @Override
 //            public String getCaption() {
@@ -363,6 +369,8 @@ public class TaskWorkflowBrowseTableFrame extends AbstractFrame {
 
         //инициализировать расширения
         initWorkflowExtension(params);
+        initTableExtension();
+
     }
 
     private void initWorkflowExtension(Map<String, Object> params) {
@@ -375,6 +383,19 @@ public class TaskWorkflowBrowseTableFrame extends AbstractFrame {
                 throw new RuntimeException(getMessage("TaskWorkflowBrowseTableFrame.errorOnScreenExtension"), e);
             }
         }
+    }
+    private void initTableExtension(){
+        taskTable.addGeneratedColumn("actualTime",entity -> {
+            Label label = componentsFactory.createComponent(Label.class);
+
+            if (entity.getActualTime() != null){
+                Duration duration = Duration.ofMinutes(entity.getActualTime());
+                label.setValue(stringUtil.formatDurationToString(duration));
+            }else {
+                label.setValue("");
+            }
+            return label;
+        });
     }
 
     //refresh queries table

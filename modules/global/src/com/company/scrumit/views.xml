@@ -48,7 +48,9 @@
         <property name="testingPlan"/>
         <property name="planningTime"/>
         <property name="actualTime"/>
-        <property name="parentBug" view="_minimal"/>
+        <property name="parentBug" view="_minimal">
+            <property name="initiatorEmail"/>
+        </property>
         <property name="done"/>
         <property name="control"/>
         <property name="priority"/>

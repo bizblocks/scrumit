@@ -23,21 +23,18 @@
             <columns>
                 <column id="shortdesc"/>
                 <column id="parentBug" link="true" linkScreen="scrumit$Tracker.edit" linkScreenOpenType="NEW_TAB"/>
-                <column id="createTs" caption="msg://creationTime"/>
-                <column id="begin"/>
+                <column id="createTs"/>
+                <column id="parentBug.initiatorEmail"/>
                 <column id="duration"/>
                 <column id="returnComment"/>
-                <column id="done"/>
                 <column id="testingPlan"/>
                 <column id="planningTime"/>
                 <column id="actualTime"/>
                 <column id="control"/>
                 <column id="priority"/>
-                <column id="realdurationMins"/>
                 <column id="type"/>
                 <column id="deadline"/>
                 <column id="amount"/>
-                <column id="ssId"/>
             </columns>
             <rows datasource="taskDs"/>
         </treeTable>
