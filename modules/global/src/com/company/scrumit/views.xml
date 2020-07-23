@@ -363,4 +363,11 @@
         <property name="startWork"/>
         <property name="actualTime"/>
     </view>
+    <view entity="scrumit$Tracker" name="tracker-with-threadSize" extends="_minimal">
+        <property name="threadSize"/>
+    </view>
+    <view entity="scrumit$Tracker" name="tracker-description" extends="_minimal">
+        <property name="description"/>
+        <property name="threadSize"/>
+    </view>
 </views>

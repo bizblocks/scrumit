@@ -80,6 +80,28 @@ public class Tracker extends StandardEntity {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "tracker")
     protected Discussion discussion;
 
+    @Column(name = "THREAD_ID")
+    protected String threadId;
+
+    @Column(name = "THREAD_SIZE")
+    protected Integer threadSize;
+
+    public Integer getThreadSize() {
+        return threadSize;
+    }
+
+    public void setThreadSize(Integer threadSize) {
+        this.threadSize = threadSize;
+    }
+
+    public String getThreadId() {
+        return threadId;
+    }
+
+    public void setThreadId(String threadId) {
+        this.threadId = threadId;
+    }
+
     public String getInitiatorEmail() {
         return initiatorEmail;
     }

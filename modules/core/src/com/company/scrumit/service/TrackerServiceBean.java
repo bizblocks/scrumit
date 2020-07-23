@@ -5,9 +5,11 @@ import com.company.scrumit.entity.IncidentStatus;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Tracker;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.Metadata;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @Service(TrackerService.NAME)
 public class TrackerServiceBean implements TrackerService {
@@ -16,6 +18,8 @@ public class TrackerServiceBean implements TrackerService {
     private DataManager dataManager;
     @Inject
     private StringUtil stringUtil;
+    @Inject
+    private Metadata metadata;
 
     @Override
     public IncidentStatus updateIncidentStatus(Tracker incident) {
@@ -73,5 +77,19 @@ public class TrackerServiceBean implements TrackerService {
     @Override
     public String getEmailFormString(String source){
         return stringUtil.getEmailFromString(source);
+    }
+
+    @Override
+    public List<String> getAllThreadIds(){
+        return dataManager.loadValue("select f.threadId from scrumit$Tracker f",String.class)
+                .list();
+    }
+    @Override
+    public Tracker getTrackerByThreadId(String threadId){
+        return dataManager.load(Tracker.class)
+                .query("select f from scrumit$Tracker f where f.threadId = :id")
+                .parameter("id", threadId)
+                .view("tracker-with-threadSize")
+                .optional().orElse(metadata.create(Tracker.class));
     }
 }

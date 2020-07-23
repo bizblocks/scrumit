@@ -208,6 +208,8 @@ create table SCRUMIT_TRACKER (
     TYPE_ varchar(50),
     DESCRIPTION text,
     WIKI_URL varchar(1024),
+    THREAD_ID varchar(255),
+    THREAD_SIZE integer,
     --
     primary key (ID)
 )^
