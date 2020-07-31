@@ -165,6 +165,7 @@ public class TaskWorkflowBrowseTableFrame extends AbstractFrame {
         trackerTable.setDatasource(trackerDs);
         trackerTable.setWidthFull();
         trackerTable.setHeightFull();
+        trackerTable.setMultiSelect(true);
         Table.Column<Tracker> column = trackerTable.getColumn("incidentStatus");
         column.setCaption("Статус инцидента");
         trackerTable.removeColumn(trackerTable.getColumn("description"));
