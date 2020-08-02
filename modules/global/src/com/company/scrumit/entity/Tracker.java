@@ -86,6 +86,17 @@ public class Tracker extends StandardEntity {
     @Column(name = "THREAD_SIZE")
     protected Integer threadSize;
 
+    @Column(name = "INITIAL_MESSAGE_ID")
+    protected String initialMessageId;
+
+    public String getInitialMessageId() {
+        return initialMessageId;
+    }
+
+    public void setInitialMessageId(String initialMessageId) {
+        this.initialMessageId = initialMessageId;
+    }
+
     public Integer getThreadSize() {
         return threadSize;
     }

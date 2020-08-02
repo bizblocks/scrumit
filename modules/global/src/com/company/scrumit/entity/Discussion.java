@@ -7,7 +7,7 @@ import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.security.entity.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "SCRUMIT_DISCUSSION")
@@ -20,8 +20,7 @@ public class Discussion extends StandardEntity {
     @JoinColumn(name = "TRACKER_ID")
     protected Tracker tracker;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "INITIATOR_ID")
     protected User initiator;
 
@@ -36,8 +35,8 @@ public class Discussion extends StandardEntity {
     protected List<Files> files;
 
     @OrderBy("createTs DESC")
-    @OneToMany(mappedBy = "discussion")
-    protected List<Message> messages;
+    @OneToMany(mappedBy = "discussion", cascade = CascadeType.PERSIST)
+    protected List<Message> messages = new ArrayList<>();
 
     public User getInitiator() {
         return initiator;

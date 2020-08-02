@@ -2,6 +2,7 @@ package com.company.scrumit.service;
 
 import com.company.scrumit.utils.StringUtil;
 import com.company.scrumit.entity.*;
+import com.groupstp.mailreader.entity.ConnectionData;
 import com.groupstp.mailreader.entity.dto.*;
 import com.groupstp.mailreader.service.GmailService;
 import com.haulmont.cuba.core.Persistence;
@@ -39,36 +40,33 @@ public class MailListServiceBean implements MailListService {
 
     @Override
     public void checkEmails() {
-            List<ThreadDto> threadDtos = gmailService.receive();
-        threadDtos.forEach(threadDto -> {
-            Tracker tracker = trackerService.getTrackerByThreadId(threadDto.getId());
-            if (PersistenceHelper.isNew(tracker)){
-                String email = stringUtil.getEmailFromString(threadDto.getMessages().get(0).getRecipient());
-                tracker.setThreadId(threadDto.getId());
-                tracker.setThreadSize(threadDto.getMessages().size());
-                tracker.setShortdesc(!StringUtils.isEmpty(threadDto.getMessages().get(0).getSubject()) ? threadDto.getMessages().get(0).getSubject() : "(без темы)");
-                String content = threadDto.getMessages().get(0).getTextContent();
+        Map<ConnectionData, List<ThreadDto>> conectionThreadsMap = gmailService.receive();
+        conectionThreadsMap.entrySet().forEach(connectionDataListEntry -> {
+            connectionDataListEntry.getValue().forEach(threadDto -> {
+                Tracker tracker = trackerService.getTrackerByThreadId(threadDto.getId());
+                if (PersistenceHelper.isNew(tracker)){
+                    tracker.setThreadId(threadDto.getId());
+                    tracker.setThreadSize(threadDto.getMessages().size());
+                    tracker.setShortdesc(!StringUtils.isEmpty(threadDto.getMessages().get(0).getSubject()) ? threadDto.getMessages().get(0).getSubject() : "(без темы)");
+                    String content = threadDto.getMessages().get(0).getTextContent();
 
 
-                content = content.replaceAll("<img src=[^<]+", "[файл находится во вложениях]");
+                    content = content.replaceAll("<img src=[^<]+", "[файл находится во вложениях]");
 
 
-                tracker.setDescription(content);
-                tracker.setTrackerPriorityType(TrackerPriorityType.Current);
-                tracker.setType(TicketsType.SUPPORT);
-                Task task = metadata.create(Task.class);
-                task.setDescription(content);
-                task.setPriority(Priority.Middle);
-                task.setShortdesc(!StringUtils.isEmpty(threadDto.getMessages().get(0).getSubject()) ? threadDto.getMessages().get(0).getSubject() : "(без темы)");
-                tracker.setIncidentStatus(IncidentStatus.NEW);
-                tracker.setInitiatorEmail(threadDto.getMessages().get(0).getFrom());
+                    tracker.setDescription(content);
+                    tracker.setTrackerPriorityType(TrackerPriorityType.Current);
+                    tracker.setType(TicketsType.SUPPORT);
+                    Task task = metadata.create(Task.class);
+                    task.setDescription(content);
+                    task.setPriority(Priority.Middle);
+                    task.setShortdesc(!StringUtils.isEmpty(threadDto.getMessages().get(0).getSubject()) ? threadDto.getMessages().get(0).getSubject() : "(без темы)");
+                    tracker.setIncidentStatus(IncidentStatus.NEW);
+                    tracker.setInitiatorEmail(threadDto.getMessages().get(0).getFrom());
+                    tracker.setInitialMessageId(threadDto.getMessages().get(0).getMessageExtId());
 
-                if (email!= null) {
-                    ExtConnectionData connectionData = dataManager.load(ExtConnectionData.class)
-                            .query("select f from scrumit_ExtConnectionData f where f.username = :email")
-                            .parameter("email", email)
-                            .view("extConnectionData-full")
-                            .one();
+                    ExtConnectionData connectionData = (ExtConnectionData) connectionDataListEntry.getKey();
+                    connectionData = dataManager.reload(connectionData, "extConnectionData-full");
                     tracker.setProject(connectionData.getProject());
                     tracker.setNumber(projectIdentificatorService.generateTrackerNumber(tracker));
                     task.setTop(connectionData.getProject());
@@ -79,53 +77,70 @@ public class MailListServiceBean implements MailListService {
                             .view("taskClass-full")
                             .one();
                     task.setTaskClass(taskClass);
+                    task = dataManager.commit(task);
+                    tracker.setTask(Arrays.asList(task));
+                    task.setParentBug(tracker);
+                    dataManager.commit(task);
+                    List<FileDescriptor> attachments = new ArrayList<>();
+                    threadDto.getMessages().forEach(messageDto -> {
+                        attachments.addAll(messageDto.getAttachments());
+                    });
+                    for (FileDescriptor fileDescriptor :attachments) {
+                        fileDescriptor = dataManager.commit(fileDescriptor);
+                        Files files = metadata.create(Files.class);
+                        files.setDescription(fileDescriptor.getName());
+                        files.setEntity(tracker.getUuid());
+                        files.setFile(fileDescriptor);
+                        dataManager.commit(files);
+                    }
+//                tracker = dataManager.commit(tracker);
 
+                    if (threadDto.getMessages().size() > 1){
+                        Discussion discussion = metadata.create(Discussion.class);
+                        discussion.setMessages(new ArrayList<>());
+                        discussion.setTracker(tracker);
+                        threadDto.getMessages().remove(0);
+                        for (MessageDto messageDto : threadDto.getMessages()) {
+                            Message message = metadata.create(Message.class);
+                            message.setDiscussion(discussion);
+                            message.setFrom(messageDto.getFrom());
+                            message.setText(messageDto.getTextContent());
+                            message.setReceiptTime(messageDto.getReceiptTime());
+                            message.setExtId(messageDto.getMessageExtId());
+                            message.setInReplyTo(messageDto.getInReplyTo());
+                            message.setReferences(messageDto.getReferences());
+                            //todo
+                            //  добавить множественное прикрепление
+                            if (!messageDto.getAttachments().isEmpty())
+                                message.setAttachment(messageDto.getAttachments().get(0));
+                            discussion.getMessages().add(message);
+                        }
+                        discussion = dataManager.commit(discussion);
+                    }
                 }
-                task = dataManager.commit(task);
-                tracker.setTask(Arrays.asList(task));
-                task.setParentBug(tracker);
-                dataManager.commit(task);
-                List<FileDescriptor> attachments = new ArrayList<>();
-                threadDto.getMessages().forEach(messageDto -> {
-                    attachments.addAll(messageDto.getAttachments());
-                });
-                for (FileDescriptor fileDescriptor :attachments) {
-                    fileDescriptor = dataManager.commit(fileDescriptor);
-                    Files files = metadata.create(Files.class);
-                    files.setDescription(fileDescriptor.getName());
-                    files.setEntity(tracker.getUuid());
-                    files.setFile(fileDescriptor);
-                    dataManager.commit(files);
-                }
+                else if (threadDto.getMessages().size() > tracker.getThreadSize()){
+                    tracker = dataManager.reload(tracker,"tracker-description");
+                    StringBuilder sb = new StringBuilder(tracker.getDescription());
+                    for (int i = tracker.getThreadSize(); i < threadDto.getMessages().size(); i++){
+                        Message message = metadata.create(Message.class);
+                        message.setDiscussion(tracker.getDiscussion());
+                        message.setFrom(threadDto.getMessages().get(i).getFrom());
+                        message.setText(threadDto.getMessages().get(i).getTextContent());
+                        message.setExtId(threadDto.getMessages().get(i).getMessageExtId());
+                        message.setInReplyTo(threadDto.getMessages().get(i).getInReplyTo());
+                        message.setReferences(threadDto.getMessages().get(i).getReferences());
+                        message.setReceiptTime(threadDto.getMessages().get(i).getReceiptTime());
+                        tracker.getDiscussion().getMessages().add(message);
+                    }
 
-
-                threadDto.getMessages().remove(0);
-                StringBuilder sb = new StringBuilder(tracker.getDescription());
-                threadDto.getMessages().forEach(messageDto -> {
-                    sb.append("\n----------------------------------\n");
-                    sb.append(messageDto.getFrom());
-                    sb.append(": ");
-                    sb.append(messageDto.getTextContent());
-                });
-                tracker = dataManager.reload(tracker,"tracker-description");
-                tracker.setDescription(sb.toString());
-                dataManager.commit(tracker);
-            }
-            else if (threadDto.getMessages().size() > tracker.getThreadSize()){
-                tracker = dataManager.reload(tracker,"tracker-description");
-                StringBuilder sb = new StringBuilder(tracker.getDescription());
-                for (int i = tracker.getThreadSize(); i < threadDto.getMessages().size(); i++){
-                    sb.append("\n----------------------------------\n");
-                    sb.append(threadDto.getMessages().get(i).getFrom());
-                    sb.append(": ");
-                    sb.append(threadDto.getMessages().get(i).getTextContent());
+                    tracker.setThreadSize(threadDto.getMessages().size());
+                    dataManager.commit(tracker);
+                    dataManager.commit(tracker.getDiscussion());
                 }
-                tracker.setDescription(sb.toString());
-                tracker.setThreadSize(threadDto.getMessages().size());
-                dataManager.commit(tracker);
-            }
 
             });
+        });
+
     }
     @Override
     public void sendEmail(String to, String subject,String templatePath, Map<String, Serializable> params){

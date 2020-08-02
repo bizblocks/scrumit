@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         class="com.company.scrumit.web.screens.DiscussionEdit"
+        caption="msg://tracker_discussion"
         messagesPack="com.company.scrumit.web.screens">
     <dsContext>
     </dsContext>
@@ -10,7 +11,7 @@
         <grid spacing="true" width="100%" height="100%">
             <columns count="1"/>
             <rows>
-                <row flex="0">
+                <row flex="1">
                     <scrollBox height="100%"
                                 >
                         <vbox spacing="true" margin="true" height="70%" id="dialogSpace">
@@ -18,10 +19,13 @@
                     </scrollBox>
                 </row>
                 <row>
-                    <vbox id="inputBox" spacing="true" margin="true" height="100%">
-                        <richTextArea id="inputField" width="100%" height="auto"/>
-                        <button id="sendBtn" invoke="onSendBtnClick" caption="msg://send" align="BOTTOM_RIGHT"/>
-                    </vbox>
+                    <popupView hideOnMouseOut="false" minimizedValue="msg://message" width="100%" align="TOP_RIGHT"
+                               colspan="1" margin="true">
+                        <vbox id="inputBox" spacing="true" margin="true" height="100%" align="TOP_RIGHT">
+                            <richTextArea id="inputField" width="100%" height="auto"/>
+                            <button id="sendBtn" invoke="onSendBtnClick" caption="msg://send" align="BOTTOM_RIGHT"/>
+                        </vbox>
+                    </popupView>
                 </row>
             </rows>
         </grid>

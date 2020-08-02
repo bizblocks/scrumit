@@ -26,6 +26,7 @@
                 <entry key="scrumit_TaskClassService" value="com.company.scrumit.service.TaskClassService"/>
                 <entry key="scrumit_HumanResourcesAccountService"
                        value="com.company.scrumit.service.HumanResourcesAccountService"/>
+                <entry key="scrumit_DaoService" value="com.company.scrumit.service.DaoService"/>
             </map>
         </property>
     </bean>

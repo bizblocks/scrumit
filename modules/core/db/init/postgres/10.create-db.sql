@@ -448,7 +448,7 @@ create table SCRUMIT_DISCUSSION (
     DELETED_BY varchar(50),
     --
     TRACKER_ID uuid,
-    INITIATOR_ID uuid not null,
+    INITIATOR_ID uuid,
     --
     primary key (ID)
 )^
@@ -485,9 +485,14 @@ create table SCRUMIT_MESSAGE (
     DELETED_BY varchar(50),
     --
     TEXT text,
+    RECEIPT_TIME timestamp,
+    FROM_ varchar(255),
     DISCUSSION_ID uuid,
     AUTOR_ID uuid,
     ATTACHMENT_ID uuid,
+    EXT_ID varchar(255),
+    REFERENCES_ text,
+    IN_REPLY_TO varchar(255),
     --
     primary key (ID)
 )^

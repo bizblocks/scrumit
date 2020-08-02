@@ -13,11 +13,13 @@ import com.groupstp.workflowstp.web.bean.WorkflowWebBean;
 import com.groupstp.workflowstp.web.components.AbstractXmlDescriptorFrame;
 import com.groupstp.workflowstp.web.components.ExternalSelectionGroupTable;
 import com.groupstp.workflowstp.web.util.action.AlwaysActiveAction;
+import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.WindowParam;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.actions.*;
+import com.haulmont.cuba.gui.config.WindowInfo;
 import com.haulmont.cuba.gui.data.DsBuilder;
 import com.haulmont.cuba.gui.data.GroupDatasource;
 import com.haulmont.cuba.gui.data.HierarchicalDatasource;
@@ -277,6 +279,22 @@ public class TaskWorkflowBrowseTableFrame extends AbstractFrame {
         Button removeButton = componentsFactory.createComponent(Button.class);
         removeButton.setAction(removeAction);
 
+        BaseAction openDiscussion = new BaseAction("open-discussion"){
+            @Override
+            public void actionPerform(Component component) {
+                if (trackerTable.getSingleSelected() == null){
+                    showNotification(getMessage("tracker_not_selected"), NotificationType.WARNING);
+                    return;
+                }
+                openWindow("scrumit_DiscussionEdit", WindowManager.OpenType.NEW_TAB, ParamsMap.of("tracker",trackerTable.getSingleSelected()));
+
+            }
+        };
+        Button duscussionButton = componentsFactory.createComponent(Button.class);
+        duscussionButton.setCaption(getMessage("tracker_discussion"));
+        duscussionButton.setAction(openDiscussion);
+
+
 
 //        BaseAction runAction = new BaseAction("run") {
 //            @Override
@@ -360,6 +378,9 @@ public class TaskWorkflowBrowseTableFrame extends AbstractFrame {
 //        buttonsPanel.add(runButton);
 
         addExcelAction(trackerTable);
+
+        trackerTable.addAction(openDiscussion);
+        buttonsPanel.add(duscussionButton);
     }
 
     private void initWorkflowView(Map<String, Object> params) {

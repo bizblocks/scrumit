@@ -1,8 +1,10 @@
 package com.company.scrumit.web.tracker;
 
 import com.company.scrumit.entity.*;
+import com.company.scrumit.service.DaoService;
 import com.company.scrumit.service.MailListService;
 import com.company.scrumit.service.TrackerService;
+import com.groupstp.mailreader.service.GmailService;
 import com.groupstp.workflowstp.entity.*;
 import com.groupstp.workflowstp.exception.WorkflowException;
 import com.groupstp.workflowstp.service.WorkflowService;
@@ -36,7 +38,10 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.io.Serializable;
+import java.security.GeneralSecurityException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -113,6 +118,10 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
     private TrackerService trackerService;
     @Inject
     private MailListService mailListService;
+    @Inject
+    private GmailService gmailService;
+    @Inject
+    private DaoService daoService;
 
 
     @Override
@@ -494,18 +503,9 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                                 tr = dataManager.reload(tr,"Task-process");
                                 tr.setPerformer((Performer) user);
                                 tr = dataManager.commit(tr);
-                                String email = trackerService.getEmailFormString(getItem().getInitiatorEmail());
-                                if (email != null){
-                                    Map<String, Serializable> params = new HashMap<>();
-                                    params.put("shortDesc",getItem().getShortdesc());
-                                    params.put("trackerNumber",getItem().getNumber());
-                                    mailListService.sendEmail(
-                                            email,
-                                            getItem().getShortdesc(),
-                                            "com/company/scrumit/templates/notification_about_inWork.txt",
-                                            params
-                                    );
-                                }
+                                String messageText = "Здравствуйте!\n" +
+                                        "Ваша заявка с темой \""+ getItem().getShortdesc() + "\" передана в работу под номером:" + getItem().getNumber();
+                                trackerService.sendReplyMessageinTrackerDiscussion(getItem(),messageText);
                             }
                         } else {
                             message = String.format(getMessage("TaskWorkflowBrowseTableFrame.alreadyInProgress"), tr.getId());
@@ -513,6 +513,15 @@ public class TrackerEdit extends AbstractEditor<Tracker> {
                     } catch (WorkflowException e) {
                         message = String.format(getMessage("TaskWorkflowBrowseTableFrame.workflowFailed"),
                                 tr.getUuid(), e.getMessage() == null ? getMessage("TaskWorkflowBrowseTableFrame.notAvailable") : e.getMessage());
+                    } catch (GeneralSecurityException e) {
+                        e.printStackTrace();
+                        message = getMessage("error_while_sending_notification_about_work_message");
+                    } catch (IOException e) {
+                        message = getMessage("error_while_sending_notification_about_work_message");
+                        e.printStackTrace();
+                    } catch (MessagingException e) {
+                        message = getMessage("error_while_sending_notification_about_work_message");
+                        e.printStackTrace();
                     }
                     if (sb.length() > 0) {
                         sb.append("\n");

@@ -301,11 +301,17 @@
         <property name="initiator" view="_minimal"/>
         <property name="messages" view="_minimal">
             <property name="text"/>
+            <property name="receiptTime"/>
+            <property name="from"/>
             <property name="discussion" view="_local"/>
             <property name="autor" view="_minimal">
                 <property name="email"/>
             </property>
             <property name="attachment" view="_minimal"/>
+            <property name="extId"/>
+            <property name="references"/>
+            <property name="inReplyTo"/>
+            <property name="createTs"/>
         </property>
     </view>
     <view entity="scrumit$Tracker" name="tracker-taskWorkflow" extends="_minimal">
@@ -323,6 +329,7 @@
     </view>
     <view entity="scrumit$Tracker" name="tracker-newTab" extends="_minimal">
         <property name="project" view="_minimal"/>
+        <property name="initiatorEmail"/>
         <property name="number"/>
         <property name="incidentStatus"/>
         <property name="testingPlan"/>
@@ -368,6 +375,22 @@
     </view>
     <view entity="scrumit$Tracker" name="tracker-description" extends="_minimal">
         <property name="description"/>
+        <property name="discussion" view="_minimal">
+            <property name="messages" view="_minimal"/>
+        </property>
         <property name="threadSize"/>
+    </view>
+    <view entity="scrumit$Tracker" name="tracker-sendMessage" extends="_local">
+        <property name="project" view="_minimal"/>
+        <property name="task" view="_minimal"/>
+        <property name="discussion" view="_minimal">
+            <property name="messages" view="_minimal">
+                <property name="receiptTime"/>
+                <property name="from"/>
+                <property name="extId"/>
+                <property name="references"/>
+                <property name="inReplyTo"/>
+            </property>
+        </property>
     </view>
 </views>

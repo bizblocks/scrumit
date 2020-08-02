@@ -1,14 +1,25 @@
 package com.company.scrumit.service;
 
+import com.company.scrumit.entity.Message;
 import com.company.scrumit.utils.StringUtil;
 import com.company.scrumit.entity.IncidentStatus;
 import com.company.scrumit.entity.Task;
 import com.company.scrumit.entity.Tracker;
+import com.groupstp.mailreader.entity.ConnectionData;
+import com.groupstp.mailreader.entity.dto.MessageDto;
+import com.groupstp.mailreader.service.GmailService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.global.UserSessionSource;
+import com.haulmont.cuba.security.global.UserSession;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import javax.mail.MessagingException;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service(TrackerService.NAME)
@@ -20,6 +31,12 @@ public class TrackerServiceBean implements TrackerService {
     private StringUtil stringUtil;
     @Inject
     private Metadata metadata;
+    @Inject
+    private DaoService daoService;
+    @Inject
+    private UserSessionSource userSession;
+    @Inject
+    private GmailService gmailService;
 
     @Override
     public IncidentStatus updateIncidentStatus(Tracker incident) {
@@ -91,5 +108,54 @@ public class TrackerServiceBean implements TrackerService {
                 .parameter("id", threadId)
                 .view("tracker-with-threadSize")
                 .optional().orElse(metadata.create(Tracker.class));
+    }
+    @Override
+    public Message sendReplyMessageinTrackerDiscussion(Tracker tracker, String text) throws GeneralSecurityException, MessagingException, IOException {
+        tracker = dataManager.reload(tracker ,"tracker-sendMessage");
+        List<Message> messages = tracker.getDiscussion().getMessages();
+        messages.sort(Comparator.comparing(message -> message.getReceiptTime()));
+        ConnectionData connectionData = daoService.findFirstConnectionDataByProject(tracker.getProject());
+        if (connectionData == null){
+            return null;
+        }
+
+        String to;
+        String inReplyTo;
+        String references;
+        if (messages.isEmpty()){
+            to = stringUtil.getEmailFromString(tracker.getInitiatorEmail());
+            inReplyTo = tracker.getInitialMessageId();
+            references = tracker.getInitialMessageId();
+        }
+        else {
+            to =stringUtil.getEmailFromString(messages.get(messages.size() - 1).getFrom());
+            inReplyTo = messages.get(messages.size() -1 ).getExtId();
+            references = messages.get(messages.size() -1 ).getReferences() +" " + inReplyTo;
+        }
+
+        Message message= metadata.create(Message.class);
+        message.setText(text);
+        message.setAutor(userSession.getUserSession().getCurrentOrSubstitutedUser());
+        message.setDiscussion(tracker.getDiscussion());
+        message.setFrom(userSession.getUserSession().getCurrentOrSubstitutedUser().getEmail());
+        message.setReferences(references);
+        message.setInReplyTo(inReplyTo);
+
+
+
+
+        MessageDto msg = gmailService.sendReplyMessage(connectionData,
+                to,
+                tracker.getShortdesc(),
+                message.getText(),
+                inReplyTo,
+                tracker.getThreadId(),
+                references);
+        tracker.setThreadSize(tracker.getThreadSize() +1);
+        message.setExtId(msg.getMessageExtId());
+        message.setReceiptTime(msg.getReceiptTime());
+        message.setFrom(msg.getFrom());
+        dataManager.commit(tracker);
+        return message=dataManager.commit(message);
     }
 }
