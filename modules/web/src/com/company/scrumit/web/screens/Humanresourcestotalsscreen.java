@@ -126,6 +126,7 @@ public class Humanresourcestotalsscreen extends Screen {
                     .show();
             return;
         }
+        result.clear();
         List<HumanResourcesAccount> resourcesAccounts = dataManager.load(HumanResourcesAccount.class)
                 .query("select e from scrumit_HumanResourcesAccount e where e.startTime >= :begin and e.startTime <= :end and e.performer = :performer")
                 .parameter("begin", beginDateField.getValue())
